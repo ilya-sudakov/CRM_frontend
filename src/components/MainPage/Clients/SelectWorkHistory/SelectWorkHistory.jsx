@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from "react";
 import "../../../../utils/MainWindow/MainWindow.scss";
 import "../../../../utils/Form/Form.scss";
-import deleteSVG from "../../../../../assets/select/delete.svg";
-// import okSVG from '../../../../../assets/tableview/ok.svg';
 import okSVG from "../../../../../assets/tableview/calendar_check.svg";
 import cancelSVG from "../../../../../assets/tableview/cancel.svg";
 import "./SelectWorkHistory.scss";
 import InputDate from "../../../../utils/Form/InputDate/InputDate.jsx";
-import {
-  formatDateString,
-  formatDateStringWithTime,
-} from "../../../../utils/functions.jsx";
+import { formatDateStringWithTime } from "../../../../utils/functions.jsx";
 import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
+import { sortByField } from "../../../../utils/sorting/sorting";
 
 const SelectWorkHistory = (props) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showHints, setShowHints] = useState(false);
   const [creatingItem, setCreatingItem] = useState(false);
-  const [newItem, setNewItem] = useState({
+  const defaultItem = {
     date: new Date(),
     action: "",
     result: "",
     comment: "",
-  });
+  };
+  const [newItem, setNewItem] = useState(defaultItem);
   const [hints, setHints] = useState([
     "Предложение сотрудничества",
     "Отсылка материалов",
@@ -39,12 +36,7 @@ const SelectWorkHistory = (props) => {
     if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
       setItems([...props.defaultValue]);
     }
-    setNewItem({
-      date: new Date(),
-      action: "",
-      result: "",
-      comment: "",
-    });
+    setNewItem(defaultItem);
   }, [props.defaultValue, props.options]);
 
   const deleteItem = (id) => {
@@ -54,12 +46,16 @@ const SelectWorkHistory = (props) => {
     props.handleWorkHistoryChange([...temp]);
   };
 
-  const handleInputChange = (event) => {
-    const name = event.target.getAttribute("name");
-    let value = event.target.value;
+  const handleInputChange = (name, value) => {
     setNewItem({
       ...newItem,
       [name]: value,
+    });
+  };
+
+  const filterHints = (data, action) => {
+    data.filter((hint) => {
+      return hint.toLowerCase().includes(action.toLowerCase());
     });
   };
 
@@ -70,12 +66,7 @@ const SelectWorkHistory = (props) => {
           className="main-window__button"
           onClick={() => {
             setCreatingItem(true);
-            return setNewItem({
-              date: new Date(),
-              action: "",
-              result: "",
-              comment: "",
-            });
+            return setNewItem(defaultItem);
           }}
           text="Добавить запись в историю"
         />
@@ -92,12 +83,12 @@ const SelectWorkHistory = (props) => {
                     required
                     name="date"
                     selected={Date.parse(newItem.date)}
-                    handleDateChange={(date) => {
+                    handleDateChange={(date) =>
                       setNewItem({
                         ...newItem,
                         date: date,
-                      });
-                    }}
+                      })
+                    }
                   />
                 ),
               },
@@ -114,13 +105,11 @@ const SelectWorkHistory = (props) => {
                       name="action"
                       value={newItem.action}
                       autoComplete="off"
-                      onChange={handleInputChange}
+                      onChange={({ target }) =>
+                        handleInputChange("action", target.value)
+                      }
                     />
-                    {hints.filter((hint) => {
-                      return hint
-                        .toLowerCase()
-                        .includes(newItem.action.toLowerCase());
-                    }).length > 0 && (
+                    {filterHints(hints, newItem.action).length > 0 && (
                       <div
                         className={
                           showHints
@@ -128,29 +117,21 @@ const SelectWorkHistory = (props) => {
                             : "select-work-history__hints-wrapper select-work-history__hints-wrapper--hidden"
                         }
                       >
-                        {hints
-                          .filter((hint) => {
-                            return hint
-                              .toLowerCase()
-                              .includes(newItem.action.toLowerCase());
-                          })
-                          .map((hint) => {
-                            return (
-                              <div
-                                className="select-work-history__hint"
-                                name={hint}
-                                onClick={() => {
-                                  setNewItem({
-                                    ...newItem,
-                                    action: hint,
-                                  });
-                                  setShowHints(false);
-                                }}
-                              >
-                                {hint}
-                              </div>
-                            );
-                          })}
+                        {filterHints(hints, newItem.action).map((hint) => (
+                          <div
+                            className="select-work-history__hint"
+                            name={hint}
+                            onClick={() => {
+                              setNewItem({
+                                ...newItem,
+                                action: hint,
+                              });
+                              setShowHints(false);
+                            }}
+                          >
+                            {hint}
+                          </div>
+                        ))}
                       </div>
                     )}
                   </span>
@@ -164,7 +145,9 @@ const SelectWorkHistory = (props) => {
                     name="result"
                     value={newItem.result}
                     autoComplete="off"
-                    onChange={handleInputChange}
+                    onChange={({ target }) =>
+                      handleInputChange("result", target.value)
+                    }
                   />
                 ),
               },
@@ -176,7 +159,9 @@ const SelectWorkHistory = (props) => {
                     name="comment"
                     value={newItem.comment}
                     autoComplete="off"
-                    onChange={handleInputChange}
+                    onChange={({ target }) =>
+                      handleInputChange("comment", target.value)
+                    }
                   />
                 ),
               },
@@ -207,17 +192,8 @@ const SelectWorkHistory = (props) => {
             }
           />
         ) : null}
-        {items
-          .sort((a, b) => {
-            if (new Date(a.date) < new Date(b.date)) {
-              return 1;
-            }
-            if (new Date(a.date) > new Date(b.date)) {
-              return -1;
-            }
-            return 0;
-          })
-          .map((item, index) => (
+        {sortByField(items, { fieldName: "date", direction: "desc" }).map(
+          (item, index) => (
             <NestedFormItem
               index={index}
               readOnly={true}
@@ -256,15 +232,11 @@ const SelectWorkHistory = (props) => {
                 },
                 {
                   name: "Действие",
-                  element: (
-                    <input type="text" value={item.action} readOnly />
-                  ),
+                  element: <input type="text" value={item.action} readOnly />,
                 },
                 {
                   name: "Результат",
-                  element: (
-                    <input type="text" value={item.result} readOnly />
-                  ),
+                  element: <input type="text" value={item.result} readOnly />,
                 },
                 {
                   name: "Комментарий",
@@ -274,7 +246,8 @@ const SelectWorkHistory = (props) => {
                 },
               ]}
             />
-          ))}
+          )
+        )}
       </div>
     </div>
   );
