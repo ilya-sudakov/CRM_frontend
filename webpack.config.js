@@ -1,20 +1,20 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const Dotenv = require('dotenv-webpack')
-const webpack = require('webpack')
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const Dotenv = require("dotenv-webpack");
+const webpack = require("webpack");
 
 module.exports = {
   entry: [
-    path.resolve(__dirname, './src/main/resources/templates/index.jsx'),
-    path.resolve(__dirname, './src/main/resources/templates/index.scss'),
+    path.resolve(__dirname, "./src/templates/index.jsx"),
+    path.resolve(__dirname, "./src/templates/index.scss"),
   ],
   output: {
-    path: path.resolve(__dirname, './src/main/resources/static/built'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "./src/static/built"),
+    publicPath: "/",
+    filename: "bundle.js",
   },
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       {
@@ -22,37 +22,37 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
           },
         ],
       },
       {
         test: /\.(png|svg|jpg|gif|ico|json)$/,
         exclude: /\.inline.svg$/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: 'assets/[name].[ext]',
+          name: "assets/[name].[ext]",
         },
       },
       {
         test: /\.inline.svg$/,
-        use: ['@svgr/webpack'],
+        use: ["@svgr/webpack"],
       },
       {
         test: /\.s?css$/,
         // MiniCssExtractPlugin.loader для production
         use: [
-          process.env.NODE_ENV === 'production'
+          process.env.NODE_ENV === "production"
             ? MiniCssExtractPlugin.loader
-            : 'style-loader',
-          'css-loader',
-          'sass-loader',
+            : "style-loader",
+          "css-loader",
+          "sass-loader",
         ],
       },
     ],
   },
   devServer: {
-    contentBase: '/static/',
+    contentBase: "/static/",
     watchContentBase: true,
     inline: true,
     hot: true,
@@ -63,22 +63,22 @@ module.exports = {
   plugins: [
     new webpack.IgnorePlugin(/cptable/),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: "style.css",
     }),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
-      template: './src/main/resources/templates/index.html',
-      filename: 'index.html',
-      favicon: './assets/favicon.ico',
-      manifest: '/assets/manifest.json',
+      template: "./src/templates/index.html",
+      filename: "index.html",
+      favicon: "./assets/favicon.ico",
+      manifest: "/assets/manifest.json",
     }),
     new Dotenv({
-      path: './.env',
+      path: "./.env",
     }),
   ],
   node: {
-    fs: 'empty',
+    fs: "empty",
   },
-  externals: [{ './cptable': 'var cptable', './jszip': 'jszip' }],
-}
+  externals: [{ "./cptable": "var cptable", "./jszip": "jszip" }],
+};

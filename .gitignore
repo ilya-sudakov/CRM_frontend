@@ -9,6 +9,7 @@ HELP.md
 package-lock.json
 /node_modules
 /src/main/resources/static/built/*
+/src/static/built/*
 
 ### STS ###
 .apt_generated
