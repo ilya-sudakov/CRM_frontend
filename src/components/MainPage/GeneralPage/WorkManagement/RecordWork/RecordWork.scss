@@ -6,14 +6,14 @@
   --item-height: 160px;
   --buttons-height: 70px;
   .main-form {
-    min-height: calc(100vh - 60px);
-    height: calc(100vh - 60px);
+    // min-height: calc(100vh - 60px);
+    // height: calc(100vh - 60px);
   }
   .main-form__form {
+    // height: 100%;
     overflow-x: hidden;
     position: relative;
     overflow-y: hidden;
-    height: 100%;
     transition: 200ms ease-in-out;
     .main-form__wrapper {
       position: absolute;

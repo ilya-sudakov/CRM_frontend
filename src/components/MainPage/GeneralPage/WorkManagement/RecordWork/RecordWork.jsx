@@ -204,6 +204,11 @@ const NewRecordWork = (props) => {
             <div className="main-form__title">Запись о работе</div>
           </div>
           <div
+            style={{
+              height: `calc(${wrapperHeight})`,
+            }}
+          ></div>
+          <div
             className="main-form__wrapper"
             style={{
               left: `calc(-100% * ${curPage} + (${
