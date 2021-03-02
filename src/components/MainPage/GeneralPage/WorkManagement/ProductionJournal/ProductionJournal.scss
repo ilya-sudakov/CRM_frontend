@@ -43,6 +43,15 @@
             }
         }
     }
+    .form-window {
+        &__content {
+            height: fit-content;
+            max-width: 600px;
+            .form-window__body {
+                padding: 0;
+            }
+        }
+    }
 
     &__current-date {
         display: flex;
