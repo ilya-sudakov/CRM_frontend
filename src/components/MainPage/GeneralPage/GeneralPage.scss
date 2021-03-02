@@ -2,6 +2,7 @@
 
 .general-page {
   background-color: #f4f4f4;
+  min-height: calc(100vh - 60px);
   .main-window {
     padding-bottom: 0;
     &__header {
