@@ -1,91 +1,46 @@
 import React, { useState, useEffect } from "react";
 import "./NewLtd.scss";
-import ErrorMessage from "../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import Button from "../../../../../../utils/Form/Button/Button.jsx";
 import { addLTD } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
 import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
 import { fetchINNData, getInputsListFromArray } from "../functions";
 import {
   ltdFormNameInputs,
-  ltdListDefaultInputObject,
-  ltdListDefaultInputObjectValues,
+  ltdListDefaultInputs,
   ltdFormAddressInputs,
   ltdFormContactsInputs,
   ltdFormBankInputs,
   ltdFormEmployeesInputs,
 } from "../objects.js";
+import useForm from "../../../../../../utils/hooks/useForm.js";
 
 const NewLtd = (props) => {
-  const [formInputs, setFormInputs] = useState(ltdListDefaultInputObjectValues);
-  const [formErrors, setFormErrors] = useState(ltdListDefaultInputObject);
-  const [validInputs, setValidInputs] = useState(ltdListDefaultInputObject);
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    updateFormInputs,
+    errorWindow,
+  } = useForm(ltdListDefaultInputs);
+
   const [isLoading, setIsLoading] = useState(false);
-  const validateField = (fieldName, value) => {
-    console.log(fieldName, value);
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "" && value !== undefined,
-          });
-        }
-        break;
-    }
-  };
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = ltdListDefaultInputObject;
-    for (let item in validInputs) {
-      if (formInputs[item] === "") {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setFormErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
-    setIsLoading(true);
     console.log(formInputs);
-    console.log(validInputs);
-    formIsValid() &&
-      addLTD(formInputs)
-        .then(() => props.history.push("/ltd-list"))
-        .catch((error) => {
-          setIsLoading(false);
-          alert("Ошибка при добавлении записи");
-        });
-  };
-
-  const handleInputChange = (name, value) => {
-    validateField(name, value);
-    setFormInputs((formInputs) => {
-      return {
-        ...formInputs,
-        [name]: value,
-      };
-    });
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
+    if (!formIsValid()) return;
+    setIsLoading(true);
+    addLTD(formInputs)
+      .then(() => props.history.push("/ltd-list"))
+      .catch(() => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+      });
   };
 
   useEffect(() => {
     document.title = "Добавление ООО";
-  }, [validInputs]);
+  }, []);
 
   const allOtherInputs = [
     { name: "inn", inputName: "ИНН", required: true },
@@ -96,12 +51,7 @@ const NewLtd = (props) => {
           className="main-window__button main-window__button--inverted"
           inverted
           onClick={() =>
-            fetchINNData(
-              formInputs,
-              setIsLoading,
-              setFormInputs,
-              (name, value) => validateField(name, value)
-            )
+            fetchINNData(formInputs, setIsLoading, updateFormInputs)
           }
           isLoading={isLoading}
           style={{ margin: "-15px auto 20px 10px" }}
@@ -128,11 +78,7 @@ const NewLtd = (props) => {
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Добавление ООО</div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           {getInputsListFromArray(
             ltdFormNameInputs,
             ...defaultInputsListParams

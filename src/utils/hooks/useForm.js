@@ -108,7 +108,9 @@ const useForm = (defaultInputs = []) => {
         newValidInputs = {
           ...newValidInputs,
           [input.name]:
-            inputs[input.name] !== undefined && inputs[input.name] !== null,
+            inputs[input.name] !== undefined &&
+            inputs[input.name] !== null &&
+            inputs[input.name] !== "",
         };
       }
     });

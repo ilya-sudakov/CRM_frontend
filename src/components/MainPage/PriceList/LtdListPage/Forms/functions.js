@@ -5,12 +5,7 @@ import {
   getInfoByINN,
 } from "../../../../../utils/RequestsAPI/Clients.jsx";
 
-export const fetchINNData = (
-  inputs,
-  setIsLoading,
-  setFormInputs,
-  validateField
-) => {
+export const fetchINNData = (inputs, setIsLoading, setFormInputs) => {
   setIsLoading(true);
   let formData = {};
   //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
@@ -31,14 +26,6 @@ export const fetchINNData = (
           legalAddress: data.address.value,
           generalDirector: data.management?.name,
         });
-        validateField("name", data.name.full);
-        validateField("shortName", data.name.short);
-        validateField("kpp", data.kpp);
-        validateField("okpo", data.okpo);
-        validateField("okved", data.okved);
-        validateField("ogrn", data.ogrn);
-        validateField("legalAddress", data.legalAddress);
-        validateField("generalDirector", data.generalDirector);
         return formData;
       } else return null;
     })
@@ -50,10 +37,6 @@ export const fetchINNData = (
           .then((res) => {
             console.log(res);
             setIsLoading(false);
-            validateField(
-              "bik",
-              res.suggestions.length > 0 ? res.suggestions[0].data.bic : ""
-            );
             setFormInputs({
               ...formData,
               bik:

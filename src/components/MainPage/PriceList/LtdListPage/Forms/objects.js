@@ -41,6 +41,28 @@ export const ltdListDefaultInputObjectValues = {
   logo: "",
 };
 
+export const ltdListDefaultInputs = [
+  { name: "name", defaultValue: "", isRequired: true },
+  { name: "shortName", defaultValue: "" },
+  { name: "legalAddress", defaultValue: "", isRequired: true },
+  { name: "mailingAddress", defaultValue: "", isRequired: true },
+  { name: "phone", defaultValue: "", isRequired: true },
+  { name: "site", defaultValue: "", isRequired: true },
+  { name: "inn", defaultValue: "", isRequired: true },
+  { name: "kpp", defaultValue: "", isRequired: true },
+  { name: "ogrn", defaultValue: "", isRequired: true },
+  { name: "okpo", defaultValue: "", isRequired: true },
+  { name: "okved", defaultValue: "", isRequired: true },
+  { name: "email", defaultValue: "", isRequired: true },
+  { name: "checkingAccount", defaultValue: "", isRequired: true },
+  { name: "bank", defaultValue: "", isRequired: true },
+  { name: "correspondentAccount", defaultValue: "", isRequired: true },
+  { name: "bik", defaultValue: "", isRequired: true },
+  { name: "generalDirector", defaultValue: "", isRequired: true },
+  { name: "accountant", defaultValue: "", isRequired: true },
+  { name: "logo", defaultValue: "", isRequired: true },
+];
+
 export const ltdFormNameInputs = [
   { name: "name", inputName: "Наименование", required: true },
   { name: "shortName", inputName: "Краткое наименование" },
@@ -49,6 +71,7 @@ export const ltdFormNameInputs = [
 export const ltdFormAddressInputs = [
   { name: "legalAddress", inputName: "Юридический адрес", required: true },
   { name: "mailingAddress", inputName: "Почтовый адрес", required: true },
+  { name: "site", inputName: "Сайт", required: true },
 ];
 
 export const ltdFormContactsInputs = [
