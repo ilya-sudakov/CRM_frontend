@@ -1,4 +1,6 @@
 import React from "react";
+import CheckBox from "../../../../../utils/Form/CheckBox/CheckBox.jsx";
+import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
 
 const CategoryHeader = ({
   category,
