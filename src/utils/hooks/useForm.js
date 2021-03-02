@@ -94,6 +94,29 @@ const useForm = (defaultInputs = []) => {
     />
   );
 
+  const updateFormInputs = (inputs) => {
+    let newInputs = {};
+    let newErrrors = {};
+    let newValidInputs = {};
+    defaultInputs.map((input) => {
+      newInputs = {
+        ...newInputs,
+        [input.name]: inputs[input.name],
+      };
+      if (input.isRequired) {
+        newErrrors = { ...newErrrors, [input.name]: false };
+        newValidInputs = {
+          ...newValidInputs,
+          [input.name]:
+            inputs[input.name] !== undefined && inputs[input.name] !== null,
+        };
+      }
+    });
+    setFormInputs({ ...newInputs });
+    setFormErrors({ ...newErrrors });
+    setValidInputs({ ...newValidInputs });
+  };
+
   return {
     formIsValid,
     formInputs,
@@ -102,6 +125,7 @@ const useForm = (defaultInputs = []) => {
     setFormErrors,
     handleInputChange,
     errorWindow,
+    updateFormInputs,
   };
 };
 
