@@ -77,27 +77,21 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const handleDelete = () => {
     setIsLoading(true);
     console.log("deleting element", worktimeInputs);
+    const id = originalWork.id;
     const originalWork = worktimeInputs.originalWorks[0];
     return Promise.all(
-      originalWork.product.map((product) => {
-        return deleteProductFromRecordedWork(
-          originalWork.id,
-          product.product.id
-        );
-      })
+      originalWork.product.map((product) =>
+        deleteProductFromRecordedWork(id, product.product.id)
+      )
     )
-      .then(() => {
-        return Promise.all(
-          originalWork.draft.map((draft) => {
-            return deleteDraftFromRecordedWork(
-              originalWork.id,
-              draft.partId,
-              draft.partType
-            );
-          })
-        );
-      })
-      .then(() => deleteRecordedWork(originalWork.id))
+      .then(() =>
+        Promise.all(
+          originalWork.draft.map((draft) =>
+            deleteDraftFromRecordedWork(id, draft.partId, draft.partType)
+          )
+        )
+      )
+      .then(() => deleteRecordedWork(id))
       .then(() => {
         inputs.deleteSelectedDaysWork();
         setIsSaved(true);
@@ -106,12 +100,14 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   };
 
   useEffect(() => {
+    const isEmployeeNew =
+      inputs?.employee?.lastName && worktimeInputs.employee === null;
     if (
-      (inputs?.employee?.lastName && worktimeInputs.employee === null) ||
+      isEmployeeNew ||
       inputs.employee?.id !== worktimeInputs.employee?.id ||
       inputs.date !== worktimeInputs.date ||
       inputs.type !== worktimeInputs.type ||
-      inputs.works !== worktimeInputs.works 
+      inputs.works !== worktimeInputs.works
     ) {
       setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
     }
