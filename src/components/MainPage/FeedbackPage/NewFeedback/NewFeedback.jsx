@@ -1,98 +1,62 @@
-import React, { useState } from 'react'
-import './NewFeedback.scss'
-import '../../../../utils/Form/Form.scss'
-import InputText from '../../../../utils/Form/InputText/InputText.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import { addFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback'
-import Button from '../../../../utils/Form/Button/Button.jsx'
+import React, { useState } from "react";
+import "./NewFeedback.scss";
+import "../../../../utils/Form/Form.scss";
+import InputText from "../../../../utils/Form/InputText/InputText.jsx";
+import { addFeedback } from "../../../../utils/RequestsAPI/Feedback/feedback";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import useForm from "../../../../utils/hooks/useForm.js";
 
 const NewFeedback = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    date: new Date().getTime() / 1000,
-    subject: '',
-    text: '',
-    author: props.userData.username,
-    status: 'in-progress',
-  })
-  const [formErrors, setFormErrors] = useState({
-    subject: false,
-    text: false,
-  })
-  const [validInputs, setValidInputs] = useState({
-    subject: false,
-    text: false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const feedbackDefaultInputs = [
+    {
+      name: "date",
+      defaultValue: new Date().getTime() / 1000,
+    },
+    {
+      name: "subject",
+      defaultValue: "",
+      isRequired: true,
+    },
+    {
+      name: "text",
+      defaultValue: "",
+      isRequired: true,
+    },
+    {
+      name: "author",
+      defaultValue: props.userData.username,
+    },
+    {
+      name: "status",
+      defaultValue: "in-progress",
+    },
+  ];
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(feedbackDefaultInputs);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    })
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    })
-  }
-
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          })
-        }
-        break
-    }
-  }
-
-  const formIsValid = () => {
-    let check = true
-    let newErrors = Object.assign({
-      subject: false,
-      text: false,
-    })
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        })
-      }
-    }
-    setFormErrors(newErrors)
-    if (check === true) {
-      return true
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
-    }
-  }
-
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
-    console.log(formInputs)
+  const handleSubmit = () => {
+    if (!formIsValid()) return;
+    setIsLoading(true);
+    console.log(formInputs);
     formIsValid() &&
       addFeedback(formInputs)
         .then(() => {
-          props.history.push('/feedback')
-          setIsLoading(false)
+          props.history.push("/feedback");
+          setIsLoading(false);
         })
         .catch((error) => {
-          alert('Ошибка при создании записи!')
-          console.log(error)
-          setIsLoading(false)
-        })
-  }
+          alert("Ошибка при создании записи!");
+          console.log(error);
+          setIsLoading(false);
+        });
+  };
 
   return (
     <div className="new-feedback">
@@ -101,6 +65,7 @@ const NewFeedback = (props) => {
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Создание обсуждения</div>
           </div>
+          {errorWindow}
           <InputText
             inputName="Тема"
             required
@@ -109,7 +74,9 @@ const NewFeedback = (props) => {
             defaultValue={formInputs.subject}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("subject", target.value)
+            }
           />
           <InputText
             inputName="Сообщение"
@@ -120,7 +87,9 @@ const NewFeedback = (props) => {
             defaultValue={formInputs.text}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("text", target.value)
+            }
           />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
@@ -129,11 +98,9 @@ const NewFeedback = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => props.history.push('/feedback')}
+              onClick={() => props.history.push("/feedback")}
               value="Вернуться назад"
             />
-            {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Добавить обсуждение" />
-                        {isLoading && <ImgLoader />} */}
             <Button
               text="Добавить обсуждение"
               isLoading={isLoading}
@@ -144,7 +111,7 @@ const NewFeedback = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewFeedback
+export default NewFeedback;

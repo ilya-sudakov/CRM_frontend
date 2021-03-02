@@ -24,14 +24,6 @@ const ViewFeedback = (props) => {
     messages: [],
     isRead: true,
   });
-  const [formErrors, setFormErrors] = useState({
-    subject: false,
-    text: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    subject: false,
-    text: false,
-  });
   const [isLoading, setIsLoading] = useState(false);
   const [feedbackId, setFeedbackId] = useState(0);
 
@@ -49,32 +41,13 @@ const ViewFeedback = (props) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    validateField(name, value);
     setFormInputs({
       ...formInputs,
       [name]: value,
     });
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
-  };
-
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
   };
 
   const handleSubmit = () => {
-    // event.preventDefault()
     console.log("handleEditSubmit");
     setIsLoading(true);
     console.log(formInputs);
@@ -130,11 +103,6 @@ const ViewFeedback = (props) => {
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Просмотр обсуждения</div>
           </div>
-          {/* <InputDate
-                        inputName="Дата"
-                        readOnly
-                        selected={Date.parse(formInputs.date)}
-                    /> */}
           <InputText
             inputName="Дата"
             defaultValue={formatDateStringWithTime(formInputs.date)}
@@ -271,7 +239,6 @@ const ViewFeedback = (props) => {
               <Button
                 text="Редактировать содержание"
                 isLoading={isLoading}
-                // inverted
                 className="main-form__submit"
                 onClick={handleSubmit}
               />
