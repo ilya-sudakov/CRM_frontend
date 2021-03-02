@@ -103,7 +103,6 @@ const NewRecordWork = (props) => {
         ? curEmployee?.id
         : query.get("employee")
       : curEmployee?.id;
-    // console.log(query.get("employee"), query.get("date"), curEmployee, curDate);
     if (!employeeId || !curDate) return;
     if (query.get("employee") && curEmployee === null) {
       setIsLoading(true);
@@ -200,12 +199,7 @@ const NewRecordWork = (props) => {
           showError={showError}
           setShowError={setShowError}
         />
-        <form
-          className="main-form__form"
-          // style={{
-          //   minHeight: `calc(${wrapperHeight} + ${screenIsMobile ? 80 : 45}px)`,
-          // }}
-        >
+        <form className="main-form__form">
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Запись о работе</div>
           </div>
@@ -218,11 +212,7 @@ const NewRecordWork = (props) => {
               height: `calc(${wrapperHeight})`,
             }}
           >
-            <div
-              className="main-form__wrapper-item"
-              id="0page"
-              // style={{ minHeight: screenIsMobile ? "280px" : "255px" }}
-            >
+            <div className="main-form__wrapper-item" id="0page">
               <InputDate
                 inputName="Дата"
                 required

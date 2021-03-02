@@ -96,7 +96,6 @@ const EditRequest = (props) => {
   };
 
   const formIsValid = () => {
-    // console.log(validInputs);
     let check = true;
     let newErrors = Object.assign({
       date: false,
