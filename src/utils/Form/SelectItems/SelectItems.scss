@@ -69,10 +69,11 @@
       //   margin-bottom: 5px;
       flex: 0 1 calc(20% - 10px);
       padding-right: 10px;
-
-      //column direction
       width: 100%;
       margin-bottom: 5px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
     }
 
     .select-items__input-field {
