@@ -77,7 +77,6 @@ const FileUploader = ({
       return false;
     }
     setHasError(false);
-
     //Для разных типов файла - разные функции обработки данных
     switch (type) {
       case "readAsArrayBuffer":
