@@ -120,7 +120,6 @@ const useForm = (defaultInputs = []) => {
   return {
     formIsValid,
     formInputs,
-    setFormInputs,
     formErrors,
     setFormErrors,
     handleInputChange,
