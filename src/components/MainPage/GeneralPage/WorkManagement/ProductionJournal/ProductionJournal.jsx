@@ -82,7 +82,9 @@ const ProductionJournal = ({}) => {
     workId
   ) => {
     handleCloseWindow();
-    const deletedWork = worksList.filter((work) => work.id !== workId);
+    const deletedWork = worksList
+      ? worksList.filter((work) => work.id !== workId)
+      : null;
     const selectedWork = worksList
       ? worksList.find((work) => work.id === workId)
       : null;
@@ -181,7 +183,7 @@ const ProductionJournal = ({}) => {
                 createWorkListPDF(employees, todaysWork, yesterdaysWork, curDay)
               }
             />
-          </> 
+          </>
         }
       />
       <div className="notes-journal__current-date">
