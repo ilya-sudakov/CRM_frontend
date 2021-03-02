@@ -117,7 +117,7 @@ const SelectLegalEntity = (props) => {
       });
   };
 
-  const getInputElement = (name, index) => {
+  const getInputElement = (name, index, item) => {
     return (
       <input
         type="text"
@@ -175,35 +175,35 @@ const SelectLegalEntity = (props) => {
               formInputs={[
                 {
                   name: "Название",
-                  element: getInputElement("name", index),
+                  element: getInputElement("name", index, item),
                 },
                 {
                   name: "ИНН",
-                  element: getInputElement("inn", index),
+                  element: getInputElement("inn", index, item),
                 },
                 {
                   name: "КПП",
-                  element: getInputElement("kpp", index),
+                  element: getInputElement("kpp", index, item),
                 },
                 {
                   name: "ОГРН",
-                  element: getInputElement("ogrn", index),
+                  element: getInputElement("ogrn", index, item),
                 },
                 {
                   name: "БИК",
-                  element: getInputElement("bik", index),
+                  element: getInputElement("bik", index, item),
                 },
                 {
                   name: "Расчетный счет",
-                  element: getInputElement("checkingAccount", index),
+                  element: getInputElement("checkingAccount", index, item),
                 },
                 {
                   name: "Юридический адрес",
-                  element: getInputElement("legalAddress", index),
+                  element: getInputElement("legalAddress", index, item),
                 },
                 {
                   name: "Фактический адрес",
-                  element: getInputElement("factualAddress", index),
+                  element: getInputElement("factualAddress", index, item),
                 },
               ]}
               bottomButton={

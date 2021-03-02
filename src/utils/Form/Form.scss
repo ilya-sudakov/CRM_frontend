@@ -1,5 +1,4 @@
 @import "../../variables.scss";
-// @import "react-datepicker/dist/react-datepicker.css";
 
 .main-form {
   width: 100%;
@@ -11,6 +10,9 @@
   padding-top: 25px;
 
   //full page view
+  align-items: flex-start;
+  padding: 0;
+  background-color: #fff;
 
   &__title {
     margin-bottom: 15px;
@@ -121,8 +123,9 @@
 
     &--full {
       margin: 0;
-      width: calc(100% + 50px);
+      width: calc(100% + 15px);
       margin-top: -20px;
+      margin-left: -35px;
       margin-bottom: 15px;
       flex-direction: column;
 
@@ -130,7 +133,6 @@
         margin-bottom: 10px;
         font-size: 150%;
         width: 100%;
-        // display: none;
         padding: 0 25px;
         padding-left: 33px;
         text-align: left;
@@ -159,6 +161,11 @@
     width: calc(100% - 80px);
     padding: 10px 25px;
     padding-top: 35px;
+
+    //fullpage view
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
 
     .main-form__row {
       display: flex;
@@ -271,12 +278,6 @@
     .main-form__item {
       width: calc(100% - 20px);
       display: flex;
-
-      //row direction
-      // flex-direction: row;
-      // align-items: center;
-      // justify-content: space-between;
-      //column direction
       flex-wrap: wrap;
       flex-direction: column;
       align-items: flex-start;
@@ -334,7 +335,6 @@
       .main-form__product_img {
         display: flex;
         flex-direction: column;
-        // justify-content: center;
         align-items: flex-start;
         img {
           // width: 100%;
@@ -364,7 +364,6 @@
       input[type="number"],
       textarea {
         border: 1px solid #bbbbbb;
-        // border: 1px solid #cccccc;
         width: calc(100% - 20px);
         max-width: calc(100% - 20px);
         min-width: calc(100% - 20px);
@@ -408,11 +407,6 @@
         &:focus {
           border: 1px solid $button__background--inverted;
         }
-      }
-
-      .select {
-        //row direction
-        // width: calc(90% - 20px);
       }
     }
 
@@ -614,7 +608,8 @@
     .main-form__header {
       &--full {
         margin-top: -10px;
-        width: calc(100% + 20px);
+        // width: calc(100% + 20px);
+        margin-left: 0;
 
         .main-form__title {
           margin-bottom: 5px;
