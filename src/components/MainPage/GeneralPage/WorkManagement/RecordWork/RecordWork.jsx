@@ -202,9 +202,9 @@ const NewRecordWork = (props) => {
         />
         <form
           className="main-form__form"
-          style={{
-            minHeight: `calc(${wrapperHeight} + ${screenIsMobile ? 80 : 45}px)`,
-          }}
+          // style={{
+          //   minHeight: `calc(${wrapperHeight} + ${screenIsMobile ? 80 : 45}px)`,
+          // }}
         >
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Запись о работе</div>
@@ -221,7 +221,7 @@ const NewRecordWork = (props) => {
             <div
               className="main-form__wrapper-item"
               id="0page"
-              style={{ minHeight: screenIsMobile ? "280px" : "255px" }}
+              // style={{ minHeight: screenIsMobile ? "280px" : "255px" }}
             >
               <InputDate
                 inputName="Дата"
