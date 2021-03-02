@@ -45,10 +45,12 @@
     }
     .form-window {
         &__content {
-            height: fit-content;
-            max-width: 600px;
-            .form-window__body {
-                padding: 0;
+            .main-form {
+                align-items: center;
+                background-color: transparent;
+                &__form {
+                    border: 1px solid #ccc;
+                }
             }
         }
     }
