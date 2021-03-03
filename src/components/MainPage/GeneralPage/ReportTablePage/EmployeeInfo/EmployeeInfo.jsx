@@ -10,6 +10,21 @@ import { Link } from "react-router-dom";
 import { days } from "../../../../../utils/dataObjects.js";
 import "./EmployeeInfo.scss";
 
+const filterWorksByDate = (item, date) => {
+  if (item.length > 0) {
+    return (
+      item[0].day === date.getDate() &&
+      item[0].month === date.getMonth() + 1 &&
+      item[0].year === date.getFullYear()
+    );
+  }
+  return (
+    item.day === date.getDate() &&
+    item.month === date.getMonth() + 1 &&
+    item.year === date.getFullYear()
+  );
+};
+
 //Окно для вывода информации о сотруднике и его работе за неделю
 const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
   useEffect(() => {
@@ -44,20 +59,9 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
             <div>Нет учтенной работы</div>
           ) : (
             dates.map((date) => {
-              const filteredData = selectedInfo?.works?.filter((item) => {
-                if (item.length > 0) {
-                  return (
-                    item[0].day === date.getDate() &&
-                    item[0].month === date.getMonth() + 1 &&
-                    item[0].year === date.getFullYear()
-                  );
-                }
-                return (
-                  item.day === date.getDate() &&
-                  item.month === date.getMonth() + 1 &&
-                  item.year === date.getFullYear()
-                );
-              });
+              const filteredData = selectedInfo?.works?.filter((item) =>
+                filterWorksByDate(item, date)
+              );
               return filteredData.length > 0 ? (
                 <div className="employee-info__wrapper">
                   <div className="employee-info__employee-title employee-info__employee-title--date">
@@ -148,20 +152,7 @@ const ProductItem = ({ item }) => {
 const WeekSummary = ({ selectedInfo, dates }) => {
   const hours = selectedInfo?.works?.reduce(
     (sum, cur) =>
-      dates.find((date) => {
-        if (cur.length > 0) {
-          return (
-            cur[0].day === date.getDate() &&
-            cur[0].month === date.getMonth() + 1 &&
-            cur[0].year === date.getFullYear()
-          );
-        }
-        return (
-          cur.day === date.getDate() &&
-          cur.month === date.getMonth() + 1 &&
-          cur.year === date.getFullYear()
-        );
-      }) !== undefined
+      dates.find((date) => filterWorksByDate(cur, date)) !== undefined
         ? sum +
           (cur.length > 0
             ? cur.reduce((sumInner, curInner) => sumInner + curInner.hours, 0)
