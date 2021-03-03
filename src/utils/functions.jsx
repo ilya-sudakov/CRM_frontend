@@ -73,7 +73,13 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
   c.width = img.naturalWidth;
   c.height = img.naturalHeight;
   ctx.drawImage(img, 0, 0);
-  c.toBlob(contextToBlob(blob, imageName), "image/jpeg", 1);
+  c.toBlob(
+    function (blob) {
+      contextToBlob(blob, imageName);
+    },
+    "image/jpeg",
+    1
+  );
   img.crossOrigin = ""; // if from different origin
   img.src = "url-to-image";
 };
@@ -366,7 +372,9 @@ export const roundUpWorkHours = (hours) => {
 
 export const saveCanvasAsImage = (canvas, fileName) => {
   canvas.toBlob(
-    c.toBlob(contextToBlob(blob, fileName), "image/jpeg", 1),
+    function (blob) {
+      contextToBlob(blob, fileName);
+    },
     "image/jpeg",
     1
   );
