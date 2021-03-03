@@ -199,3 +199,32 @@ const copySelectedRequest = (id, requests, setIsLoading, loadData) => {
       console.log(error);
     });
 };
+
+export const getRequestsDefaultInputs = (username, type) => {
+  return [
+    { name: "date", defaultValue: new Date(), isRequired: true, isValid: true },
+    {
+      name: "responsible",
+      defaultValue: username,
+      isRequired: true,
+      isValid: true,
+    },
+    {
+      name: "status",
+      defaultValue: "Ожидание",
+      isRequired: true,
+      isValid: true,
+    },
+    { name: "requestProducts", defaultValue: [], isRequired: true },
+    {
+      name: "shippingDate",
+      defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
+      isRequired: true,
+      isValid: true,
+    },
+    { name: "comment", defaultValue: "" },
+    { name: "factory", defaultValue: type },
+    { name: "sum", defaultValue: 0 },
+    { name: "clientId", defaultValue: 0, isRequired: true },
+  ];
+};

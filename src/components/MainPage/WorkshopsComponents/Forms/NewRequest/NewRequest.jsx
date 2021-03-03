@@ -6,7 +6,6 @@ import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
 import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import Button from "../../../../../utils/Form/Button/Button.jsx";
 import UserContext from "../../../../../App.js";
 import {
@@ -14,210 +13,65 @@ import {
   addProductsToRequest,
   connectClientToRequest,
 } from "../../../../../utils/RequestsAPI/Requests.jsx";
-
 import { requestStatuses, workshops } from "../../workshopVariables.js";
 import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
-import { getPageByRequest } from "../../functions.js";
+import { getPageByRequest, getRequestsDefaultInputs } from "../../functions.js";
+import useForm from "../../../../../utils/hooks/useForm";
 
 const NewRequest = (props) => {
   const userContext = useContext(UserContext);
-  const [requestInputs, setRequestInputs] = useState({
-    date: new Date(),
-    responsible: userContext.userData.username,
-    status: "Ожидание",
-    shippingDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-    comment: "",
-    factory: props.type,
-    sum: 0,
-    clientId: 0,
-  });
-  const [requestErrors, setRequestErrors] = useState({
-    date: false,
-    requestProducts: false,
-    // codeWord: false,
-    responsible: false,
-    shippingDate: false,
-    clientId: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    date: true,
-    requestProducts: false,
-    // codeWord: false,
-    responsible: true,
-    shippingDate: true,
-    clientId: false,
-  });
-  const [showError, setShowError] = useState(false);
+  const requestsDefaultInputs = getRequestsDefaultInputs(
+    userContext.userData.username,
+    props.type
+  );
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(requestsDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case "date":
-        setValidInputs({
-          ...validInputs,
-          date: value !== null,
-        });
-        break;
-      case "shippingDate":
-        setValidInputs({
-          ...validInputs,
-          shippingDate: value !== null,
-        });
-        break;
-      case "requestProducts":
-        setValidInputs({
-          ...validInputs,
-          requestProducts: value !== [],
-        });
-        break;
-      case "clientId":
-        setValidInputs({
-          ...validInputs,
-          clientId: value !== 0,
-        });
-        break;
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      date: false,
-      requestProducts: false,
-      // codeWord: false,
-      responsible: false,
-      shippingDate: false,
-      clientId: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setRequestErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
+    console.log(formInputs);
+    if (!formIsValid()) return;
     setIsLoading(true);
     let id = 0;
-    console.log(requestInputs);
-    formIsValid() &&
-      addRequest(requestInputs)
-        .then((res) => res.json())
-        .then((res) => {
-          id = res.id;
-        })
-        .then(() =>
-          Promise.all(
-            requestInputs.requestProducts.map((item) => {
-              return addProductsToRequest({
-                requestId: id,
-                quantity: item.quantity,
-                packaging: item.packaging,
-                status: item.status,
-                name: item.name,
-              });
+    addRequest(formInputs)
+      .then((res) => res.json())
+      .then((res) => (id = res.id))
+      .then(() =>
+        Promise.all(
+          formInputs.requestProducts.map((item) =>
+            addProductsToRequest({
+              requestId: id,
+              quantity: item.quantity,
+              packaging: item.packaging,
+              status: item.status,
+              name: item.name,
             })
           )
         )
-        .then(() => connectClientToRequest(id, requestInputs.clientId))
-        .then(() =>
-          props.history.push(
-            `${workshops[props.type].redirectURL}/${getPageByRequest(
-              requestInputs
-            )}#${id}`
-          )
+      )
+      .then(() => connectClientToRequest(id, formInputs.clientId))
+      .then(() =>
+        props.history.push(
+          `${workshops[props.type].redirectURL}/${getPageByRequest(
+            formInputs
+          )}#${id}`
         )
-        .catch((error) => {
-          setIsLoading(false);
-          console.log(error);
-        });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setRequestInputs({
-      ...requestInputs,
-      [name]: value,
-    });
-    setRequestErrors({
-      ...requestErrors,
-      [name]: false,
-    });
+      )
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     document.title = "Создание заявки";
   }, []);
-
-  const handleDateChange = (date) => {
-    validateField("date", date);
-    setRequestInputs({
-      ...requestInputs,
-      date: date,
-    });
-    setRequestErrors({
-      ...requestErrors,
-      date: false,
-    });
-  };
-
-  const handleDateShippedChange = (date) => {
-    validateField("date", date);
-    setRequestInputs({
-      ...requestInputs,
-      shippingDate: date,
-    });
-    setRequestErrors({
-      ...requestErrors,
-      shippingDate: false,
-    });
-  };
-
-  const handleProductsChange = (newProducts) => {
-    validateField("requestProducts", newProducts);
-    setRequestInputs({
-      ...requestInputs,
-      requestProducts: newProducts,
-    });
-    setRequestErrors({
-      ...requestErrors,
-      requestProducts: false,
-    });
-  };
-
-  const handleResponsibleChange = (newResponsible) => {
-    validateField("responsible", newResponsible);
-    setRequestInputs({
-      ...requestInputs,
-      responsible: newResponsible,
-    });
-    setRequestErrors({
-      ...requestErrors,
-      responsible: false,
-    });
-  };
 
   return (
     <div className="new-request">
@@ -228,29 +82,27 @@ const NewRequest = (props) => {
               workshops[props.type].title
             }`}</div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <div className="main-form__row">
             <InputDate
               inputName="Дата заявки"
               required
-              error={requestErrors.date}
+              error={formErrors.date}
               name="date"
-              selected={Date.parse(requestInputs.date)}
-              handleDateChange={handleDateChange}
-              errorsArr={requestErrors}
-              setErrorsArr={setRequestErrors}
+              selected={Date.parse(formInputs.date)}
+              handleDateChange={(value) => handleInputChange("date", value)}
+              errorsArr={formErrors}
+              setErrorsArr={setFormErrors}
             />
             <InputDate
               inputName="Дата отгрузки"
               name="shippingDate"
-              selected={requestInputs.shippingDate}
-              handleDateChange={handleDateShippedChange}
-              errorsArr={requestErrors}
-              setErrorsArr={setRequestErrors}
+              selected={formInputs.shippingDate}
+              handleDateChange={(value) =>
+                handleInputChange("shippingDate", value)
+              }
+              errorsArr={formErrors}
+              setErrorsArr={setFormErrors}
             />
           </div>
           <InputProducts
@@ -259,39 +111,43 @@ const NewRequest = (props) => {
             required
             options
             name="requestProducts"
-            onChange={handleProductsChange}
-            defaultValue={requestInputs.requestProducts}
-            error={requestErrors.requestProducts}
+            onChange={(products) =>
+              handleInputChange("requestProducts", products)
+            }
+            defaultValue={formInputs.requestProducts}
+            error={formErrors.requestProducts}
             searchPlaceholder="Введите название продукта для поиска..."
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputUser
             inputName="Ответственный"
             userData={userContext.userData}
             required
-            error={requestErrors.responsible}
-            defaultValue={requestInputs.responsible}
+            error={formErrors.responsible}
+            defaultValue={formInputs.responsible}
             name="responsible"
-            handleUserChange={handleResponsibleChange}
+            handleUserChange={(user) => handleInputChange("responsible", user)}
             searchPlaceholder="Введите имя пользователя для поиска..."
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <div className="main-form__item">
             <div className="main-form__input_name">Статус*</div>
             <div className="main-form__input_field">
               <select
                 name="status"
-                onChange={handleInputChange}
-                value={requestInputs.status}
+                onChange={({ target }) =>
+                  handleInputChange("status", target.value)
+                }
+                value={formInputs.status}
               >
                 {requestStatuses.map((status) => {
                   if (userContext.userHasAccess(status.access)) {
                     return (
                       <option
                         value={
-                          status.oldName === requestInputs.status
+                          status.oldName === formInputs.status
                             ? status.oldName
                             : status.name
                         }
@@ -311,51 +167,44 @@ const NewRequest = (props) => {
           <InputText
             inputName="Комментарий"
             name="comment"
-            defaultValue={requestInputs.comment}
-            handleInputChange={handleInputChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
+            defaultValue={formInputs.comment}
+            handleInputChange={({ target }) =>
+              handleInputChange("comment", target.value)
+            }
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Сумма"
             name="sum"
             type="number"
-            defaultValue={requestInputs.sum}
-            handleInputChange={handleInputChange}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
+            defaultValue={formInputs.sum}
+            handleInputChange={({ target }) =>
+              handleInputChange("sum", target.value)
+            }
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <SelectClient
             inputName="Клиент"
             userHasAccess={userContext.userHasAccess}
-            // defaultValue={requestInputs.clientId}
             required
-            onChange={(value) => {
-              validateField("clientId", value);
-              setRequestInputs({
-                ...requestInputs,
-                clientId: value,
-              });
-              setRequestErrors({
-                ...requestErrors,
-                clientId: value,
-              });
-            }}
-            error={requestErrors.clientId}
-            errorsArr={requestErrors}
-            setErrorsArr={setRequestErrors}
+            onChange={(value) => handleInputChange("clientId", value)}
+            error={formErrors.clientId}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <Button
+              text="Вернуться назад"
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
+              inverted
               onClick={() =>
                 props.history.push(`${workshops[props.type].redirectURL}/open`)
               }
-              value="Вернуться назад"
             />
             <Button
               text="Оформить заявку"
