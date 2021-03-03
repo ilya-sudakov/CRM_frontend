@@ -22,21 +22,17 @@ const SelectEmployee = (props) => {
   const { employees, setEmployees, isLoadingEmployees } = useEmployeesList(
     !props.employees
   );
-  const { sortedData, sortPanel } = useSort(
-    employees,
-    {
-      sortOrder: {
-        curSort: "lastName", 
-        lastName: "asc",
-      },
-      sortOptions: [
-        { value: "lastName asc", text: "По фамилии (А-Я)" },
-        { value: "lastName desc", text: "По фамилии (Я-А)" },
-      ],
-      ignoreURL: true,
+  const { sortedData, sortPanel } = useSort(employees, {
+    sortOrder: {
+      curSort: "lastName",
+      lastName: "asc",
     },
-    [employees]
-  );
+    sortOptions: [
+      { value: "lastName asc", text: "По фамилии (А-Я)" },
+      { value: "lastName desc", text: "По фамилии (Я-А)" },
+    ],
+    ignoreURL: true,
+  });
 
   useEffect(() => {
     if (props.employees && employees.length === 0) {

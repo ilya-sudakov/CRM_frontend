@@ -6,11 +6,23 @@ import TableView from "./TableView/TableView.jsx";
 import { getUsers, deleteUser } from "../../../../utils/RequestsAPI/Users.jsx";
 import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
 import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import useSort from "../../../../utils/hooks/useSort/useSort";
 
 const Users = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { sortPanel, sortedData } = useSort(users, {
+    ignoreURL: false,
+    sortOrder: {
+      curSort: "username",
+      username: "asc",
+    },
+    sortOptions: [
+      { value: "username asc", text: "По имени (А-Я)" },
+      { value: "username desc", text: "По имени (Я-А)" },
+    ],
+  });
   const [userRoles, setUserRoles] = useState([
     {
       name: "Руководитель",
@@ -76,37 +88,33 @@ const Users = (props) => {
       });
   };
 
-  // * Sorting
-
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "username",
-    username: "asc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    setSortOrder({
-      curSort: name,
-      [name]: order,
-    });
-  };
-
   const filterSearchQuery = (data) => {
     return data.filter((item) =>
       item.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
 
-  const sortUsers = (data) => {
-    return filterSearchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
+  const filterUsersByRoles = (data) => {
+    return filterSearchQuery(data).filter((item) => {
+      let check = false;
+      let noActiveRoles = true;
+      userRoles.map((role) => {
+        userRoles.map((role) => {
+          if (role.visible) {
+            noActiveRoles = false;
+          }
+        });
+        if (
+          noActiveRoles === true ||
+          (role.visible &&
+            item.roles.find((roleTemp) => roleTemp.name === role.role) !==
+              undefined)
+        ) {
+          check = true;
+          return;
+        }
+      });
+      return check;
     });
   };
 
@@ -119,20 +127,12 @@ const Users = (props) => {
         </div>
         <SearchBar
           fullSize
-          // title="Поиск пользователя"
           placeholder="Введите имя пользователя для поиска..."
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel
           itemsCount={`Всего: ${users.length} записей`}
-          sorting={
-            <div className="main-window__sort-panel">
-              <select onChange={changeSortOrder}>
-                <option value="username asc">По имени (А-Я)</option>
-                <option value="username desc">По имени (Я-А)</option>
-              </select>
-            </div>
-          }
+          sorting={sortPanel}
           content={
             <div className="main-window__info-panel">
               <div className="main-window__filter-pick">
@@ -170,27 +170,7 @@ const Users = (props) => {
           }
         />
         <TableView
-          data={sortUsers(users).filter((item) => {
-            let check = false;
-            let noActiveRoles = true;
-            userRoles.map((role) => {
-              userRoles.map((role) => {
-                if (role.visible) {
-                  noActiveRoles = false;
-                }
-              });
-              if (
-                noActiveRoles === true ||
-                (role.visible &&
-                  item.roles.find((roleTemp) => roleTemp.name === role.role) !==
-                    undefined)
-              ) {
-                check = true;
-                return;
-              }
-            });
-            return check;
-          })}
+          data={filterUsersByRoles(sortedData)}
           searchQuery={searchQuery}
           deleteItem={deleteItem}
           userHasAccess={props.userHasAccess}
