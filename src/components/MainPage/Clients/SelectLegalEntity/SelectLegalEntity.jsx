@@ -54,7 +54,7 @@ const SelectLegalEntity = (props) => {
   const handleInputChange = (index, name, value) => {
     let temp = selected;
     let originalItem = selected[index];
-    temp.splice(id, 1, {
+    temp.splice(index, 1, {
       ...originalItem,
       [name]: value,
     });
