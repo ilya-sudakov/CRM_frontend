@@ -390,3 +390,11 @@ export const changeVisibilityOfListItem = (list, index) => {
 export const getEmployeeNameText = (employee) => {
   return `${employee.lastName} ${employee.name} ${employee.middleName}`;
 };
+
+export const createFormDataFromObject = (object) => {
+  let formData = new FormData();
+  for (var item in object) {
+    formData.append(item, object[item]);
+  }
+  return formData;
+};

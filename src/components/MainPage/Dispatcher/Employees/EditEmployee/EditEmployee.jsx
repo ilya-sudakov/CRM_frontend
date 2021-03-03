@@ -8,144 +8,54 @@ import {
 } from "../../../../../utils/RequestsAPI/Employees.jsx";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
 import Button from "../../../../../utils/Form/Button/Button.jsx";
+import useForm from "../../../../../utils/hooks/useForm";
+import { employeesDefaultInputs } from "../objects";
 
 const EditEmployee = (props) => {
-  const [employeeInputs, setEmployeeInputs] = useState({
-    name: "",
-    lastName: "",
-    middleName: "",
-    dateOfBirth: new Date(),
-    patentExpirationDate: null,
-    registrationExpirationDate: null,
-    citizenship: "",
-    position: "",
-    workshop: "ЦехЛЭМЗ",
-    passportScan1: "",
-    comment: "",
-    relevance: "Работает",
-  });
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    updateFormInputs,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(employeesDefaultInputs);
   const [employeeId, setEmployeeId] = useState(1);
-
-  const [employeeErrors, setEmployeeErrors] = useState({
-    name: false,
-    lastName: false,
-    middleName: false,
-    dateOfBirth: false,
-    citizenship: false,
-    position: false,
-    workshop: false,
-    // passportScan1: false,
-    // comment: false,
-    relevance: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: true,
-    lastName: true,
-    middleName: true,
-    dateOfBirth: true,
-    citizenship: true,
-    position: true,
-    workshop: true,
-    // passportScan1: false,
-    // comment: false,
-    relevance: true,
-  });
-  const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case "dateOfBirth":
-        setValidInputs({
-          ...validInputs,
-          dateOfBirth: value !== null,
-        });
-        break;
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      lastName: false,
-      middleName: false,
-      dateOfBirth: false,
-      citizenship: false,
-      position: false,
-      workshop: false,
-      // passportScan1: false,
-      // comment: false,
-      relevance: false,
-    });
-    for (let item in validInputs) {
-      // console.log(item, validInputs[item]);
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setEmployeeErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
+    if (!formIsValid()) return;
     setIsLoading(true);
-    if (formIsValid())
-      return editEmployee(
-        {
-          ...employeeInputs,
-          dateOfBirth: Number.parseInt(
-            new Date(employeeInputs.dateOfBirth).getTime() / 1000
-          ),
-          patentExpirationDate:
-            employeeInputs.patentExpirationDate === null
-              ? null
-              : Number.parseInt(
-                  new Date(employeeInputs.patentExpirationDate).getTime() / 1000
-                ),
-          registrationExpirationDate:
-            employeeInputs.registrationExpirationDate === null
-              ? null
-              : Number.parseInt(
-                  new Date(
-                    employeeInputs.registrationExpirationDate
-                  ).getTime() / 1000
-                ),
-        },
-        employeeId
-      )
-        .then(() => props.history.push("/dispatcher/employees"))
-        .catch((error) => {
-          setIsLoading(false);
-          alert("Ошибка при добавлении записи");
-          console.log(error);
-        });
-
-    setIsLoading(false);
-    alert("Ошибка при добавлении записи");
-    console.log(error);
+    return editEmployee(
+      {
+        ...formInputs,
+        dateOfBirth: Number.parseInt(
+          new Date(formInputs.dateOfBirth).getTime() / 1000
+        ),
+        patentExpirationDate:
+          formInputs.patentExpirationDate === null
+            ? null
+            : Number.parseInt(
+                new Date(formInputs.patentExpirationDate).getTime() / 1000
+              ),
+        registrationExpirationDate:
+          formInputs.registrationExpirationDate === null
+            ? null
+            : Number.parseInt(
+                new Date(formInputs.registrationExpirationDate).getTime() / 1000
+              ),
+      },
+      employeeId
+    )
+      .then(() => props.history.push("/dispatcher/employees"))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+        console.log(error);
+      });
   };
 
   const handleDeleteItem = () => {
@@ -156,19 +66,6 @@ const EditEmployee = (props) => {
         alert("Ошибка при добавлении записи");
         console.log(error);
       });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setEmployeeInputs({
-      ...employeeInputs,
-      [name]: value,
-    });
-    setEmployeeErrors({
-      ...employeeErrors,
-      [name]: false,
-    });
   };
 
   useEffect(() => {
@@ -184,19 +81,9 @@ const EditEmployee = (props) => {
       getEmployeeById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
-          setEmployeeInputs({
-            name: oldRequest.name,
-            lastName: oldRequest.lastName,
-            middleName: oldRequest.middleName,
+          updateFormInputs({
+            ...oldRequest,
             dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
-            patentExpirationDate: oldRequest.patentExpirationDate,
-            registrationExpirationDate: oldRequest.registrationExpirationDate,
-            citizenship: oldRequest.citizenship,
-            position: oldRequest.position,
-            workshop: oldRequest.workshop,
-            passportScan1: oldRequest.passportScan1,
-            comment: oldRequest.comment,
-            relevance: oldRequest.relevance,
           });
         })
         .catch((error) => {
@@ -207,85 +94,76 @@ const EditEmployee = (props) => {
     }
   }, []);
 
-  const handleDateChange = (date) => {
-    const regex = "(0[1-9]|[12]d|3[01]).(0[1-9]|1[0-2]).[12]d{3})";
-    validateField("dateOfBirth", date);
-    setEmployeeInputs({
-      ...employeeInputs,
-      dateOfBirth: date,
-    });
-    setEmployeeErrors({
-      ...employeeErrors,
-      dateOfBirth: false,
-    });
-  };
-
   return (
     <div className="main-form">
       <form className="main-form__form">
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Редактирование сотрудника</div>
         </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
+        {errorWindow}
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Имя сотрудника</div>
           <div className="main-form__row">
             <InputText
               inputName="Имя"
               required
-              error={employeeErrors.name}
-              defaultValue={employeeInputs.name}
+              error={formErrors.name}
+              defaultValue={formInputs.name}
               name="name"
-              errorsArr={employeeErrors}
-              setErrorsArr={setEmployeeErrors}
-              handleInputChange={handleInputChange}
+              errorsArr={formErrors}
+              setErrorsArr={setFormErrors}
+              handleInputChange={({ target }) =>
+                handleInputChange("name", target.value)
+              }
             />
             <InputText
               inputName="Фамилия"
               required
-              error={employeeErrors.lastName}
-              defaultValue={employeeInputs.lastName}
-              errorsArr={employeeErrors}
-              setErrorsArr={setEmployeeErrors}
+              error={formErrors.lastName}
+              defaultValue={formInputs.lastName}
+              errorsArr={formErrors}
+              setErrorsArr={setFormErrors}
               name="lastName"
-              handleInputChange={handleInputChange}
+              handleInputChange={({ target }) =>
+                handleInputChange("lastName", target.value)
+              }
             />
           </div>
           <InputText
             inputName="Отчество"
             required
-            error={employeeErrors.middleName}
+            error={formErrors.middleName}
             name="middleName"
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-            defaultValue={employeeInputs.middleName}
-            handleInputChange={handleInputChange}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
+            defaultValue={formInputs.middleName}
+            handleInputChange={({ target }) =>
+              handleInputChange("middleName", target.value)
+            }
           />
         </div>
         <div className="main-form__row">
           <InputDate
             inputName="Дата рождения"
             required
-            error={employeeErrors.dateOfBirth}
+            error={formErrors.dateOfBirth}
             name="dateOfBirth"
-            selected={Date.parse(employeeInputs.dateOfBirth)}
-            handleDateChange={handleDateChange}
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
+            selected={Date.parse(formInputs.dateOfBirth)}
+            handleDateChange={(date) => handleInputChange("dateOfBirth", date)}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Гражданство"
             required
-            error={employeeErrors.citizenship}
+            error={formErrors.citizenship}
             name="citizenship"
-            errorsArr={employeeErrors}
-            setErrorsArr={setEmployeeErrors}
-            defaultValue={employeeInputs.citizenship}
-            handleInputChange={handleInputChange}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
+            defaultValue={formInputs.citizenship}
+            handleInputChange={({ target }) =>
+              handleInputChange("citizenship", target.value)
+            }
           />
         </div>
         <div className="main-form__fieldset">
@@ -296,8 +174,10 @@ const EditEmployee = (props) => {
               <div className="main-form__input_field">
                 <select
                   name="workshop"
-                  onChange={handleInputChange}
-                  value={employeeInputs.workshop}
+                  onChange={({ target }) =>
+                    handleInputChange("workshop", target.value)
+                  }
+                  value={formInputs.workshop}
                 >
                   <option value="ЦехЛЭМЗ">ЦехЛЭМЗ</option>
                   <option value="ЦехЛепсари">ЦехЛепсари</option>
@@ -309,70 +189,61 @@ const EditEmployee = (props) => {
             <InputText
               inputName="Должность"
               required
-              error={employeeErrors.position}
+              error={formErrors.position}
               name="position"
-              defaultValue={employeeInputs.position}
-              errorsArr={employeeErrors}
-              setErrorsArr={setEmployeeErrors}
-              handleInputChange={handleInputChange}
+              defaultValue={formInputs.position}
+              errorsArr={formErrors}
+              setErrorsArr={setFormErrors}
+              handleInputChange={({ target }) =>
+                handleInputChange("position", target.value)
+              }
             />
           </div>
         </div>
         <div className="main-form__item">
           <div className="main-form__input_name">Паспорт*</div>
           <FileUploader
-            onChange={(result) => {
-              setEmployeeInputs({
-                ...employeeInputs,
-                passportScan1: result,
-              });
-            }}
+            onChange={(result) => handleInputChange("passportScan1", result)}
             previewImage={
-              employeeInputs.passportScan1 !== ""
-                ? employeeInputs.passportScan1
-                : null
+              formInputs.passportScan1 !== "" ? formInputs.passportScan1 : null
             }
           />
         </div>
+        <InputText
+          inputName="Комментарий"
+          name="comment"
+          defaultValue={formInputs.comment}
+          handleInputChange={({ target }) =>
+            handleInputChange("comment", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
+        />
         <InputDate
           inputName="Срок патента (при наличии)"
           name="patentExpirationDate"
-          selected={Date.parse(employeeInputs.patentExpirationDate)}
+          selected={Date.parse(formInputs.patentExpirationDate)}
           handleDateChange={(date) =>
-            setEmployeeInputs({
-              ...employeeInputs,
-              patentExpirationDate: date,
-            })
+            handleInputChange("patentExpirationDate", date)
           }
         />
         <InputDate
           inputName="Срок регистрации (при наличии)"
           name="registrationExpirationDate"
-          selected={Date.parse(employeeInputs.registrationExpirationDate)}
+          selected={Date.parse(formInputs.registrationExpirationDate)}
           handleDateChange={(date) =>
-            setEmployeeInputs({
-              ...employeeInputs,
-              registrationExpirationDate: date,
-            })
+            handleInputChange("registrationExpirationDate", date)
           }
-        />
-        <InputText
-          inputName="Комментарий"
-          // required
-          // error={employeeErrors.comment}
-          name="comment"
-          defaultValue={employeeInputs.comment}
-          handleInputChange={handleInputChange}
-          errorsArr={employeeErrors}
-          setErrorsArr={setEmployeeErrors}
         />
         <div className="main-form__item">
           <div className="main-form__input_name">Актуальность*</div>
           <div className="main-form__input_field">
             <select
               name="relevance"
-              onChange={handleInputChange}
-              value={employeeInputs.relevance}
+              onChange={({ target }) =>
+                handleInputChange("relevance", target.value)
+              }
+              value={formInputs.relevance}
             >
               <option value="Работает">Работает</option>
               <option value="Уволен">Уволен</option>
@@ -383,11 +254,11 @@ const EditEmployee = (props) => {
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons main-form__buttons--full">
-          <input
+          <Button
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
+            inverted
             onClick={() => props.history.push("/dispatcher/employees")}
-            value="Вернуться назад"
+            text="Вернуться назад"
           />
           <Button
             text="Удалить запись"
