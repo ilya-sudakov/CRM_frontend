@@ -1,118 +1,65 @@
-import React, { useEffect, useState } from 'react'
-import './EditWork.scss'
-import '../../../../utils/Form/Form.scss'
-import InputText from '../../../../utils/Form/InputText/InputText.jsx'
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
+import React, { useEffect, useState } from "react";
+import "./EditWork.scss";
+import "../../../../utils/Form/Form.scss";
+import InputText from "../../../../utils/Form/InputText/InputText.jsx";
 import {
   getWorkById,
   editWork,
-} from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx'
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
+} from "../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
+import useForm from "../../../../utils/hooks/useForm";
+import { workItemDefaultInputs } from "../objects";
 
 const EditWork = (props) => {
-  const [workInputs, setWorkInputs] = useState({
-    work: '',
-    typeOfWork: 'Продукция',
-  })
-  const [workErrors, setWorkErrors] = useState({
-    work: false,
-  })
-  const [validInputs, setValidInputs] = useState({
-    work: true,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [workId, setWorkId] = useState(0)
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    updateFormInputs,
+    formIsValid,
+    errorWindow,
+  } = useForm(workItemDefaultInputs);
+  const [isLoading, setIsLoading] = useState(false);
+  const [workId, setWorkId] = useState(0);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          })
-        }
-        break
-    }
-  }
-
-  const formIsValid = () => {
-    let check = true
-    let newErrors = Object.assign({
-      work: false,
-    })
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        })
-      }
-    }
-    setWorkErrors(newErrors)
-    if (check === true) {
-      return true
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
-    }
-  }
-
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
-    console.log(workInputs)
-    formIsValid() &&
-      editWork(workInputs, workId)
-        .then(() => props.history.push('/work-list'))
-        .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setWorkInputs({
-      ...workInputs,
-      [name]: value,
-    })
-    setWorkErrors({
-      ...workErrors,
-      [name]: false,
-    })
-  }
+  const handleSubmit = () => {
+    console.log(formInputs);
+    if (!formIsValid()) return;
+    setIsLoading(true);
+    console.log(formInputs);
+    editWork(formInputs, workId)
+      .then(() => props.history.push("/work-list"))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование работы'
-    const id = props.history.location.pathname.split('/work-list/edit/')[1]
+    document.title = "Редактирование работы";
+    const id = props.history.location.pathname.split("/work-list/edit/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс работы!')
-      props.history.push('/work-list')
+      alert("Неправильный индекс работы!");
+      props.history.push("/work-list");
     } else {
-      setWorkId(id)
+      setWorkId(id);
       getWorkById(id)
         .then((res) => res.json())
-        .then((oldWork) => {
-          setWorkInputs({
+        .then((oldWork) =>
+          updateFormInputs({
             work: oldWork.work,
-            typeOfWork: oldWork.typeOfWork ? oldWork.typeOfWork : 'Продукция',
+            typeOfWork: oldWork.typeOfWork ?? "Продукция",
           })
-        })
+        )
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс работы!')
-          props.history.push('/work-list')
-        })
+          console.log(error);
+          alert("Неправильный индекс работы!");
+          props.history.push("/work-list");
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="main-form">
@@ -120,28 +67,28 @@ const EditWork = (props) => {
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Редактирование работы</div>
         </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
+        {errorWindow}
         <InputText
           inputName="Название работы"
           required
-          error={workErrors.work}
-          defaultValue={workInputs.work}
+          error={formErrors.work}
+          defaultValue={formInputs.work}
           name="work"
-          handleInputChange={handleInputChange}
-          errorsArr={workErrors}
-          setErrorsArr={setWorkErrors}
+          handleInputChange={({ target }) =>
+            handleInputChange("work", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <div className="main-form__item">
           <div className="main-form__input_name">Тип работы</div>
           <div className="main-form__input_field">
             <select
               name="typeOfWork"
-              value={workInputs.typeOfWork}
-              onChange={handleInputChange}
+              value={formInputs.typeOfWork}
+              onChange={({ target }) =>
+                handleInputChange("typeOfWork", target.value)
+              }
             >
               <option>Продукция</option>
               <option>Чертеж</option>
@@ -153,14 +100,12 @@ const EditWork = (props) => {
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons main-form__buttons--full">
-          <input
+          <Button
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
-            onClick={() => props.history.push('/work-list')}
-            value="Вернуться назад"
+            inverted
+            onClick={() => props.history.push("/work-list")}
+            text="Вернуться назад"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить работу" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Изменить работу"
             isLoading={isLoading}
@@ -170,7 +115,7 @@ const EditWork = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditWork
+export default EditWork;
