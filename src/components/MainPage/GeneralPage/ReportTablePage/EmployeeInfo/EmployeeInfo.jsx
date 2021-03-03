@@ -146,70 +146,37 @@ const ProductItem = ({ item }) => {
 };
 
 const WeekSummary = ({ selectedInfo, dates }) => {
+  const hours = selectedInfo?.works?.reduce(
+    (sum, cur) =>
+      dates.find((date) => {
+        if (cur.length > 0) {
+          return (
+            cur[0].day === date.getDate() &&
+            cur[0].month === date.getMonth() + 1 &&
+            cur[0].year === date.getFullYear()
+          );
+        }
+        return (
+          cur.day === date.getDate() &&
+          cur.month === date.getMonth() + 1 &&
+          cur.year === date.getFullYear()
+        );
+      }) !== undefined
+        ? sum +
+          (cur.length > 0
+            ? cur.reduce((sumInner, curInner) => sumInner + curInner.hours, 0)
+            : cur.hours)
+        : sum,
+    0
+  );
   return (
     <div className="employee-info__employee-title">
-      Всего:{` `}
+      Всего:
       {selectedInfo?.works?.length > 0
-        ? selectedInfo?.works?.reduce(
-            (sum, cur) =>
-              dates.find((date) => {
-                if (cur.length > 0) {
-                  return (
-                    cur[0].day === date.getDate() &&
-                    cur[0].month === date.getMonth() + 1 &&
-                    cur[0].year === date.getFullYear()
-                  );
-                }
-                return (
-                  cur.day === date.getDate() &&
-                  cur.month === date.getMonth() + 1 &&
-                  cur.year === date.getFullYear()
-                );
-              }) !== undefined
-                ? sum +
-                  (cur.length > 0
-                    ? cur.reduce(
-                        (sumInner, curInner) => sumInner + curInner.hours,
-                        0
-                      )
-                    : cur.hours)
-                : sum,
-            0
-          ) +
-          " " +
-          numberToString(
-            Number.parseInt(
-              roundUpWorkHours(
-                selectedInfo?.works?.reduce(
-                  (sum, cur) =>
-                    dates.find((date) => {
-                      if (cur.length > 0) {
-                        return (
-                          cur[0].day === date.getDate() &&
-                          cur[0].month === date.getMonth() + 1 &&
-                          cur[0].year === date.getFullYear()
-                        );
-                      }
-                      return (
-                        cur.day === date.getDate() &&
-                        cur.month === date.getMonth() + 1 &&
-                        cur.year === date.getFullYear()
-                      );
-                    }) !== undefined
-                      ? sum +
-                        (cur.length > 0
-                          ? cur.reduce(
-                              (sumInner, curInner) => sumInner + curInner.hours,
-                              0
-                            )
-                          : cur.hours)
-                      : sum,
-                  0
-                )
-              )
-            ),
+        ? `${roundUpWorkHours(hours)} ${numberToString(
+            Number.parseInt(roundUpWorkHours(hours)),
             ["час", "часа", "часов"]
-          )
+          )}`
         : 0}
     </div>
   );

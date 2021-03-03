@@ -45,7 +45,7 @@ const useForm = (defaultInputs = []) => {
     });
   };
 
-  const formIsValid = () => { 
+  const formIsValid = () => {
     let check = true;
     let newErrors = {};
     for (let item in formErrors) {
