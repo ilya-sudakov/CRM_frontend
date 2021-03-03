@@ -3,10 +3,6 @@ import "./SelectEmployee.scss";
 import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
 import SearchBar from "../../../SearchBar/SearchBar.jsx";
 import TableView from "./TableView/TableView.jsx";
-import {
-  getEmployees,
-  getEmployeesByWorkshop,
-} from "../../../../../utils/RequestsAPI/Employees.jsx";
 import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
 import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
 import useSort from "../../../../../utils/hooks/useSort/useSort";
@@ -32,7 +28,7 @@ const SelectEmployee = (props) => {
       { value: "lastName desc", text: "По фамилии (Я-А)" },
     ],
     ignoreURL: true,
-  });
+  }, [employees]);
 
   useEffect(() => {
     if (props.employees && employees.length === 0) {

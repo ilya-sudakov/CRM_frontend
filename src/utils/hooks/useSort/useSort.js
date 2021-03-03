@@ -65,7 +65,7 @@ const useSort = (
       direction: sortOrder[sortOrder.curSort],
     });
     setSortedData([...newData]);
-  }, [...changableParams, data, sortOrder]);
+  }, [...changableParams, sortOrder]);
 
   return {
     sortedData,
