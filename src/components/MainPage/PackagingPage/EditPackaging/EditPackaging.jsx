@@ -1,128 +1,66 @@
-import React, { useState, useEffect } from 'react'
-import './EditPackaging.scss'
-import '../../../../utils/Form/Form.scss'
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import InputText from '../../../../utils/Form/InputText/InputText.jsx'
-import Button from '../../../../utils/Form/Button/Button.jsx'
+import React, { useState, useEffect } from "react";
+import "./EditPackaging.scss";
+import "../../../../utils/Form/Form.scss";
+import InputText from "../../../../utils/Form/InputText/InputText.jsx";
+import Button from "../../../../utils/Form/Button/Button.jsx";
 import {
   getPackagingById,
   editPackaging,
-} from '../../../../utils/RequestsAPI/Products/packaging.js'
+} from "../../../../utils/RequestsAPI/Products/packaging.js";
+import useForm from "../../../../utils/hooks/useForm";
+import { packagingDefaultInputs } from "../objects";
 
 const EditPackaging = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    name: '',
-    quantity: 0,
-    size: '',
-    comment: '',
-  })
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-    quantity: false,
-    size: false,
-  })
-  const [validInputs, setValidInputs] = useState({
-    name: true,
-    quantity: true,
-    size: true,
-  })
-  const [packagingId, setPackagingId] = useState(0)
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    updateFormInputs,
+    formIsValid,
+    errorWindow,
+  } = useForm(packagingDefaultInputs);
+  const [packagingId, setPackagingId] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          })
-        }
-        break
-    }
-  }
-
-  const formIsValid = () => {
-    let check = true
-    let newErrors = Object.assign({
-      name: false,
-      quantity: false,
-      size: false,
-      comment: false,
-    })
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        })
-      }
-    }
-    setFormErrors(newErrors)
-    if (check === true) {
-      return true
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
-    }
-  }
-
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
-    console.log(formInputs)
-    formIsValid() &&
-      editPackaging(packagingId, formInputs)
-        .then(() => {})
-        .then(() => props.history.push('/packaging'))
-        .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при изменении записи')
-        })
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    })
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    })
-  }
+  const handleSubmit = () => {
+    if (!formIsValid()) return;
+    setIsLoading(true);
+    console.log(formInputs);
+    editPackaging(packagingId, formInputs)
+      .then(() => {})
+      .then(() => props.history.push("/packaging"))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при изменении записи");
+      });
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование упаковки'
-    const id = props.history.location.pathname.split('/packaging/edit/')[1]
+    document.title = "Редактирование упаковки";
+    const id = props.history.location.pathname.split("/packaging/edit/")[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс записи!')
-      props.history.push('/packaging')
+      alert("Неправильный индекс записи!");
+      props.history.push("/packaging");
     } else {
-      setPackagingId(id)
+      setPackagingId(id);
       getPackagingById(id)
         .then((res) => res.json())
-        .then((oldPackaging) => {
-          setFormInputs({
+        .then((oldPackaging) =>
+          updateFormInputs({
             name: oldPackaging.name,
             comment: oldPackaging.comment,
             quantity: oldPackaging.quantity,
             size: oldPackaging.size,
           })
-        })
+        )
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс заявки!')
-          props.history.push('/packaging')
-        })
+          console.log(error);
+          alert("Неправильный индекс заявки!");
+          props.history.push("/packaging");
+        });
     }
-  }, [])
+  }, []);
 
   return (
     <div className="new-packaging">
@@ -131,18 +69,16 @@ const EditPackaging = (props) => {
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Редактирование упаковки</div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <InputText
             inputName="Наименование"
             required
             error={formErrors.name}
             defaultValue={formInputs.name}
             name="name"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("name", target.value)
+            }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -153,7 +89,9 @@ const EditPackaging = (props) => {
             type="number"
             error={formErrors.quantity}
             name="quantity"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("quantity", target.value)
+            }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -163,7 +101,9 @@ const EditPackaging = (props) => {
             defaultValue={formInputs.size}
             error={formErrors.size}
             name="size"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("size", target.value)
+            }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -171,7 +111,9 @@ const EditPackaging = (props) => {
             defaultValue={formInputs.comment}
             inputName="Комментарий"
             name="comment"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("comment", target.value)
+            }
           />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
@@ -180,7 +122,7 @@ const EditPackaging = (props) => {
             <input
               className="main-form__submit main-form__submit--inverted"
               type="submit"
-              onClick={() => props.history.push('/packaging')}
+              onClick={() => props.history.push("/packaging")}
               value="Вернуться назад"
             />
             <Button
@@ -193,7 +135,7 @@ const EditPackaging = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditPackaging
+export default EditPackaging;
