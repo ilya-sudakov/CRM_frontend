@@ -20,6 +20,7 @@ import { requestStatuses, workshops } from "../../workshopVariables.js";
 import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
 import {
   getPageByRequest,
+  getRequestRedirectUrl,
   getRequestsEditingDefaultInputs,
 } from "../../functions.js";
 import useForm from "../../../../../utils/hooks/useForm";
@@ -94,14 +95,11 @@ const EditRequest = (props) => {
           return connectClientToRequest(requestId, formInputs.clientId);
         }
       })
-      .then(() => {
-        const id = props.history.location.pathname.split("edit/")[1];
+      .then(() =>
         props.history.push(
-          `${workshops[props.type].redirectURL}/${getPageByRequest(
-            formInputs
-          )}#${id}`
-        );
-      })
+          getRequestRedirectUrl(props.history, "edit/", props.type, formInputs)
+        )
+      )
       .catch((error) => {
         setIsLoading(false);
         console.log(error);
@@ -300,14 +298,16 @@ const EditRequest = (props) => {
               text="Вернуться назад"
               className="main-form__submit main-form__submit--inverted"
               inverted
-              onClick={() => {
-                const id = props.history.location.pathname.split("edit/")[1];
+              onClick={() =>
                 props.history.push(
-                  `${workshops[props.type].redirectURL}/${getPageByRequest(
+                  getRequestRedirectUrl(
+                    props.history,
+                    "edit/",
+                    props.type,
                     formInputs
-                  )}#${id}`
-                );
-              }}
+                  )
+                )
+              }
             />
             <Button
               text="Обновить данные"

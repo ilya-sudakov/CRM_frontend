@@ -239,3 +239,8 @@ export const getRequestsEditingDefaultInputs = (username, type) => {
   defaultInputs = [...defaultInputs, ...newInputs];
   return defaultInputs;
 };
+
+export const getRequestRedirectUrl = (history, splitPoint, type, inputs) => {
+  const id = history.location.pathname.split(splitPoint)[1];
+  return `${workshops[type].redirectURL}/${getPageByRequest(inputs)}#${id}`;
+};
