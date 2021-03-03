@@ -17,7 +17,7 @@
     "watch:build": "webpack --watch",
     "watch:server": "nodemon ./src/static/built/bundle.js --watch",
     "server-dev": "webpack-dev-server --watch --host 0.0.0.0 --inline --hot",
-    "clean": "del src\\static\\built\\*.* /q",
+    "clean": "del src\\static\\built\\*.* /q"
   },
   "repository": {
     "type": "git",
