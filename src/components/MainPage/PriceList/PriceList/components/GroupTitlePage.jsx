@@ -3,6 +3,7 @@ import { getDataUri } from "../../../../../utils/functions.jsx";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import CheckBox from "../../../../../utils/Form/CheckBox/CheckBox.jsx";
 import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
+import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
 
 const GroupTitlePage = ({ titlePage, setTitlePage }) => {
   const handleActivateTitlePageGroup = (value) => {
