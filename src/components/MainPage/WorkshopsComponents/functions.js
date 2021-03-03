@@ -228,3 +228,14 @@ export const getRequestsDefaultInputs = (username, type) => {
     { name: "clientId", defaultValue: 0, isRequired: true },
   ];
 };
+
+export const getRequestsEditingDefaultInputs = (username, type) => {
+  let defaultInputs = getRequestsDefaultInputs(username, type);
+  const newInputs = [
+    { name: "client", defaultValue: null, isRequired: true, isValid: true },
+    { name: "oldProducts", defaultValue: [], isRequired: true, isValid: true },
+  ];
+  defaultInputs = defaultInputs.map((input) => ({ ...input, isValid: true }));
+  defaultInputs = [...defaultInputs, ...newInputs];
+  return defaultInputs;
+};

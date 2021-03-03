@@ -60,8 +60,8 @@ const useForm = (defaultInputs = []) => {
         newErrors[item] = true;
       }
     }
-    console.log(formErrors, validInputs);
-    setShowError(true);
+    console.log(formErrors, validInputs, check);
+    !check && setShowError(true);
     setFormErrors({ ...newErrors });
     return check;
   };
