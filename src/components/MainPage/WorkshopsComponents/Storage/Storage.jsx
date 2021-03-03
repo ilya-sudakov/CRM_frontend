@@ -55,7 +55,7 @@ const Storage = (props) => {
 
   const sortParts = (data) => {
     return sortByField(filterData(data), {
-      fieldName: "date",
+      fieldName: "id",
       direction: "desc",
     });
   };

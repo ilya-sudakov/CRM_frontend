@@ -48,3 +48,10 @@ export const requstsSortOptions = [
   { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
   { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
 ];
+
+export const workshopStorageDefaultInputs = [
+  { name: "number", defaultValue: "", isRequired: true },
+  { name: "name", defaultValue: "", isRequired: true },
+  { name: "quantity", defaultValue: "", isRequired: true },
+  { name: "comment", defaultValue: "", isRequired: true },
+];

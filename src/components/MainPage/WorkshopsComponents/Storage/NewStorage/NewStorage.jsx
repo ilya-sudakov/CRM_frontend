@@ -2,162 +2,102 @@ import React, { useEffect, useState } from "react";
 import "./NewStorage.scss";
 import "../../../../../utils/Form/Form.scss";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import { createStorage } from "../../../../../utils/RequestsAPI/Workshop/storage.js";
 import Button from "../../../../../utils/Form/Button/Button.jsx";
 import { workshops } from "../../workshopVariables.js";
+import useForm from "../../../../../utils/hooks/useForm";
+import { workshopStorageDefaultInputs } from "../../objects";
 
 const NewPart = (props) => {
-  const [storageInputs, setStorageInputs] = useState({
-    number: "",
-    name: "",
-    quantity: "",
-    comment: "",
-  });
-  const [storageErrors, setStorageErrors] = useState({
-    number: false,
-    name: false,
-    quantity: false,
-    comment: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    number: false,
-    name: false,
-    quantity: false,
-    comment: false,
-  });
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(workshopStorageDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      number: false,
-      name: false,
-      quantity: false,
-      comment: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setStorageErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
+    if (!formIsValid()) return;
     setIsLoading(true);
-    formIsValid() &&
-      createStorage(props.type, storageInputs)
-        .then(() =>
-          props.history.push(workshops[props.type].storageRedirectURL)
-        )
-        .catch((error) => {
-          setIsLoading(false);
-          alert("Ошибка при добавлении записи");
-          console.log(error);
-        });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setStorageInputs({
-      ...storageInputs,
-      [name]: value,
-    });
-    setStorageErrors({
-      ...storageErrors,
-      [name]: false,
-    });
+    createStorage(props.type, formInputs)
+      .then(() => props.history.push(workshops[props.type].storageRedirectURL))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     document.title = "Добавление детали на склад";
   }, []);
+
   return (
     <div className="main-form">
       <form className="main-form__form">
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Новая деталь</div>
         </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
+        {errorWindow}
         <InputText
           inputName="Название"
           required
-          error={storageErrors.name}
+          error={formErrors.name}
           name="name"
-          handleInputChange={handleInputChange}
-          errorsArr={storageErrors}
-          setErrorsArr={setStorageErrors}
+          handleInputChange={({ target }) =>
+            handleInputChange("name", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <InputText
           inputName="Номер"
           required
-          error={storageErrors.number}
+          error={formErrors.number}
           name="number"
           type="number"
-          handleInputChange={handleInputChange}
-          errorsArr={storageErrors}
-          setErrorsArr={setStorageErrors}
+          handleInputChange={({ target }) =>
+            handleInputChange("number", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <InputText
           inputName="Количество"
           required
-          error={storageErrors.quantity}
+          error={formErrors.quantity}
           name="quantity"
-          handleInputChange={handleInputChange}
-          errorsArr={storageErrors}
-          setErrorsArr={setStorageErrors}
+          handleInputChange={({ target }) =>
+            handleInputChange("quantity", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <InputText
           inputName="Комментарий"
           required
-          error={storageErrors.comment}
+          error={formErrors.comment}
           name="comment"
-          handleInputChange={handleInputChange}
-          errorsArr={storageErrors}
-          setErrorsArr={setStorageErrors}
+          handleInputChange={({ target }) =>
+            handleInputChange("comment", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons main-form__buttons--full">
-          <input
+          <Button
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
+            inverted
             onClick={() =>
               props.history.push(workshops[props.type].storageRedirectURL)
             }
-            value="Вернуться назад"
+            text="Вернуться назад"
           />
           <Button
             text="Добавить запись"
