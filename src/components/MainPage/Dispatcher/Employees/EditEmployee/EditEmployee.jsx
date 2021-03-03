@@ -26,6 +26,10 @@ const EditEmployee = (props) => {
   const [employeeId, setEmployeeId] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
+  const formatDateObjects = (date) => {
+    date === null ? null : Number.parseInt(new Date(date).getTime() / 1000);
+  };
+
   const handleSubmit = () => {
     if (!formIsValid()) return;
     setIsLoading(true);
@@ -35,18 +39,12 @@ const EditEmployee = (props) => {
         dateOfBirth: Number.parseInt(
           new Date(formInputs.dateOfBirth).getTime() / 1000
         ),
-        patentExpirationDate:
-          formInputs.patentExpirationDate === null
-            ? null
-            : Number.parseInt(
-                new Date(formInputs.patentExpirationDate).getTime() / 1000
-              ),
-        registrationExpirationDate:
-          formInputs.registrationExpirationDate === null
-            ? null
-            : Number.parseInt(
-                new Date(formInputs.registrationExpirationDate).getTime() / 1000
-              ),
+        patentExpirationDate: formatDateObjects(
+          formInputs.patentExpirationDate
+        ),
+        registrationExpirationDate: formatDateObjects(
+          formInputs.registrationExpirationDate
+        ),
       },
       employeeId
     )
