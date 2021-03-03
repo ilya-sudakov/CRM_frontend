@@ -244,3 +244,28 @@ export const getRequestRedirectUrl = (history, splitPoint, type, inputs) => {
   const id = history.location.pathname.split(splitPoint)[1];
   return `${workshops[type].redirectURL}/${getPageByRequest(inputs)}#${id}`;
 };
+
+export const getWorkshopOrdersDefaultInputs = (factory) => {
+  return [
+    { name: "name", defaultValue: "", isRequired: true },
+    { name: "status", defaultValue: "ordered" },
+    { name: "date", defaultValue: new Date(), isRequired: true, isValid: true },
+    {
+      name: "deliverBy",
+      defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
+      isRequired: true,
+      isValid: true,
+    },
+    { name: "assembly", defaultValue: "ordered" },
+    {
+      name: "products",
+      defaultValue: [
+        {
+          name: "",
+          quantity: "",
+        },
+      ],
+    },
+    { name: "factoryName", defaultValue: factory },
+  ];
+};

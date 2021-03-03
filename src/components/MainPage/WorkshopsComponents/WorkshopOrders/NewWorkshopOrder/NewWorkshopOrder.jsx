@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./NewWorkshopOrder.scss";
 import "../../../../../utils/Form/Form.scss";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
 import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
 import SelectItems from "../../../../../utils/Form/SelectItems/SelectItems.jsx";
@@ -11,141 +10,50 @@ import {
 } from "../../../../../utils/RequestsAPI/Workshop/Orders.jsx";
 import Button from "../../../../../utils/Form/Button/Button.jsx";
 import { workshops } from "../../workshopVariables";
+import useForm from "../../../../../utils/hooks/useForm";
+import { getWorkshopOrdersDefaultInputs } from "../../functions";
 
 const NewWorkshopOrder = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    name: "",
-    status: "ordered",
-    deliverBy: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-    products: [
-      {
-        name: "",
-        quantity: "",
-      },
-    ],
-    assembly: "",
-    date: new Date(),
-    factoryName: workshops[props.type].fullName,
-  });
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-    // products: false,
-    date: false,
-    deliverBy: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: false,
-    // products: false,
-    date: true,
-    deliverBy: true,
-  });
-
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case "date":
-        setValidInputs({
-          ...validInputs,
-          date: value !== null,
-        });
-        break;
-      case "deliverBy":
-        setValidInputs({
-          ...validInputs,
-          date: value !== null,
-        });
-        break;
-      case "products":
-        setValidInputs({
-          ...validInputs,
-          products: value.length > 0,
-        });
-        break;
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      // products: false,
-      date: false,
-      deliverBy: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setFormErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(getWorkshopOrdersDefaultInputs(workshops[props.type].fullName));
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
+    if (!formIsValid()) return;
     setIsLoading(true);
-    console.log(formInputs);
     let orderId = 0;
-    formIsValid() &&
-      addOrder({
-        ...formInputs,
-        date: formInputs.date.getTime() / 1000,
-        deliverBy: formInputs.deliverBy.getTime() / 1000,
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          console.log(res.id);
-          orderId = res.id;
-          Promise.all(
-            formInputs.products.map((product) => {
-              return addProductToOrder({
-                ...product,
-                equipmentId: orderId,
-              });
-            })
-          ).then(() => {
-            setIsLoading(false);
-            props.history.push(workshops[props.type].ordersRedirectURL);
-          });
-        });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setFormInputs({
+    addOrder({
       ...formInputs,
-      [name]: value,
-    });
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
+      date: formInputs.date.getTime() / 1000,
+      deliverBy: formInputs.deliverBy.getTime() / 1000,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.id);
+        orderId = res.id;
+        Promise.all(
+          formInputs.products.map((product) => {
+            return addProductToOrder({
+              ...product,
+              equipmentId: orderId,
+            });
+          })
+        ).then(() => {
+          setIsLoading(false);
+          props.history.push(workshops[props.type].ordersRedirectURL);
+        });
+      });
   };
 
   useEffect(() => {
     document.title = `Создание заказа ${workshops[props.type].name}`;
   }, []);
-
-  const [showError, setShowError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="new-workshop-order">
@@ -154,28 +62,14 @@ const NewWorkshopOrder = (props) => {
           <div className="main-form__header main-form__header--full">
             <div className="main-form__title">Создание заказа</div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <InputDate
             inputName="Дата создания"
             required
             error={formErrors.date}
             name="date"
             selected={Date.parse(formInputs.date)}
-            handleDateChange={(date) => {
-              validateField("date", date);
-              setFormInputs({
-                ...formInputs,
-                date: date,
-              });
-              setFormErrors({
-                ...formErrors,
-                date: false,
-              });
-            }}
+            handleDateChange={(date) => handleInputChange("date", date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -184,14 +78,18 @@ const NewWorkshopOrder = (props) => {
             required
             error={formErrors.name}
             name="name"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("name", target.value)
+            }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Комплектация"
             name="assembly"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("assembly", target.value)
+            }
           />
           <InputDate
             inputName="Дата поставки"
@@ -199,17 +97,7 @@ const NewWorkshopOrder = (props) => {
             error={formErrors.deliverBy}
             name="deliverBy"
             selected={Date.parse(formInputs.deliverBy)}
-            handleDateChange={(date) => {
-              validateField("deliverBy", date);
-              setFormInputs({
-                ...formInputs,
-                deliverBy: date,
-              });
-              setFormErrors({
-                ...formErrors,
-                deliverBy: false,
-              });
-            }}
+            handleDateChange={(date) => handleInputChange("deliverBy", date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -218,17 +106,7 @@ const NewWorkshopOrder = (props) => {
             userHasAccess={props.userHasAccess}
             defaultValue={formInputs.products}
             required
-            onChange={(value) => {
-              validateField("products", value);
-              setFormInputs({
-                ...formInputs,
-                products: value,
-              });
-              setFormErrors({
-                ...formErrors,
-                products: value,
-              });
-            }}
+            onChange={(value) => handleInputChange("products", value)}
             error={formErrors.products}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -238,7 +116,9 @@ const NewWorkshopOrder = (props) => {
             <div className="main-form__input_field">
               <select
                 name="status"
-                onChange={handleInputChange}
+                onChange={({ target }) =>
+                  handleInputChange("status", target.value)
+                }
                 value={formInputs.status}
               >
                 <option value="ordered">Заказано</option>
@@ -252,13 +132,13 @@ const NewWorkshopOrder = (props) => {
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <Button
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
+              inverted
               onClick={() =>
                 props.history.push(workshops[props.type].ordersRedirectURL)
               }
-              value="Вернуться назад"
+              text="Вернуться назад"
             />
             <Button
               text="Добавить запись"
