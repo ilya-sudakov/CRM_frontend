@@ -14,8 +14,6 @@ WORKDIR /CRM_frontend
 
 COPY . .
 
-RUN npm run mkdir-built
-
 RUN npm run test -- --silent
 
 RUN npm run webpack:prod
