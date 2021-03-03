@@ -4,6 +4,7 @@ import editSVG from "../../../../../../assets/tableview/edit.svg";
 import deleteSVG from "../../../../../../assets/tableview/delete.svg";
 import "./TableView.scss";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import TableActions from "../../../../../utils/TableView/TableActions/TableActions.jsx";
 
 const TableView = (props) => {
   const roles = {
@@ -23,7 +24,7 @@ const TableView = (props) => {
             <span>Имя пользователя</span>
             <span>Эл. почта</span>
             <span>Роль</span>
-            <div className="main-window__actions">Действия</div>
+            <div className="main-window__table-actions"></div>
           </div>
           {props.isLoading ? (
             <PlaceholderLoading
@@ -50,10 +51,11 @@ const TableView = (props) => {
                     !item.name ? null : roles[item.name]
                   )}
                 </span>
+                <TableActions actionsList={[]} />
                 <div className="main-window__actions">
                   <Link
                     className="main-window__action"
-                    to={"/profile/users/edit/" + user.id}
+                    to={`/profile/users/edit/${user.id}`}
                     title="Редактировать пользователя"
                   >
                     <img className="main-window__img" src={editSVG} />
@@ -61,9 +63,7 @@ const TableView = (props) => {
                   {props.userHasAccess(["ROLE_ADMIN"]) && (
                     <div
                       className="main-window__action"
-                      onClick={() => {
-                        props.deleteItem(user.id);
-                      }}
+                      onClick={() => props.deleteItem(user.id)}
                       title="Удалить пользователя"
                     >
                       <img className="main-window__img" src={deleteSVG} />
