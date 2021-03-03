@@ -5,6 +5,7 @@ import deleteSVG from "../../../../../../assets/tableview/delete.svg";
 import "./TableView.scss";
 import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
 import TableActions from "../../../../../utils/TableView/TableActions/TableActions.jsx";
+import DeleteItemAction from "../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
 
 const TableView = (props) => {
   const roles = {
@@ -51,25 +52,24 @@ const TableView = (props) => {
                     !item.name ? null : roles[item.name]
                   )}
                 </span>
-                <TableActions actionsList={[]} />
-                <div className="main-window__actions">
-                  <Link
-                    className="main-window__action"
-                    to={`/profile/users/edit/${user.id}`}
-                    title="Редактировать пользователя"
-                  >
-                    <img className="main-window__img" src={editSVG} />
-                  </Link>
-                  {props.userHasAccess(["ROLE_ADMIN"]) && (
-                    <div
-                      className="main-window__action"
-                      onClick={() => props.deleteItem(user.id)}
-                      title="Удалить пользователя"
-                    >
-                      <img className="main-window__img" src={deleteSVG} />
-                    </div>
-                  )}
-                </div>
+                <TableActions
+                  actionsList={[
+                    {
+                      link: `/profile/users/edit/${user.id}`,
+                      imgSrc: editSVG,
+                      title: "Редактировать пользователя",
+                    },
+                    {
+                      isRendered: props.userHasAccess(["ROLE_ADMIN"]),
+                      customElement: (
+                        <DeleteItemAction
+                          onClick={() => props.deleteItem(user.id)}
+                          title="Удалить пользователя"
+                        />
+                      ),
+                    },
+                  ]}
+                />
               </div>
             ))
           )}
