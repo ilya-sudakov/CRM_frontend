@@ -10,6 +10,7 @@ package-lock.json
 /node_modules
 /src/main/resources/static/built/*
 /src/static/built/*
+!/src/static/built/.gitkeep
 
 ### STS ###
 .apt_generated

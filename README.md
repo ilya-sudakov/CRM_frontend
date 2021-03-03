@@ -13,14 +13,6 @@
         NODE_ENV = production
         INN_TOKEN = INNToken
 
-- Затем необходимо создать папку static/built, для этого выполните команду (Windows):
-
-        npm run mkdir-built
-
-- Для остальных платформ - необходимо вручную создать папку:
-
-        /src/static/build
-
 - После этих действий в корне фронтэнд проекта / запустите команду:
 
         npm install
