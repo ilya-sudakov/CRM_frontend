@@ -109,7 +109,7 @@ const SelectWorkHistory = (props) => {
                         handleInputChange("action", target.value)
                       }
                     />
-                    {filterHints(hints, newItem.action).length > 0 && (
+                    {filterHints(hints, newItem.action)?.length > 0 && (
                       <div
                         className={
                           showHints
