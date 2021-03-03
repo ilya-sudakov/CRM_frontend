@@ -44,18 +44,22 @@ const EditRequest = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
+    // return console.log(formInputs);
     if (!formIsValid()) return;
     setIsLoading(true);
     editRequest(formInputs, requestId)
       .then(() => {
-        const productsArr = formInputs.oldProducts.map((selected) => {
+        const productsArr = formInputs.requestProducts.map((selected) => {
           let edited = false;
-          formInputs.requestProducts.map((item) => {
+          let oldItem = null;
+          formInputs.oldProducts.map((item) => {
             if (item.id === selected.id) {
               edited = true;
+              oldItem = item;
               return;
             }
           });
+          if (oldItem === selected) return;
           return edited
             ? editProductsToRequest(
                 {
