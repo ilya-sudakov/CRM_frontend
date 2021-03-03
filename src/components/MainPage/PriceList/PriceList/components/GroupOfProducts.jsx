@@ -55,9 +55,7 @@ const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
         className={
           item.isMinimized
             ? " main-form__item main-form__item--hidden"
-            : item.active
-            ? "main-form__item"
-            : "main-form__item main-form__item--hidden"
+            : "main-form__item"
         }
       >
         <div className="main-form__input_field">
