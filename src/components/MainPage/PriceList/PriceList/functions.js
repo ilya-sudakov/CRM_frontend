@@ -90,7 +90,7 @@ export const parseExcelData = (result) => {
       tempNumber = item.number.substring(0, 3);
     }
     let products = [];
-    for (let i = startId; i <= endId; i++) {
+    for (let i = startId; i < endId; i++) {
       products.push(getPriceListParsedProduct(excelRows[i]));
     }
     if (item.number) {
@@ -101,9 +101,10 @@ export const parseExcelData = (result) => {
           ...groupData,
           products,
         });
+        console.log(startId, index, item, excelRows[index]);
         groupData = getPriceListDefaultParsedObject(item);
         startId = index;
-        endId = index;
+        endId = index + 1;
         tempNumber = item.number.substring(0, 3);
       }
     } else {
@@ -114,5 +115,6 @@ export const parseExcelData = (result) => {
       break;
     }
   }
+  console.log(parsedData);
   return { parsedData, disclaimer, titlePage };
 };
