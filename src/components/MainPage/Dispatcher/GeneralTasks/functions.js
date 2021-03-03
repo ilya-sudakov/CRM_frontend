@@ -42,3 +42,39 @@ export const filterSearchQuery = (data, searchQuery) => {
       formatDateString(item.dateControl).includes(query)
   );
 };
+
+export const getTasksDefaultInputs = (username = "") => {
+  return [
+    {
+      name: "dateCreated",
+      defaultValue: new Date(),
+      isRequired: true,
+      isValid: true,
+    },
+    {
+      name: "dateControl",
+      defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
+      isRequired: true,
+      isValid: true,
+    },
+    {
+      name: "description",
+      defaultValue: "",
+      isRequired: true,
+    },
+    {
+      name: "responsible",
+      defaultValue: username,
+      isRequired: true,
+      isValid: true,
+    },
+    {
+      name: "status",
+      defaultValue: "",
+    },
+    {
+      name: "condition",
+      defaultValue: "В процессе",
+    },
+  ];
+};

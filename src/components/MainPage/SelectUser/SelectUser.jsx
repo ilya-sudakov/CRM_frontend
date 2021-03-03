@@ -1,86 +1,86 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import deleteSVG from '../../../../assets/select/delete.svg'
-import Select from 'react-select'
-import './SelectUser.scss'
-import { getUsers } from '../../../utils/RequestsAPI/Users.jsx'
-import { customSelectStyles } from '../../../utils/dataObjects'
+import React, { useState, useEffect, useCallback } from "react";
+import deleteSVG from "../../../../assets/select/delete.svg";
+import Select from "react-select";
+import "./SelectUser.scss";
+import { getUsers } from "../../../utils/RequestsAPI/Users.jsx";
+import { customSelectStyles } from "../../../utils/dataObjects";
 
 const SelectUser = (props) => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [options, setOptions] = useState([])
-  const [selectedUser, setSelectedUser] = useState('')
-  const [customUser, setCustomUser] = useState(false)
-  const [showOptions, setShowOptions] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("");
+  const [options, setOptions] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [customUser, setCustomUser] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
   const search = () => {
     let searchFilter = options.filter((item) => {
       const temp = props.filteredRoles
         ? item.roles.reduce((prevRole, curRole) => {
-            let check = false
+            let check = false;
             props.filteredRoles.map((filteredRole) => {
               // console.log(filteredRole, curRole.name);
               if (filteredRole === curRole.name) {
-                check = true
-                return
+                check = true;
+                return;
               }
-            })
-            return check
+            });
+            return check;
           }, false)
-        : true
+        : true;
       return (
         temp && item.username.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    })
-    return searchFilter
-  }
+      );
+    });
+    return searchFilter;
+  };
 
   const handleInputChange = (event) => {
-    const value = event.target.value
-    setSearchQuery(value)
-    setSelectedUser(value)
-    props.onChange(value)
-  }
+    const value = event.target.value;
+    setSearchQuery(value);
+    setSelectedUser(value);
+    props.onChange(value);
+  };
 
   const clickOnInput = () => {
     if (!showOptions && search().length != 0) {
-      setShowOptions(true)
+      setShowOptions(true);
     } else {
-      search().length != 0 && setShowOptions(false)
+      search().length != 0 && setShowOptions(false);
     }
-  }
+  };
 
   const clickOnOption = (event) => {
-    const value = event.target.getAttribute('name')
-    const id = event.target.getAttribute('id')
-    clickOnInput()
-    setSelectedUser(value)
-    props.onChange(value, id)
-  }
+    const value = event.target.getAttribute("name");
+    const id = event.target.getAttribute("id");
+    clickOnInput();
+    setSelectedUser(value);
+    props.onChange(value, id);
+  };
 
   const pressEscKey = useCallback((event) => {
     if (event.keyCode === 27 && showOptions) {
-      setShowOptions(!showOptions)
+      setShowOptions(!showOptions);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     options.length === 0 &&
       getUsers()
         .then((res) => res.json())
         .then((res) => {
-          setOptions(res)
+          setOptions(res);
         })
         .catch((error) => {
-          !props.defaultValue && setSelectedUser(props.userData.username)
-        })
+          !props.defaultValue && setSelectedUser(props.userData.username);
+        });
     if (props.defaultValue) {
-      setSelectedUser(props.defaultValue)
+      setSelectedUser(props.defaultValue);
     }
-    document.addEventListener('keydown', pressEscKey, false)
+    document.addEventListener("keydown", pressEscKey, false);
     return () => {
-      document.removeEventListener('keydown', pressEscKey, false)
-    }
-  }, [props.defaultValue])
+      document.removeEventListener("keydown", pressEscKey, false);
+    };
+  }, [props.defaultValue]);
 
   return (
     <div className="select_user">
@@ -88,23 +88,12 @@ const SelectUser = (props) => {
         <div
           className={
             showOptions
-              ? 'select_user__overlay'
-              : 'select_user__overlay select_user__overlay--hidden'
+              ? "select_user__overlay"
+              : "select_user__overlay select_user__overlay--hidden"
           }
           onClick={() => setShowOptions(!showOptions)}
         ></div>
       )}
-      {/* <Select
-        // defaultValue={workTypes[0]}
-        styles={customSelectStyles}
-        onChange={(value) => {
-          setSelectedUser(value)
-          props.onChange(value, id)
-        }}
-        options={[
-          ...search().map((item) => ({ label: item.username, value: item.id })),
-        ]}
-      /> */}
       <input
         type="text"
         className="select_user__input"
@@ -118,8 +107,8 @@ const SelectUser = (props) => {
         <div
           className={
             showOptions
-              ? 'select_user__options'
-              : 'select_user__options select_user__options--hidden'
+              ? "select_user__options"
+              : "select_user__options select_user__options--hidden"
           }
         >
           {search().map((item, index) => (
@@ -136,7 +125,7 @@ const SelectUser = (props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SelectUser
+export default SelectUser;

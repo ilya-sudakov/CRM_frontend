@@ -1,207 +1,89 @@
-import React, { useEffect, useState } from 'react'
-import './EditTask.scss'
-import '../../../../../utils/Form/Form.scss'
+import React, { useEffect, useState } from "react";
+import "./EditTask.scss";
+import "../../../../../utils/Form/Form.scss";
 import {
   getMainTaskById,
   editMainTask,
-} from '../../../../../utils/RequestsAPI/MainTasks.js'
-import { getUsers } from '../../../../../utils/RequestsAPI/Users.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx'
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+} from "../../../../../utils/RequestsAPI/MainTasks.js";
+import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
+import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
+import Button from "../../../../../utils/Form/Button/Button.jsx";
+import { getTasksDefaultInputs } from "../functions";
+import useForm from "../../../../../utils/hooks/useForm";
 
 const EditTask = (props) => {
-  const [taskId, setTaskId] = useState(1)
-  const [users, setUsers] = useState([])
-  const [taskInputs, setTaskInputs] = useState({
-    dateCreated: new Date(),
-    description: '',
-    responsible: '',
-    dateControl: new Date(),
-    status: '',
-    condition: 'Материалы',
-    // visibility: 'all'
-  })
-  const [taskErrors, setTaskErrors] = useState({
-    dateCreated: false,
-    description: false,
-    responsible: false,
-    dateControl: false,
-    // status: false
-  })
-  const [validInputs, setValidInputs] = useState({
-    dateCreated: true,
-    description: true,
-    responsible: true,
-    dateControl: true,
-    // status: true
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [taskId, setTaskId] = useState(1);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    updateFormInputs,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(getTasksDefaultInputs());
+  const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case 'dateCreated':
-        setValidInputs({
-          ...validInputs,
-          dateCreated: value !== null,
-        })
-        break
-      case 'dateControl':
-        setValidInputs({
-          ...validInputs,
-          dateControl: value !== null,
-        })
-        break
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          })
-        }
-        break
-    }
-  }
-
-  const formIsValid = () => {
-    let check = true
-    let newErrors = Object.assign({
-      dateCreated: false,
-      description: false,
-      responsible: false,
-      dateControl: false,
-      // status: false
-    })
-    for (let item in validInputs) {
-      // console.log(item, validInputs[item]);
-      if (validInputs[item] === false) {
-        check = false
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        })
-      }
-    }
-    setTaskErrors(newErrors)
-    if (check === true) {
-      return true
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
-    }
-  }
-
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    setIsLoading(true)
-    formIsValid() &&
-      editMainTask(taskInputs, taskId)
-        .then(() => props.history.push(`/dispatcher/general-tasks#${taskId}`))
-        .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
-    setTaskInputs({
-      ...taskInputs,
-      [name]: value,
-    })
-    setTaskErrors({
-      ...taskErrors,
-      [name]: false,
-    })
-  }
-
-  const handleResponsibleChange = (newResponsible) => {
-    validateField('responsible', newResponsible)
-    setTaskInputs({
-      ...taskInputs,
-      responsible: newResponsible,
-    })
-    setTaskErrors({
-      ...taskErrors,
-      responsible: false,
-    })
-  }
+  const handleSubmit = () => {
+    if (!formIsValid()) return;
+    setIsLoading(true);
+    editMainTask(formInputs, taskId)
+      .then(() => props.history.push(`/dispatcher/general-tasks#${taskId}`))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    document.title = 'Редактирование основной задачи'
+    document.title = "Редактирование основной задачи";
     const id = props.history.location.pathname.split(
-      '/dispatcher/general-tasks/edit/',
-    )[1]
+      "/dispatcher/general-tasks/edit/"
+    )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert('Неправильный индекс задачи!')
-      props.history.push('/dispatcher/general-tasks')
+      alert("Неправильный индекс задачи!");
+      props.history.push("/dispatcher/general-tasks");
     } else {
-      setTaskId(id)
+      setTaskId(id);
       getMainTaskById(id)
         .then((res) => res.json())
         .then((oldRequest) => {
-          // console.log(oldRequest);
-          setTaskInputs({
+          updateFormInputs({
             dateCreated: oldRequest.dateCreated,
             description: oldRequest.description,
             responsible: oldRequest.responsible,
             dateControl: oldRequest.dateControl,
             condition: oldRequest.condition,
             status: oldRequest.status,
-          })
-        })
-        .then(() => {
-          getUsers()
-            .then((res) => res.json())
-            .then((res) => {
-              setUsers(res)
-            })
+          });
         })
         .catch((error) => {
-          console.log(error)
-          alert('Неправильный индекс задачи!')
-          props.history.push('/dispatcher/general-tasks')
-        })
+          console.log(error);
+          alert("Неправильный индекс задачи!");
+          props.history.push("/dispatcher/general-tasks");
+        });
     }
-  }, [])
+  }, []);
+
   return (
     <div className="main-form">
       <form className="main-form__form">
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Редактирование задачи</div>
         </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
+        {errorWindow}
         <InputDate
           inputName="Дата постановки"
           required
-          error={taskErrors.dateCreated}
+          error={formErrors.dateCreated}
           name="dateCreated"
-          selected={Date.parse(taskInputs.dateCreated)}
-          errorsArr={taskErrors}
-          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
-          setErrorsArr={setTaskErrors}
-          handleDateChange={(dateCreated) => {
-            validateField('dateCreated', dateCreated)
-            setTaskInputs({
-              ...taskInputs,
-              dateCreated: dateCreated,
-            })
-            setTaskErrors({
-              ...taskErrors,
-              dateCreated: false,
-            })
-          }}
+          selected={Date.parse(formInputs.dateCreated)}
+          errorsArr={formErrors}
+          readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+          setErrorsArr={setFormErrors}
+          handleDateChange={(date) => handleInputChange("dateCreated", date)}
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Сведения</div>
@@ -209,64 +91,59 @@ const EditTask = (props) => {
             inputName="Описание"
             required
             type="textarea"
-            error={taskErrors.description}
+            error={formErrors.description}
             name="description"
-            handleInputChange={handleInputChange}
-            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
-            errorsArr={taskErrors}
-            setErrorsArr={setTaskErrors}
-            defaultValue={taskInputs.description}
+            handleInputChange={({ target }) =>
+              handleInputChange("description", target.value)
+            }
+            readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
+            defaultValue={formInputs.description}
           />
           <InputUser
             inputName="Ответственный"
             userData={props.userData}
             required
-            error={taskErrors.responsible}
-            defaultValue={taskInputs.responsible}
-            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
+            error={formErrors.responsible}
+            defaultValue={formInputs.responsible}
+            readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
             name="responsible"
-            options={users}
-            handleUserChange={handleResponsibleChange}
-            errorsArr={taskErrors}
-            setErrorsArr={setTaskErrors}
+            handleUserChange={(user) => handleInputChange("responsible", user)}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
             searchPlaceholder="Введите имя пользователя для поиска..."
           />
         </div>
         <InputDate
           inputName="Дата контроля"
           required
-          error={taskErrors.dateControl}
+          error={formErrors.dateControl}
           name="dateControl"
-          selected={Date.parse(taskInputs.dateControl)}
-          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
-          errorsArr={taskErrors}
-          setErrorsArr={setTaskErrors}
-          handleDateChange={(dateControl) => {
-            validateField('dateControl', dateControl)
-            setTaskInputs({
-              ...taskInputs,
-              dateControl: dateControl,
-            })
-            setTaskErrors({
-              ...taskErrors,
-              dateControl: false,
-            })
-          }}
+          selected={Date.parse(formInputs.dateControl)}
+          readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
+          handleDateChange={(date) => handleInputChange("dateControl", date)}
         />
         <InputText
           inputName="Состояние"
           name="status"
           type="textarea"
-          handleInputChange={handleInputChange}
-          defaultValue={taskInputs.status}
+          handleInputChange={({ target }) =>
+            handleInputChange("status", target.value)
+          }
+          defaultValue={formInputs.status}
         />
         <div className="main-form__item">
           <div className="main-form__input_name">Статус*</div>
           <div className="main-form__input_field">
             <select
               name="condition"
-              onChange={handleInputChange}
-              value={taskInputs.condition}
+              onChange={({ target }) =>
+                handleInputChange("condition", target.value)
+              }
+              value={formInputs.condition}
             >
               <option>Выполнено</option>
               <option>Отложено</option>
@@ -280,13 +157,13 @@ const EditTask = (props) => {
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons main-form__buttons--full">
-          <input
+          <Button
+            text="Вернуться назад"
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
+            inverted
             onClick={() =>
               props.history.push(`/dispatcher/general-tasks#${taskId}`)
             }
-            value="Вернуться назад"
           />
           <Button
             text="Редактировать задачу"
@@ -297,7 +174,7 @@ const EditTask = (props) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditTask
+export default EditTask;
