@@ -66,7 +66,11 @@ const useEmployeesNotifications = () => {
             return {
               id: item.id,
               name: `${item.lastName} ${item.name} ${item.middleName}`,
-              description: "Просроченные документы",
+              description:
+                item.patentExpirationDate === null ||
+                item.registrationExpirationDate === null
+                  ? "Не указаны сроки документов"
+                  : "Просроченные документы",
               type: "Просроченные документы",
               expirationTime: item.patentExpirationDate,
               read: true,
