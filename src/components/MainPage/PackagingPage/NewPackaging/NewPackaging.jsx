@@ -13,7 +13,7 @@ const NewPackaging = (props) => {
     formInputs,
     formErrors,
     setFormErrors,
-    formIsValid,
+    formIsValid, 
     errorWindow,
   } = useForm(packagingDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
