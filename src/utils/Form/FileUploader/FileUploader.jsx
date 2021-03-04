@@ -139,7 +139,7 @@ const FileUploader = ({
         {data || (previewImage && previewImage !== "") ? (
           <ul className="file-uploader__file-list">
             <li>
-              {data?.name ?? "фотография.jpeg"}
+              <div>{data?.name ?? "фотография.jpeg"}</div>
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>

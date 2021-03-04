@@ -6,7 +6,6 @@ import {
   editProduct,
 } from "../../../../utils/RequestsAPI/Products.js";
 import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
 import SelectCategory from "../SelectCategory/SelectCategory.jsx";
 import { imgToBlobDownload, getDataUri } from "../../../../utils/functions.jsx";
 import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
@@ -17,140 +16,41 @@ import {
   deletePackagingFromProduct,
   addPackagingToProduct,
 } from "../../../../utils/RequestsAPI/Products/packaging.js";
+import useForm from "../../../../utils/hooks/useForm";
+import { productsdefaultInputs } from "../objects";
 
 const EditProduct = (props) => {
-  const [productInputs, setProductInputs] = useState({
-    name: "",
-    item: "",
-    weight: "",
-    description: "",
-    barcode: "",
-    productionLocation: "ЦехЛЭМЗ",
-    group: "",
-    unit: 0,
-    vendor: "",
-    photo: "",
-    category: "",
-    packages: [],
-    comment: "",
-  });
-  const [productErrors, setProductErrors] = useState({
-    name: false,
-    category: false,
-    comment: false,
-    // productionLocation: false,
-    packages: false,
-    photo: false,
-    unit: false,
-    weight: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: true,
-    category: true,
-    // comment: false,
-    packages: true,
-    productionLocation: true,
-    // photo: false,
-    unit: true,
-    weight: true,
-  });
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    updateFormInputs,
+    formIsValid,
+    errorWindow,
+  } = useForm(productsdefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== "",
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      category: false,
-      packages: false,
-      unit: false,
-      weight: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setProductErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
+    console.log(formInputs);
+    if (!formIsValid()) return;
     setIsLoading(true);
-    // console.log(productInputs);
     const id = props.history.location.pathname.split("/products/edit/")[1];
-    formIsValid() &&
-      editProduct(productInputs, id)
-        .then(() => {
-          return deletePackagingFromProduct(id);
-        })
-        .then(() => {
-          return addPackagingToProduct(
-            {
-              packings: [
-                ...productInputs.packages.map((item) => {
-                  return item.id;
-                }),
-              ],
-            },
-            id
-          );
-        })
-        .then(() => props.history.push("/products"))
-        .catch((error) => {
-          setIsLoading(false);
-          alert("Ошибка при добавлении записи");
-        });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setProductInputs({
-      ...productInputs,
-      [name]: value,
-    });
-    setProductErrors({
-      ...productErrors,
-      [name]: false,
-    });
-  };
-
-  const handleCategoryChange = (value) => {
-    validateField("category", value);
-    setProductInputs({
-      ...productInputs,
-      category: value,
-    });
-    setProductErrors({
-      ...productErrors,
-      category: false,
-    });
+    editProduct(formInputs, id)
+      .then(() => deletePackagingFromProduct(id))
+      .then(() =>
+        addPackagingToProduct(
+          {
+            packings: [...formInputs.packages.map((item) => item.id)],
+          },
+          id
+        )
+      )
+      .then(() => props.history.push("/products"))
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Ошибка при добавлении записи");
+      });
   };
 
   useEffect(() => {
@@ -163,11 +63,9 @@ const EditProduct = (props) => {
       getProductById(id)
         .then((res) => res.json())
         .then((oldProduct) => {
-          // console.log(oldProduct)
-          setProductInputs({
+          updateFormInputs({
             name: oldProduct.name,
             weight: oldProduct.weight,
-            unit: oldProduct.unit,
             packages: oldProduct.packings,
             description: oldProduct.description,
             barcode: oldProduct.barcode,
@@ -185,38 +83,23 @@ const EditProduct = (props) => {
         });
     }
   }, []);
+
   return (
     <div className="main-form">
       <form className="main-form__form">
         <div className="main-form__header main-form__header--full">
           <div className="main-form__title">Редактирование продукции</div>
         </div>
-        <ErrorMessage
-          message="Не заполнены все обязательные поля!"
-          showError={showError}
-          setShowError={setShowError}
-        />
+        {errorWindow}
         <div className="main-form__item">
           <div className="main-form__input_name">Фотография</div>
-          {/* <div className="main-form__product_img">
-                        <img src={productInputs.photo} alt="" />
-                        <div className="main-form__submit" onClick={() => imgToBlobDownload(productInputs.photo, (productInputs.name + '.jpeg'))}>Скачать картинку</div>
-                    </div> */}
-
           <div className="main-form__product_img">
-            <ImgLoader
-              imgClass=""
-              imgSrc={productInputs.photo}
-              noPhotoTemplate
-            />
-            {productInputs.photo !== "" && (
+            <ImgLoader imgClass="" imgSrc={formInputs.photo} noPhotoTemplate />
+            {formInputs.photo !== "" && (
               <div
                 className="main-form__submit"
                 onClick={() =>
-                  imgToBlobDownload(
-                    productInputs.photo,
-                    productInputs.name + ".jpeg"
-                  )
+                  imgToBlobDownload(formInputs.photo, formInputs.name + ".jpeg")
                 }
               >
                 Скачать картинку
@@ -227,22 +110,26 @@ const EditProduct = (props) => {
         <InputText
           inputName="Наименование"
           required
-          error={productErrors.name}
+          error={formErrors.name}
           name="name"
-          defaultValue={productInputs.name}
-          handleInputChange={handleInputChange}
-          errorsArr={productErrors}
-          setErrorsArr={setProductErrors}
+          defaultValue={formInputs.name}
+          handleInputChange={({ target }) =>
+            handleInputChange("name", target.value)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
         />
         <SelectCategory
           inputName="Категория"
           required
-          error={productErrors.category}
-          defaultValue={productInputs.category}
+          error={formErrors.category}
+          defaultValue={formInputs.category}
           name="category"
-          handleCategoryChange={handleCategoryChange}
-          errorsArr={productErrors}
-          setErrorsArr={setProductErrors}
+          handleCategoryChange={(category) =>
+            handleInputChange("category", category)
+          }
+          errorsArr={formErrors}
+          setErrorsArr={setFormErrors}
           readOnly
         />
 
@@ -251,89 +138,70 @@ const EditProduct = (props) => {
           <InputText
             inputName="Вес изделия"
             required
-            error={productErrors.weight}
-            defaultValue={productInputs.weight}
+            error={formErrors.weight}
+            defaultValue={formInputs.weight}
             name="weight"
             type="number"
-            handleInputChange={handleInputChange}
-            errorsArr={productErrors}
-            setErrorsArr={setProductErrors}
+            handleInputChange={({ target }) =>
+              handleInputChange("weight", target.value)
+            }
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Артикул"
-            defaultValue={productInputs.vendor}
+            defaultValue={formInputs.vendor}
             name="vendor"
             type="text"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("vendor", target.value)
+            }
           />
           <InputText
             inputName="Описание"
             type="text"
-            defaultValue={productInputs.description}
+            defaultValue={formInputs.description}
             name="description"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("description", target.value)
+            }
           />
           <InputText
             inputName="Штрихкод"
             type="text"
-            defaultValue={productInputs.barcode}
+            defaultValue={formInputs.barcode}
             name="barcode"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange("barcode", target.value)
+            }
           />
-
-          {/* <div className="main-form__item">
-          <div className="main-form__input_name">Единица измерения*</div>
-          <div className="main-form__input_field">
-            <select
-              name="unit"
-              onChange={handleInputChange}
-              value={productInputs.unit}
-            >
-              <option value="шт.">Штук</option>
-              <option value="тыс. шт.">Тысяч Штук</option>
-              <option value="упак.">Упаковок</option>
-            </select>
-          </div>
-        </div> */}
-          {/* <InputText
-          inputName="Упаковка"
-          required
-          defaultValue={productInputs.packages}
-          error={productErrors.packages}
-          name="packages"
-          handleInputChange={handleInputChange}
-          errorsArr={productErrors}
-          setErrorsArr={setProductErrors}
-        /> */}
           <SelectPackaging
             required
-            onChange={(packages) => {
-              validateField("packages", packages);
-              setProductInputs({
-                ...productInputs,
-                packages: packages,
-              });
-            }}
-            defaultValue={productInputs.packages}
+            onChange={(packages) => handleInputChange("packages", packages)}
+            defaultValue={formInputs.packages}
             errorName="packages"
-            errorsArr={productErrors}
-            setErrorsArr={setProductErrors}
-            error={productErrors.packages}
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
+            error={formErrors.packages}
           />
         </div>
         <InputText
           inputName="Комментарий"
           name="comment"
-          defaultValue={productInputs.comment}
-          handleInputChange={handleInputChange}
+          defaultValue={formInputs.comment}
+          handleInputChange={({ target }) =>
+            handleInputChange("comment", target.value)
+          }
         />
         <div className="main-form__item">
           <div className="main-form__input_name">Место производства*</div>
           <div className="main-form__input_field">
             <select
               name="productionLocation"
-              onChange={handleInputChange}
-              value={productInputs.productionLocation}
+              onChange={({ target }) =>
+                handleInputChange("productionLocation", target.value)
+              }
+              value={formInputs.productionLocation}
             >
               <option>ЦехЛЭМЗ</option>
               <option>ЦехЛиговский</option>
@@ -347,25 +215,23 @@ const EditProduct = (props) => {
             onChange={async (result) => {
               const downgraded =
                 result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
-              setProductInputs({
-                ...productInputs,
-                photo: downgraded,
-              });
+              handleInputChange("photo", downgraded);
             }}
+            previewImage={formInputs.photo}
+            error={formErrors.photo}
+            hideError={() => setFormErrors({ ...formErrors, photo: false })}
           />
         </div>
         <div className="main-form__input_hint">
           * - поля, обязательные для заполнения
         </div>
         <div className="main-form__buttons main-form__buttons--full">
-          <input
+          <Button
             className="main-form__submit main-form__submit--inverted"
-            type="submit"
+            inverted
             onClick={() => props.history.push("/products")}
-            value="Вернуться назад"
+            text="Вернуться назад"
           />
-          {/* <input className="main-form__submit" type="submit" onClick={handleSubmit} value="Изменить данные" />
-                    {isLoading && <ImgLoader />} */}
           <Button
             text="Изменить данные"
             isLoading={isLoading}

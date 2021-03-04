@@ -2,13 +2,9 @@
 
 .view-product {
     .select-packaging {
-        flex-direction: row;
         .select-packaging__input {
             width: calc(20% - 10px);
         }
-        //   .main-window {
-        //       padding-top: 0;
-        //   }
     }
 
     @media (max-width: 768px) {

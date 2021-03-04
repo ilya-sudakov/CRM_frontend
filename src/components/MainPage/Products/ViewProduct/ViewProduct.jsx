@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./ViewProduct.scss";
 import "../../../../utils/Form/Form.scss";
 import { getProductById } from "../../../../utils/RequestsAPI/Products.js";
 import { imgToBlobDownload } from "../../../../utils/functions.jsx";
 import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
 import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
+import { productsdefaultInputs } from "../objects";
+import useForm from "../../../../utils/hooks/useForm";
+import Button from "../../../../utils/Form/Button/Button.jsx";
 
 const ViewProduct = (props) => {
-  const [productInputs, setProductInputs] = useState({
-    name: "",
-    item: "",
-    weight: "",
-    group: "",
-    vendor: "",
-    category: "",
-    unit: "",
-    description: "",
-    barcode: "",
-    productionLocation: "",
-    packaging: [],
-    comment: "",
-  });
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    props.history.push("/products");
-  };
+  const { formInputs, updateFormInputs } = useForm(productsdefaultInputs);
 
   useEffect(() => {
     document.title = "Просмотр продукта";
@@ -38,7 +23,7 @@ const ViewProduct = (props) => {
         .then((res) => res.json())
         .then((oldProduct) => {
           console.log(oldProduct);
-          setProductInputs({
+          updateFormInputs({
             name: oldProduct.name,
             photo: oldProduct.photo,
             item: oldProduct.item,
@@ -49,7 +34,7 @@ const ViewProduct = (props) => {
             vendor: oldProduct.vendor,
             productionLocation: oldProduct.productionLocation,
             unit: oldProduct.unit,
-            packaging: oldProduct.packings,
+            packages: oldProduct.packings,
             comment: oldProduct.comment,
           });
         })
@@ -73,16 +58,16 @@ const ViewProduct = (props) => {
             <div className="main-form__product_img">
               <ImgLoader
                 imgClass=""
-                imgSrc={productInputs.photo}
+                imgSrc={formInputs.photo}
                 noPhotoTemplate
               />
-              {productInputs.photo !== "" && (
+              {formInputs.photo !== "" && (
                 <div
                   className="main-form__submit"
                   onClick={() =>
                     imgToBlobDownload(
-                      productInputs.photo,
-                      productInputs.name + ".jpeg"
+                      formInputs.photo,
+                      formInputs.name + ".jpeg"
                     )
                   }
                 >
@@ -97,7 +82,7 @@ const ViewProduct = (props) => {
               <input
                 type="text"
                 name="name"
-                defaultValue={productInputs.name}
+                defaultValue={formInputs.name}
                 readOnly
               />
             </div>
@@ -108,7 +93,7 @@ const ViewProduct = (props) => {
               <input
                 type="text"
                 name="weight"
-                defaultValue={productInputs.category}
+                defaultValue={formInputs.category}
                 readOnly
               />
             </div>
@@ -123,66 +108,49 @@ const ViewProduct = (props) => {
                 <input
                   type="text"
                   name="weight"
-                  defaultValue={productInputs.weight}
+                  defaultValue={formInputs.weight}
                   readOnly
                 />
               </div>
             </div>
-            {/* <div className="main-form__item">
-          <div className="main-form__input_name">Единица измерения</div>
-          <div className="main-form__input_field">
-            <input
-              type="text"
-              name="unit"
-              defaultValue={productInputs.unit}
-              readOnly
-            />
-          </div>
-        </div> */}
             <div className="main-form__item">
               <div className="main-form__input_name">Артикул</div>
               <div className="main-form__input_field">
                 <input
                   type="text"
                   name="vendor"
-                  defaultValue={productInputs.vendor}
+                  defaultValue={formInputs.vendor}
                   readOnly
                 />
               </div>
             </div>
-            {productInputs.description ? (
+            {formInputs.description ? (
               <div className="main-form__item">
                 <div className="main-form__input_name">Описание</div>
                 <div className="main-form__input_field">
                   <textarea
                     type="text"
                     name="description"
-                    defaultValue={productInputs.description}
+                    defaultValue={formInputs.description}
                     readOnly
                   />
                 </div>
               </div>
             ) : null}
-            {productInputs.barcode ? (
+            {formInputs.barcode ? (
               <div className="main-form__item">
                 <div className="main-form__input_name">Штрих-код</div>
                 <div className="main-form__input_field">
                   <input
                     type="text"
                     name="barcode"
-                    defaultValue={productInputs.barcode}
+                    defaultValue={formInputs.barcode}
                     readOnly
                   />
                 </div>
               </div>
             ) : null}
-            {/* <div className="main-form__item">
-                    <div className="main-form__input_name">Упаковка</div>
-                    <div className="main-form__input_field">
-                        <input type="text" name="packaging" defaultValue={productInputs.packaging} readOnly />
-                    </div>
-                </div> */}
-            <SelectPackaging defaultValue={productInputs.packaging} readOnly />
+            <SelectPackaging defaultValue={formInputs.packages} readOnly />
           </div>
           <div className="main-form__item">
             <div className="main-form__input_name">Место производства</div>
@@ -190,7 +158,7 @@ const ViewProduct = (props) => {
               <input
                 type="text"
                 name="productionLocation"
-                defaultValue={productInputs.productionLocation}
+                defaultValue={formInputs.productionLocation}
                 readOnly
               />
             </div>
@@ -201,17 +169,17 @@ const ViewProduct = (props) => {
               <input
                 type="text"
                 name="comment"
-                defaultValue={productInputs.comment}
+                defaultValue={formInputs.comment}
                 readOnly
               />
             </div>
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <Button
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
-              onClick={handleSubmit}
-              value="Вернуться назад"
+              inverted
+              onClick={() => props.history.push("/products")}
+              text="Вернуться назад"
             />
           </div>
         </form>

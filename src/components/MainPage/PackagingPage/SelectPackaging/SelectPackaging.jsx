@@ -104,18 +104,6 @@ const SelectPackaging = (props) => {
           </div>
         )}
       </div>
-      {/* {selected.length === 0 && props.required && (
-        <div className="main-window">
-          <div className="main-window__list">
-            <span>
-              <div className="main-window__reminder">
-                <div>!</div>
-                <div>Не выбрана упаковка</div>
-              </div>
-            </span>
-          </div>
-        </div>
-      )} */}
       {selected.length > 0 && (
         <div className="main-window">
           <div className="main-window__list">

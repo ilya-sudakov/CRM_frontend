@@ -87,7 +87,7 @@
     font-size: 0.85rem;
     box-sizing: border-box;
     cursor: pointer;
-    
+
     border: 1px solid #d48282;
     background-color: #fadada;
     color: #ad1c1c;
@@ -120,13 +120,23 @@
 
     li {
       display: flex;
+      width: 100%;
       div {
-        color: #777777;
-        margin-left: 10px;
-        cursor: pointer;
+        &:nth-child(1) {
+          width: 100%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          max-width: 100%;
+          overflow: hidden;
+        }
+        &:nth-child(2) {
+          color: #777777;
+          margin-left: 10px;
+          cursor: pointer;
 
-        &:hover {
-          text-decoration: underline;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
