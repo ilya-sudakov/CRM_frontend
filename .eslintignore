@@ -4,6 +4,6 @@ package-lock.json
 /coverage/
 public/
 bin/
-src/static/built
-src/templates
+src/static/built/
+src/templates/
 assets/

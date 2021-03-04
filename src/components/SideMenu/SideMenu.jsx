@@ -42,14 +42,14 @@ const SideMenu = (props) => {
                 name: 'Создать клиента',
                 pathname: '/clients/new',
                 link: '/clients/new',
-                renderIcon: () => <PlusImg className="sidemenu__img" />,
+                renderIcon: <PlusImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               {
                 name: 'Управление категориями',
                 pathname: '/clients/categories',
                 link: '/clients/categories',
-                renderIcon: () => <ContractImg className="sidemenu__img" />,
+                renderIcon: <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
@@ -86,7 +86,7 @@ const SideMenu = (props) => {
                 name: 'Создать поставщика',
                 pathname: '/suppliers/new',
                 link: '/suppliers/new',
-                renderIcon: () => <PlusImg className="sidemenu__img" />,
+                renderIcon: <PlusImg className="sidemenu__img" />,
                 mainRoles: [
                   'ROLE_ADMIN',
                   'ROLE_MANAGER',
@@ -99,7 +99,7 @@ const SideMenu = (props) => {
                 name: 'Управление категориями',
                 pathname: '/suppliers/categories',
                 link: '/suppliers/categories',
-                renderIcon: () => <ContractImg className="sidemenu__img" />,
+                renderIcon: <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
@@ -191,7 +191,7 @@ const SideMenu = (props) => {
                 }
                 to={item.linkTo ? item.linkTo : item.pathname}
               >
-                {item.renderIcon && item.renderIcon()}
+                {item.renderIcon && item.renderIcon}
                 <span>{item.name}</span>
               </Link>
               {item.addButtonName &&
@@ -235,7 +235,7 @@ const SideMenu = (props) => {
                         >
                           <div className="sidemenu__link">
                             {dropdownMenuItem.renderIcon &&
-                              dropdownMenuItem.renderIcon()}
+                              dropdownMenuItem.renderIcon}
                             {dropdownMenuItem.name}
                           </div>
                         </Link>

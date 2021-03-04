@@ -1,4 +1,3 @@
-import React from 'react';
 import TasksList from './TasksList.jsx';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';

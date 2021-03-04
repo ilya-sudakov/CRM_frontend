@@ -48,7 +48,7 @@ export const getDefaultItems = (userContext) => {
         : '/lemz/workshop-lemz',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
-      renderIcon: () => (
+      renderIcon: (
         <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
       ),
       iconClassName: 'sidemenu__img',
@@ -63,7 +63,7 @@ export const getDefaultItems = (userContext) => {
         : '/lepsari/workshop-lepsari',
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
-      renderIcon: () => (
+      renderIcon: (
         <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
       ),
       iconClassName: 'sidemenu__img',
