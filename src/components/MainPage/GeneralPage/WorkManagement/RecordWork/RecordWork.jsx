@@ -315,7 +315,7 @@ const NewRecordWork = (props) => {
                   onClick={handleClickPrevPage}
                 />
                 <Button
-                  text="Создать запись"
+                  text="Сохранить данные"
                   isLoading={isLoading}
                   className="main-form__submit"
                   onClick={handleSubmit}
