@@ -29,6 +29,8 @@ import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 import { clientsDefaultInputs } from '../objects';
 import useForm from 'Utils/hooks/useForm.js';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
+import { clientsFormHeaderMenu } from '../functions';
 
 const EditClient = (props) => {
   const {
@@ -54,10 +56,18 @@ const EditClient = (props) => {
       name: 'поставщик',
     },
   };
+  const { titleHeader, curPage } = useTitleHeader(
+    `Редактирование ${clientTypes[props.type].name}а`,
+    [
+      ...clientsFormHeaderMenu(clientTypes[props.type].name),
+      { pageTitle: 'Заказы', pageName: 'requestsHistory' },
+    ],
+    'clientData',
+    'main-form',
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [clientId, setClientId] = useState(0);
-  const [curTab, setCurTab] = useState('clientData');
 
   const handleSubmit = () => {
     if (!formIsValid()) return;
@@ -268,67 +278,17 @@ const EditClient = (props) => {
     <div className="edit_client">
       <div className="main-form">
         <form className="main-form__form">
-          <div className="main-form__header main-form__header--full">
-            <div className="main-form__title">{`Редактирование ${
-              clientTypes[props.type].name
-            }а`}</div>
-            <div className="main-form__menu">
-              <div
-                className={
-                  curTab === 'workHistory'
-                    ? 'main-form__menu-item main-form__menu-item--active'
-                    : 'main-form__menu-item'
-                }
-                onClick={() => {
-                  setCurTab('workHistory');
-                }}
-              >
-                История работы
-              </div>
-              <div
-                className={
-                  curTab === 'requestsHistory'
-                    ? 'main-form__menu-item main-form__menu-item--active'
-                    : 'main-form__menu-item'
-                }
-                onClick={() => {
-                  setCurTab('requestsHistory');
-                }}
-              >
-                Заказы
-              </div>
-              <div
-                className={
-                  curTab === 'clientData'
-                    ? 'main-form__menu-item main-form__menu-item--active'
-                    : 'main-form__menu-item'
-                }
-                onClick={() => {
-                  setCurTab('clientData');
-                }}
-              >
-                {`Данные ${clientTypes[props.type].name}а`}
-              </div>
-            </div>
-          </div>
+          {titleHeader}
           {errorWindow}
-          {curTab === 'workHistory' ? (
-            <>
-              {/* Добавление истории работ */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">История работ*</div>
-                <div className="main-form__input_field">
-                  <SelectWorkHistory
-                    handleWorkHistoryChange={(value) => {
-                      handleInputChange('workHistoryNew', value);
-                    }}
-                    defaultValue={formInputs.workHistoryNew}
-                    userHasAccess={props.userHasAccess}
-                  />
-                </div>
-              </div>
-            </>
-          ) : curTab === 'requestsHistory' ? (
+          {curPage === 'workHistory' ? (
+            <SelectWorkHistory
+              handleWorkHistoryChange={(value) => {
+                handleInputChange('workHistoryNew', value);
+              }}
+              defaultValue={formInputs.workHistoryNew}
+              userHasAccess={props.userHasAccess}
+            />
+          ) : curPage === 'requestsHistory' ? (
             <RequestHistory id={formInputs.id} />
           ) : (
             <>

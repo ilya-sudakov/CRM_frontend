@@ -32,7 +32,7 @@ const NewRecordWork = (props) => {
   const [curDate, setCurDate] = useState(
     query.get('date') ? new Date(query.get('date')) : new Date(),
   );
-  const { products, categories, isLoadingProducts } = useProductsList();
+  const { products, categories } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [curPage, setCurPage] = useState(0);
   const [wrapperHeight, setWrapperHeight] = useState('0px');

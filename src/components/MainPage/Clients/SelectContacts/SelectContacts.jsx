@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import deleteSVG from 'Assets/select/delete.svg';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import './SelectContacts.scss';
 
@@ -31,7 +29,6 @@ const SelectContacts = (props) => {
 
   const handleNewContact = () => {
     //Открыть по дефолту форму
-    const id = selected.length;
     setSelected([
       ...selected,
       {
@@ -94,6 +91,7 @@ const SelectContacts = (props) => {
               <NestedFormItem
                 item={item}
                 index={index}
+                key={index}
                 readOnly={props.readOnly}
                 itemsLength={selected.length}
                 handleDeleteItem={deleteContact}

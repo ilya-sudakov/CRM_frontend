@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 import TitleHeader from '../../MainWindow/TitleHeader/TitleHeader.jsx';
 
-const useTitleHeader = (title, menuItems, initPage, updates = []) => {
+const useTitleHeader = (
+  title,
+  menuItems,
+  initPage,
+  type = 'main-window',
+  updates = [],
+) => {
   const [curPage, setCurPage] = useState(initPage);
 
   useEffect(() => {}, [...updates, curPage]);
@@ -12,6 +18,7 @@ const useTitleHeader = (title, menuItems, initPage, updates = []) => {
       menuItems={menuItems}
       curPage={curPage}
       setCurPage={setCurPage}
+      type={type}
     />
   );
 

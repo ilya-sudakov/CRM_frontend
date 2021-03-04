@@ -4,4 +4,23 @@
     .main-window__header--full {
         width: 100%;
     }
+
+    .main-form__header--full {
+        width: 100%;
+        margin-left: -25px;
+
+        .main-form__item {
+            margin-bottom: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-form__header--full {
+            margin-left: -10px;
+
+            .main-form__menu {
+                width: 100%;
+            }
+        }
+    }
 }

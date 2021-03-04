@@ -19,6 +19,8 @@ import UserContext from '../../../../App.js';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import useForm from 'Utils/hooks/useForm.js';
 import { clientsDefaultInputs } from '../objects';
+import { clientsFormHeaderMenu } from '../functions';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -59,10 +61,15 @@ const newClient = (props) => {
         addClientWorkHistory(newWorkHistory),
     },
   };
+  const { titleHeader, curPage } = useTitleHeader(
+    `Новый ${clientTypes[props.type].name}`,
+    clientsFormHeaderMenu(clientTypes[props.type].name),
+    'clientData',
+    'main-form',
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [curTab, setCurTab] = useState('clientData');
 
   //Добавление клиента и остальных обязательных данных
   //при корректном заполнении всей формы
@@ -195,55 +202,18 @@ const newClient = (props) => {
     <div className="new_client">
       <div className="main-form">
         <form className="main-form__form">
-          {/* //Меню для перехода на разные страницы формы */}
-          <div className="main-form__header main-form__header--full">
-            <div className="main-form__title">{`Новый ${
-              clientTypes[props.type].name
-            }`}</div>
-            <div className="main-form__menu">
-              {' '}
-              <div
-                className={
-                  curTab === 'workHistory'
-                    ? 'main-form__menu-item main-form__menu-item--active'
-                    : 'main-form__menu-item'
-                }
-                onClick={() => {
-                  setCurTab('workHistory');
-                }}
-              >
-                История работы
-              </div>
-              <div
-                className={
-                  curTab === 'clientData'
-                    ? 'main-form__menu-item main-form__menu-item--active'
-                    : 'main-form__menu-item'
-                }
-                onClick={() => {
-                  setCurTab('clientData');
-                }}
-              >
-                {`Данные ${clientTypes[props.type].name}а`}
-              </div>
-            </div>
-          </div>
+          {titleHeader}
           {errorWindow}
-          {curTab === 'workHistory' ? (
+          {/* Добавление истории работ */}
+          {curPage === 'workHistory' ? (
             <>
-              {/* Добавление истории работ */}
-              <div className="main-form__item">
-                <div className="main-form__input_name">История работ*</div>
-                <div className="main-form__input_field">
-                  <SelectWorkHistory
-                    handleWorkHistoryChange={(value) => {
-                      handleInputChange('workHistory', value);
-                    }}
-                    defaultValue={formInputs.workHistory}
-                    userHasAccess={userContext.userHasAccess}
-                  />
-                </div>
-              </div>
+              <SelectWorkHistory
+                handleWorkHistoryChange={(value) => {
+                  handleInputChange('workHistory', value);
+                }}
+                defaultValue={formInputs.workHistory}
+                userHasAccess={userContext.userHasAccess}
+              />
             </>
           ) : (
             <>

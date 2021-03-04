@@ -13,6 +13,21 @@
     font-size: 0.8rem;
   }
 
+  .main-form__item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 5px;
+    .main-form__input_name {
+      width: fit-content;
+      margin-bottom: 0;
+      flex: none;
+    }
+    .main-form__input_field {
+      width: fit-content;
+    }
+  }
+
   .select-work-history__hints-wrapper {
     position: absolute;
     top: 100%;
@@ -79,7 +94,7 @@
       &:last-child {
         margin-right: 0px;
         .main-form__img {
-        width: 17px;
+          width: 17px;
         }
       }
     }
@@ -90,6 +105,23 @@
       .main-form__buttons {
         max-width: none;
         width: 100% !important;
+
+        span:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    .main-form__item {
+      flex-direction: column;
+      align-items: flex-start;
+      .add-to-button {
+        &__link {
+          margin-left: 0;
+          padding-left: 0;
+        }
       }
     }
   }

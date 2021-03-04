@@ -50,7 +50,7 @@
       width: 100%;
     }
 
-    .main-form__menu-item {
+    .main-form__item {
       width: fit-content;
       margin-right: 2.5px;
       font-size: 80%;
@@ -617,7 +617,7 @@
         width: calc(100% - 25px);
         overflow-x: auto;
 
-        .main-form__menu-item {
+        .main-form__item {
           white-space: nowrap;
           margin: 0 15px;
         }

@@ -3,19 +3,30 @@ import { Link } from 'react-router-dom';
 
 import './TitleHeader.scss';
 
-const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
+const TitleHeader = ({
+  title,
+  menuItems,
+  curPage,
+  setCurPage,
+  type = 'main-window',
+}) => {
+  const types = {
+    'main-window': 'main-window',
+    'main-form': 'main-form',
+  };
+  const curClassName = types[type];
   return (
     <div className="title-header">
-      <div className="main-window__header main-window__header--full">
-        {title ? <div className="main-window__title">{title}</div> : null}
+      <div className={`${curClassName}__header ${curClassName}__header--full`}>
+        {title ? <div className={`${curClassName}__title`}>{title}</div> : null}
         {menuItems ? (
-          <div className="main-window__menu">
+          <div className={`${curClassName}__menu`}>
             {menuItems.map((item) => {
               const itemContents = (
                 <>
                   {item.pageTitle}
                   {item.count ? (
-                    <span className="main-window__items-count">
+                    <span className={`${curClassName}__items-count`}>
                       {item.count}
                     </span>
                   ) : null}
@@ -23,11 +34,11 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
               );
               return item.link ? (
                 <Link
-                  className={`main-window__item ${
+                  className={`${curClassName}__item ${
                     (item.isActive === undefined &&
                       curPage === item.pageName) ||
                     item.isActive
-                      ? 'main-window__item--active'
+                      ? `${curClassName}__item--active`
                       : ''
                   }`}
                   to={item.link}
@@ -37,11 +48,11 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
                 </Link>
               ) : (
                 <div
-                  className={`main-window__item ${
+                  className={`${curClassName}__item ${
                     (item.isActive === undefined &&
                       curPage === item.pageName) ||
                     item.isActive
-                      ? 'main-window__item--active'
+                      ? `${curClassName}__item--active`
                       : ''
                   }`}
                   onClick={() => setCurPage(item.pageName)}
@@ -64,4 +75,5 @@ TitleHeader.propTypes = {
   menuItems: PropTypes.array,
   curPage: PropTypes.string,
   setCurPage: PropTypes.func,
+  type: PropTypes.bool,
 };

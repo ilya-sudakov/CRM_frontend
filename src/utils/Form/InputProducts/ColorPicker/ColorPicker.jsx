@@ -5,17 +5,8 @@ import './ColorPicker.scss';
 const ColorPicker = (props) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  const clickOnColorOption = (event) => {
-    // const id = Number.parseInt(event.target.getAttribute("index"));
-    const id = props.id;
-    const color = event.target.classList[1].split(
-      'select-product__color_option--',
-    )[1];
-    const req = Object.assign({
-      color: color,
-    });
-    // console.log(color, id);
-    props.handleStatusChange(color, id);
+  const clickOnColorOption = (color) => {
+    props.handleStatusChange(color, props.id);
     setShowColorPicker(false);
   };
 
@@ -32,10 +23,6 @@ const ColorPicker = (props) => {
       <div
         className="select-product__color_name"
         onClick={() => setShowColorPicker(!showColorPicker)}
-        // style={{
-        //   whiteSpace: 'nowrap'
-        // }}
-        // style={props.style}
       >
         {props.defaultName}
         <img className="tableview__img" src={chevronDownIcon} />
@@ -48,19 +35,19 @@ const ColorPicker = (props) => {
         }
       >
         <div
-          onClick={clickOnColorOption}
+          onClick={() => clickOnColorOption('completed')}
           className="select-product__color_option select-product__color_option--completed"
         >
           Завершено
         </div>
         <div
-          onClick={clickOnColorOption}
+          onClick={() => clickOnColorOption('defect')}
           className="select-product__color_option select-product__color_option--defect"
         >
           Приоритет
         </div>
         <div
-          onClick={clickOnColorOption}
+          onClick={() => clickOnColorOption('production')}
           className="select-product__color_option select-product__color_option--production"
         >
           В работе

@@ -7,7 +7,7 @@ import './SelectWorkHistory.scss';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import { formatDateStringWithTime } from 'Utils/functions.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 
@@ -23,14 +23,14 @@ const SelectWorkHistory = (props) => {
     comment: '',
   };
   const [newItem, setNewItem] = useState(defaultItem);
-  const [hints, setHints] = useState([
+  const hints = [
     'Предложение сотрудничества',
     'Отсылка материалов',
     'Обсуждение условий',
     'Техническая консультация',
     'Текущая работа',
     'Заявка',
-  ]);
+  ];
 
   useEffect(() => {
     if (props.defaultValue !== undefined && props.defaultValue.length !== 0) {
@@ -61,16 +61,20 @@ const SelectWorkHistory = (props) => {
 
   return (
     <div className="select-work-history">
-      {!props.readOnly && (
-        <Button
-          className="main-window__button"
-          onClick={() => {
-            setCreatingItem(true);
-            return setNewItem(defaultItem);
-          }}
-          text="Добавить запись в историю"
-        />
-      )}
+      <div className="main-form__item">
+        <div className="main-form__input_name">История работ</div>
+        <div className="main-form__input_field">
+          {!props.readOnly && (
+            <AddToButton
+              text="Добавить запись в историю"
+              onClick={() => {
+                setCreatingItem(true);
+                return setNewItem(defaultItem);
+              }}
+            />
+          )}
+        </div>
+      </div>
       <div className="main-window">
         {creatingItem ? (
           <NestedFormItem
@@ -117,21 +121,24 @@ const SelectWorkHistory = (props) => {
                             : 'select-work-history__hints-wrapper select-work-history__hints-wrapper--hidden'
                         }
                       >
-                        {filterHints(hints, newItem.action).map((hint) => (
-                          <div
-                            className="select-work-history__hint"
-                            name={hint}
-                            onClick={() => {
-                              setNewItem({
-                                ...newItem,
-                                action: hint,
-                              });
-                              setShowHints(false);
-                            }}
-                          >
-                            {hint}
-                          </div>
-                        ))}
+                        {filterHints(hints, newItem.action).map(
+                          (hint, index) => (
+                            <div
+                              key={index}
+                              className="select-work-history__hint"
+                              name={hint}
+                              onClick={() => {
+                                setNewItem({
+                                  ...newItem,
+                                  action: hint,
+                                });
+                                setShowHints(false);
+                              }}
+                            >
+                              {hint}
+                            </div>
+                          ),
+                        )}
                       </div>
                     )}
                   </span>
@@ -195,7 +202,7 @@ const SelectWorkHistory = (props) => {
         {sortByField(items, { fieldName: 'date', direction: 'desc' }).map(
           (item, index) => (
             <NestedFormItem
-              index={index}
+              key={item.id}
               readOnly={true}
               isMinimizedDefault={true}
               deleteItem={() => deleteItem(index)}

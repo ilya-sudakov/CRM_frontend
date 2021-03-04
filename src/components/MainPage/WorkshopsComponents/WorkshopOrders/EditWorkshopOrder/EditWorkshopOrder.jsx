@@ -149,7 +149,6 @@ const EditWorkshopOrder = (props) => {
             handleInputChange={({ target }) =>
               handleInputChange('assembly', target.value)
             }
-            handleInputChange={handleInputChange}
             readOnly={!userContext.userHasAccess(['ROLE_ADMIN'])}
           />
           <InputDate
