@@ -16,7 +16,7 @@ COPY . .
 
 RUN npm run test -- --silent
 
-RUN npm run webpack:prod
+RUN npm run webpack --mode development
 
 FROM nginx:stable
 
