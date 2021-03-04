@@ -15,4 +15,3 @@ jobs:
       - run: npm install
       - run: npm run webpack:prod
       - run: npm run format
-      - run: npm run lint

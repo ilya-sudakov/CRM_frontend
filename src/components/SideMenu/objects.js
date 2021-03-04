@@ -30,9 +30,7 @@ export const mainPage = {
   linkTo: '/',
   addButtonLinkTo: '/work-management/record-time',
   name: 'Главная',
-  renderIcon: function () {
-    <HomeImg className="sidemenu__img" />;
-  },
+  renderIcon: () => <HomeImg className="sidemenu__img" />,
 };
 
 export const generalTasks = {
@@ -41,9 +39,7 @@ export const generalTasks = {
   mainRoles: allRoles,
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonName: 'Добавить задачу',
-  renderIcon: function () {
-    <TasksImg width="20" className="sidemenu__img" />;
-  },
+  renderIcon: () => <TasksImg width="20" className="sidemenu__img" />,
 };
 
 export const clients = {
@@ -53,9 +49,7 @@ export const clients = {
   addButtonLinkTo: '/clients/new',
   mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   name: 'Клиенты',
-  renderIcon: function () {
-    <ClientImg className="sidemenu__img" />;
-  },
+  renderIcon: () => <ClientImg className="sidemenu__img" />,
   dropdownMenu: [],
 };
 
@@ -66,9 +60,7 @@ export const suppliers = {
   addButtonLinkTo: '/suppliers/new',
   mainRoles: allRoles,
   name: 'Поставщики',
-  renderIcon: function () {
-    <SupplierIcon className="sidemenu__img" />;
-  },
+  renderIcon: () => <SupplierIcon className="sidemenu__img" />,
   dropdownMenu: [],
 };
 
@@ -87,9 +79,9 @@ export const requests = {
   mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   addButtonName: 'Добавить заявку',
-  renderIcon: function () {
-    <PlayListImg className="sidemenu__img sidemenu__img--request" />;
-  },
+  renderIcon: () => (
+    <PlayListImg className="sidemenu__img sidemenu__img--request" />
+  ),
 };
 
 export const products = {
@@ -98,18 +90,16 @@ export const products = {
   mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_WORKSHOP'],
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   addButtonName: 'Добавить продукцию',
-  renderIcon: function () {
-    <BoxImg className="sidemenu__img sidemenu__img--product" />;
-  },
+  renderIcon: () => <BoxImg className="sidemenu__img sidemenu__img--product" />,
 };
 
 export const priceList = {
   pathname: '/price-list',
   name: 'Каталог продукции',
   mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
-  renderIcon: function () {
-    <PriceListImg className="sidemenu__img sidemenu__img--price" />;
-  },
+  renderIcon: () => (
+    <PriceListImg className="sidemenu__img sidemenu__img--price" />
+  ),
 };
 
 export const workshopLEMZ = {
@@ -132,18 +122,16 @@ export const workshopLigosvkiy = {
   linkTo: '/rigging-list',
   mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY', 'ROLE_DISPATCHER'],
   name: 'ЦехЛиговский',
-  renderIcon: function () {
-    <FactoryIcon className="sidemenu__img sidemenu__img--factory" />;
-  },
+  renderIcon: () => (
+    <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+  ),
   iconClassName: 'sidemenu__img',
   dropdownMenu: [
     {
       name: 'Очередь инструментального производства',
       pathname: '/rigging-list',
       link: '/rigging-list',
-      renderIcon: function () {
-        <ListImg className="sidemenu__img" />;
-      },
+      renderIcon: () => <ListImg className="sidemenu__img" />,
       mainRoles: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
     },
   ],
@@ -161,36 +149,32 @@ export const lepsariDropdown = [
     name: 'Очередь производства',
     pathname: '/lepsari/workshop-lepsari',
     link: '/lepsari/workshop-lepsari',
-    renderIcon: function () {
-      <PlayListImg className="sidemenu__img sidemenu__img--request" />;
-    },
+    renderIcon: () => (
+      <PlayListImg className="sidemenu__img sidemenu__img--request" />
+    ),
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
   },
   {
     name: 'Очередь инструментального производства',
     pathname: '/rigging-list',
     link: '/rigging-list',
-    renderIcon: function () {
-      <ListImg className="sidemenu__img" />;
-    },
+    renderIcon: () => <ListImg className="sidemenu__img" />,
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
   },
   {
     name: 'Склад',
     pathname: '/lepsari/workshop-storage',
     link: '/lepsari/workshop-storage',
-    renderIcon: function () {
-      <BoxImg className="sidemenu__img sidemenu__img--product" />;
-    },
+    renderIcon: () => (
+      <BoxImg className="sidemenu__img sidemenu__img--product" />
+    ),
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
   },
   {
     name: 'Комплектация цеха',
     pathname: '/lepsari/workshop-orders',
     link: '/lepsari/workshop-orders',
-    renderIcon: function () {
-      <ScrewImg className="sidemenu__img" />;
-    },
+    renderIcon: () => <ScrewImg className="sidemenu__img" />,
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
   },
 ];
@@ -200,27 +184,25 @@ export const lemzDropdown = [
     name: 'Очередь производства',
     pathname: '/lemz/workshop-lemz',
     link: '/lemz/workshop-lemz',
-    renderIcon: function () {
-      <PlayListImg className="sidemenu__img sidemenu__img--request" />;
-    },
+    renderIcon: () => (
+      <PlayListImg className="sidemenu__img sidemenu__img--request" />
+    ),
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
   },
   {
     name: 'Очередь инструментального производства',
     pathname: '/rigging-list',
     link: '/rigging-list',
-    renderIcon: function () {
-      <ListImg className="sidemenu__img" />;
-    },
+    renderIcon: () => <ListImg className="sidemenu__img" />,
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
   },
   {
     name: 'Склад',
     pathname: '/lemz/workshop-storage',
     link: '/lemz/workshop-storage',
-    renderIcon: function () {
-      <BoxImg className="sidemenu__img sidemenu__img--product" />;
-    },
+    renderIcon: () => (
+      <BoxImg className="sidemenu__img sidemenu__img--product" />
+    ),
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ'],
   },
   {
@@ -228,9 +210,7 @@ export const lemzDropdown = [
     pathname: '/lemz/workshop-orders',
     link: '/lemz/workshop-orders',
     mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
-    renderIcon: function () {
-      <ScrewImg className="sidemenu__img" />;
-    },
+    renderIcon: () => <ScrewImg className="sidemenu__img" />,
   },
 ];
 
@@ -258,9 +238,7 @@ export const rigging = {
     'ROLE_WORKSHOP',
   ],
   name: 'Оснастка',
-  renderIcon: function () {
-    <WrenchImg className="sidemenu__img" />;
-  },
+  renderIcon: () => <WrenchImg className="sidemenu__img" />,
 };
 
 export const stamp = {
@@ -311,9 +289,9 @@ export const employees = {
   mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonName: 'Добавить сотрудника',
-  renderIcon: function () {
-    <EmployeesImg className="sidemenu__img sidemenu__img--employees" />;
-  },
+  renderIcon: () => (
+    <EmployeesImg className="sidemenu__img sidemenu__img--employees" />
+  ),
 };
 
 export const transportation = {
@@ -322,9 +300,7 @@ export const transportation = {
   mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonName: 'Добавить запись',
-  renderIcon: function () {
-    <TruckImg className="sidemenu__img sidemenu__img--truck" />;
-  },
+  renderIcon: () => <TruckImg className="sidemenu__img sidemenu__img--truck" />,
 };
 
 export const feedback = {
@@ -333,18 +309,14 @@ export const feedback = {
   mainRoles: allRoles,
   addButtonRoles: allRoles,
   addButtonName: 'Оставить сообщение',
-  renderIcon: function () {
-    <FeedbackImg className="sidemenu__img" />;
-  },
+  renderIcon: () => <FeedbackImg className="sidemenu__img" />,
 };
 
 export const etcetera = {
   pathname: '/etcetera',
   name: 'Остальное',
   mainRoles: allRoles,
-  renderIcon: function () {
-    <MoreImg className="sidemenu__img" />;
-  },
+  renderIcon: () => <MoreImg className="sidemenu__img" />,
 };
 
 export const packaging = {

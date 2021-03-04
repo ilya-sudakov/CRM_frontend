@@ -1,8 +1,8 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./index.scss";
 import { App } from "../App.js";
+import firebase from "firebase/app";
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker

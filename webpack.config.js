@@ -21,11 +21,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-        ],
+        use: 'babel-loader',
       },
       {
         test: /\.(png|svg|jpg|gif|ico|json)$/,
@@ -72,6 +68,9 @@ module.exports = {
     }),
     new Dotenv({
       path: './.env',
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
     }),
   ],
   resolve: {

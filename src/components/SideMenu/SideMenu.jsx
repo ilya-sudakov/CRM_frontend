@@ -42,18 +42,14 @@ const SideMenu = (props) => {
                 name: 'Создать клиента',
                 pathname: '/clients/new',
                 link: '/clients/new',
-                renderIcon: function () {
-                  <PlusImg className="sidemenu__img" />;
-                },
+                renderIcon: () => <PlusImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               {
                 name: 'Управление категориями',
                 pathname: '/clients/categories',
                 link: '/clients/categories',
-                renderIcon: function () {
-                  <ContractImg className="sidemenu__img" />;
-                },
+                renderIcon: () => <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
@@ -90,9 +86,7 @@ const SideMenu = (props) => {
                 name: 'Создать поставщика',
                 pathname: '/suppliers/new',
                 link: '/suppliers/new',
-                renderIcon: function () {
-                  <PlusImg className="sidemenu__img" />;
-                },
+                renderIcon: () => <PlusImg className="sidemenu__img" />,
                 mainRoles: [
                   'ROLE_ADMIN',
                   'ROLE_MANAGER',
@@ -105,9 +99,7 @@ const SideMenu = (props) => {
                 name: 'Управление категориями',
                 pathname: '/suppliers/categories',
                 link: '/suppliers/categories',
-                renderIcon: function () {
-                  <ContractImg className="sidemenu__img" />;
-                },
+                renderIcon: () => <ContractImg className="sidemenu__img" />,
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
