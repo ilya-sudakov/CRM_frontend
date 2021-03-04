@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import {
   formatDateString,
   addSpaceDelimiter,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import './TableView.scss';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../assets/tableview/delete.svg';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);

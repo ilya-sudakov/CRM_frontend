@@ -3,7 +3,7 @@ import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import PlusImg from '../../../../assets/sidemenu/plus.inline.svg';
 import './LEMZ.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
 import {
@@ -18,7 +18,7 @@ import {
   EditRequest,
   ShipRequest,
 } from '../lazyImports.jsx';
-import useTitleHeader from '../../../utils/hooks/uiComponents/useTitleHeader.js';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
 const LEMZ = (props) => {
   const menuItems = [

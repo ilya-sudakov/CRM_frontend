@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './ViewRequests.scss';
 import TableView from '../../WorkshopsComponents/TableView/TableView.jsx';
-import usePagination from '../../../../utils/hooks/usePagination/usePagination';
+import usePagination from 'Utils/hooks/usePagination/usePagination';
 import { sortRequests } from '../../WorkshopsComponents/TableView/functions.js';
 
 const ViewRequests = (data) => {

@@ -1,22 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
 import './Clients.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
-import '../../../utils/Form/Form.scss';
-import { searchClients } from '../../../utils/RequestsAPI/Clients.jsx';
+import 'Utils/MainWindow/MainWindow.scss';
+import 'Utils/Form/Form.scss';
+import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
-import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
-import Button from '../../../utils/Form/Button/Button.jsx';
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';
 import EditNextContactDate from './MainComponents/EditContactDay.jsx';
 import ClientsList from './MainComponents/ClientsList.jsx';
 import UserContext from '../../../App.js';
 import { getEmailsExcel } from './MainComponents/functions.js';
-import { changeSortOrder } from '../../../utils/functions.jsx';
+import { changeSortOrder } from 'Utils/functions.jsx';
 import { clientTypes } from './MainComponents/objects.js';
-import usePagination from '../../../utils/hooks/usePagination/usePagination';
+import usePagination from 'Utils/hooks/usePagination/usePagination';
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);

@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
 import './RecordWork.scss';
-import '../../../../../utils/Form/Form.scss';
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import 'Utils/Form/Form.scss';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import SelectWork from '../SelectWork/SelectWork.jsx';
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
-import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import { submitWorkData } from './functions.js';
-import useQuery from '../../../../../utils/hooks/useQuery';
-import { getWorkReportByDateAndEmployee } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import useQuery from 'Utils/hooks/useQuery';
+import { getWorkReportByDateAndEmployee } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import UserContext from '../../../../../App.js';
-import { getEmployeeById } from '../../../../../utils/RequestsAPI/Employees.jsx';
+import { getEmployeeById } from 'Utils/RequestsAPI/Employees.jsx';
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({

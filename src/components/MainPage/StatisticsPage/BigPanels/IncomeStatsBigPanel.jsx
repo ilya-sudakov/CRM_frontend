@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
-import { months } from '../../../../utils/dataObjects';
+import { months } from 'Utils/dataObjects';
 import {
   addSpaceDelimiter,
   getRandomNiceColor,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import {
   checkIfDateIsInRange,
   checkRequestsForSelectedMonth,
 } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import BigPanel from './BigPanel.jsx';
-import BarChart from '../../../../utils/Charts/BarChart/BarChart.jsx';
-import { tooltipLabelRubles } from '../../../../utils/Charts/callbacks.js';
+import BarChart from 'Utils/Charts/BarChart/BarChart.jsx';
+import { tooltipLabelRubles } from 'Utils/Charts/callbacks.js';
 
 const IncomeStatsBigPanel = ({
   requests,

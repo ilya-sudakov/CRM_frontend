@@ -5,8 +5,8 @@ import './Select.scss';
 import SearchBar from '../../../components/MainPage/SearchBar/SearchBar.jsx';
 import TableView from '../../../components/MainPage/Products/TableView/TableView.jsx';
 import FormWindow from '../../Form/FormWindow/FormWindow.jsx';
-import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useSort from '../../hooks/useSort/useSort';
 import {
   renderNewQuantity,

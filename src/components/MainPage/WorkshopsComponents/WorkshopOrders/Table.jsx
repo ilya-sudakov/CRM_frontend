@@ -1,12 +1,12 @@
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateString,
   addSpaceDelimiter,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 
 import editSVG from '../../../../../assets/tableview/edit.svg';
-import TableActions from '../../../../utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from '../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 
 const Tableview = ({
   data,

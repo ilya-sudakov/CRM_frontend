@@ -3,10 +3,10 @@ import './SelectLegalEntity.scss';
 import {
   getInfoByINN,
   getBIKByINN,
-} from '../../../../utils/RequestsAPI/Clients.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
-import AddToButton from '../../../../utils/Form/AddToButton/AddToButton.jsx';
+} from 'Utils/RequestsAPI/Clients.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
 
 const SelectLegalEntity = (props) => {
   const newEntity = {

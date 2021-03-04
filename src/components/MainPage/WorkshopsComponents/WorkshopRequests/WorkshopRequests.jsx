@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import './WorkshopRequests.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import PrintIcon from '../../../../../assets/print.png';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import {
   getRequestsByWorkshop,
   transferRequest,
   getRequests,
-} from '../../../../utils/RequestsAPI/Requests.jsx';
+} from 'Utils/RequestsAPI/Requests.jsx';
 import {
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
-} from '../../../../utils/functions.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/functions.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { pages, requstsSortOptions } from '../objects.js';
 import chevronDown from '../../../../../assets/tableview/chevron-down.svg';
-import useSort from '../../../../utils/hooks/useSort/useSort.js';
-import useTitleHeader from '../../../../utils/hooks/uiComponents/useTitleHeader';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import useSort from 'Utils/hooks/useSort/useSort.js';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader';
+import { sortByField } from 'Utils/sorting/sorting';
 import { requestStatuses, workshops } from '../workshopVariables.js';
 import {
   copySelectedRequest,
@@ -31,7 +31,7 @@ import {
   getPageByRequest,
   printRequestsList,
 } from '../functions.js';
-import useFormWindow from '../../../../utils/hooks/useFormWindow';
+import useFormWindow from 'Utils/hooks/useFormWindow';
 
 const WorkshopRequests = (props) => {
   const [requests, setRequests] = useState([]);

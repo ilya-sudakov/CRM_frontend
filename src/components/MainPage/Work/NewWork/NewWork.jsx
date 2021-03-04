@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './NewWork.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import { addWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import { customSelectStyles } from '../../../../utils/dataObjects';
-import useForm from '../../../../utils/hooks/useForm';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import { addWork } from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import { customSelectStyles } from 'Utils/dataObjects';
+import useForm from 'Utils/hooks/useForm';
 import { workItemDefaultInputs } from '../objects';
 
 const NewWork = (props) => {

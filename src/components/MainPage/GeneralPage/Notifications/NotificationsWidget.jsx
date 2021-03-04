@@ -3,7 +3,7 @@ import openWidget from '../../../../../assets/tableview/bx-window-open.svg';
 import './NotificationsWidget.scss';
 import Widget from '../Widget/Widget.jsx';
 import NotificationsList from './NotificationsList/NotificationsList.jsx';
-import useEmployeesNotifications from '../../../../utils/hooks/useEmployeesNotifications.js';
+import useEmployeesNotifications from 'Utils/hooks/useEmployeesNotifications.js';
 
 const NotificationsWidget = () => {
   const [notifications, setNotifications] = useState([]);

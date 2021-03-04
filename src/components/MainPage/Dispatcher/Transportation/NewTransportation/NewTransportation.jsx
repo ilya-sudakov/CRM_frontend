@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './NewTransportation.scss';
-import '../../../../../utils/Form/Form.scss';
-import { addTransportation } from '../../../../../utils/RequestsAPI/Transportation.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
-import useForm from '../../../../../utils/hooks/useForm.js';
+import 'Utils/Form/Form.scss';
+import { addTransportation } from 'Utils/RequestsAPI/Transportation.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm.js';
 import { transportationDefaultInputs } from '../objects.js';
 
 const NewTransportation = (props) => {

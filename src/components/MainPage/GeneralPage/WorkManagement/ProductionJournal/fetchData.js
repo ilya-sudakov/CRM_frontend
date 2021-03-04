@@ -1,4 +1,4 @@
-import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx';
+import { getEmployees } from 'Utils/RequestsAPI/Employees.jsx';
 
 export const loadEmployees = async (
   signal,

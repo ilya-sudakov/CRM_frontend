@@ -1,13 +1,13 @@
 import {
   formatDateString,
   getEmployeeNameText,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import {
   createPDF,
   getPDFTitleObject,
   getInputElementTextPDF,
   defaultStylesPDF,
-} from '../../../../utils/pdfFunctions.js';
+} from 'Utils/pdfFunctions.js';
 
 export const filterEmployeesBySearchQuery = (data, searchQuery) => {
   const query = searchQuery.toLowerCase();

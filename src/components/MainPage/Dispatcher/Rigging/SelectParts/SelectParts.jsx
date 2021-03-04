@@ -4,9 +4,9 @@ import {
   workshopsLocations,
   checkRiggingTypesInputs,
 } from '../RiggingComponents/rigsVariables';
-import NestedFormItem from '../../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
-import { scrollToElement } from '../../../../../utils/functions.jsx';
-import AddToButton from '../../../../../utils/Form/AddToButton/AddToButton.jsx';
+import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import { scrollToElement } from 'Utils/functions.jsx';
+import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
 
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([]);

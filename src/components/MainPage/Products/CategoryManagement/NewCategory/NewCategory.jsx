@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './NewCategory.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { addCategory } from '../../../../../utils/RequestsAPI/Products/Categories.js';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
-import useForm from '../../../../../utils/hooks/useForm';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import { addCategory } from 'Utils/RequestsAPI/Products/Categories.js';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm';
 import { productCategoriesDefaultInputs } from '../../objects';
 
 const NewCategory = (props) => {

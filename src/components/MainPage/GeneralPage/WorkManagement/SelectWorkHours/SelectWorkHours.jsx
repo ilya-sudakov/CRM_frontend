@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './SelectWorkHours.scss';
-import { formatDateString } from '../../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 
 const SelectWorkHours = (props) => {
   useEffect(() => {}, [props.workArray]);

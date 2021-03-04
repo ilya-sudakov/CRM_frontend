@@ -1,6 +1,6 @@
 import './LabelPrint.scss';
 import Barcode from 'react-barcode';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import QRCode from 'react-qr-code';
 import PropTypes from 'prop-types';
 

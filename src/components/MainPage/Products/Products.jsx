@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import './Products.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { deleteProduct } from '../../../utils/RequestsAPI/Products.js';
-import { deleteCategory } from '../../../utils/RequestsAPI/Products/Categories.js';
-import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js';
-import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import { deleteProduct } from 'Utils/RequestsAPI/Products.js';
+import { deleteCategory } from 'Utils/RequestsAPI/Products/Categories.js';
+import { deletePackagingFromProduct } from 'Utils/RequestsAPI/Products/packaging.js';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import useProductsList from '../../../utils/hooks/useProductsList/useProductsList.js';
-import useSort from '../../../utils/hooks/useSort/useSort';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
+import useSort from 'Utils/hooks/useSort/useSort';
 
 const Products = (props) => {
   const { products, categories, isProductsLoading } = useProductsList();

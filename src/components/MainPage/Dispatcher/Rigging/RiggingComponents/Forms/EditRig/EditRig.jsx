@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './EditRig.scss';
-import '../../../../../../../utils/Form/Form.scss';
+import 'Utils/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import {
   getStampById,
@@ -8,13 +8,13 @@ import {
   editPartsOfStamp,
   addPartsToStamp,
   deletePartsFromStamp,
-} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
-import InputText from '../../../../../../../utils/Form/InputText/InputText.jsx';
-import ErrorMessage from '../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import Button from '../../../../../../../utils/Form/Button/Button.jsx';
-import { formatDateString } from '../../../../../../../utils/functions.jsx';
+} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import { rigTypes } from '../../rigsVariables.js';
-import useQuery from '../../../../../../../utils/hooks/useQuery.js';
+import useQuery from 'Utils/hooks/useQuery.js';
 
 const EditRig = (props) => {
   const { query } = useQuery();

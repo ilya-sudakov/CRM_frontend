@@ -5,10 +5,10 @@ import companyLogoNoSlogan from '../../../../../assets/priceList/osfix_logo__no_
 import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
 import saleImg from '../../../../../assets/priceList/onSale.png';
 import proprietaryItemImg from '../../../../../assets/priceList/rospatent.png';
-import { getDataUri } from '../../../../utils/functions.jsx';
+import { getDataUri } from 'Utils/functions.jsx';
 import { pdfHeaderCompanyContacts } from './objects.js';
-import { createPDF } from '../../../../utils/pdfFunctions.js';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import { createPDF } from 'Utils/pdfFunctions.js';
+import { sortByField } from 'Utils/sorting/sorting';
 import { getPriceListColumnValue } from './functions.js';
 
 const loadGroupImage = async (img) => {

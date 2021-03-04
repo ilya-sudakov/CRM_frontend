@@ -1,13 +1,13 @@
 // import "./ReportTablePage.scss";
 import DownloadIcon from '../../../../../../assets/download.svg';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { getReportTableExcel } from '../getReportTableExcel.js';
-import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';
 import { EmployeeInfo } from './InfoComponents.jsx';
-import { formatDateString } from '../../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import { getDaysArray } from '../functions.js';
 
 const SummaryPage = ({

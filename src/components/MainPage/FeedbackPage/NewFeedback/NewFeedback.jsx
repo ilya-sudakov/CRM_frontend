@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './NewFeedback.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import { addFeedback } from '../../../../utils/RequestsAPI/Feedback/feedback';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import useForm from '../../../../utils/hooks/useForm.js';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import { addFeedback } from 'Utils/RequestsAPI/Feedback/feedback';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm.js';
 
 const NewFeedback = (props) => {
   const feedbackDefaultInputs = [

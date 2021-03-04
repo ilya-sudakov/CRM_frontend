@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import usePagination from '../../../../utils/hooks/usePagination/usePagination.js';
-import useSort from '../../../../utils/hooks/useSort/useSort.js';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import usePagination from 'Utils/hooks/usePagination/usePagination.js';
+import useSort from 'Utils/hooks/useSort/useSort.js';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import {
   deleteLTD,
   getLTDList,
-} from '../../../../utils/RequestsAPI/PriceList/lts_list.js';
+} from 'Utils/RequestsAPI/PriceList/lts_list.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import UserContext from '../../../../App.js';
 import TableView from './TableView/TableView.jsx';

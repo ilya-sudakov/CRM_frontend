@@ -1,4 +1,4 @@
-import usePagination from '../../../../../utils/hooks/usePagination/usePagination.js';
+import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import { sortRequests } from '../../../WorkshopsComponents/TableView/functions.js';
 import TableView from '../../../WorkshopsComponents/TableView/TableView.jsx';
 import './RequestsList.scss';

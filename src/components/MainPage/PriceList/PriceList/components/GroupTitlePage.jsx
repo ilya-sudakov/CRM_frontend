@@ -1,8 +1,8 @@
-import { getDataUri } from '../../../../../utils/functions.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
+import { getDataUri } from 'Utils/functions.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
-import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 
 const GroupTitlePage = ({ titlePage, setTitlePage }) => {
   const handleActivateTitlePageGroup = (value) => {

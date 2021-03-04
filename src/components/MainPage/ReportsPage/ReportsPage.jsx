@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import './ReportsPage.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import UserContext from '../../../App.js';
 import workTimeIcon from '../../../../assets/sidemenu/work_time_icon.svg';
-import Button from '../../../utils/Form/Button/Button.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 const ReportsPage = (props) => {
   const userContext = useContext(UserContext);

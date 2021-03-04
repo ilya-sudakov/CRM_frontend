@@ -4,7 +4,7 @@ import './ColorPicker.scss';
 import {
   editStampColor,
   editStampPartColor,
-} from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 
 import { rigStatuses } from '../rigsVariables.js';
 

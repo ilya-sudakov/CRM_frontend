@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import {
   formatDateStringNoYear,
   formatDateStringToTime,
-} from '../../../../utils/functions.jsx';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+} from 'Utils/functions.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import './TableView.scss';
 import { logItemsRedirectLinks } from '../objects.js';
 

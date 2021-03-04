@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import '../../../../utils/MainWindow/MainWindow.scss';
-import '../../../../utils/Form/Form.scss';
+import 'Utils/MainWindow/MainWindow.scss';
+import 'Utils/Form/Form.scss';
 import okSVG from '../../../../../assets/tableview/calendar_check.svg';
 import cancelSVG from '../../../../../assets/tableview/cancel.svg';
 import './SelectWorkHistory.scss';
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import { formatDateStringWithTime } from '../../../../utils/functions.jsx';
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import { formatDateStringWithTime } from 'Utils/functions.jsx';
+import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const SelectWorkHistory = (props) => {
   const [items, setItems] = useState([]);

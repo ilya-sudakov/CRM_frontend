@@ -1,9 +1,9 @@
 import Excel from 'exceljs';
-import { getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
-import { getWorkReportByEmployee } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { getEmployeeNameText } from '../../../../utils/functions.jsx';
-import { months } from '../../../../utils/dataObjects.js';
-import { saveExcelFile } from '../../../../utils/xlsxFunctions.js';
+import { getEmployeesByWorkshop } from 'Utils/RequestsAPI/Employees.jsx';
+import { getWorkReportByEmployee } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getEmployeeNameText } from 'Utils/functions.jsx';
+import { months } from 'Utils/dataObjects.js';
+import { saveExcelFile } from 'Utils/xlsxFunctions.js';
 import { sortEmployees } from './functions.js';
 
 const getReportTableColumnXLSX = (name, width = 5) => {

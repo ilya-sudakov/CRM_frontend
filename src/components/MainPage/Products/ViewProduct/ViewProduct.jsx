@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import './ViewProduct.scss';
-import '../../../../utils/Form/Form.scss';
-import { getProductById } from '../../../../utils/RequestsAPI/Products.js';
-import { imgToBlobDownload } from '../../../../utils/functions.jsx';
+import 'Utils/Form/Form.scss';
+import { getProductById } from 'Utils/RequestsAPI/Products.js';
+import { imgToBlobDownload } from 'Utils/functions.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
 import { productsDefaultInputs } from '../objects';
-import useForm from '../../../../utils/hooks/useForm';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 const ViewProduct = (props) => {
   const { formInputs, updateFormInputs } = useForm(productsDefaultInputs);

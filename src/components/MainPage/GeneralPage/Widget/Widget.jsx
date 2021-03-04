@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import './Widget.scss';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { useHistory } from 'react-router-dom';
 
 const Widget = ({

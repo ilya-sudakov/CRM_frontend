@@ -1,38 +1,33 @@
 import { useState, useEffect } from 'react';
 import './EditClient.scss';
-import '../../../../utils/Form/Form.scss';
-import {
-  addClient,
-  getClientById,
-  editClient,
-} from '../../../../utils/RequestsAPI/Clients.jsx';
+import 'Utils/Form/Form.scss';
+import { getClientById, editClient } from 'Utils/RequestsAPI/Clients.jsx';
 import {
   addClientLegalEntity,
   editClientLegalEntity,
   deleteClientLegalEntity,
-} from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
+} from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
 import {
   addClientContact,
   editClientContact,
   deleteClientContact,
-} from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
+} from 'Utils/RequestsAPI/Clients/Contacts.jsx';
 import {
   addClientWorkHistory,
   editClientWorkHistory,
   deleteClientWorkHistory,
-} from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
+} from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
-import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
-import { getRequests } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 
 const EditClient = (props) => {
   const [clientInputs, setClientInputs] = useState({
@@ -128,8 +123,7 @@ const EditClient = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault();
+  const handleSubmit = () => {
     setIsLoading(true);
     console.log(clientInputs);
     formIsValid() &&

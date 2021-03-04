@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 import './Transportation.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import PrintIcon from '../../../../../assets/print.png';
 import TableView from './TableView/TableView.jsx';
 import {
   getTransportations,
   deleteTransportation,
-} from '../../../../utils/RequestsAPI/Transportation.jsx';
+} from 'Utils/RequestsAPI/Transportation.jsx';
 import {
   createPDF,
   getTransportationListPdfText,
-} from '../../../../utils/pdfFunctions.js';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import usePagination from '../../../../utils/hooks/usePagination/usePagination.js';
-import { formatDateString } from '../../../../utils/functions.jsx';
-import useSort from '../../../../utils/hooks/useSort/useSort.js';
-import { sortByField } from '../../../../utils/sorting/sorting.js';
+} from 'Utils/pdfFunctions.js';
+import Button from 'Utils/Form/Button/Button.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import usePagination from 'Utils/hooks/usePagination/usePagination.js';
+import { formatDateString } from 'Utils/functions.jsx';
+import useSort from 'Utils/hooks/useSort/useSort.js';
+import { sortByField } from 'Utils/sorting/sorting.js';
 
 const Transportation = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

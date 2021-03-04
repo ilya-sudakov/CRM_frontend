@@ -3,12 +3,12 @@ import { Link, withRouter } from 'react-router-dom';
 import {
   formatDateString,
   scrollToElement,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import './TableView.scss';
-import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.js';
+import { editTaskStatus } from 'Utils/RequestsAPI/MainTasks.js';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../assets/tableview/delete.svg';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [scrolledToPrev, setScrolledToPrev] = useState(false);

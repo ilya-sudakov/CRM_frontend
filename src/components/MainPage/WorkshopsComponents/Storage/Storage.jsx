@@ -1,17 +1,17 @@
 import { useState, useEffect, useContext } from 'react';
 import './Storage.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
   deleteStorage,
   getStorage,
-} from '../../../../utils/RequestsAPI/Workshop/storage.js';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/RequestsAPI/Workshop/storage.js';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import { workshops } from '../workshopVariables.js';
-import { sortByField } from '../../../../utils/sorting/sorting.js';
+import { sortByField } from 'Utils/sorting/sorting.js';
 
 const Storage = (props) => {
   const userContext = useContext(UserContext);

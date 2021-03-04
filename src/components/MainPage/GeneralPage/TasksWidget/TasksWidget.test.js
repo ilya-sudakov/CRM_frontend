@@ -2,7 +2,7 @@ import React from 'react';
 import TasksWidget from './TasksWidget.jsx';
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup } from '@testing-library/react';
-import { renderWithRouterAndContext } from '../../../../utils/testing/functions.js';
+import { renderWithRouterAndContext } from 'Utils/testing/functions.js';
 import {
   filterTasks,
   filterTasksByUser,

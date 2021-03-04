@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../assets/select/delete.svg';
-import AddToButton from '../../../../utils/Form/AddToButton/AddToButton.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import './SelectContacts.scss';
 
 const SelectContacts = (props) => {

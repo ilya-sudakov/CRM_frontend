@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './EditLtd.scss';
-import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
-import Button from '../../../../../../utils/Form/Button/Button.jsx';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import {
   addLTD,
   getLTDById,
-} from '../../../../../../utils/RequestsAPI/PriceList/lts_list.js';
-import FileUploader from '../../../../../../utils/Form/FileUploader/FileUploader.jsx';
+} from 'Utils/RequestsAPI/PriceList/lts_list.js';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { fetchINNData, getInputsListFromArray } from '../functions.js';
 import {
   ltdFormAddressInputs,

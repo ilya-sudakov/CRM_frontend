@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './SelectWorkItem.scss';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { getWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import { getWork } from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
 import TableView from './TableViewWork/TableView.jsx';
-import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectWorkItem = (props) => {
   const [showWindow, setShowWindow] = useState(false);

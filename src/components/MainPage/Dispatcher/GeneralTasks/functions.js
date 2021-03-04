@@ -1,4 +1,4 @@
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 
 export const filterCompletedTasks = (tasks, curPage) => {
   return tasks.filter(

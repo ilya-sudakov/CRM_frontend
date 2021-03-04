@@ -1,9 +1,9 @@
 import editIcon from '../../../../../../assets/tableview/edit.svg';
 import './TableView.scss';
-import { addSpaceDelimiter } from '../../../../../utils/functions.jsx';
-import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { addSpaceDelimiter } from 'Utils/functions.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = ({ data, deleteItem, userHasAccess, link, isLoading }) => {
   return (

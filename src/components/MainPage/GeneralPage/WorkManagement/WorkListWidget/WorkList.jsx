@@ -2,7 +2,7 @@ import './WorkListWidget.scss';
 import {
   numberToString,
   roundUpWorkHours,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import { filterEmployeesObject, sortEmployeesObject } from './functions.js';
 import { Link } from 'react-router-dom';
 

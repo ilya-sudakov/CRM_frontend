@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './PriceList.scss';
-import '../../../../utils/Form/Form.scss';
+import 'Utils/Form/Form.scss';
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
-} from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
-import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+} from 'Utils/RequestsAPI/PriceList/PriceList.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import {
   defaultCategories,
   defaultOptionalColumns,
@@ -18,7 +18,7 @@ import { getPriceListPdf } from './getPriceListPdf.js';
 import { getPriceListExcel } from './getPriceListExcel.js';
 import { Link } from 'react-router-dom';
 import SelectLtd from '../LtdListPage/SelectLtd/SelectLtd.jsx';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import { sortByField } from 'Utils/sorting/sorting';
 import { parseExcelData } from './functions.js';
 import GroupTitlePage from './components/GroupTitlePage.jsx';
 import CategoryHeader from './components/CategoryHeader.jsx';

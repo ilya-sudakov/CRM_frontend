@@ -1,8 +1,8 @@
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
 import {
   getBIKByINN,
   getInfoByINN,
-} from '../../../../../utils/RequestsAPI/Clients.jsx';
+} from 'Utils/RequestsAPI/Clients.jsx';
 
 export const fetchINNData = (inputs, setIsLoading, setFormInputs) => {
   setIsLoading(true);

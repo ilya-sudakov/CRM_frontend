@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
-import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import { formatDateStringNoYear } from 'Utils/functions.jsx';
+import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import { getRecordedWorkByDateRange } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import UserContext from '../../../../App.js';
 import './GraphWidget.scss';
 

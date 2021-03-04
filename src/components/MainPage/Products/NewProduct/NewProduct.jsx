@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import './NewProduct.scss';
-import '../../../../utils/Form/Form.scss';
-import { addProduct } from '../../../../utils/RequestsAPI/Products.js';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import 'Utils/Form/Form.scss';
+import { addProduct } from 'Utils/RequestsAPI/Products.js';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
-import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
-import { getDataUri } from '../../../../utils/functions.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import { getDataUri } from 'Utils/functions.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
-import { addPackagingToProduct } from '../../../../utils/RequestsAPI/Products/packaging.js';
-import useForm from '../../../../utils/hooks/useForm.js';
+import { addPackagingToProduct } from 'Utils/RequestsAPI/Products/packaging.js';
+import useForm from 'Utils/hooks/useForm.js';
 import { productsDefaultInputs } from '../objects.js';
 
 const NewProduct = (props) => {

@@ -5,7 +5,7 @@ import {
   renderWithContext,
   renderWithRouter,
   renderWithRouterAndContext,
-} from '../../utils/testing/functions.js';
+} from 'Utils/testing/functions.js';
 import UserContext from '../../App.js';
 
 //Данные пользователя

@@ -1,5 +1,5 @@
-import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx';
-import { sortByField } from '../../../../../../utils/sorting/sorting.js';
+import { addSpaceDelimiter } from 'Utils/functions.jsx';
+import { sortByField } from 'Utils/sorting/sorting.js';
 
 const ProductsStatisticsList = ({ isHidden, data }) => {
   return (

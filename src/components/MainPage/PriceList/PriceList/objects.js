@@ -4,7 +4,7 @@ import category3Img from '../../../../../assets/priceList/крепежные_э�
 import categoryImg from '../../../../../assets/priceList/default_category.png';
 import locationType1Img from '../../../../../assets/priceList/Фасад.png';
 import locationType2Img from '../../../../../assets/priceList/Терраса.png';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 
 export const defaultCategories = [
   {

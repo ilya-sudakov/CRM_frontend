@@ -1,6 +1,6 @@
 import Excel from 'exceljs';
-import { getDataUri } from '../../../../utils/functions.jsx';
-import { saveExcelFile } from '../../../../utils/xlsxFunctions.js';
+import { getDataUri } from 'Utils/functions.jsx';
+import { saveExcelFile } from 'Utils/xlsxFunctions.js';
 import { getPriceListColumnValue } from './functions.js';
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {

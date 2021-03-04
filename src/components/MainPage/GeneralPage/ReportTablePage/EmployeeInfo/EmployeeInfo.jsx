@@ -4,10 +4,10 @@ import {
   addSpaceDelimiter,
   formatDateStringNoYear,
   roundUpWorkHours,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import editIcon from '../../../../../../assets/tableview/edit.svg';
 import { Link } from 'react-router-dom';
-import { days } from '../../../../../utils/dataObjects.js';
+import { days } from 'Utils/dataObjects.js';
 import './EmployeeInfo.scss';
 
 const filterWorksByDate = (item, date) => {

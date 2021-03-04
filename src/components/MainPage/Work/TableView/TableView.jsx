@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import editSVG from '../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';
 import './TableView.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import 'Utils/MainWindow/MainWindow.scss';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);

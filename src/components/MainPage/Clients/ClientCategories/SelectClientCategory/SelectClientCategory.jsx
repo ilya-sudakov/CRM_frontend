@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './SelectClientCategory.scss';
-import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import {
   getClientCategories,
   getSupplierCategories,
-} from '../../../../../utils/RequestsAPI/Clients/Categories.js';
-import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+} from 'Utils/RequestsAPI/Clients/Categories.js';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectClientCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false);

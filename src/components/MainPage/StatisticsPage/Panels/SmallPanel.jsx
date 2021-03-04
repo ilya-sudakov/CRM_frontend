@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
-import { addSpaceDelimiter } from '../../../../utils/functions.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import { addSpaceDelimiter } from 'Utils/functions.jsx';
 
 const SmallPanel = ({
   isLoaded,

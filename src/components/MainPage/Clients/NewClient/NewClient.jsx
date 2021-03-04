@@ -1,23 +1,23 @@
 import { useState, useEffect, useContext } from 'react';
 import './NewClient.scss';
-import '../../../../utils/Form/Form.scss';
-import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
-import { addClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
-import { addClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
-import { addClientWorkHistory } from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
+import 'Utils/Form/Form.scss';
+import { addClient } from 'Utils/RequestsAPI/Clients.jsx';
+import { addClientLegalEntity } from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
+import { addClientContact } from 'Utils/RequestsAPI/Clients/Contacts.jsx';
+import { addClientWorkHistory } from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
-import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
-import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
 import UsersVisibility from '../FormComponents/UsersVisibility.jsx';
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);

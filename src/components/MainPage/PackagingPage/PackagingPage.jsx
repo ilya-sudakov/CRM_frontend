@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import './PackagingPage.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import editSVG from '../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../assets/tableview/delete.svg';
-import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
+import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import {
   getPackaging,
   deletePackaging,
-} from '../../../utils/RequestsAPI/Products/packaging.js';
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/RequestsAPI/Products/packaging.js';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const PackagingPage = (props) => {
   const [packages, setPackages] = useState([]);

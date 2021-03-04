@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './SelectCategory.scss';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableViewCategory from '../CategoryManagement/TableView/TableViewCategory.jsx';
-import useCategoriesList from '../../../../utils/hooks/useProductsList/useProductCategoriesList.js';
-import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import useCategoriesList from 'Utils/hooks/useProductsList/useProductCategoriesList.js';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false);

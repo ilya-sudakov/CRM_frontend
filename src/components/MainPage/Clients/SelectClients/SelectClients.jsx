@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './SelectClients.scss';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { searchClients } from '../../../../utils/RequestsAPI/Clients.jsx';
-import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const SelectClient = (props) => {
   const [showWindow, setShowWindow] = useState(false);

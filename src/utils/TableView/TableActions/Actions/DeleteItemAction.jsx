@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';
-import MessageForUser from '../../../../utils/Form/MessageForUser/MessageForUser.jsx';
+import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
 
 const DeleteItemAction = ({ onClick, title = 'Удаление элемента', icon }) => {
   const [showMessage, setShowMessage] = useState(false);

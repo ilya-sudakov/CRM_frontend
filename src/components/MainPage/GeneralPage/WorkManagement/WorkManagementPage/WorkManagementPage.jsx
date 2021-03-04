@@ -1,26 +1,26 @@
 import { useState, useEffect } from 'react';
 import './WorkManagementPage.scss';
-import '../../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import OneColumnIcon from '../../../../../../assets/tableview/onecolumn.png';
 import okIcon from '../../../../../../assets/tableview/ok.svg';
 import TwoColumnsIcon from '../../../../../../assets/tableview/twocolumns.png';
 import chevronDownSVG from '../../../../../../assets/tableview/chevron-down.svg';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import {
   getAllProductsFromWorkCount,
   getAllDraftsFromWorkCount,
   getDatesAndWorkItems,
   formatDateString,
-} from '../../../../../utils/functions.jsx';
-import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+} from 'Utils/functions.jsx';
+import { getRecordedWorkByDateRange } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getEmployeesByWorkshop } from 'Utils/RequestsAPI/Employees.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
 import TableView from './TableView/TableView.jsx';
-import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

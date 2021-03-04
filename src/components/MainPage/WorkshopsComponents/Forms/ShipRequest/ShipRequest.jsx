@@ -1,17 +1,17 @@
 import { useEffect, useState, useContext } from 'react';
 import './ShipRequest.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../../App.js';
 import {
   editRequest,
   editProductsToRequest,
   getRequestById,
-} from '../../../../../utils/RequestsAPI/Requests.jsx';
+} from 'Utils/RequestsAPI/Requests.jsx';
 import { workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 

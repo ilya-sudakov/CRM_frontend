@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './ClientCategories.scss';
 import editSVG from '../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
   getClientCategories,
@@ -10,13 +10,13 @@ import {
   addClientCategory,
   editClientCategory,
   getSupplierCategories,
-} from '../../../../utils/RequestsAPI/Clients/Categories.js';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+} from 'Utils/RequestsAPI/Clients/Categories.js';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './EditPackaging.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import {
   getPackagingById,
   editPackaging,
-} from '../../../../utils/RequestsAPI/Products/packaging.js';
-import useForm from '../../../../utils/hooks/useForm';
+} from 'Utils/RequestsAPI/Products/packaging.js';
+import useForm from 'Utils/hooks/useForm';
 import { packagingDefaultInputs } from '../objects';
 
 const EditPackaging = (props) => {

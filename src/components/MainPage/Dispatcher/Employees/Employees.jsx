@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Employees.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import PrintIcon from '../../../../../assets/print.png';
@@ -8,10 +8,10 @@ import { getEmployeesListPdfText } from './functions.js';
 import {
   deleteEmployee,
   getEmployeesByWorkshop,
-} from '../../../../utils/RequestsAPI/Employees.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import { sortByField } from '../../../../utils/sorting/sorting';
+} from 'Utils/RequestsAPI/Employees.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

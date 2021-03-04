@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './SelectEmployee.scss';
-import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
-import useSort from '../../../../../utils/hooks/useSort/useSort';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import useSort from 'Utils/hooks/useSort/useSort';
 import { filterEmployeesBySearchQuery } from '../functions';
-import useEmployeesList from '../../../../../utils/hooks/useEmployeesList';
+import useEmployeesList from 'Utils/hooks/useEmployeesList';
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);

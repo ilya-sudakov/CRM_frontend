@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../assets/tableview/delete.svg';
 import './TableView.scss';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 
 const TableView = (props) => {
   const roles = {

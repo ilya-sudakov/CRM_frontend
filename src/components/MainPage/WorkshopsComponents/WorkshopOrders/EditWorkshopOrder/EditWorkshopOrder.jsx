@@ -1,21 +1,21 @@
 import { useState, useEffect, useContext } from 'react';
 import './EditWorkshopOrder.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import SelectItems from 'Utils/Form/SelectItems/SelectItems.jsx';
 import {
   getOrderById,
   editOrder,
   editProductInOrder,
   addProductToOrder,
   deleteProductFromOrder,
-} from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+} from 'Utils/RequestsAPI/Workshop/Orders.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
 import UserContext from '../../../../../App.js';
 import { getWorkshopOrdersDefaultInputs } from '../../functions';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 
 const EditWorkshopOrder = (props) => {
   const {

@@ -1,9 +1,9 @@
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateString,
   formatDateStringNoYear,
   dateDiffInDays,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import { conditions } from '../objects.js';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';

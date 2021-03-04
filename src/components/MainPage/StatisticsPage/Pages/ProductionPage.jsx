@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import useDraftsList from '../../../../utils/hooks/useDraftsList';
-import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import useDraftsList from 'Utils/hooks/useDraftsList';
+import { getRecordedWorkByDateRange } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import RiggingItemsQuantityForType from '../Graphs/RiggingItemsQuantityForType.jsx';
 
 const ProductionPage = ({ curDate }) => {

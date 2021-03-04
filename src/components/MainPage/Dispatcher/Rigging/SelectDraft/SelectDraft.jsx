@@ -3,9 +3,9 @@ import deleteSVG from '../../../../../../assets/select/delete.svg';
 import './SelectDraft.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
-import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
-import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import { getStamp } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 
 const SelectDraft = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

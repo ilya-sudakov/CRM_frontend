@@ -1,7 +1,7 @@
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import Header from './Header.jsx';
 // import "@testing-library/jest-dom/extend-expect";
-import { renderWithRouterAndContext } from '../../utils/testing/functions.js';
+import { renderWithRouterAndContext } from 'Utils/testing/functions.js';
 
 describe('Header component', () => {
   afterEach(cleanup);

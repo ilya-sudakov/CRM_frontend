@@ -5,11 +5,11 @@ import starBorderedSVG from '../../../../../assets/tableview/star_border.svg';
 import phoneSVG from '../../../../../assets/tableview/phone.svg';
 import calendarSVG from '../../../../../assets/tableview/calendar.svg';
 import eyeSVG from '../../../../../assets/tableview/eye-invisible-outlined.svg';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import { sortClients } from './functions.js';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import TableActions from '../../../../utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from '../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import UserContext from '../../../../App.js';
 
 const ClientsList = ({

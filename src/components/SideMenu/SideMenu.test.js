@@ -1,7 +1,7 @@
 import { cleanup, screen } from '@testing-library/react';
 import SideMenu from './SideMenu.jsx';
 import '@testing-library/jest-dom/extend-expect';
-import { renderWithRouterAndContext } from '../../utils/testing/functions.js';
+import { renderWithRouterAndContext } from 'Utils/testing/functions.js';
 import { getDefaultItems, sortCategories } from './functions.js';
 
 describe('Sidemenu component', () => {

@@ -1,7 +1,7 @@
 import Widget from './Widget.jsx';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { renderWithRouter } from '../../../../utils/testing/functions.js';
+import { renderWithRouter } from 'Utils/testing/functions.js';
 
 const mockHistoryPush = jest.fn();
 

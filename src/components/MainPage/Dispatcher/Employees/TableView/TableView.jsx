@@ -7,10 +7,10 @@ import './TableView.scss';
 import {
   changeVisibilityOfListItem,
   formatDateString,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import { getEmployeesByWorkshopListPdfText } from '../functions.js';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import { sortByField } from '../../../../../utils/sorting/sorting';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 import { filterEmployeesBySearchQuery } from '../functions.js';
 
 const TableView = (props) => {

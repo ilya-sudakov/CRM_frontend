@@ -1,11 +1,11 @@
 //Таблица с табелем
 import { useEffect } from 'react';
-import { months } from '../../../../../utils/dataObjects.js'; //Список месяцев
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { months } from 'Utils/dataObjects.js'; //Список месяцев
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateStringNoYear,
   getEmployeeNameText,
-} from '../../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import { workshops } from '../objects.js';
 import { sortEmployees } from '../functions.js';
 import ChevronSVG from '../../../../../../assets/tableview/chevron-down.svg';

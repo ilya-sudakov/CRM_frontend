@@ -1,5 +1,5 @@
-import { formatDateString } from '../../../utils/functions.jsx';
-import { getRequestPdfText } from '../../../utils/pdfFunctions.js';
+import { formatDateString } from 'Utils/functions.jsx';
+import { getRequestPdfText } from 'Utils/pdfFunctions.js';
 import {
   deleteProductsToRequest,
   getRequestById,
@@ -7,10 +7,10 @@ import {
   connectClientToRequest,
   addProductsToRequest,
   addRequest,
-} from '../../../utils/RequestsAPI/Requests.jsx';
+} from 'Utils/RequestsAPI/Requests.jsx';
 import { workshops } from './workshopVariables.js';
-import { getProductsFromRequestsListPdfText } from '../../../utils/pdfFunctions.js';
-import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.js';
+import { getProductsFromRequestsListPdfText } from 'Utils/pdfFunctions.js';
+import { getCategories } from 'Utils/RequestsAPI/Products/Categories.js';
 
 export const getPageByRequest = (item) => {
   if (item.status === 'Завершено') {

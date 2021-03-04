@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import './EditWork.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
 import {
   getWorkById,
   editWork,
-} from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import useForm from '../../../../utils/hooks/useForm';
+} from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm';
 import { workItemDefaultInputs } from '../objects';
 
 const EditWork = (props) => {

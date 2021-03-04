@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import CakeIcon from '../../../../../../assets/notifications/birthday-cake.inline.svg';
 import DocumentsIcon from '../../../../../../assets/statistics/document-report.inline.svg';
 

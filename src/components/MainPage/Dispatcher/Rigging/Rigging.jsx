@@ -4,12 +4,12 @@ import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import PlusImg from '../../../../../assets/sidemenu/plus.inline.svg';
 import './Rigging.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../../PageLoading/PageLoading.jsx';
 import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx';
 import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx';
-import useTitleHeader from '../../../../utils/hooks/uiComponents/useTitleHeader.js';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
 const Rigging = (props) => {
   const [cachedItems, setCachedItems] = useState({

@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import './EditTask.scss';
-import '../../../../../utils/Form/Form.scss';
+import 'Utils/Form/Form.scss';
 import {
   getMainTaskById,
   editMainTask,
-} from '../../../../../utils/RequestsAPI/MainTasks.js';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+} from 'Utils/RequestsAPI/MainTasks.js';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { getTasksDefaultInputs } from '../functions';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 
 const EditTask = (props) => {
   const [taskId, setTaskId] = useState(1);

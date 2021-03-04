@@ -1,6 +1,6 @@
 import LoginPage from './LoginPage.jsx';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
-import { renderWithRouter } from '../../../utils/testing/functions.js';
+import { renderWithRouter } from 'Utils/testing/functions.js';
 import '@testing-library/jest-dom/extend-expect';
 import 'isomorphic-fetch';
 

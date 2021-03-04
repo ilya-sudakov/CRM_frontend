@@ -4,8 +4,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {
   dateDiffInDays,
   formatDateStringNoYear,
-} from '../../../../../utils/functions.jsx';
-import { renderWithRouter } from '../../../../../utils/testing/functions.js';
+} from 'Utils/functions.jsx';
+import { renderWithRouter } from 'Utils/testing/functions.js';
 
 const mockHistoryPush = jest.fn();
 

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import './FeedbackChat.scss';
 import sendSVG from '../../../../../assets/chat/send.svg';
 import arrowUpSVG from '../../../../../assets/chat/unread_messages__arrow-up.svg';
-import '../../../../utils/Form/Form.scss';
+import 'Utils/Form/Form.scss';
 import {
   formatDateString,
   formatDateStringWithTime,
   formatDateStringToTime,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 
 const FeedbackChat = (props) => {
   const [newMessage, setNewMessage] = useState('');

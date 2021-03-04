@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import './Users.scss';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getUsers, deleteUser } from '../../../../utils/RequestsAPI/Users.jsx';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import useSort from '../../../../utils/hooks/useSort/useSort';
+import { getUsers, deleteUser } from 'Utils/RequestsAPI/Users.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import useSort from 'Utils/hooks/useSort/useSort';
 
 const Users = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

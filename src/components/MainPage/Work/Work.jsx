@@ -5,10 +5,10 @@ import TableView from './TableView/TableView.jsx';
 import {
   deleteWork,
   getWork,
-} from '../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
-import '../../../utils/MainWindow/MainWindow.scss';
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import 'Utils/MainWindow/MainWindow.scss';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const Work = (props) => {
   const [work, setWork] = useState([]);

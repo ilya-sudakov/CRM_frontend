@@ -5,10 +5,10 @@ import {
   numberToString,
   formatDateString,
   addSpaceDelimiter,
-} from '../../../../../../utils/functions.jsx';
-import { days } from '../../../../../../utils/dataObjects';
+} from 'Utils/functions.jsx';
+import { days } from 'Utils/dataObjects';
 import { Link } from 'react-router-dom';
-import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({});

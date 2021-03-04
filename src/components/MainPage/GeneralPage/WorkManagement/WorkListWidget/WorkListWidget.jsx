@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import openWidget from '../../../../../../assets/tableview/bx-window-open.svg';
-import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
-import { formatDateString } from '../../../../../utils/functions.jsx';
+import { getRecordedWorkByDay } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import UserContext from '../../../../../App.js';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { workshopsList } from './objects.js';
 import WorkList from './WorkList.jsx';
 import Widget from '../../Widget/Widget.jsx';
-import useEmployeesList from '../../../../../utils/hooks/useEmployeesList.js';
+import useEmployeesList from 'Utils/hooks/useEmployeesList.js';
 
 import './WorkListWidget.scss';
 

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import './LogListPage.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { logItemsTypes } from './objects.js';
-import { getLogsListByType } from '../../../utils/RequestsAPI/Logs/logs.js';
-import usePagination from '../../../utils/hooks/usePagination/usePagination';
-import useSort from '../../../utils/hooks/useSort/useSort';
-import useQuery from '../../../utils/hooks/useQuery';
+import { getLogsListByType } from 'Utils/RequestsAPI/Logs/logs.js';
+import usePagination from 'Utils/hooks/usePagination/usePagination';
+import useSort from 'Utils/hooks/useSort/useSort';
+import useQuery from 'Utils/hooks/useQuery';
 
 const LogListPage = () => {
   const { query, pushParamToURL } = useQuery();

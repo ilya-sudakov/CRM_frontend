@@ -7,10 +7,10 @@ import {
   deletePartsFromStamp,
   deleteStamp,
   getStampsByStatus,
-} from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
-import FloatingPlus from '../../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import useTitleHeader from '../../../../../../utils/hooks/uiComponents/useTitleHeader.js';
+} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { filterRigItems } from './functions.js';
 
 const RiggingWorkshop = (props) => {

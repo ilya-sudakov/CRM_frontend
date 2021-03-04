@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
-import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 
 const UsersVisibility = (props) => {
   const [users, setUsers] = useState(props.defaultValue || {});

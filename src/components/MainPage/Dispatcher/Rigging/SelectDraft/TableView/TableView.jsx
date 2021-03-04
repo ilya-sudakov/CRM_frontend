@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './TableView.scss';
-import '../../../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import okSVG from '../../../../../../../assets/tableview/ok.svg';
 
 const TableView = (props) => {

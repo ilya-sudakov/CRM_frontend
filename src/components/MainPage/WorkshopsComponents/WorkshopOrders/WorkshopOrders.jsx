@@ -1,17 +1,17 @@
 import { useContext, useState } from 'react';
 import './WorkshopOrders.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { formatDateString } from '../../../../utils/functions.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 import {
   deleteProductFromOrder,
   deleteOrder,
   getOrdersByName,
-} from '../../../../utils/RequestsAPI/Workshop/Orders.jsx';
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/RequestsAPI/Workshop/Orders.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import Tableview from './Table.jsx';
-import { sortByField } from '../../../../utils/sorting/sorting';
+import { sortByField } from 'Utils/sorting/sorting';
 import { workshops } from '../workshopVariables.js';
 
 const WorkshopOrders = (props) => {

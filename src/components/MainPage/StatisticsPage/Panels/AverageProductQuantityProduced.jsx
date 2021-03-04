@@ -4,7 +4,7 @@ import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg';
 import {
   addSpaceDelimiter,
   dateDiffInDays,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 
 const AverageProductQuantityProduced = ({ data, curDate }) => {
   const [stats, setStats] = useState({

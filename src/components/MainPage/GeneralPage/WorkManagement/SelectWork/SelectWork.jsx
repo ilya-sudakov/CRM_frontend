@@ -2,11 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import deleteSVG from '../../../../../../assets/select/delete.svg';
 import './SelectWork.scss';
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
+import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx';
 import UserContext from '../../../../../App.js';
-import AddToButton from '../../../../../utils/Form/AddToButton/AddToButton.jsx';
-import useMessageForUser from '../../../../../utils/hooks/useMessageForUser';
+import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
+import useMessageForUser from 'Utils/hooks/useMessageForUser';
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? []);

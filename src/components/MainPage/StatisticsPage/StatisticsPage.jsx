@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import './StatisticsPage.scss';
-import { formatDateStringNoYear } from '../../../utils/functions.jsx';
-import { months } from '../../../utils/dataObjects.js';
+import { formatDateStringNoYear } from 'Utils/functions.jsx';
+import { months } from 'Utils/dataObjects.js';
 
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import {
   getDaysArray,
   getPreviousMonthDates,
@@ -11,7 +11,7 @@ import {
   getPreviousQuarterDates,
   getPreviousYearDates,
 } from './functions.js';
-import useTitleHeader from '../../../utils/hooks/uiComponents/useTitleHeader.js';
+import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import ProductionPage from './Pages/ProductionPage.jsx';
 import RequestsPage from './Pages/RequestsPage.jsx';
 

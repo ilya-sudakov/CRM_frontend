@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import './EditStorage.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
 import {
   updateStorage,
   getStorageById,
-} from '../../../../../utils/RequestsAPI/Workshop/storage.js';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+} from 'Utils/RequestsAPI/Workshop/storage.js';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables.js';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 import { workshopStorageDefaultInputs } from '../../objects';
 
 const EditPart = (props) => {

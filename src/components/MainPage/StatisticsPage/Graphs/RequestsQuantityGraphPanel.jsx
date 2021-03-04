@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import ListIcon from '../../../../../assets/sidemenu/list.inline.svg';
-import { months } from '../../../../utils/dataObjects';
-import { formatDateString } from '../../../../utils/functions.jsx';
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import { months } from 'Utils/dataObjects';
+import { formatDateString } from 'Utils/functions.jsx';
+import { createGraph, loadCanvas } from 'Utils/graphs.js';
 
 const RequestsQuantityGraphPanel = ({ data, curDate }) => {
   const [graph, setGraph] = useState(null);

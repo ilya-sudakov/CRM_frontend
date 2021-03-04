@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './NewPackaging.scss';
-import '../../../../utils/Form/Form.scss';
-import InputText from '../../../../utils/Form/InputText/InputText.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
-import { addPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
-import useForm from '../../../../utils/hooks/useForm';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import { addPackaging } from 'Utils/RequestsAPI/Products/packaging.js';
+import useForm from 'Utils/hooks/useForm';
 import { packagingDefaultInputs } from '../objects';
 
 const NewPackaging = (props) => {

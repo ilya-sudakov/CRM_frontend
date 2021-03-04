@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import './SelectPackaging.scss';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
-import { getPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import { getPackaging } from 'Utils/RequestsAPI/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';
 import okSVG from '../../../../../assets/tableview/ok.svg';
-import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
-import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
+import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectPackaging = (props) => {
   const [selected, setSelected] = useState([]);

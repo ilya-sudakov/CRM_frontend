@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import './NewTask.scss';
-import '../../../../../utils/Form/Form.scss';
-import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.js';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import { addMainTask } from 'Utils/RequestsAPI/MainTasks.js';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../../App.js';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 import { getTasksDefaultInputs } from '../functions';
 
 const NewTask = (props) => {

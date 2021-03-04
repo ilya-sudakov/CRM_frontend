@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './EditClientCategory.scss';
-import '../../../../../utils/Form/Form.scss';
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 const EditClientCategory = (props) => {
   const [formInputs, setFormInputs] = useState({

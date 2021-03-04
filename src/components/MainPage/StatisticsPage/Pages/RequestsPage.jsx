@@ -10,7 +10,7 @@ import ProductQuantityInRequest from '../Panels/ProductQuantityInRequest.jsx';
 import ClientTypeDistributionInRequests from '../Graphs/ClientTypeDistributionInRequests.jsx';
 import OnTimeRequestsDistribution from '../Panels/OnTimeRequestsDistribution.jsx';
 import IncomeStatsBigPanel from '../BigPanels/IncomeStatsBigPanel.jsx';
-import { getRequests } from '../../../../utils/RequestsAPI/Requests.jsx';
+import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 
 const RequestsPage = ({ currDate, timePeriod }) => {
   const [requests, setRequests] = useState([]);

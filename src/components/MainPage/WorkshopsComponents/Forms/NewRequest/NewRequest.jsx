@@ -1,22 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
 
 import './NewRequest.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
-import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../../App.js';
 import {
   addRequest,
   addProductsToRequest,
   connectClientToRequest,
-} from '../../../../../utils/RequestsAPI/Requests.jsx';
+} from 'Utils/RequestsAPI/Requests.jsx';
 import { requestStatuses, workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 import { getPageByRequest, getRequestsDefaultInputs } from '../../functions.js';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 
 const NewRequest = (props) => {
   const userContext = useContext(UserContext);

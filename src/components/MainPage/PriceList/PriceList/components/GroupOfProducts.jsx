@@ -1,6 +1,6 @@
 import SelectPriceItem from '../../SelectPriceItem/SelectPriceItem.jsx';
-import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
-import { sortByField } from '../../../../../utils/sorting/sorting';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
 
 const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {

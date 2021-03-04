@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import plusIcon from '../../../../../assets/tableview/add_item.png';
 import plusContIcon from '../../../../../assets/tableview/add_cont.png';
 import './TableView.scss';
-import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
-import '../../../../utils/MainWindow/MainWindow.scss';
+import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import 'Utils/MainWindow/MainWindow.scss';
 
 import viewSVG from '../../../../../assets/tableview/view.svg';
 import editSVG from '../../../../../assets/tableview/edit.svg';
@@ -13,8 +13,8 @@ import deleteSVG from '../../../../../assets/tableview/delete.svg';
 import {
   addSpaceDelimiter,
   changeVisibilityOfListItem,
-} from '../../../../utils/functions.jsx';
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+} from 'Utils/functions.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);

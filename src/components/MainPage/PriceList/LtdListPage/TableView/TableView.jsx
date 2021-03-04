@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import okSVG from '../../../../../../assets/tableview/ok.svg';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 import './TableView.scss';
 

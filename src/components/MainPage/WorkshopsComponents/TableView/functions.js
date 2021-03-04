@@ -1,10 +1,10 @@
 import {
   formatDateString,
   saveCanvasAsImage,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import { requestStatuses } from '../workshopVariables.js';
 import html2canvas from 'html2canvas';
-import { sortByField } from '../../../../utils/sorting/sorting.js';
+import { sortByField } from 'Utils/sorting/sorting.js';
 
 export const getRequestItemClassName = (request, isMinimized) => {
   return `main-window__list-item main-window__list-item--${

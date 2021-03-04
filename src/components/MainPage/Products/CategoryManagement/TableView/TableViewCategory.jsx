@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../../../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../assets/tableview/delete.svg';
 import okSVG from '../../../../../../assets/tableview/ok.svg';
 import './TableViewCategory.scss';
-import { sortByField } from '../../../../../utils/sorting/sorting';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const TableViewCategory = (props) => {
   const searchQuery = (data) => {

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import './NewLtd.scss';
-import Button from '../../../../../../utils/Form/Button/Button.jsx';
-import { addLTD } from '../../../../../../utils/RequestsAPI/PriceList/lts_list.js';
-import FileUploader from '../../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import { addLTD } from 'Utils/RequestsAPI/PriceList/lts_list.js';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { fetchINNData, getInputsListFromArray } from '../functions';
 import {
   ltdFormNameInputs,
@@ -12,7 +12,7 @@ import {
   ltdFormBankInputs,
   ltdFormEmployeesInputs,
 } from '../objects.js';
-import useForm from '../../../../../../utils/hooks/useForm.js';
+import useForm from 'Utils/hooks/useForm.js';
 
 const NewLtd = (props) => {
   const {

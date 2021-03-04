@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import okSVG from '../../../../../../assets/tableview/ok.svg';
 import './TableView.scss';
-import '../../../../../utils/MainWindow/MainWindow.scss';
-import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import { sortByField } from '../../../../../utils/sorting/sorting';
+import 'Utils/MainWindow/MainWindow.scss';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const TableView = (props) => {
   const searchQuery = (data) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import './FeedbackPage.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import unreadMessagesSVG from '../../../../assets/chat/unread_messages__mail_icon.svg';
 import deleteSVG from '../../../../assets/tableview/delete.svg';
@@ -9,18 +9,18 @@ import {
   formatDateString,
   formatDateStringWithTime,
   scrollToElement,
-} from '../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import {
   getFeedback,
   deleteFeedbackById,
-} from '../../../utils/RequestsAPI/Feedback/feedback.js';
+} from 'Utils/RequestsAPI/Feedback/feedback.js';
 import {
   getMessagesByDiscussionId,
   deleteMessage,
-} from '../../../utils/RequestsAPI/Feedback/messages.js';
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import PlaceholderLoading from '../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+} from 'Utils/RequestsAPI/Feedback/messages.js';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

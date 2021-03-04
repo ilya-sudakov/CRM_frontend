@@ -3,7 +3,7 @@ import {
   formatDateString,
   dateDiffInDays,
   addSpaceDelimiter,
-} from '../../../../utils/functions.jsx';
+} from 'Utils/functions.jsx';
 import {
   productsStatuses,
   requestStatuses,

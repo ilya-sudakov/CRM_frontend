@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './TableView.scss';
-import '../../../../../../utils/MainWindow/MainWindow.scss';
-import { formatDateString } from '../../../../../../utils/functions.jsx';
+import 'Utils/MainWindow/MainWindow.scss';
+import { formatDateString } from 'Utils/functions.jsx';
 import okSVG from '../../../../../../../assets/tableview/ok.svg';
-import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   useEffect(() => {

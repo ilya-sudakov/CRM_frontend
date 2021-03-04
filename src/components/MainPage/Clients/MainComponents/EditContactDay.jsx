@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 const EditNextContactDate = (props) => {
   const [date, setDate] = useState(new Date());

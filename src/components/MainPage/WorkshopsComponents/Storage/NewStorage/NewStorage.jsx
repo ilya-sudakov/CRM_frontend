@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './NewStorage.scss';
-import '../../../../../utils/Form/Form.scss';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import { createStorage } from '../../../../../utils/RequestsAPI/Workshop/storage.js';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
+import 'Utils/Form/Form.scss';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import { createStorage } from 'Utils/RequestsAPI/Workshop/storage.js';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables.js';
-import useForm from '../../../../../utils/hooks/useForm';
+import useForm from 'Utils/hooks/useForm';
 import { workshopStorageDefaultInputs } from '../../objects';
 
 const NewPart = (props) => {

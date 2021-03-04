@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 import { MainPageWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
 import './GeneralPage.scss';
-import '../../../utils/MainWindow/MainWindow.scss';
+import 'Utils/MainWindow/MainWindow.scss';
 import DownloadIcon from '../../../../assets/download.svg';
 import StatsIcon from '../../../../assets/statistics/bar-chart-line.inline.svg';
 import HistoryIcon from '../../../../assets/statistics/history-outlined.inline.svg';
 import ReportIcon from '../../../../assets/statistics/report.svg';
 import calenderIcon from '../../../../assets/tableview/calendar.svg';
 import { getReportTableExcel } from './ReportTablePage/getReportTableExcel.js';
-import Button from '../../../utils/Form/Button/Button.jsx';
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const GeneralPage = (props) => {
   const workshops = [

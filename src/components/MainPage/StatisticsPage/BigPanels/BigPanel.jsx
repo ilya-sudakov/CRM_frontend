@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 
 const BigPanel = ({
   isLoaded,

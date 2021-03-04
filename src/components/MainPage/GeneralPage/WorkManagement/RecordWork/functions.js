@@ -6,7 +6,7 @@ import {
   deleteProductFromRecordedWork,
   deleteRecordedWork,
   editRecordedWork,
-} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+} from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 
 export const submitWorkData = async (
   worktimeInputs,

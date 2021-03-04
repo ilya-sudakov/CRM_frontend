@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import './EditEmployee.scss';
-import '../../../../../utils/Form/Form.scss';
+import 'Utils/Form/Form.scss';
 import {
   getEmployeeById,
   editEmployee,
   deleteEmployee,
-} from '../../../../../utils/RequestsAPI/Employees.jsx';
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
-import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
-import Button from '../../../../../utils/Form/Button/Button.jsx';
-import useForm from '../../../../../utils/hooks/useForm';
+} from 'Utils/RequestsAPI/Employees.jsx';
+import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects';
 
 const EditEmployee = (props) => {
