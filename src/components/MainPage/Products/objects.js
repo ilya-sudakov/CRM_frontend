@@ -1,4 +1,4 @@
-export const productsdefaultInputs = [
+export const productsDefaultInputs = [
   { name: "name", defaultValue: "", isRequired: true },
   { name: "category", defaultValue: "", isRequired: true },
   { name: "packages", defaultValue: [], isRequired: true },
@@ -15,4 +15,8 @@ export const productsdefaultInputs = [
   { name: "vendor", defaultValue: "" },
   { name: "description", defaultValue: "" },
   { name: "barcode", defaultValue: "" },
+];
+
+export const productCategoriesDefaultInputs = [
+  { name: "category", defaultValue: "", isRequired: true },
 ];

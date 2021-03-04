@@ -5,12 +5,12 @@ import { getProductById } from "../../../../utils/RequestsAPI/Products.js";
 import { imgToBlobDownload } from "../../../../utils/functions.jsx";
 import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
 import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import { productsdefaultInputs } from "../objects";
+import { productsDefaultInputs } from "../objects";
 import useForm from "../../../../utils/hooks/useForm";
 import Button from "../../../../utils/Form/Button/Button.jsx";
 
 const ViewProduct = (props) => {
-  const { formInputs, updateFormInputs } = useForm(productsdefaultInputs);
+  const { formInputs, updateFormInputs } = useForm(productsDefaultInputs);
 
   useEffect(() => {
     document.title = "Просмотр продукта";

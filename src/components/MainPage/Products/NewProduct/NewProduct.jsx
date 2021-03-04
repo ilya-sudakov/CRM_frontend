@@ -10,7 +10,7 @@ import Button from "../../../../utils/Form/Button/Button.jsx";
 import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
 import { addPackagingToProduct } from "../../../../utils/RequestsAPI/Products/packaging.js";
 import useForm from "../../../../utils/hooks/useForm.js";
-import { productsdefaultInputs } from "../objects.js";
+import { productsDefaultInputs } from "../objects.js";
 
 const NewProduct = (props) => {
   const {
@@ -20,7 +20,7 @@ const NewProduct = (props) => {
     setFormErrors,
     formIsValid,
     errorWindow,
-  } = useForm(productsdefaultInputs);
+  } = useForm(productsDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {

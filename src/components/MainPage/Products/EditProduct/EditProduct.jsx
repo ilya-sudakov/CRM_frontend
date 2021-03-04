@@ -17,7 +17,7 @@ import {
   addPackagingToProduct,
 } from "../../../../utils/RequestsAPI/Products/packaging.js";
 import useForm from "../../../../utils/hooks/useForm";
-import { productsdefaultInputs } from "../objects";
+import { productsDefaultInputs } from "../objects";
 
 const EditProduct = (props) => {
   const {
@@ -28,7 +28,7 @@ const EditProduct = (props) => {
     updateFormInputs,
     formIsValid,
     errorWindow,
-  } = useForm(productsdefaultInputs);
+  } = useForm(productsDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
