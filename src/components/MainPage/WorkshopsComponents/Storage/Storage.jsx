@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./Storage.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import TableView from "./TableView/TableView.jsx";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import './Storage.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import TableView from './TableView/TableView.jsx';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
   deleteStorage,
   getStorage,
-} from "../../../../utils/RequestsAPI/Workshop/storage.js";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import UserContext from "../../../../App.js";
-import { workshops } from "../workshopVariables.js";
-import { sortByField } from "../../../../utils/sorting/sorting.js";
+} from '../../../../utils/RequestsAPI/Workshop/storage.js';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import UserContext from '../../../../App.js';
+import { workshops } from '../workshopVariables.js';
+import { sortByField } from '../../../../utils/sorting/sorting.js';
 
 const Storage = (props) => {
   const userContext = useContext(UserContext);
   const [storage, setStorage] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Склад";
+    document.title = 'Склад';
     loadStorage();
   }, []);
 
@@ -49,14 +49,14 @@ const Storage = (props) => {
         item.name.toLowerCase().includes(query) ||
         item.quantity.toLowerCase().includes(query) ||
         item.comment.toLowerCase().includes(query) ||
-        item.number.toString().toLowerCase().includes(query)
+        item.number.toString().toLowerCase().includes(query),
     );
   };
 
   const sortParts = (data) => {
     return sortByField(filterData(data), {
-      fieldName: "id",
-      direction: "desc",
+      fieldName: 'id',
+      direction: 'desc',
     });
   };
 
@@ -65,7 +65,7 @@ const Storage = (props) => {
       <div className="main-window">
         <FloatingPlus
           linkTo={`${workshops[props.type].storageRedirectURL}/new`}
-          visibility={["ROLE_ADMIN", "ROLE_WORKSHOP"]}
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
         />
         <SearchBar
           fullSize

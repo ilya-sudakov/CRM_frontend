@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   numberToString,
   addSpaceDelimiter,
   formatDateStringNoYear,
   roundUpWorkHours,
-} from "../../../../../utils/functions.jsx";
-import editIcon from "../../../../../../assets/tableview/edit.svg";
-import { Link } from "react-router-dom";
-import { days } from "../../../../../utils/dataObjects.js";
-import "./EmployeeInfo.scss";
+} from '../../../../../utils/functions.jsx';
+import editIcon from '../../../../../../assets/tableview/edit.svg';
+import { Link } from 'react-router-dom';
+import { days } from '../../../../../utils/dataObjects.js';
+import './EmployeeInfo.scss';
 
 const filterWorksByDate = (item, date) => {
   if (item.length > 0) {
@@ -37,7 +37,7 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
         <div className="employee-info__employee-title">
           {header ??
             `Данные сотрудника (${formatDateStringNoYear(
-              dates[0]
+              dates[0],
             )} - ${formatDateStringNoYear(dates[dates.length - 1])})`}
         </div>
         <div className="employee-info__employee-general">
@@ -60,7 +60,7 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
           ) : (
             dates.map((date) => {
               const filteredData = selectedInfo?.works?.filter((item) =>
-                filterWorksByDate(item, date)
+                filterWorksByDate(item, date),
               );
               return filteredData.length > 0 ? (
                 <div className="employee-info__wrapper">
@@ -87,7 +87,7 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
                       item.map((workItem) => <WorksItem item={workItem} />)
                     ) : (
                       <WorksItem item={item} />
-                    )
+                    ),
                   )}
                 </div>
               ) : null;
@@ -107,9 +107,9 @@ const WorksItem = ({ item }) => {
     <div
       className="employee-info__employee-works-item"
       style={{
-        marginBottom: "15px",
-        marginTop: "5px",
-        marginLeft: "15px",
+        marginBottom: '15px',
+        marginTop: '5px',
+        marginLeft: '15px',
       }}
     >
       <span>{item.workList.work}</span>
@@ -158,7 +158,7 @@ const WeekSummary = ({ selectedInfo, dates }) => {
             ? cur.reduce((sumInner, curInner) => sumInner + curInner.hours, 0)
             : cur.hours)
         : sum,
-    0
+    0,
   );
   return (
     <div className="employee-info__employee-title">
@@ -166,7 +166,7 @@ const WeekSummary = ({ selectedInfo, dates }) => {
       {selectedInfo?.works?.length > 0
         ? `${roundUpWorkHours(hours)} ${numberToString(
             Number.parseInt(roundUpWorkHours(hours)),
-            ["час", "часа", "часов"]
+            ['час', 'часа', 'часов'],
           )}`
         : 0}
     </div>

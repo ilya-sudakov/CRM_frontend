@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import {
   formatDateString,
   scrollToElement,
-} from "../../../../../utils/functions.jsx";
-import "./TableView.scss";
-import { editTaskStatus } from "../../../../../utils/RequestsAPI/MainTasks.js";
-import editSVG from "../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../assets/tableview/delete.svg";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+} from '../../../../../utils/functions.jsx';
+import './TableView.scss';
+import { editTaskStatus } from '../../../../../utils/RequestsAPI/MainTasks.js';
+import editSVG from '../../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
@@ -16,12 +16,12 @@ const TableView = (props) => {
 
   const handleConditionChange = (event) => {
     const condition = event.target.value;
-    const id = event.target.getAttribute("id");
+    const id = event.target.getAttribute('id');
     editTaskStatus(
       {
         condition: condition,
       },
-      id
+      id,
     )
       .then(() => {
         props.loadData();
@@ -37,7 +37,7 @@ const TableView = (props) => {
 
   const prevRef = useCallback(
     (node) => {
-      const id = Number.parseInt(props.history.location.hash.split("#")[1]);
+      const id = Number.parseInt(props.history.location.hash.split('#')[1]);
       if (
         !props.data ||
         scrolledToPrev ||
@@ -47,7 +47,7 @@ const TableView = (props) => {
       if (node !== null && props.data) {
         console.log(
           node,
-          props.data.find((item) => item.id === id)
+          props.data.find((item) => item.id === id),
         );
         // node.scrollIntoView({
         //   behavior: 'smooth',
@@ -57,7 +57,7 @@ const TableView = (props) => {
         setScrolledToPrev(true);
       }
     },
-    [props.data]
+    [props.data],
   );
 
   return (
@@ -81,19 +81,19 @@ const TableView = (props) => {
         )}
         {props.data.map(
           (task, task_id) =>
-            (props.userHasAccess(["ROLE_ADMIN"]) ||
+            (props.userHasAccess(['ROLE_ADMIN']) ||
               props.userData.username === task.responsible) && (
               <div
                 key={task_id}
                 className={
-                  "main-window__list-item main-window__list-item--" +
+                  'main-window__list-item main-window__list-item--' +
                   props.taskStatuses.find(
-                    (status) => status.name === task.condition
+                    (status) => status.name === task.condition,
                   )?.className
                 }
                 id={task.id}
                 ref={
-                  Number.parseInt(props.history.location.hash.split("#")[1]) ===
+                  Number.parseInt(props.history.location.hash.split('#')[1]) ===
                   task.id
                     ? prevRef
                     : null
@@ -117,7 +117,7 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Дата контроля:</div>
                   {/* {formatDateString(task.dateControl)} */}
                   {new Date(task.dateControl) < new Date() &&
-                  task.condition !== "Выполнено" ? (
+                  task.condition !== 'Выполнено' ? (
                     <div className="main-window__reminder">
                       <div>!</div>
                       <div>{formatDateString(task.dateControl)}</div>
@@ -132,9 +132,9 @@ const TableView = (props) => {
                 </span>
                 <span
                   className={
-                    "main-window__list-item--" +
+                    'main-window__list-item--' +
                     props.taskStatuses.find(
-                      (status) => status.name === task.condition
+                      (status) => status.name === task.condition,
                     )?.className
                   }
                 >
@@ -154,20 +154,20 @@ const TableView = (props) => {
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess([
-                    "ROLE_ADMIN",
-                    "ROLE_DISPATCHER",
-                    "ROLE_ENGINEER",
-                    "ROLE_WORKSHOP",
+                    'ROLE_ADMIN',
+                    'ROLE_DISPATCHER',
+                    'ROLE_ENGINEER',
+                    'ROLE_WORKSHOP',
                   ]) && (
                     <Link
-                      to={"/dispatcher/general-tasks/edit/" + task.id}
+                      to={'/dispatcher/general-tasks/edit/' + task.id}
                       className="main-window__action"
                       title="Редактировать задачу"
                     >
                       <img className="main-window__img" src={editSVG} />
                     </Link>
                   )}
-                  {props.userHasAccess(["ROLE_ADMIN"]) && (
+                  {props.userHasAccess(['ROLE_ADMIN']) && (
                     <div
                       className="main-window__action"
                       title="Удалить задачу"
@@ -180,7 +180,7 @@ const TableView = (props) => {
                   )}
                 </div>
               </div>
-            )
+            ),
         )}
       </div>
     </div>

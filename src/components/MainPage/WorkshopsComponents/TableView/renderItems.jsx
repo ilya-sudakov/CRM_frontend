@@ -1,27 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   formatDateString,
   dateDiffInDays,
   addSpaceDelimiter,
-} from "../../../../utils/functions.jsx";
+} from '../../../../utils/functions.jsx';
 import {
   productsStatuses,
   requestStatuses,
   workshops,
-} from "../workshopVariables.js";
-import downloadSVG from "../../../../../assets/download.svg";
-import { downloadImage } from "./functions.js";
+} from '../workshopVariables.js';
+import downloadSVG from '../../../../../assets/download.svg';
+import { downloadImage } from './functions.js';
 
-export const renderIdColumn = (request = { id: 0 }, workshopName = "") => {
-  const fullRequests = workshopName === "requests";
+export const renderIdColumn = (request = { id: 0 }, workshopName = '') => {
+  const fullRequests = workshopName === 'requests';
   return (
     <span className="requests__column--id">{`${
-      fullRequests ? "Заявка" : "Очередь производства"
+      fullRequests ? 'Заявка' : 'Очередь производства'
     } #${request.id} ${
-      fullRequests && request.factory !== "requests"
+      fullRequests && request.factory !== 'requests'
         ? ` - ${workshops[request.factory]?.name}`
-        : ""
+        : ''
     }`}</span>
   );
 };
@@ -65,23 +65,23 @@ export const renderResponsibleColumn = ({ responsible }) => {
 
 export const renderDateShippedColumn = (request) => {
   const originalDateDiff = Math.abs(
-    dateDiffInDays(new Date(request.date), new Date(request.shippingDate))
+    dateDiffInDays(new Date(request.date), new Date(request.shippingDate)),
   );
   const curDateDiff = Math.abs(
-    dateDiffInDays(new Date(), new Date(request.shippingDate))
+    dateDiffInDays(new Date(), new Date(request.shippingDate)),
   );
   const shippingDate = formatDateString(
     request.shippingDate === null || request.shippingDate === undefined
       ? new Date()
-      : request.shippingDate
+      : request.shippingDate,
   );
   return (
     <span className="requests__column--date-shipping">
       <div className="main-window__mobile-text">Отгрузка:</div>
-      {request.status === "Отгружено" || request.status === "Завершено" ? (
+      {request.status === 'Отгружено' || request.status === 'Завершено' ? (
         <div
           className={`main-window__reminder ${
-            originalDateDiff > 7 ? "" : "main-window__reminder--positive"
+            originalDateDiff > 7 ? '' : 'main-window__reminder--positive'
           }`}
           title={
             originalDateDiff > 7
@@ -135,20 +135,20 @@ const findStatusClassName = (statuses, curStatus) => {
     (item) =>
       item.name === curStatus ||
       item.className === curStatus ||
-      item.oldName === curStatus
+      item.oldName === curStatus,
   )?.className;
 };
 
 export const renderRequestStatusColumn = (
   request,
   userHasAccess,
-  handleStatusChange
+  handleStatusChange,
 ) => {
   return (
     <span
       className={`main-window__list-item--${findStatusClassName(
         requestStatuses,
-        request.status
+        request.status,
       )}  requests__column--status`}
     >
       <div className="main-window__mobile-text">Статус заявки:</div>
@@ -159,7 +159,7 @@ export const renderRequestStatusColumn = (
       >
         {requestStatuses.map((status) => {
           const optionStyle =
-            userHasAccess && userHasAccess(status.access) ? "block" : "none";
+            userHasAccess && userHasAccess(status.access) ? 'block' : 'none';
           const optionsValue =
             status.oldName && status.oldName === request.status
               ? status.oldName
@@ -182,13 +182,13 @@ export const renderRequestStatusColumn = (
 
 export const renderProductStatusSelect = (
   product,
-  handleProductStatusChange
+  handleProductStatusChange,
 ) => {
   return (
     <span
       className={`main-window__list-item--${findStatusClassName(
         productsStatuses,
-        product.status
+        product.status,
       )}`}
     >
       <div className="main-window__mobile-text">Статус:</div>
@@ -220,8 +220,8 @@ export const renderProductsMinimizedColumn = ({ requestProducts = [] }) => {
   const productsQuantity = addSpaceDelimiter(
     requestProducts.reduce(
       (prev, cur) => prev + Number.parseFloat(cur.quantity),
-      0
-    )
+      0,
+    ),
   );
   return (
     <span
@@ -241,7 +241,7 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
   return (
     <div
       className={`main-window__list-options ${
-        request.isMinimized ? "main-window__list-options--hidden" : ""
+        request.isMinimized ? 'main-window__list-options--hidden' : ''
       }`}
     >
       <div className="main-window__title">Продукция</div>
@@ -256,7 +256,7 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
           <div
             className={`main-window__list-item main-window__list-item--${findStatusClassName(
               productsStatuses,
-              product.status
+              product.status,
             )}`}
           >
             <span>
@@ -282,7 +282,7 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
 export const renderListHeader = (isMinimized, printConfig, workshop) => {
   return (
     <div className="main-window__list-item main-window__list-item--header">
-      {printConfig["products"].visible ? (
+      {printConfig['products'].visible ? (
         isMinimized ? (
           <span className="requests__column--products">Продукция</span>
         ) : (
@@ -295,21 +295,21 @@ export const renderListHeader = (isMinimized, printConfig, workshop) => {
           </div>
         )
       ) : null}
-      {printConfig["client"].visible ? (
+      {printConfig['client'].visible ? (
         <span className="requests__column--client">
-          {workshop === "requests" ? "Клиент" : "Кодовое слово"}
+          {workshop === 'requests' ? 'Клиент' : 'Кодовое слово'}
         </span>
       ) : null}
-      {printConfig["responsible"].visible ? (
+      {printConfig['responsible'].visible ? (
         <span className="requests__column--responsible">Ответственный</span>
       ) : null}
-      {printConfig["status"].visible ? (
+      {printConfig['status'].visible ? (
         <span className="requests__column--status">Статус заявки</span>
       ) : null}
-      {printConfig["date-shipping"].visible ? (
+      {printConfig['date-shipping'].visible ? (
         <span className="requests__column--date-shipping">Отгрузка</span>
       ) : null}
-      {printConfig["comment"].visible ? (
+      {printConfig['comment'].visible ? (
         <span className="requests__column--comment">Комментарий</span>
       ) : null}
       <div className="main-window__table-actions"></div>
@@ -322,7 +322,7 @@ export const renderProductsColumn = (
   createLabelForProduct,
   handleProductStatusChange,
   setSelectedProduct,
-  setLabelIsHidden
+  setLabelIsHidden,
 ) => {
   return (
     <div className="main-window__list-col">
@@ -347,7 +347,7 @@ export const renderProductsColumn = (
             <div
               className={`main-window__list-col-row main-window__list-item--${findStatusClassName(
                 productsStatuses,
-                product.status
+                product.status,
               )}`}
             >
               <span onClick={() => createLabelForProduct(product)}>
@@ -369,7 +369,7 @@ export const renderProductsColumn = (
                     product,
                     request.factory,
                     setSelectedProduct,
-                    setLabelIsHidden
+                    setLabelIsHidden,
                   )
                 }
                 title="Скачать этикетку"

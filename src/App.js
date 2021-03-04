@@ -1,17 +1,17 @@
-import React, { Suspense, lazy, useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import "./App.scss";
-import "./variables.scss";
-const MainPage = lazy(() => import("./components/MainPage/MainPage.jsx")); //lazy-загрузка компонента MainPage
-import LoginPage from "./components/Authorization/LoginPage/LoginPage.jsx";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
-import { refreshToken } from "./utils/RequestsAPI/Authorization.js";
-import PageLoading from "./components/MainPage/PageLoading/PageLoading.jsx";
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import './App.scss';
+import './variables.scss';
+const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx')); //lazy-загрузка компонента MainPage
+import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+import { refreshToken } from './utils/RequestsAPI/Authorization.js';
+import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx';
 const UserContext = React.createContext();
-import { AppIcon__128 } from "../assets/app_icon__128.png";
-import { AppIcon__144 } from "../assets/app_icon__144.png";
-import { messaging } from "./init-fcm.js";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { AppIcon__128 } from '../assets/app_icon__128.png';
+import { AppIcon__144 } from '../assets/app_icon__144.png';
+import { messaging } from './init-fcm.js';
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 
 const queryClient = new QueryClient();
 
@@ -20,19 +20,19 @@ export const App = () => {
   const [expiredIn, setExpiredIn] = useState(new Date());
   const [user, setUser] = useState({
     //Данные пользователя
-    email: "",
-    username: "",
-    firstName: "",
-    lastName: "",
+    email: '',
+    username: '',
+    firstName: '',
+    lastName: '',
     roles: [],
     id: 0,
   });
   const [newNotifications, setNewNotifications] = useState(0);
   const [lastNotification, setLastNotification] = useState({
-    body: "",
-    description: "",
+    body: '',
+    description: '',
     img: null,
-    link: "/",
+    link: '/',
     visible: false,
   });
 
@@ -61,7 +61,7 @@ export const App = () => {
   useEffect(() => {
     //Проверка на наличие в localStorage браузера токена,
     //запрос на его обновление при отсутствии
-    if (localStorage.getItem("refreshToken") && !isAuthorized)
+    if (localStorage.getItem('refreshToken') && !isAuthorized)
       refreshOldToken();
 
     initFirebase();
@@ -75,13 +75,13 @@ export const App = () => {
     if (expiredInDateMS > curDateMS) {
       const timeDifference = expiredInDateMS - curDateMS;
       return setTimeout(() => {
-        console.log("refreshing old token");
+        console.log('refreshing old token');
         return refreshOldToken();
       }, timeDifference);
     }
 
     if (expiredInDateMS <= curDateMS) {
-      console.log("refreshing old token");
+      console.log('refreshing old token');
       return refreshOldToken();
     }
   };
@@ -89,7 +89,7 @@ export const App = () => {
   //Обновление токена доступа
   const refreshOldToken = () => {
     const refreshTokenObject = Object.assign({
-      refreshToken: localStorage.getItem("refreshToken"),
+      refreshToken: localStorage.getItem('refreshToken'),
     });
     return refreshToken(refreshTokenObject)
       .then((res) => res.json())
@@ -98,15 +98,15 @@ export const App = () => {
         setUserData(true, response);
         //Функция обработки токена, если он устареет
         refreshExpiredToken(response.expiredIn);
-        localStorage.setItem("accessToken", response.accessToken);
-        localStorage.setItem("refreshToken", response.refreshToken);
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
         return;
       })
       .catch((error) => {
         //При ошибке очищаем localStorage
         console.log(error);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         window.location.reload();
         return;
       });
@@ -120,18 +120,18 @@ export const App = () => {
         .requestPermission()
         .then(async function () {
           const token = await messaging.getToken();
-          console.log("token: " + token);
+          console.log('token: ' + token);
           return;
         })
         .catch(function (err) {
-          console.log("Unable to get permission to notify.", err);
+          console.log('Unable to get permission to notify.', err);
         });
 
-      navigator.serviceWorker.addEventListener("message", (message) => {
-        console.log(message.data["firebase-messaging-msg-data"].data);
+      navigator.serviceWorker.addEventListener('message', (message) => {
+        console.log(message.data['firebase-messaging-msg-data'].data);
         setNewNotifications(newNotifications + 1);
         setLastNotification({
-          ...message.data["firebase-messaging-msg-data"].data,
+          ...message.data['firebase-messaging-msg-data'].data,
           visible: true,
         });
       });

@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import "./TableView.scss";
-import "../../../../../../utils/MainWindow/MainWindow.scss";
-import okSVG from "../../../../../../../assets/tableview/ok.svg";
+import React, { useEffect } from 'react';
+import './TableView.scss';
+import '../../../../../../utils/MainWindow/MainWindow.scss';
+import okSVG from '../../../../../../../assets/tableview/ok.svg';
 
 const TableView = (props) => {
   const search = () => {
     // console.log(drafts);
     let re = /[.,\s\-_]/gi;
     const query = props.searchQuery.toLowerCase();
-    let searchArr = query.split(" ");
+    let searchArr = query.split(' ');
     return props.drafts.filter((item) => {
       let check = true;
       searchArr.map((searchWord) => {
@@ -17,8 +17,8 @@ const TableView = (props) => {
             false &&
           item.number
             .toLowerCase()
-            .replace(re, "")
-            .includes(query.replace(re, "")) === false
+            .replace(re, '')
+            .includes(query.replace(re, '')) === false
         )
           check = false;
       });
@@ -31,10 +31,10 @@ const TableView = (props) => {
   };
 
   const partTypes = {
-    Bench: "Станок",
-    Stamp: "Штамп",
-    Press: "Пресс-форма",
-    Detail: "Деталь",
+    Bench: 'Станок',
+    Stamp: 'Штамп',
+    Press: 'Пресс-форма',
+    Detail: 'Деталь',
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const TableView = (props) => {
                   .includes(props.searchQuery.toLowerCase()) ||
                 draft.location
                   .toLowerCase()
-                  .includes(props.searchQuery.toLowerCase())
+                  .includes(props.searchQuery.toLowerCase()),
             )
             .map((draft, index) => {
               return (
@@ -76,7 +76,7 @@ const TableView = (props) => {
                       draft.id,
                       draft.name,
                       draft.type,
-                      draft.number
+                      draft.number,
                     );
                     props.setCloseWindow(!props.closeWindow);
                   }}

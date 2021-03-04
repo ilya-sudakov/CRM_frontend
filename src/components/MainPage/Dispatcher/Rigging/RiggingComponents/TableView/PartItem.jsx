@@ -1,21 +1,21 @@
-import React from "react";
-import editIcon from "../../../../../../../assets/tableview/edit.svg";
-import "./TableView.scss";
-import { addSpaceDelimiter } from "../../../../../../utils/functions.jsx";
-import { rigStatuses, rigTypes, workshopsLocations } from "../rigsVariables";
-import { editStampPartColor } from "../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import TableActions from "../../../../../../utils/TableView/TableActions/TableActions.jsx";
+import React from 'react';
+import editIcon from '../../../../../../../assets/tableview/edit.svg';
+import './TableView.scss';
+import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx';
+import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables';
+import { editStampPartColor } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import TableActions from '../../../../../../utils/TableView/TableActions/TableActions.jsx';
 
 const PartItem = ({ part, refItem, loadData, type, stampId }) => {
   return (
     <div
       key={part.id}
       className={
-        "main-window__list-item main-window__list-item--" +
-        (part.color || "production") +
+        'main-window__list-item main-window__list-item--' +
+        (part.color || 'production') +
         (workshopsLocations[part.location]
-          ? ""
-          : " main-window__list-item--message main-window__list-item--warning")
+          ? ''
+          : ' main-window__list-item--message main-window__list-item--warning')
       }
       data-msg="Предупреждение! Введите корректное местоположение"
       ref={refItem}
@@ -44,14 +44,14 @@ const PartItem = ({ part, refItem, loadData, type, stampId }) => {
         title={
           workshopsLocations[part.location]
             ? workshopsLocations[part.location].name
-            : ""
+            : ''
         }
         className="main-window__list-item--border-checked"
       >
         <div className="main-window__mobile-text">Местоположение:</div>
         {workshopsLocations[part.location]
           ? workshopsLocations[part.location].name
-          : ""}
+          : ''}
       </span>
       <span title={part.comment}>
         <div className="main-window__mobile-text">Комментарий:</div>
@@ -59,9 +59,9 @@ const PartItem = ({ part, refItem, loadData, type, stampId }) => {
       </span>
       <span
         className={
-          "main-window__list-item--" +
-          rigStatuses[part.color || "production"].className +
-          "main-window__list-item--border-checked"
+          'main-window__list-item--' +
+          rigStatuses[part.color || 'production'].className +
+          'main-window__list-item--border-checked'
         }
       >
         <div className="main-window__mobile-text">Статус:</div>
@@ -74,7 +74,7 @@ const PartItem = ({ part, refItem, loadData, type, stampId }) => {
               {
                 color: target.value,
               },
-              part.id
+              part.id,
             ).then(() => loadData())
           }
         >
@@ -123,7 +123,7 @@ const PartItem = ({ part, refItem, loadData, type, stampId }) => {
           {
             link: `${rigTypes[type].redirectURL}/edit/${stampId}?part=${part.id}`,
             imgSrc: editIcon,
-            title: "Редактировать",
+            title: 'Редактировать',
           },
         ]}
       />

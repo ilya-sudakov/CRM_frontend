@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import "./NewWork.scss";
-import "../../../../utils/Form/Form.scss";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import { addWork } from "../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import { customSelectStyles } from "../../../../utils/dataObjects";
-import useForm from "../../../../utils/hooks/useForm";
-import { workItemDefaultInputs } from "../objects";
+import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
+import './NewWork.scss';
+import '../../../../utils/Form/Form.scss';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import { addWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import { customSelectStyles } from '../../../../utils/dataObjects';
+import useForm from '../../../../utils/hooks/useForm';
+import { workItemDefaultInputs } from '../objects';
 
 const NewWork = (props) => {
   const {
@@ -25,24 +25,24 @@ const NewWork = (props) => {
     setIsLoading(true);
     console.log(formInputs);
     addWork(formInputs)
-      .then(() => props.history.push("/work-list"))
+      .then(() => props.history.push('/work-list'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Создание работы";
+    document.title = 'Создание работы';
   }, []);
 
   const workTypes = [
-    { label: "Продукция", value: "Продукция" },
-    { label: "Чертеж", value: "Чертеж" },
+    { label: 'Продукция', value: 'Продукция' },
+    { label: 'Чертеж', value: 'Чертеж' },
     {
-      label: "Без продукции/чертежа",
-      value: "Без продукции/чертежа",
+      label: 'Без продукции/чертежа',
+      value: 'Без продукции/чертежа',
     },
   ];
 
@@ -59,7 +59,7 @@ const NewWork = (props) => {
           error={formErrors.work}
           name="work"
           handleInputChange={({ target }) =>
-            handleInputChange("work", target.value)
+            handleInputChange('work', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -70,7 +70,7 @@ const NewWork = (props) => {
             <Select
               defaultValue={workTypes[0]}
               styles={customSelectStyles}
-              onChange={(value) => handleInputChange("typeOfWork", value.label)}
+              onChange={(value) => handleInputChange('typeOfWork', value.label)}
               options={workTypes}
             />
           </div>
@@ -82,7 +82,7 @@ const NewWork = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/work-list")}
+            onClick={() => props.history.push('/work-list')}
             text="Вернуться назад"
           />
           <Button

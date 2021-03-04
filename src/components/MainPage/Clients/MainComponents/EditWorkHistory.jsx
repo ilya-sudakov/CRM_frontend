@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import SelectWorkHistory from "../SelectWorkHistory/SelectWorkHistory.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+import React, { useState, useEffect } from 'react';
+import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const EditWorkHistory = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ const EditWorkHistory = (props) => {
               comment: selected.comment,
               clientId: clientId,
             },
-            selected.id
+            selected.id,
           )
         : props.addWorkHistory({
             date: selected.date,

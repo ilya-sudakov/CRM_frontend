@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import "./RecordWorkForm.scss";
-import "../../../../../utils/Form/Form.scss";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import SelectEmployee from "../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
+import React, { useState, useEffect } from 'react';
+import './RecordWorkForm.scss';
+import '../../../../../utils/Form/Form.scss';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import {
   deleteProductFromRecordedWork,
   deleteDraftFromRecordedWork,
   deleteRecordedWork,
-} from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
-import SelectWork from "../SelectWork/SelectWork.jsx";
-import MessageForUser from "../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
-import { submitWorkData } from "../RecordWork/functions.js";
+} from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js';
+import SelectWork from '../SelectWork/SelectWork.jsx';
+import MessageForUser from '../../../../../utils/Form/MessageForUser/MessageForUser.jsx';
+import { submitWorkData } from '../RecordWork/functions.js';
 
 const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -41,13 +41,13 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "date":
+      case 'date':
         setValidInputs({
           ...validInputs,
           date: value !== null,
         });
         break;
-      case "works":
+      case 'works':
         setValidInputs({
           ...validInputs,
           works: value !== null,
@@ -57,7 +57,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -70,26 +70,26 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
       worktimeInputs.date,
       worktimeInputs.employee,
       setIsLoading,
-      inputs
+      inputs,
     ).then(() => setIsSaved(true));
   };
 
   const handleDelete = () => {
     setIsLoading(true);
-    console.log("deleting element", worktimeInputs);
+    console.log('deleting element', worktimeInputs);
     const id = originalWork.id;
     const originalWork = worktimeInputs.originalWorks[0];
     return Promise.all(
       originalWork.product.map((product) =>
-        deleteProductFromRecordedWork(id, product.product.id)
-      )
+        deleteProductFromRecordedWork(id, product.product.id),
+      ),
     )
       .then(() =>
         Promise.all(
           originalWork.draft.map((draft) =>
-            deleteDraftFromRecordedWork(id, draft.partId, draft.partType)
-          )
-        )
+            deleteDraftFromRecordedWork(id, draft.partId, draft.partType),
+          ),
+        ),
       )
       .then(() => deleteRecordedWork(id))
       .then(() => {
@@ -153,7 +153,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
           {/* Создание работы */}
           <SelectWork
             handleWorkChange={(value) => {
-              validateField("works", value);
+              validateField('works', value);
               setWorkTimeInputs({
                 ...worktimeInputs,
                 works: value,
@@ -171,7 +171,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             noNewItems
           />
           <div className="main-form__item">
-            <div class="main-form__input_name">{`Всего: ${totalHours} ч`}</div>
+            <div className="main-form__input_name">{`Всего: ${totalHours} ч`}</div>
           </div>
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
@@ -184,7 +184,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             >
               Закрыть
             </button>
-            {worktimeInputs.type === "edit" ? (
+            {worktimeInputs.type === 'edit' ? (
               <Button
                 text="Удалить запись"
                 isLoading={isLoading}
@@ -194,9 +194,9 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             ) : null}
             {worktimeInputs.works?.length > 0 &&
             worktimeInputs.works?.reduce((sum, cur) => {
-              if (cur.workType === "Без продукции/чертежа") {
+              if (cur.workType === 'Без продукции/чертежа') {
                 return sum + 1;
-              } else if (cur.workType === "Чертеж") {
+              } else if (cur.workType === 'Чертеж') {
                 return sum + 1;
               } else return cur?.product.length;
             }, 0) > 0 ? (

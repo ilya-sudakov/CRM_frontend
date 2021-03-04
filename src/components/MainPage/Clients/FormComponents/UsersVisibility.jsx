@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx'
-import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx'
+import React, { useEffect, useState } from 'react';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 
 const UsersVisibility = (props) => {
-  const [users, setUsers] = useState(props.defaultValue || {})
-  const [allChecked, setAllChecked] = useState(true)
+  const [users, setUsers] = useState(props.defaultValue || {});
+  const [allChecked, setAllChecked] = useState(true);
 
   useEffect(() => {
-    loadUsers()
-  }, [])
+    loadUsers();
+  }, []);
 
   const loadUsers = () => {
     getUsers()
       .then((res) => res.json())
       .then((res) => {
-        let newUsers = {}
+        let newUsers = {};
         res
           .filter(
             (user) =>
@@ -30,12 +30,12 @@ const UsersVisibility = (props) => {
                 ...user,
                 selected: true,
               },
-            })
-          })
-        props.handleInputChange(newUsers)
-        return setUsers({ ...newUsers })
-      })
-  }
+            });
+          });
+        props.handleInputChange(newUsers);
+        return setUsers({ ...newUsers });
+      });
+  };
 
   return (
     <div className="main-form__item">
@@ -46,10 +46,10 @@ const UsersVisibility = (props) => {
             text="Выбрать всех"
             checked={allChecked}
             onChange={(value) => {
-              setAllChecked(value)
-              let newUsers = {}
+              setAllChecked(value);
+              let newUsers = {};
               Object.entries(users).map((user) => {
-                console.log(user)
+                console.log(user);
                 return (newUsers = {
                   ...newUsers,
                   [user[0]]: {
@@ -59,10 +59,10 @@ const UsersVisibility = (props) => {
                         ? true
                         : value,
                   },
-                })
-              })
-              props.handleInputChange(newUsers)
-              setUsers({ ...newUsers })
+                });
+              });
+              props.handleInputChange(newUsers);
+              setUsers({ ...newUsers });
             }}
           />
         </div>
@@ -81,21 +81,21 @@ const UsersVisibility = (props) => {
                     ...user[1],
                     selected: value,
                   },
-                }
-              })
+                };
+              });
               props.handleInputChange({
                 ...users,
                 [user[1].id]: {
                   ...user[1],
                   selected: value,
                 },
-              })
+              });
             }}
           />
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default UsersVisibility
+export default UsersVisibility;

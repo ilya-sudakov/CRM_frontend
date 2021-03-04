@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./FormWindow.scss";
-import PropTypes from "prop-types";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './FormWindow.scss';
+import PropTypes from 'prop-types';
 
 const FormWindow = ({
   showWindow = false,
   setShowWindow,
-  title = "",
+  title = '',
   headerButton,
-  content = "",
+  content = '',
 }) => {
   useEffect(() => {}, [showWindow, setShowWindow]);
 
@@ -16,9 +16,9 @@ const FormWindow = ({
     e.preventDefault();
     e.stopPropagation();
     if (
-      !(e.target.classList[0] === "form-window") &&
-      !e.target.classList.contains("form-window__exit") &&
-      !e.target.classList.contains("form-window__bar")
+      !(e.target.classList[0] === 'form-window') &&
+      !e.target.classList.contains('form-window__exit') &&
+      !e.target.classList.contains('form-window__bar')
     ) {
       setShowWindow(true);
     } else {
@@ -28,14 +28,14 @@ const FormWindow = ({
 
   return (
     <div
-      className={showWindow ? "form-window" : "form-window form-window--hidden"}
+      className={showWindow ? 'form-window' : 'form-window form-window--hidden'}
       onClick={clickOnSelectWindow}
     >
       <div
         className={
           showWindow
-            ? "form-window__content"
-            : "form-window__content form-window__content--hidden"
+            ? 'form-window__content'
+            : 'form-window__content form-window__content--hidden'
         }
       >
         <div className="form-window__title">

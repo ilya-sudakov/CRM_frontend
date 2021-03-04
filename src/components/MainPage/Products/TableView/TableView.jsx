@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import plusIcon from "../../../../../assets/tableview/add_item.png";
-import plusContIcon from "../../../../../assets/tableview/add_cont.png";
-import "./TableView.scss";
-import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import "../../../../utils/MainWindow/MainWindow.scss";
+import plusIcon from '../../../../../assets/tableview/add_item.png';
+import plusContIcon from '../../../../../assets/tableview/add_cont.png';
+import './TableView.scss';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import '../../../../utils/MainWindow/MainWindow.scss';
 
-import viewSVG from "../../../../../assets/tableview/view.svg";
-import editSVG from "../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../assets/tableview/delete.svg";
+import viewSVG from '../../../../../assets/tableview/view.svg';
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../assets/tableview/delete.svg';
 import {
   addSpaceDelimiter,
   changeVisibilityOfListItem,
-} from "../../../../utils/functions.jsx";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+} from '../../../../utils/functions.jsx';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +37,7 @@ const TableView = (props) => {
       temp.push({
         id: element.id,
         hidden: true,
-      })
+      }),
     );
     setProductsVisible([...temp]);
     props.closeWindow && props.setShowWindow(false);
@@ -67,27 +67,27 @@ const TableView = (props) => {
                 <span className="tableview_products__items-count">
                   {`${
                     props.products.filter(
-                      (product) => product.category === category.category
+                      (product) => product.category === category.category,
                     ).length
                   }`}
                 </span>
               </span>
               <div className="main-window__actions">
                 {props.userHasAccess &&
-                  props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
+                  props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
                     <div
                       className="main-window__action"
                       title="Редактирование категории"
                       onClick={() => {
                         props.history.push(
-                          "/products/category/edit/" + category.id
+                          '/products/category/edit/' + category.id,
                         );
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />
                     </div>
                   )}
-                {props.userHasAccess && props.userHasAccess(["ROLE_ADMIN"]) && (
+                {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
                   <div className="main-window__action" onClick={null}>
                     <img className="main-window__img" src={deleteSVG} />
                   </div>
@@ -98,8 +98,8 @@ const TableView = (props) => {
             <div
               className={
                 isProductsHidden(category.id)
-                  ? "main-window__list-options main-window__list-options--hidden"
-                  : "main-window__list-options"
+                  ? 'main-window__list-options main-window__list-options--hidden'
+                  : 'main-window__list-options'
               }
             >
               <div className="main-window__list">
@@ -158,7 +158,7 @@ const TableView = (props) => {
                             title="Просмотр продукции"
                             onClick={() => {
                               return props.history.push(
-                                "/products/view/" + product.id
+                                '/products/view/' + product.id,
                               );
                             }}
                           >
@@ -166,15 +166,15 @@ const TableView = (props) => {
                           </div>
                           {props.userHasAccess &&
                             props.userHasAccess([
-                              "ROLE_ADMIN",
-                              "ROLE_MANAGER",
+                              'ROLE_ADMIN',
+                              'ROLE_MANAGER',
                             ]) && (
                               <div
                                 className="main-window__action"
                                 title="Редактирование продукции"
                                 onClick={() => {
                                   return props.history.push(
-                                    "/products/edit/" + product.id
+                                    '/products/edit/' + product.id,
                                   );
                                 }}
                               >
@@ -185,7 +185,7 @@ const TableView = (props) => {
                               </div>
                             )}
                           {props.userHasAccess &&
-                            props.userHasAccess(["ROLE_ADMIN"]) && (
+                            props.userHasAccess(['ROLE_ADMIN']) && (
                               <div
                                 className="main-window__action"
                                 title="Удаление продукции"
@@ -208,7 +208,7 @@ const TableView = (props) => {
                                   props.selectProduct(
                                     product.id,
                                     product.name,
-                                    product.id
+                                    product.id,
                                   );
                                 }}
                               >
@@ -226,7 +226,7 @@ const TableView = (props) => {
                                   props.selectProduct(
                                     product.id,
                                     product.name,
-                                    product.id
+                                    product.id,
                                   );
                                   props.setCloseWindow(!props.closeWindow);
                                 }}
@@ -241,7 +241,7 @@ const TableView = (props) => {
                           )}
                         </div>
                       </div>
-                    )
+                    ),
                 )}
               </div>
             </div>

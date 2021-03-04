@@ -1,43 +1,43 @@
-import React, { useContext, useState } from "react";
-import "./WorkshopOrders.scss";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import { formatDateString } from "../../../../utils/functions.jsx";
+import React, { useContext, useState } from 'react';
+import './WorkshopOrders.scss';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
 import {
   deleteProductFromOrder,
   deleteOrder,
   getOrdersByName,
-} from "../../../../utils/RequestsAPI/Workshop/Orders.jsx";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import UserContext from "../../../../App.js";
-import Tableview from "./Table.jsx";
-import { sortByField } from "../../../../utils/sorting/sorting";
-import { workshops } from "../workshopVariables.js";
+} from '../../../../utils/RequestsAPI/Workshop/Orders.jsx';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import UserContext from '../../../../App.js';
+import Tableview from './Table.jsx';
+import { sortByField } from '../../../../utils/sorting/sorting';
+import { workshops } from '../workshopVariables.js';
 
 const WorkshopOrders = (props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [orders, setOrders] = useState([]);
   const userContext = useContext(UserContext);
   const [statuses, setStatuses] = useState([
     {
-      className: "sent",
-      name: "Отправлено",
+      className: 'sent',
+      name: 'Отправлено',
       visible: true,
     },
     {
-      className: "completed",
-      name: "Завершено",
+      className: 'completed',
+      name: 'Завершено',
       visible: false,
     },
     {
-      className: "ordered",
-      name: "Заказано",
+      className: 'ordered',
+      name: 'Заказано',
       visible: true,
     },
     {
-      className: "problem",
-      name: "Проблема",
+      className: 'problem',
+      name: 'Проблема',
       visible: true,
     },
   ]);
@@ -48,7 +48,7 @@ const WorkshopOrders = (props) => {
       {
         name: workshops[props.type].fullName,
       },
-      signal
+      signal,
     )
       .then((res) => res.json())
       .then((res) => {
@@ -63,7 +63,7 @@ const WorkshopOrders = (props) => {
 
   const deleteItem = (item) => {
     Promise.all(
-      item.products.map((product) => deleteProductFromOrder(product.id))
+      item.products.map((product) => deleteProductFromOrder(product.id)),
     )
       .then(() => deleteOrder(item.id))
       .then(() => loadData());
@@ -119,7 +119,7 @@ const WorkshopOrders = (props) => {
         />
         <FloatingPlus
           linkTo={`${workshops[props.type].ordersRedirectURL}/new`}
-          visibility={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
+          visibility={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
         />
         <ControlPanel
           itemsCount={`Всего: ${orders.length} записей`}
@@ -130,7 +130,7 @@ const WorkshopOrders = (props) => {
                 {statuses.map((status, index) => (
                   <div
                     className={`main-window__button ${
-                      status.visible ? "" : "main-window__button--inverted"
+                      status.visible ? '' : 'main-window__button--inverted'
                     } main-window__list-item--${status.className}`}
                     onClick={() => handleStatusClick(index, status)}
                   >
@@ -143,8 +143,8 @@ const WorkshopOrders = (props) => {
         />
         <Tableview
           data={sortByField(filterOrders(orders), {
-            fieldName: "date",
-            direction: "asc",
+            fieldName: 'date',
+            direction: 'asc',
           })}
           link={workshops[props.type].ordersRedirectURL}
           isLoading={isLoading}

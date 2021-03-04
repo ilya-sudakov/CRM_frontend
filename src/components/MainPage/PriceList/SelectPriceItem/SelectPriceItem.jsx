@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import "./SelectPriceItem.scss";
-import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import { getDataUri } from "../../../../utils/functions.jsx";
-import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
-import { defaultPriceItemObject } from "./objects.js";
+import React, { useState, useEffect } from 'react';
+import './SelectPriceItem.scss';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import { getDataUri } from '../../../../utils/functions.jsx';
+import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import { defaultPriceItemObject } from './objects.js';
 
 const SelectPriceItem = (props) => {
   const [selected, setSelected] = useState([defaultPriceItemObject]);
@@ -61,7 +61,7 @@ const SelectPriceItem = (props) => {
     props.handlePriceItemChange([...temp]);
   };
 
-  const getInputElement = (name, index, value, type = "number") => {
+  const getInputElement = (name, index, value, type = 'number') => {
     return (
       <input
         type={type}
@@ -76,7 +76,7 @@ const SelectPriceItem = (props) => {
 
   const onImageDataChange = async (result, imgInfo) => {
     const downgraded =
-      result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
+      result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
     imgInfo.setter(downgraded);
     props.handleImgChange(downgraded, imgInfo.itemName);
   };
@@ -103,29 +103,29 @@ const SelectPriceItem = (props) => {
       <div className="select-price-item__selected">
         {!props.readOnly && (
           <div className="price-list__images-wrapper">
-            {getPhotoInputElement("Фотография 1", 1, {
+            {getPhotoInputElement('Фотография 1', 1, {
               setter: (downgraded) => setGroupImg1(downgraded),
-              itemName: "groupImg1",
+              itemName: 'groupImg1',
               previewImage: groupImg1,
             })}
-            {getPhotoInputElement("Фотография 2", 2, {
+            {getPhotoInputElement('Фотография 2', 2, {
               setter: (downgraded) => setGroupImg2(downgraded),
-              itemName: "groupImg2",
+              itemName: 'groupImg2',
               previewImage: groupImg2,
             })}
-            {getPhotoInputElement("Фотография 3", 3, {
+            {getPhotoInputElement('Фотография 3', 3, {
               setter: (downgraded) => setGroupImg3(downgraded),
-              itemName: "groupImg3",
+              itemName: 'groupImg3',
               previewImage: groupImg3,
             })}
-            {getPhotoInputElement("Фотография 4", 4, {
+            {getPhotoInputElement('Фотография 4', 4, {
               setter: (downgraded) => setGroupImg4(downgraded),
-              itemName: "groupImg4",
+              itemName: 'groupImg4',
               previewImage: groupImg4,
             })}
-            {getPhotoInputElement("Фотография снизу", 5, {
+            {getPhotoInputElement('Фотография снизу', 5, {
               setter: (downgraded) => setFooterImg(downgraded),
-              itemName: "footerImg",
+              itemName: 'footerImg',
               previewImage: footerImg,
             })}
           </div>
@@ -145,113 +145,113 @@ const SelectPriceItem = (props) => {
             isMinimizedDefault={true}
             headerItems={[
               {
-                text: "Артикул",
+                text: 'Артикул',
                 value: item.number,
-                placeholder: "Введите артикул...",
-                style: { flex: " 0 1 15%" },
+                placeholder: 'Введите артикул...',
+                style: { flex: ' 0 1 15%' },
               },
               {
-                text: "Описание",
+                text: 'Описание',
                 value: item.description,
-                placeholder: "Введите описание...",
-                style: { flex: " 0 1 40%" },
+                placeholder: 'Введите описание...',
+                style: { flex: ' 0 1 40%' },
               },
               {
-                text: "Розница",
+                text: 'Розница',
                 value: item.retailPrice,
-                placeholder: "Введите розн. цену...",
-                style: { flex: " 0 1 15%" },
+                placeholder: 'Введите розн. цену...',
+                style: { flex: ' 0 1 15%' },
               },
               {
-                text: "до 1500 шт.",
+                text: 'до 1500 шт.',
                 value: item.lessThan1500Price,
-                placeholder: "Введите цену до 1500шт...",
-                style: { flex: " 0 1 15%" },
+                placeholder: 'Введите цену до 1500шт...',
+                style: { flex: ' 0 1 15%' },
               },
               {
-                text: "до 5000 шт.",
+                text: 'до 5000 шт.',
                 value: item.lessThan5000Price,
-                placeholder: "Введите цену до 5000шт...",
-                style: { flex: " 0 1 15%" },
+                placeholder: 'Введите цену до 5000шт...',
+                style: { flex: ' 0 1 15%' },
               },
             ]}
             formInputs={[
               {
-                name: "Название",
-                element: getInputElement("name", index, item.name, "text"),
+                name: 'Название',
+                element: getInputElement('name', index, item.name, 'text'),
               },
               {
-                name: "Артикул",
-                element: getInputElement("number", index, item.number, "text"),
+                name: 'Артикул',
+                element: getInputElement('number', index, item.number, 'text'),
               },
               {
-                name: "Описание",
+                name: 'Описание',
                 element: getInputElement(
-                  "description",
+                  'description',
                   index,
                   item.description,
-                  "text"
+                  'text',
                 ),
               },
               {
-                name: "Розница (рыночная цена)",
+                name: 'Розница (рыночная цена)',
                 element: getInputElement(
-                  "retailMarketPrice",
+                  'retailMarketPrice',
                   index,
-                  item.retailMarketPrice
+                  item.retailMarketPrice,
                 ),
               },
               {
-                name: "Розница",
+                name: 'Розница',
                 element: getInputElement(
-                  "retailPrice",
+                  'retailPrice',
                   index,
-                  item.retailPrice
+                  item.retailPrice,
                 ),
               },
               {
-                name: "До 1500 шт.",
+                name: 'До 1500 шт.',
                 element: getInputElement(
-                  "lessThan1500Price",
+                  'lessThan1500Price',
                   index,
-                  item.lessThan1500Price
+                  item.lessThan1500Price,
                 ),
               },
               {
-                name: "До 5000 шт.",
+                name: 'До 5000 шт.',
                 element: getInputElement(
-                  "lessThan5000Price",
+                  'lessThan5000Price',
                   index,
-                  item.lessThan5000Price
+                  item.lessThan5000Price,
                 ),
               },
               {
-                name: "Партнер",
+                name: 'Партнер',
                 element: getInputElement(
-                  "partnerPrice",
+                  'partnerPrice',
                   index,
-                  item.partnerPrice
+                  item.partnerPrice,
                 ),
               },
               {
-                name: "Дилер",
+                name: 'Дилер',
                 element: getInputElement(
-                  "dealerPrice",
+                  'dealerPrice',
                   index,
-                  item.dealerPrice
+                  item.dealerPrice,
                 ),
               },
               {
-                name: "Дистрибутор",
+                name: 'Дистрибутор',
                 element: getInputElement(
-                  "distributorPrice",
+                  'distributorPrice',
                   index,
-                  item.distributorPrice
+                  item.distributorPrice,
                 ),
               },
               {
-                name: "Стопцена",
-                element: getInputElement("stopPrice", index, item.stopPrice),
+                name: 'Стопцена',
+                element: getInputElement('stopPrice', index, item.stopPrice),
               },
             ]}
           />

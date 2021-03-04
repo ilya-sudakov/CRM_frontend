@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../../App.js";
-import { loadEmployees } from "../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/fetchData.js";
+import { useContext, useEffect, useState } from 'react';
+import UserContext from '../../App.js';
+import { loadEmployees } from '../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/fetchData.js';
 import {
   combineOriginalAndNewWorks,
   combineWorksForSamePeople,
-} from "../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/helpers.js";
-import { formatDateString } from "../functions.jsx";
-import { getRecordedWorkByDay } from "../RequestsAPI/WorkManaging/WorkControl.jsx";
+} from '../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/helpers.js';
+import { formatDateString } from '../functions.jsx';
+import { getRecordedWorkByDay } from '../RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const useWorkReport = (curDay) => {
   const userContext = useContext(UserContext);
@@ -22,31 +22,31 @@ const useWorkReport = (curDay) => {
     office: {},
   });
 
-  const isLemz = userContext.userHasAccess(["ROLE_LEMZ"]);
+  const isLemz = userContext.userHasAccess(['ROLE_LEMZ']);
   const ROLE_LEMZ = {
-    ЦехЛЭМЗ: "lemz",
+    ЦехЛЭМЗ: 'lemz',
   };
-  const isLepsari = userContext.userHasAccess(["ROLE_LEPSARI"]);
+  const isLepsari = userContext.userHasAccess(['ROLE_LEPSARI']);
   const ROLE_LEPSARI = {
-    ЦехЛепсари: "lepsari",
+    ЦехЛепсари: 'lepsari',
   };
-  const isLigovskiy = userContext.userHasAccess(["ROLE_LIGOVSKIY"]);
+  const isLigovskiy = userContext.userHasAccess(['ROLE_LIGOVSKIY']);
   const ROLE_LIGOVSKIY = {
-    ЦехЛиговский: "ligovskiy",
+    ЦехЛиговский: 'ligovskiy',
   };
-  const isManager = userContext.userHasAccess(["ROLE_MANAGER"]);
+  const isManager = userContext.userHasAccess(['ROLE_MANAGER']);
   const ROLE_MANAGER = {
-    Офис: "office",
+    Офис: 'office',
   };
   const isAdmin =
-    userContext.userHasAccess(["ROLE_ADMIN"]) ||
-    userContext.userHasAccess(["ROLE_DISPATCHER"]) ||
-    userContext.userHasAccess(["ROLE_ENGINEER"]);
+    userContext.userHasAccess(['ROLE_ADMIN']) ||
+    userContext.userHasAccess(['ROLE_DISPATCHER']) ||
+    userContext.userHasAccess(['ROLE_ENGINEER']);
   const ROLE_ADMIN = {
-    ЦехЛЭМЗ: "lemz",
-    ЦехЛепсари: "lepsari",
-    ЦехЛиговский: "ligovskiy",
-    Офис: "office",
+    ЦехЛЭМЗ: 'lemz',
+    ЦехЛепсари: 'lepsari',
+    ЦехЛиговский: 'ligovskiy',
+    Офис: 'office',
   };
 
   const workshops = isAdmin
@@ -70,14 +70,14 @@ const useWorkReport = (curDay) => {
       setEmployees,
       setWorkTimeInputs,
       worktimeInputs,
-      workshops
+      workshops,
     )
       .then((res) => {
         localEmployees = res;
         return getRecordedWorkByDay(
           date.getMonth() + 1,
           date.getDate(),
-          date.getFullYear()
+          date.getFullYear(),
         );
       })
       .then((res) => res.json())
@@ -85,7 +85,7 @@ const useWorkReport = (curDay) => {
         const combinedWorks = await combineWorksForSamePeople(
           res,
           setEmployeesMap,
-          () => {}
+          () => {},
         );
         combineOriginalAndNewWorks(
           combinedWorks,
@@ -93,7 +93,7 @@ const useWorkReport = (curDay) => {
           () => {},
           workshops,
           setWorkTimeInputs,
-          worktimeInputs
+          worktimeInputs,
         );
         setCurLoadedDay(curDay);
         return setIsLoading(false);
@@ -105,7 +105,7 @@ const useWorkReport = (curDay) => {
   };
 
   useEffect(() => {
-    console.log("first render", curDay);
+    console.log('first render', curDay);
     const abortController = new AbortController();
     handleFetchData(curDay, abortController.signal);
     return function cancel() {
@@ -121,7 +121,7 @@ const useWorkReport = (curDay) => {
     )
       return;
     const abortController = new AbortController();
-    console.log("date change", curDay, curLoadedDay);
+    console.log('date change', curDay, curLoadedDay);
     if (formatDateString(curLoadedDay) !== formatDateString(curDay)) {
       handleFetchData(curDay);
     }

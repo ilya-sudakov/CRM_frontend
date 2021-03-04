@@ -1,35 +1,35 @@
-import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import "./TableView.scss";
-import UserContext from "../../../../../../App.js";
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import './TableView.scss';
+import UserContext from '../../../../../../App.js';
 
-import chevronDownSVG from "../../../../../../../assets/tableview/chevron-down.svg";
-import editIcon from "../../../../../../../assets/tableview/edit.svg";
+import chevronDownSVG from '../../../../../../../assets/tableview/chevron-down.svg';
+import editIcon from '../../../../../../../assets/tableview/edit.svg';
 import {
   rigStatuses,
   rigTypes,
-} from "../../RiggingComponents/rigsVariables.js";
-import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+} from '../../RiggingComponents/rigsVariables.js';
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([
     {
-      name: "ЦехЛЭМЗ",
-      alternatives: ["ЛЭМЗ", "lemz"],
+      name: 'ЦехЛЭМЗ',
+      alternatives: ['ЛЭМЗ', 'lemz'],
       isMinimized: false,
-      visibility: ["ROLE_ADMIN", "ROLE_LEMZ"],
+      visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
     },
     {
-      name: "ЦехЛиговский",
-      alternatives: ["Лиговка", "ligoskiy"],
+      name: 'ЦехЛиговский',
+      alternatives: ['Лиговка', 'ligoskiy'],
       isMinimized: false,
-      visibility: ["ROLE_ADMIN", "ROLE_LIGOVSKIY"],
+      visibility: ['ROLE_ADMIN', 'ROLE_LIGOVSKIY'],
     },
     {
-      name: "ЦехЛепсари",
-      alternatives: ["Лепсари", "lepsari"],
+      name: 'ЦехЛепсари',
+      alternatives: ['Лепсари', 'lepsari'],
       isMinimized: false,
-      visibility: ["ROLE_ADMIN", "ROLE_LEPSARI"],
+      visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
     },
   ]);
 
@@ -45,8 +45,8 @@ const TableView = (props) => {
               (item) =>
                 item.location === workshop.name ||
                 workshop.alternatives.find(
-                  (oldName) => oldName === item.location
-                ) !== undefined
+                  (oldName) => oldName === item.location,
+                ) !== undefined,
             );
             return (
               <>
@@ -65,8 +65,8 @@ const TableView = (props) => {
                       <img
                         className={
                           workshop.isMinimized
-                            ? "main-window__img"
-                            : "main-window__img main-window__img--rotated"
+                            ? 'main-window__img'
+                            : 'main-window__img main-window__img--rotated'
                         }
                         src={chevronDownSVG}
                       />
@@ -121,14 +121,14 @@ const TableView = (props) => {
                             </span>
                             <span
                               className={`main-window__list-item--${
-                                rigStatuses[item.color || "production"]
+                                rigStatuses[item.color || 'production']
                                   ?.className
                               }`}
                             >
                               <div className="main-window__mobile-text">
                                 Статус
                               </div>
-                              {rigStatuses[item.color || "production"].name}
+                              {rigStatuses[item.color || 'production'].name}
                             </span>
                             {console.log(item)}
                             <div className="main-window__actions">

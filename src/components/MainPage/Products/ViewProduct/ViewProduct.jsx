@@ -1,23 +1,23 @@
-import React, { useEffect } from "react";
-import "./ViewProduct.scss";
-import "../../../../utils/Form/Form.scss";
-import { getProductById } from "../../../../utils/RequestsAPI/Products.js";
-import { imgToBlobDownload } from "../../../../utils/functions.jsx";
-import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
-import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import { productsDefaultInputs } from "../objects";
-import useForm from "../../../../utils/hooks/useForm";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+import React, { useEffect } from 'react';
+import './ViewProduct.scss';
+import '../../../../utils/Form/Form.scss';
+import { getProductById } from '../../../../utils/RequestsAPI/Products.js';
+import { imgToBlobDownload } from '../../../../utils/functions.jsx';
+import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import { productsDefaultInputs } from '../objects';
+import useForm from '../../../../utils/hooks/useForm';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const ViewProduct = (props) => {
   const { formInputs, updateFormInputs } = useForm(productsDefaultInputs);
 
   useEffect(() => {
-    document.title = "Просмотр продукта";
-    const id = props.history.location.pathname.split("/products/view/")[1];
+    document.title = 'Просмотр продукта';
+    const id = props.history.location.pathname.split('/products/view/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
-      props.history.push("/products");
+      alert('Неправильный индекс заявки!');
+      props.history.push('/products');
     } else {
       getProductById(id)
         .then((res) => res.json())
@@ -40,8 +40,8 @@ const ViewProduct = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс заявки!");
-          props.history.push("/products");
+          alert('Неправильный индекс заявки!');
+          props.history.push('/products');
         });
     }
   }, []);
@@ -61,13 +61,13 @@ const ViewProduct = (props) => {
                 imgSrc={formInputs.photo}
                 noPhotoTemplate
               />
-              {formInputs.photo !== "" && (
+              {formInputs.photo !== '' && (
                 <div
                   className="main-form__submit"
                   onClick={() =>
                     imgToBlobDownload(
                       formInputs.photo,
-                      formInputs.name + ".jpeg"
+                      formInputs.name + '.jpeg',
                     )
                   }
                 >
@@ -178,7 +178,7 @@ const ViewProduct = (props) => {
             <Button
               className="main-form__submit main-form__submit--inverted"
               inverted
-              onClick={() => props.history.push("/products")}
+              onClick={() => props.history.push('/products')}
               text="Вернуться назад"
             />
           </div>

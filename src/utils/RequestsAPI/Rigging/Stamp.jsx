@@ -1,11 +1,11 @@
-import { request } from '../../utilsAPI.jsx'
+import { request } from '../../utilsAPI.jsx';
 
 export function getStamp(signal) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/stamp/',
     method: 'GET',
     signal: signal,
-  })
+  });
 }
 
 export function getStampsByStatus(status, signal) {
@@ -13,21 +13,21 @@ export function getStampsByStatus(status, signal) {
     url: `${process.env.API_BASE_URL}/api/v1/stamp/status/${status}`,
     method: 'GET',
     signal: signal,
-  })
+  });
 }
 
 export function getStampById(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/stamp/' + id,
     method: 'GET',
-  })
+  });
 }
 
 export function deleteStamp(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/stamp/' + id,
     method: 'DELETE',
-  })
+  });
 }
 
 export function addStamp(newStamp) {
@@ -35,7 +35,7 @@ export function addStamp(newStamp) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/',
     method: 'POST',
     body: JSON.stringify(newStamp),
-  })
+  });
 }
 
 export function editStamp(newStamp, id) {
@@ -43,7 +43,7 @@ export function editStamp(newStamp, id) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/' + id,
     method: 'PUT',
     body: JSON.stringify(newStamp),
-  })
+  });
 }
 
 export function addPartsToStamp(newPart) {
@@ -51,7 +51,7 @@ export function addPartsToStamp(newPart) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/',
     method: 'POST',
     body: JSON.stringify(newPart),
-  })
+  });
 }
 
 export function editPartsOfStamp(newPart, id) {
@@ -59,14 +59,14 @@ export function editPartsOfStamp(newPart, id) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/' + id,
     method: 'PUT',
     body: JSON.stringify(newPart),
-  })
+  });
 }
 
 export function getPartFromStamp(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/' + id,
     method: 'GET',
-  })
+  });
 }
 
 export function editPartFromStamp(newPart, id) {
@@ -74,14 +74,14 @@ export function editPartFromStamp(newPart, id) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/' + id,
     method: 'PUT',
     body: JSON.stringify(newPart),
-  })
+  });
 }
 
 export function deletePartsFromStamp(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/' + id,
     method: 'DELETE',
-  })
+  });
 }
 
 export function editStampColor(color, id) {
@@ -89,7 +89,7 @@ export function editStampColor(color, id) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/color/' + id,
     method: 'PUT',
     body: JSON.stringify(color),
-  })
+  });
 }
 
 export function editStampPartColor(color, id) {
@@ -97,5 +97,5 @@ export function editStampPartColor(color, id) {
     url: process.env.API_BASE_URL + '/api/v1/stamp/part/color/' + id,
     method: 'PUT',
     body: JSON.stringify(color),
-  })
+  });
 }

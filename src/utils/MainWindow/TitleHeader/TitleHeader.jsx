@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import "./TitleHeader.scss";
+import './TitleHeader.scss';
 
 const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
   return (
@@ -28,8 +28,8 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
                     (item.isActive === undefined &&
                       curPage === item.pageName) ||
                     item.isActive
-                      ? "main-window__item--active"
-                      : ""
+                      ? 'main-window__item--active'
+                      : ''
                   }`}
                   to={item.link}
                   onClick={() => setCurPage(item.pageName)}
@@ -42,8 +42,8 @@ const TitleHeader = ({ title, menuItems, curPage, setCurPage }) => {
                     (item.isActive === undefined &&
                       curPage === item.pageName) ||
                     item.isActive
-                      ? "main-window__item--active"
-                      : ""
+                      ? 'main-window__item--active'
+                      : ''
                   }`}
                   onClick={() => setCurPage(item.pageName)}
                 >

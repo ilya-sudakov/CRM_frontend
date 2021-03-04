@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./ReportsPage.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import UserContext from "../../../App.js";
-import workTimeIcon from "../../../../assets/sidemenu/work_time_icon.svg";
-import Button from "../../../utils/Form/Button/Button.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import './ReportsPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import UserContext from '../../../App.js';
+import workTimeIcon from '../../../../assets/sidemenu/work_time_icon.svg';
+import Button from '../../../utils/Form/Button/Button.jsx';
 
 const ReportsPage = (props) => {
   const userContext = useContext(UserContext);
 
   useEffect(() => {
-    document.title = "Отчеты";
+    document.title = 'Отчеты';
   }, []);
 
   const [menuItems, setMenuItems] = useState({
-    "Учет времени": [
+    'Учет времени': [
       {
-        linkTo: "/reports/employee",
-        name: "Отчет сотрудника",
-        access: ["ROLE_ADMIN"],
+        linkTo: '/reports/employee',
+        name: 'Отчет сотрудника',
+        access: ['ROLE_ADMIN'],
         icon: workTimeIcon,
       },
     ],

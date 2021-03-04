@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import MessageForUser from "../Form/MessageForUser/MessageForUser.jsx";
+import React, { useEffect, useState } from 'react';
+import MessageForUser from '../Form/MessageForUser/MessageForUser.jsx';
 
 const useMessageForUser = (
   content = {
-    title: "Сообщение",
-    message: "",
+    title: 'Сообщение',
+    message: '',
     onClick: () => {},
-    buttonText: "ОК",
+    buttonText: 'ОК',
   },
-  updates = []
+  updates = [],
 ) => {
   const [showMessage, setShowMessage] = useState(false);
 

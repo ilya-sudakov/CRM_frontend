@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "./NewUser.scss";
-import "../../../../../utils/Form/Form.scss";
-import { addUser } from "../../../../../utils/RequestsAPI/Users.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../../utils/hooks/useForm";
-import { usersDefaultInputs } from "../objects";
+import React, { useEffect, useState } from 'react';
+import './NewUser.scss';
+import '../../../../../utils/Form/Form.scss';
+import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../../utils/hooks/useForm';
+import { usersDefaultInputs } from '../objects';
 
 const NewUser = (props) => {
   const {
@@ -18,8 +18,8 @@ const NewUser = (props) => {
   } = useForm([
     ...usersDefaultInputs,
     {
-      name: "role",
-      defaultValue: "ROLE_ADMIN",
+      name: 'role',
+      defaultValue: 'ROLE_ADMIN',
       isRequired: true,
       isValid: true,
     },
@@ -31,16 +31,16 @@ const NewUser = (props) => {
     setIsLoading(true);
     console.log(formInputs);
     addUser(formInputs)
-      .then(() => props.history.push("/profile/users"))
+      .then(() => props.history.push('/profile/users'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Создание пользователя";
+    document.title = 'Создание пользователя';
   }, []);
 
   return (
@@ -56,7 +56,7 @@ const NewUser = (props) => {
           error={formErrors.username}
           name="username"
           handleInputChange={({ target }) =>
-            handleInputChange("username", target.value)
+            handleInputChange('username', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -67,7 +67,7 @@ const NewUser = (props) => {
           error={formErrors.password}
           name="password"
           handleInputChange={({ target }) =>
-            handleInputChange("password", target.value)
+            handleInputChange('password', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -78,7 +78,7 @@ const NewUser = (props) => {
           error={formErrors.email}
           name="email"
           handleInputChange={({ target }) =>
-            handleInputChange("email", target.value)
+            handleInputChange('email', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -87,7 +87,7 @@ const NewUser = (props) => {
           <div className="main-form__input_name">Роль</div>
           <div className="main-form__input_field">
             <select
-              onChange={({ target }) => handleInputChange("role", target.value)}
+              onChange={({ target }) => handleInputChange('role', target.value)}
             >
               <option value="ROLE_ADMIN">Руководитель</option>
               <option value="ROLE_MANAGER">Менеджер1</option>
@@ -106,7 +106,7 @@ const NewUser = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/profile/users")}
+            onClick={() => props.history.push('/profile/users')}
             text="Вернуться назад"
           />
           <Button

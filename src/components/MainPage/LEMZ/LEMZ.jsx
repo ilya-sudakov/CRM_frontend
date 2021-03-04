@@ -1,11 +1,11 @@
-import React, { Suspense } from "react";
-import PrivateRoute from "../../PrivateRoute/PrivateRoute.jsx";
-import { Route, Switch, Link } from "react-router-dom";
-import PlusImg from "../../../../assets/sidemenu/plus.inline.svg";
-import "./LEMZ.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import PageNotFound from "../PageNotFound/PageNotFound.jsx";
-import PageLoading from "../PageLoading/PageLoading.jsx";
+import React, { Suspense } from 'react';
+import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx';
+import { Route, Switch, Link } from 'react-router-dom';
+import PlusImg from '../../../../assets/sidemenu/plus.inline.svg';
+import './LEMZ.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import PageNotFound from '../PageNotFound/PageNotFound.jsx';
+import PageLoading from '../PageLoading/PageLoading.jsx';
 import {
   WorkshopRequests,
   Storage,
@@ -17,14 +17,14 @@ import {
   NewRequest,
   EditRequest,
   ShipRequest,
-} from "../lazyImports.jsx";
-import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
+} from '../lazyImports.jsx';
+import useTitleHeader from '../../../utils/hooks/uiComponents/useTitleHeader.js';
 
 const LEMZ = (props) => {
   const menuItems = [
     {
-      pageName: "/lemz/workshop-lemz",
-      isActive: props.location.pathname.includes("/lemz/workshop-lemz"),
+      pageName: '/lemz/workshop-lemz',
+      isActive: props.location.pathname.includes('/lemz/workshop-lemz'),
       pageTitle: (
         <>
           Очередь производства
@@ -33,11 +33,11 @@ const LEMZ = (props) => {
           </Link>
         </>
       ),
-      link: "/lemz/workshop-lemz",
+      link: '/lemz/workshop-lemz',
     },
     {
-      pageName: "/lemz/workshop-storage",
-      isActive: props.location.pathname.includes("/lemz/workshop-storage"),
+      pageName: '/lemz/workshop-storage',
+      isActive: props.location.pathname.includes('/lemz/workshop-storage'),
       pageTitle: (
         <>
           Склад
@@ -49,11 +49,11 @@ const LEMZ = (props) => {
           </Link>
         </>
       ),
-      link: "/lemz/workshop-storage",
+      link: '/lemz/workshop-storage',
     },
     {
-      pageName: "/lemz/workshop-orders",
-      isActive: props.location.pathname.includes("/lemz/workshop-orders"),
+      pageName: '/lemz/workshop-orders',
+      isActive: props.location.pathname.includes('/lemz/workshop-orders'),
       pageTitle: (
         <>
           Комплектация Цеха
@@ -65,13 +65,13 @@ const LEMZ = (props) => {
           </Link>
         </>
       ),
-      link: "/lemz/workshop-orders",
+      link: '/lemz/workshop-orders',
     },
   ];
   const { titleHeader } = useTitleHeader(
-    "Цех ЛЭМЗ",
+    'Цех ЛЭМЗ',
     menuItems,
-    "/lemz/workshop-lemz"
+    '/lemz/workshop-lemz',
   );
 
   return (
@@ -86,45 +86,45 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-lemz/new"
                 component={NewRequest}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/edit/"
                 component={EditRequest}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/ship/"
                 component={ShipRequest}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-lemz/"
                 component={WorkshopRequests}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 exact
                 path="/lemz/workshop-storage"
                 component={Storage}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 exact
                 path="/lemz/workshop-storage/new"
                 component={NewStorage}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-storage/edit/"
                 component={EditStorage}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 exact
@@ -132,10 +132,10 @@ const LEMZ = (props) => {
                 component={WorkshopOrders}
                 type="lemz"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_LEMZ",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_LEMZ',
                 ]}
               />
               <PrivateRoute
@@ -143,17 +143,17 @@ const LEMZ = (props) => {
                 path="/lemz/workshop-orders/new"
                 component={NewWorkshopOrder}
                 type="lemz"
-                allowedRoles={["ROLE_ADMIN", "ROLE_ENGINEER", "ROLE_LEMZ"]}
+                allowedRoles={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
               />
               <PrivateRoute
                 path="/lemz/workshop-orders/edit/"
                 component={EditWorkshopOrder}
                 type="lemz"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_LEPSARI",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_LEPSARI',
                 ]}
               />
               <Route component={PageNotFound} />

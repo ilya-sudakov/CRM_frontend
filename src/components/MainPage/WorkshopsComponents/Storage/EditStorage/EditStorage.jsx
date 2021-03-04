@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./EditStorage.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import React, { useEffect, useState } from 'react';
+import './EditStorage.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import {
   updateStorage,
   getStorageById,
-} from "../../../../../utils/RequestsAPI/Workshop/storage.js";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { workshops } from "../../workshopVariables.js";
-import useForm from "../../../../../utils/hooks/useForm";
-import { workshopStorageDefaultInputs } from "../../objects";
+} from '../../../../../utils/RequestsAPI/Workshop/storage.js';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { workshops } from '../../workshopVariables.js';
+import useForm from '../../../../../utils/hooks/useForm';
+import { workshopStorageDefaultInputs } from '../../objects';
 
 const EditPart = (props) => {
   const {
@@ -31,18 +31,18 @@ const EditPart = (props) => {
       .then(() => props.history.push(workshops[props.type].storageRedirectURL))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование детали";
+    document.title = 'Редактирование детали';
     const id = props.history.location.pathname.split(
-      `${workshops[props.type].storageRedirectURL}/edit/`
+      `${workshops[props.type].storageRedirectURL}/edit/`,
     )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс детали!");
+      alert('Неправильный индекс детали!');
       props.history.push(workshops[props.type].storageRedirectURL);
     } else {
       setStorageId(id);
@@ -53,11 +53,11 @@ const EditPart = (props) => {
             number: data.number,
             quantity: data.quantity,
             comment: data.comment,
-          })
+          }),
         )
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс детали!");
+          alert('Неправильный индекс детали!');
           props.history.push(workshops[props.type].storageRedirectURL);
         });
     }
@@ -76,7 +76,7 @@ const EditPart = (props) => {
           name="name"
           defaultValue={formInputs.name}
           handleInputChange={({ target }) =>
-            handleInputChange("name", target.value)
+            handleInputChange('name', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -89,7 +89,7 @@ const EditPart = (props) => {
           type="number"
           defaultValue={formInputs.number}
           handleInputChange={({ target }) =>
-            handleInputChange("number", target.value)
+            handleInputChange('number', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -101,7 +101,7 @@ const EditPart = (props) => {
           name="quantity"
           defaultValue={formInputs.quantity}
           handleInputChange={({ target }) =>
-            handleInputChange("quantity", target.value)
+            handleInputChange('quantity', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -113,7 +113,7 @@ const EditPart = (props) => {
           name="comment"
           defaultValue={formInputs.comment}
           handleInputChange={({ target }) =>
-            handleInputChange("comment", target.value)
+            handleInputChange('comment', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}

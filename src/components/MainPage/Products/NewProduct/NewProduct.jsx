@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./NewProduct.scss";
-import "../../../../utils/Form/Form.scss";
-import { addProduct } from "../../../../utils/RequestsAPI/Products.js";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import SelectCategory from "../SelectCategory/SelectCategory.jsx";
-import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { getDataUri } from "../../../../utils/functions.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
-import { addPackagingToProduct } from "../../../../utils/RequestsAPI/Products/packaging.js";
-import useForm from "../../../../utils/hooks/useForm.js";
-import { productsDefaultInputs } from "../objects.js";
+import React, { useEffect, useState } from 'react';
+import './NewProduct.scss';
+import '../../../../utils/Form/Form.scss';
+import { addProduct } from '../../../../utils/RequestsAPI/Products.js';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import SelectCategory from '../SelectCategory/SelectCategory.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import { getDataUri } from '../../../../utils/functions.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
+import { addPackagingToProduct } from '../../../../utils/RequestsAPI/Products/packaging.js';
+import useForm from '../../../../utils/hooks/useForm.js';
+import { productsDefaultInputs } from '../objects.js';
 
 const NewProduct = (props) => {
   const {
@@ -38,18 +38,18 @@ const NewProduct = (props) => {
               }),
             ],
           },
-          res.id
-        )
+          res.id,
+        ),
       )
-      .then(() => props.history.push("/products"))
+      .then(() => props.history.push('/products'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
       });
   };
 
   useEffect(() => {
-    document.title = "Создание продукции";
+    document.title = 'Создание продукции';
   }, []);
 
   return (
@@ -65,7 +65,7 @@ const NewProduct = (props) => {
           error={formErrors.name}
           name="name"
           handleInputChange={({ target }) =>
-            handleInputChange("name", target.value)
+            handleInputChange('name', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -76,7 +76,7 @@ const NewProduct = (props) => {
           error={formErrors.category}
           name="category"
           handleCategoryChange={(category) =>
-            handleInputChange("category", category)
+            handleInputChange('category', category)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -89,7 +89,7 @@ const NewProduct = (props) => {
             type="text"
             name="vendor"
             handleInputChange={({ target }) =>
-              handleInputChange("vendor", target.value)
+              handleInputChange('vendor', target.value)
             }
           />
           <InputText
@@ -99,7 +99,7 @@ const NewProduct = (props) => {
             type="number"
             name="weight"
             handleInputChange={({ target }) =>
-              handleInputChange("weight", target.value)
+              handleInputChange('weight', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -110,7 +110,7 @@ const NewProduct = (props) => {
             type="text"
             name="description"
             handleInputChange={({ target }) =>
-              handleInputChange("description", target.value)
+              handleInputChange('description', target.value)
             }
           />
           <InputText
@@ -118,12 +118,12 @@ const NewProduct = (props) => {
             type="text"
             name="barcode"
             handleInputChange={({ target }) =>
-              handleInputChange("barcode", target.value)
+              handleInputChange('barcode', target.value)
             }
           />
           <SelectPackaging
             required
-            onChange={(packages) => handleInputChange("packages", packages)}
+            onChange={(packages) => handleInputChange('packages', packages)}
             errorName="packages"
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -134,7 +134,7 @@ const NewProduct = (props) => {
           inputName="Комментарий"
           name="comment"
           handleInputChange={({ target }) =>
-            handleInputChange("comment", target.value)
+            handleInputChange('comment', target.value)
           }
         />
         <div className="main-form__item">
@@ -143,7 +143,7 @@ const NewProduct = (props) => {
             <select
               name="productionLocation"
               onChange={({ target }) =>
-                handleInputChange("productionLocation", target.value)
+                handleInputChange('productionLocation', target.value)
               }
             >
               <option>ЦехЛЭМЗ</option>
@@ -157,8 +157,8 @@ const NewProduct = (props) => {
           <FileUploader
             onChange={async (result) => {
               const downgraded =
-                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
-              handleInputChange("photo", downgraded);
+                result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+              handleInputChange('photo', downgraded);
             }}
             previewImage={formInputs.photo}
             error={formErrors.photo}
@@ -172,7 +172,7 @@ const NewProduct = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/products")}
+            onClick={() => props.history.push('/products')}
             text="Вернуться назад"
           />
           <Button

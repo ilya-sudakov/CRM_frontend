@@ -1,16 +1,16 @@
-import React, { useEffect, useCallback } from "react";
-import PropTypes from "prop-types";
-import "./ErrorMessage.scss";
+import React, { useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import './ErrorMessage.scss';
 
-const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
+const ErrorMessage = ({ showError = false, setShowError, message = '' }) => {
   const clickOnErrorWindow = (event) => {
     event.preventDefault();
     const classList = event.target.classList;
     if (
-      !(classList[0] === "window_error") &&
-      !classList.contains("window_error__exit") &&
-      !classList.contains("window_error__bar") &&
-      !classList.contains("main-window__button")
+      !(classList[0] === 'window_error') &&
+      !classList.contains('window_error__exit') &&
+      !classList.contains('window_error__bar') &&
+      !classList.contains('main-window__button')
     ) {
       return setShowError(true);
     }
@@ -19,31 +19,31 @@ const ErrorMessage = ({ showError = false, setShowError, message = "" }) => {
   };
 
   const handleCloseWindow = useCallback((event) => {
-    if (event.key === "Enter" || event.key === "Escape") {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault();
       setShowError(false);
     }
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleCloseWindow, false);
+    document.addEventListener('keydown', handleCloseWindow, false);
     return () => {
-      document.removeEventListener("keydown", handleCloseWindow, false);
+      document.removeEventListener('keydown', handleCloseWindow, false);
     };
   }, []);
 
   return (
     <div
       className={
-        showError ? "window_error" : "window_error window_error--hidden"
+        showError ? 'window_error' : 'window_error window_error--hidden'
       }
       onClick={clickOnErrorWindow}
     >
       <div
         className={
           showError
-            ? "window_error__content"
-            : "window_error__content window_error__content--hidden"
+            ? 'window_error__content'
+            : 'window_error__content window_error__content--hidden'
         }
       >
         <div className="window_error__title">

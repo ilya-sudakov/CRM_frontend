@@ -1,10 +1,10 @@
-import { formatDateString } from "../../../../utils/functions.jsx";
+import { formatDateString } from '../../../../utils/functions.jsx';
 
 export const filterCompletedTasks = (tasks, curPage) => {
   return tasks.filter(
     (task) =>
-      (curPage === "В процессе" && task.condition !== "Выполнено") ||
-      (curPage === "Завершено" && task.condition === "Выполнено")
+      (curPage === 'В процессе' && task.condition !== 'Выполнено') ||
+      (curPage === 'Завершено' && task.condition === 'Выполнено'),
   );
 };
 
@@ -39,42 +39,42 @@ export const filterSearchQuery = (data, searchQuery) => {
       item.responsible.toLowerCase().includes(query) ||
       item.status.toLowerCase().includes(query) ||
       formatDateString(item.dateCreated).includes(query) ||
-      formatDateString(item.dateControl).includes(query)
+      formatDateString(item.dateControl).includes(query),
   );
 };
 
-export const getTasksDefaultInputs = (username = "") => {
+export const getTasksDefaultInputs = (username = '') => {
   return [
     {
-      name: "dateCreated",
+      name: 'dateCreated',
       defaultValue: new Date(),
       isRequired: true,
       isValid: true,
     },
     {
-      name: "dateControl",
+      name: 'dateControl',
       defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
       isRequired: true,
       isValid: true,
     },
     {
-      name: "description",
-      defaultValue: "",
+      name: 'description',
+      defaultValue: '',
       isRequired: true,
     },
     {
-      name: "responsible",
+      name: 'responsible',
       defaultValue: username,
       isRequired: true,
       isValid: true,
     },
     {
-      name: "status",
-      defaultValue: "",
+      name: 'status',
+      defaultValue: '',
     },
     {
-      name: "condition",
-      defaultValue: "В процессе",
+      name: 'condition',
+      defaultValue: 'В процессе',
     },
   ];
 };

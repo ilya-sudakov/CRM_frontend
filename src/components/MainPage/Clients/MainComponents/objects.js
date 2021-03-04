@@ -1,17 +1,17 @@
-import { deleteClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx'
-import { deleteClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx'
+import { deleteClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
+import { deleteClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
 import {
   deleteClientWorkHistory,
   editClientWorkHistory,
   addClientWorkHistory,
-} from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx'
+} from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
 import {
   deleteClient,
   getClientsByCategoryAndType,
   editNextContactDateClient,
   editClient,
-} from '../../../../utils/RequestsAPI/Clients.jsx'
-import { getSuppliersByCategoryAndType } from '../../../../utils/RequestsAPI/Clients/Suppliers'
+} from '../../../../utils/RequestsAPI/Clients.jsx';
+import { getSuppliersByCategoryAndType } from '../../../../utils/RequestsAPI/Clients/Suppliers';
 
 export const clientTypes = {
   clients: {
@@ -60,4 +60,4 @@ export const clientTypes = {
     deleteContactsFunction: (id) => deleteClientContact(id),
     deleteLegalEntityFunction: (id) => deleteClientLegalEntity(id),
   },
-}
+};

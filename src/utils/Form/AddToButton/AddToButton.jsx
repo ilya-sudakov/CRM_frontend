@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import PlusSVG from "../../../../assets/sidemenu/plus.inline.svg";
-import "./AddToButton.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import PlusSVG from '../../../../assets/sidemenu/plus.inline.svg';
+import './AddToButton.scss';
 
-const AddToButton = ({ text = "Добавить", onClick }) => {
+const AddToButton = ({ text = 'Добавить', onClick }) => {
   return (
     <div className="add-to-button">
       <div

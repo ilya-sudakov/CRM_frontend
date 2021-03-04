@@ -1,14 +1,14 @@
 //Таблица с табелем
-import React, { useEffect } from "react";
-import { months } from "../../../../../utils/dataObjects.js"; //Список месяцев
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React, { useEffect } from 'react';
+import { months } from '../../../../../utils/dataObjects.js'; //Список месяцев
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateStringNoYear,
   getEmployeeNameText,
-} from "../../../../../utils/functions.jsx";
-import { workshops } from "../objects.js";
-import { sortEmployees } from "../functions.js";
-import ChevronSVG from "../../../../../../assets/tableview/chevron-down.svg";
+} from '../../../../../utils/functions.jsx';
+import { workshops } from '../objects.js';
+import { sortEmployees } from '../functions.js';
+import ChevronSVG from '../../../../../../assets/tableview/chevron-down.svg';
 
 const TableView = (props) => {
   useEffect(() => {}, [props.date]);
@@ -20,10 +20,10 @@ const TableView = (props) => {
           <div className="main-window__title">
             <img
               className="main-window__img"
-              style={{ transform: "rotate(90deg)" }}
+              style={{ transform: 'rotate(90deg)' }}
               onClick={() => {
                 const newDate = new Date(
-                  new Date(props.date).setMonth(props.date.getMonth() - 1)
+                  new Date(props.date).setMonth(props.date.getMonth() - 1),
                 );
                 props.setDate(newDate);
               }}
@@ -35,10 +35,10 @@ const TableView = (props) => {
             } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
-              style={{ transform: "rotate(-90deg)" }}
+              style={{ transform: 'rotate(-90deg)' }}
               onClick={() => {
                 const newDate = new Date(
-                  new Date(props.date).setMonth(props.date.getMonth() + 1)
+                  new Date(props.date).setMonth(props.date.getMonth() + 1),
                 );
                 props.setDate(newDate);
               }}
@@ -63,10 +63,10 @@ const TableView = (props) => {
           <div className="main-window__title">
             <img
               className="main-window__img"
-              style={{ transform: "rotate(90deg)" }}
+              style={{ transform: 'rotate(90deg)' }}
               onClick={() => {
                 const newDate = new Date(
-                  new Date(props.date).setMonth(props.date.getMonth() - 1)
+                  new Date(props.date).setMonth(props.date.getMonth() - 1),
                 );
                 props.setDate(newDate);
               }}
@@ -78,10 +78,10 @@ const TableView = (props) => {
             } ${props.date.getFullYear()}`}</div>
             <img
               className="main-window__img"
-              style={{ transform: "rotate(-90deg)" }}
+              style={{ transform: 'rotate(-90deg)' }}
               onClick={() => {
                 const newDate = new Date(
-                  new Date(props.date).setMonth(props.date.getMonth() + 1)
+                  new Date(props.date).setMonth(props.date.getMonth() + 1),
                 );
                 props.setDate(newDate);
               }}
@@ -146,8 +146,8 @@ const HalfOfTheMonthList = ({
               <span
                 className={
                   weekday === 6 || weekday === 0
-                    ? "report-table-page__day--weekend"
-                    : ""
+                    ? 'report-table-page__day--weekend'
+                    : ''
                 }
               >
                 {dateItem}
@@ -158,11 +158,11 @@ const HalfOfTheMonthList = ({
         </div>
         {workshops
           .filter((workshop) =>
-            userContext.userHasAccess(workshop.allowedRoles)
+            userContext.userHasAccess(workshop.allowedRoles),
           )
           .map((workshop) => {
             const filteredEmployees = sortEmployees(
-              filterEmployeesData(Object.values(workData), workshop)
+              filterEmployeesData(Object.values(workData), workshop),
             );
             if (filteredEmployees.length === 0 && !isLoading) return;
             return (
@@ -178,7 +178,7 @@ const HalfOfTheMonthList = ({
                   />
                 ) : (
                   sortEmployees(
-                    filterEmployeesData(Object.values(workData), workshop)
+                    filterEmployeesData(Object.values(workData), workshop),
                   ).map((work) => {
                     const fullEmployeeName = getEmployeeNameText(work.employee);
                     return (
@@ -191,15 +191,15 @@ const HalfOfTheMonthList = ({
                                 new Date(date).setDate(
                                   workItem.length > 0
                                     ? workItem[0].day
-                                    : workItem.day
-                                )
+                                    : workItem.day,
+                                ),
                               ).getDay();
                               const startDate = new Date(
                                 date.getFullYear(),
                                 date.getMonth(),
                                 workItem.length > 0
                                   ? workItem[0].day
-                                  : workItem.day
+                                  : workItem.day,
                               );
                               return (
                                 <span
@@ -222,32 +222,32 @@ const HalfOfTheMonthList = ({
                                   }}
                                   className={
                                     weekday === 6 || weekday === 0
-                                      ? "report-table-page__day--weekend"
-                                      : ""
+                                      ? 'report-table-page__day--weekend'
+                                      : ''
                                   }
                                 >
                                   <div className="report-table-report__date-hint">
                                     {formatDateStringNoYear(
-                                      new Date(startDate)
+                                      new Date(startDate),
                                     )}
                                   </div>
                                   {workItem.hours === 0
-                                    ? " "
+                                    ? ' '
                                     : workItem.reduce(
                                         (sum, cur) => sum + cur.hours,
-                                        0
+                                        0,
                                       )}
                                 </span>
                               );
                             }
-                          }
+                          },
                         )}
                         <span
                           onClick={() => {
                             const filteredData = Object.values(
-                              work.works
+                              work.works,
                             ).filter((item, workItemIndex) =>
-                              datesComparison(workItemIndex)
+                              datesComparison(workItemIndex),
                             );
 
                             setSelectedInfo({
@@ -259,12 +259,12 @@ const HalfOfTheMonthList = ({
                                 startDate: new Date(
                                   date.getFullYear(),
                                   date.getMonth(),
-                                  dates[0]
+                                  dates[0],
                                 ),
                                 endDate: new Date(
                                   date.getFullYear(),
                                   date.getMonth(),
-                                  dates[dates.length - 1]
+                                  dates[dates.length - 1],
                                 ),
                               },
                             });
@@ -286,7 +286,7 @@ const HalfOfTheMonthList = ({
                                 );
                               } else return sum;
                             },
-                            0
+                            0,
                           )}
                         </span>
                       </div>

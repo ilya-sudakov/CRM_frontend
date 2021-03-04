@@ -1,47 +1,47 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./NewClient.scss";
-import "../../../../utils/Form/Form.scss";
-import { addClient } from "../../../../utils/RequestsAPI/Clients.jsx";
-import { addClientLegalEntity } from "../../../../utils/RequestsAPI/Clients/LegalEntity.jsx";
-import { addClientContact } from "../../../../utils/RequestsAPI/Clients/Contacts.jsx";
-import { addClientWorkHistory } from "../../../../utils/RequestsAPI/Clients/WorkHistory.jsx";
-import SelectLegalEntity from "../SelectLegalEntity/SelectLegalEntity.jsx";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../utils/Form/InputDate/InputDate.jsx";
-import ErrorMessage from "../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import SelectContacts from "../SelectContacts/SelectContacts.jsx";
-import SelectClientCategory from "../ClientCategories/SelectClientCategory/SelectClientCategory.jsx";
-import SelectWorkHistory from "../SelectWorkHistory/SelectWorkHistory.jsx";
-import InputUser from "../../../../utils/Form/InputUser/InputUser.jsx";
-import { getUsers } from "../../../../utils/RequestsAPI/Users.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import UserContext from "../../../../App.js";
-import UsersVisibility from "../FormComponents/UsersVisibility.jsx";
-import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import './NewClient.scss';
+import '../../../../utils/Form/Form.scss';
+import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';
+import { addClientLegalEntity } from '../../../../utils/RequestsAPI/Clients/LegalEntity.jsx';
+import { addClientContact } from '../../../../utils/RequestsAPI/Clients/Contacts.jsx';
+import { addClientWorkHistory } from '../../../../utils/RequestsAPI/Clients/WorkHistory.jsx';
+import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import ErrorMessage from '../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import SelectContacts from '../SelectContacts/SelectContacts.jsx';
+import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
+import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
+import InputUser from '../../../../utils/Form/InputUser/InputUser.jsx';
+import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import UserContext from '../../../../App.js';
+import UsersVisibility from '../FormComponents/UsersVisibility.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
   const [clientInputs, setClientInputs] = useState({
-    name: "",
+    name: '',
     legalEntity: [],
     contacts: [],
     managerName: userContext.userData.username,
     managerId: userContext.userData.id,
     workHistory: [],
-    site: "",
-    comment: "",
-    city: "",
-    storageAddress: "",
-    workCondition: "",
-    price: "",
-    discount: "",
-    check: "",
-    clientType: "Активные",
+    site: '',
+    comment: '',
+    city: '',
+    storageAddress: '',
+    workCondition: '',
+    price: '',
+    discount: '',
+    check: '',
+    clientType: 'Активные',
     categoryId: 0,
     // users: {
     // },
     visibility: true,
-    categoryName: "",
+    categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
   });
   //Ошибки для обязательных полей
@@ -61,8 +61,8 @@ const newClient = (props) => {
 
   const clientTypes = {
     clients: {
-      name: "клиент",
-      filteredRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+      name: 'клиент',
+      filteredRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
       addItemFunction: (newClient) => addClient({ ...newClient, type: null }),
       addLegalEntityFunction: (newLegalEntity) =>
         addClientLegalEntity(newLegalEntity),
@@ -71,16 +71,16 @@ const newClient = (props) => {
         addClientWorkHistory(newWorkHistory),
     },
     suppliers: {
-      name: "поставщик",
+      name: 'поставщик',
       filteredRoles: [
-        "ROLE_ADMIN",
-        "ROLE_ENGINEER",
-        "ROLE_DISPATCHER",
-        "ROLE_MANAGER",
-        "ROLE_WORKSHOP",
+        'ROLE_ADMIN',
+        'ROLE_ENGINEER',
+        'ROLE_DISPATCHER',
+        'ROLE_MANAGER',
+        'ROLE_WORKSHOP',
       ],
       addItemFunction: (newClient) =>
-        addClient({ ...newClient, type: "supplier" }),
+        addClient({ ...newClient, type: 'supplier' }),
       addLegalEntityFunction: (newLegalEntity) =>
         addClientLegalEntity(newLegalEntity),
       addContactsFunction: (newContact) => addClientContact(newContact),
@@ -92,7 +92,7 @@ const newClient = (props) => {
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [curTab, setCurTab] = useState("clientData");
+  const [curTab, setCurTab] = useState('clientData');
 
   //Проверка поля на корректность
   const validateField = (fieldName, value) => {
@@ -101,7 +101,7 @@ const newClient = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -177,7 +177,7 @@ const newClient = (props) => {
                 legalEntity: item.legalEntity,
                 clientId: res.id,
               });
-            })
+            }),
           );
         })
         .then(() => {
@@ -191,15 +191,15 @@ const newClient = (props) => {
                 phoneNumber: item.phoneNumber,
                 clientId: clientId,
               });
-            })
+            }),
           );
         })
         .then(() => {
           return clientTypes[props.type].addWorkHistoryFunction({
             date: new Date(),
-            action: "Создание записи",
-            result: "Запись успешно создана",
-            comment: "<Cообщение сгенерировано автоматически>",
+            action: 'Создание записи',
+            result: 'Запись успешно создана',
+            comment: '<Cообщение сгенерировано автоматически>',
             clientId: clientId,
           });
         })
@@ -213,21 +213,21 @@ const newClient = (props) => {
                 comment: item.comment,
                 clientId: clientId,
               });
-            })
+            }),
           );
         })
         .then(() => {
           return props.history.push(
-            "/" +
+            '/' +
               props.type +
-              "/category/" +
+              '/category/' +
               clientInputs.categoryName +
-              "/active"
+              '/active',
           );
         })
         .catch((error) => {
           setIsLoading(false);
-          alert("Ошибка при добавлении записи");
+          alert('Ошибка при добавлении записи');
           console.log(error);
         });
   };
@@ -305,27 +305,27 @@ const newClient = (props) => {
               clientTypes[props.type].name
             }`}</div>
             <div className="main-form__menu">
-              {" "}
+              {' '}
               <div
                 className={
-                  curTab === "workHistory"
-                    ? "main-form__menu-item main-form__menu-item--active"
-                    : "main-form__menu-item"
+                  curTab === 'workHistory'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
                 }
                 onClick={() => {
-                  setCurTab("workHistory");
+                  setCurTab('workHistory');
                 }}
               >
                 История работы
               </div>
               <div
                 className={
-                  curTab === "clientData"
-                    ? "main-form__menu-item main-form__menu-item--active"
-                    : "main-form__menu-item"
+                  curTab === 'clientData'
+                    ? 'main-form__menu-item main-form__menu-item--active'
+                    : 'main-form__menu-item'
                 }
                 onClick={() => {
-                  setCurTab("clientData");
+                  setCurTab('clientData');
                 }}
               >
                 {`Данные ${clientTypes[props.type].name}а`}
@@ -337,7 +337,7 @@ const newClient = (props) => {
             showError={showError}
             setShowError={setShowError}
           />
-          {curTab === "workHistory" ? (
+          {curTab === 'workHistory' ? (
             <React.Fragment>
               {/* Добавление истории работ */}
               <div className="main-form__item">
@@ -345,7 +345,7 @@ const newClient = (props) => {
                 <div className="main-form__input_field">
                   <SelectWorkHistory
                     handleWorkHistoryChange={(value) => {
-                      validateField("workHistory", value);
+                      validateField('workHistory', value);
                       setClientInputs({
                         ...clientInputs,
                         workHistory: value,
@@ -386,7 +386,7 @@ const newClient = (props) => {
                 {/* Добавление контактных лиц */}
                 <SelectContacts
                   handleContactsChange={(value) => {
-                    validateField("contacts", value);
+                    validateField('contacts', value);
                     setClientInputs({
                       ...clientInputs,
                       contacts: value,
@@ -451,7 +451,7 @@ const newClient = (props) => {
               <InputUser
                 inputName="Ответственный менеджер"
                 userData={userContext.userData}
-                filteredRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}
+                filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 required
                 name="manager"
                 handleUserChange={(value, id) => {
@@ -491,9 +491,9 @@ const newClient = (props) => {
                     text="Запись видна всем пользователям"
                     name="visibility"
                     checked={clientInputs.visibility}
-                    disabled={!userContext.userHasAccess(["ROLE_ADMIN"])}
+                    disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
                     onChange={(value) =>
-                      handleInputValueChange(value, "visibility")
+                      handleInputValueChange(value, 'visibility')
                     }
                   />
                 </div>
@@ -524,7 +524,7 @@ const newClient = (props) => {
                   userHasAccess={userContext.userHasAccess}
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
-                    validateField("categoryId", value);
+                    validateField('categoryId', value);
                     setClientInputs({
                       ...clientInputs,
                       categoryId: value,
@@ -550,7 +550,7 @@ const newClient = (props) => {
               className="main-form__submit main-form__submit--inverted"
               type="submit"
               onClick={() =>
-                props.history.push("/" + props.type + "/categories")
+                props.history.push('/' + props.type + '/categories')
               }
               value="Вернуться назад"
             />

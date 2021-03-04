@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import "./EditLtd.scss";
-import ErrorMessage from "../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import InputText from "../../../../../../utils/Form/InputText/InputText.jsx";
-import Button from "../../../../../../utils/Form/Button/Button.jsx";
+import React, { useState, useEffect } from 'react';
+import './EditLtd.scss';
+import ErrorMessage from '../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from '../../../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../../../utils/Form/Button/Button.jsx';
 import {
   addLTD,
   getLTDById,
-} from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
-import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { fetchINNData, getInputsListFromArray } from "../functions.js";
+} from '../../../../../../utils/RequestsAPI/PriceList/lts_list.js';
+import FileUploader from '../../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import { fetchINNData, getInputsListFromArray } from '../functions.js';
 import {
   ltdFormAddressInputs,
   ltdFormBankInputs,
@@ -17,7 +17,7 @@ import {
   ltdFormNameInputs,
   ltdListDefaultInputObject,
   ltdListDefaultInputObjectValues,
-} from "../objects.js";
+} from '../objects.js';
 
 const EditLtd = (props) => {
   const [formInputs, setFormInputs] = useState(ltdListDefaultInputObjectValues);
@@ -33,7 +33,7 @@ const EditLtd = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -45,7 +45,7 @@ const EditLtd = (props) => {
     let newErrors = ltdListDefaultInputObject;
     for (let item in validInputs) {
       // if (validInputs[item] === false) {
-      if (formInputs[item] === "") {
+      if (formInputs[item] === '') {
         check = false;
         newErrors = Object.assign({
           ...newErrors,
@@ -70,10 +70,10 @@ const EditLtd = (props) => {
     formIsValid() &&
       addLTD(formInputs)
         .then(() => {})
-        .then(() => props.history.push("/ltd-list"))
+        .then(() => props.history.push('/ltd-list'))
         .catch((error) => {
           setIsLoading(false);
-          alert("Ошибка при добавлении записи");
+          alert('Ошибка при добавлении записи');
         });
   };
 
@@ -92,11 +92,11 @@ const EditLtd = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Редактирование ООО";
-    const id = props.history.location.pathname.split("/ltd-list/edit/")[1];
+    document.title = 'Редактирование ООО';
+    const id = props.history.location.pathname.split('/ltd-list/edit/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс!");
-      props.history.push("/ltd-list");
+      alert('Неправильный индекс!');
+      props.history.push('/ltd-list');
     } else {
       getLTDById(id)
         .then((data) => {
@@ -106,14 +106,14 @@ const EditLtd = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс!");
-          props.history.push("/ltd-list");
+          alert('Неправильный индекс!');
+          props.history.push('/ltd-list');
         });
     }
   }, []);
 
   const allOtherInputs = [
-    { name: "inn", inputName: "ИНН", required: true },
+    { name: 'inn', inputName: 'ИНН', required: true },
     {
       custom: (
         <Button
@@ -125,20 +125,20 @@ const EditLtd = (props) => {
               formInputs,
               setIsLoading,
               setFormInputs,
-              (name, value) => validateField(name, value)
+              (name, value) => validateField(name, value),
             )
           }
           isLoading={isLoading}
-          style={{ margin: "-15px auto 20px 10px" }}
+          style={{ margin: '-15px auto 20px 10px' }}
         />
       ),
     },
-    { name: "kpp", inputName: "КПП", required: true },
-    { name: "ogrn", inputName: "ОГРН", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
-    { name: "okved", inputName: "ОКВЭД", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: 'kpp', inputName: 'КПП', required: true },
+    { name: 'ogrn', inputName: 'ОГРН', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
+    { name: 'okved', inputName: 'ОКВЭД', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
   ];
 
   const defaultInputsListParams = [
@@ -160,13 +160,13 @@ const EditLtd = (props) => {
           />
           {getInputsListFromArray(
             ltdFormNameInputs,
-            ...defaultInputsListParams
+            ...defaultInputsListParams,
           )}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Адреса</div>
             {getInputsListFromArray(
               ltdFormAddressInputs,
-              ...defaultInputsListParams
+              ...defaultInputsListParams,
             )}
           </div>
           <div className="main-form__fieldset">
@@ -174,7 +174,7 @@ const EditLtd = (props) => {
             <div className="main-form__group-content">
               {getInputsListFromArray(
                 ltdFormContactsInputs,
-                ...defaultInputsListParams
+                ...defaultInputsListParams,
               )}
             </div>
           </div>
@@ -183,19 +183,19 @@ const EditLtd = (props) => {
             <div className="main-form__group-name">Банковская информация</div>
             {getInputsListFromArray(
               ltdFormBankInputs,
-              ...defaultInputsListParams
+              ...defaultInputsListParams,
             )}
           </div>
           {getInputsListFromArray(
             ltdFormEmployeesInputs,
-            ...defaultInputsListParams
+            ...defaultInputsListParams,
           )}
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader
               previewImage={formInputs.logo}
               error={formErrors.logo}
-              onChange={(value) => handleInputChange("logo", value)}
+              onChange={(value) => handleInputChange('logo', value)}
               hideError={() => setFormErrors({ ...formErrors, logo: false })}
             />
           </div>
@@ -206,7 +206,7 @@ const EditLtd = (props) => {
             <Button
               inverted
               className="main-form__submit main-form__submit--inverted"
-              onClick={() => props.history.push("/ltd-list")}
+              onClick={() => props.history.push('/ltd-list')}
               text="Вернуться назад"
               isLoading={isLoading}
             />

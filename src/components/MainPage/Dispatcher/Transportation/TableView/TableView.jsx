@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   formatDateString,
   addSpaceDelimiter,
-} from "../../../../../utils/functions.jsx";
-import "./TableView.scss";
-import editSVG from "../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../assets/tableview/delete.svg";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+} from '../../../../../utils/functions.jsx';
+import './TableView.scss';
+import editSVG from '../../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -63,14 +63,14 @@ const TableView = (props) => {
             </span>
             <div className="main-window__actions">
               <Link
-                to={"/dispatcher/transportation/edit/" + transportation.id}
+                to={'/dispatcher/transportation/edit/' + transportation.id}
                 className="main-window__action"
                 title="Редактировать запись"
               >
                 {/* Редактировать */}
                 <img className="main-window__img" src={editSVG} />
               </Link>
-              {props.userHasAccess(["ROLE_ADMIN"]) && (
+              {props.userHasAccess(['ROLE_ADMIN']) && (
                 <div
                   className="main-window__action"
                   onClick={() => props.deleteItem(transportation.id)}

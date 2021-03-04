@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import MoneyIcon from "../../../../../assets/etc/bx-ruble.inline.svg";
-import { months } from "../../../../utils/dataObjects";
+import React, { useState, useEffect } from 'react';
+import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
+import { months } from '../../../../utils/dataObjects';
 import {
   addSpaceDelimiter,
   getRandomNiceColor,
-} from "../../../../utils/functions.jsx";
+} from '../../../../utils/functions.jsx';
 import {
   checkIfDateIsInRange,
   checkRequestsForSelectedMonth,
-} from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
-import BigPanel from "./BigPanel.jsx";
-import BarChart from "../../../../utils/Charts/BarChart/BarChart.jsx";
-import { tooltipLabelRubles } from "../../../../utils/Charts/callbacks.js";
+} from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import BigPanel from './BigPanel.jsx';
+import BarChart from '../../../../utils/Charts/BarChart/BarChart.jsx';
+import { tooltipLabelRubles } from '../../../../utils/Charts/callbacks.js';
 
 const IncomeStatsBigPanel = ({
   requests,
@@ -23,11 +23,11 @@ const IncomeStatsBigPanel = ({
   curPeriod,
 }) => {
   const [stats, setStats] = useState({
-    category: "Доход",
+    category: 'Доход',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
-    chartName: "IncomeStatsBigPanel",
+    linkTo: '/requests',
+    chartName: 'IncomeStatsBigPanel',
     isLoaded: false,
     timePeriod: timeText,
     difference: 0,
@@ -43,21 +43,21 @@ const IncomeStatsBigPanel = ({
     for (let i = 0; i < 12; i++) {
       const newRequests = checkRequestsForSelectedMonth(
         requests,
-        new Date(curYear, i, 1)
+        new Date(curYear, i, 1),
       );
       const totalIncome = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
-        0
+        0,
       );
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
         color:
           curMonth === i
-            ? "#B74F3B"
+            ? '#B74F3B'
             : curMonth - 1 === i
-            ? "#3BB7B6"
-            : "#cccccc",
+            ? '#3BB7B6'
+            : '#cccccc',
       });
     }
     return monthsIncome;
@@ -73,26 +73,26 @@ const IncomeStatsBigPanel = ({
     for (let i = 0; i < 12; i++) {
       const newRequests = checkRequestsForSelectedMonth(
         requests,
-        new Date(curYear, i, 1)
+        new Date(curYear, i, 1),
       );
 
       const curMonthIncome = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
-        0
+        0,
       );
 
       if (isFutureMonth(i)) {
         monthsIncome.push({
           value: 0,
           label: months[i],
-          color: "#3e95cd",
+          color: '#3e95cd',
         });
       } else {
         totalSum += curMonthIncome;
         monthsIncome.push({
           value: totalSum,
           label: months[i],
-          color: "#3e95cd",
+          color: '#3e95cd',
         });
       }
     }
@@ -103,19 +103,19 @@ const IncomeStatsBigPanel = ({
     let clients = {};
 
     const colors = [
-      "#F1B5CB",
-      "#E88EED",
-      "#CC3F0C",
-      "#9A6D38",
-      "#33673B",
-      "#DB8A74",
-      "#444054",
-      "#FFB7FF",
-      "#3B8EA5",
-      "#F4C3C2",
-      "#2D728F",
-      "#F3DAD8",
-      "#D6D9CE",
+      '#F1B5CB',
+      '#E88EED',
+      '#CC3F0C',
+      '#9A6D38',
+      '#33673B',
+      '#DB8A74',
+      '#444054',
+      '#FFB7FF',
+      '#3B8EA5',
+      '#F4C3C2',
+      '#2D728F',
+      '#F3DAD8',
+      '#D6D9CE',
     ];
 
     requests.map((request) => {
@@ -123,11 +123,11 @@ const IncomeStatsBigPanel = ({
 
       if (curId && clients[curId] === undefined) {
         const filteredRequests = requests.filter(
-          (item) => item.client?.id === curId
+          (item) => item.client?.id === curId,
         );
 
         const dataset = getFullYearData(filteredRequests, currDate).map(
-          (item) => item.value
+          (item) => item.value,
         );
 
         //dont account for requests w/ sum of 0
@@ -155,7 +155,7 @@ const IncomeStatsBigPanel = ({
         return 0;
       })
       .splice(0, 10);
-    newClients.map((item) => (topIds = { ...topIds, [item.label]: "" }));
+    newClients.map((item) => (topIds = { ...topIds, [item.label]: '' }));
 
     //get income for the rest of the clients outside of top 10
     let restOfClientsDataset = [];
@@ -164,13 +164,14 @@ const IncomeStatsBigPanel = ({
       const newRequests = checkRequestsForSelectedMonth(
         requests.filter(
           (request) =>
-            request?.client?.name && topIds[request?.client?.name] === undefined
+            request?.client?.name &&
+            topIds[request?.client?.name] === undefined,
         ),
-        new Date(curYear, index, 1)
+        new Date(curYear, index, 1),
       );
       const sum = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
-        0
+        0,
       );
       return restOfClientsDataset.push(sum);
     });
@@ -180,8 +181,8 @@ const IncomeStatsBigPanel = ({
       }),
       {
         data: restOfClientsDataset,
-        label: "Остальные",
-        color: "#CCCCCC",
+        label: 'Остальные',
+        color: '#CCCCCC',
       },
     ];
   };
@@ -201,12 +202,12 @@ const IncomeStatsBigPanel = ({
       const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         prevMonthIncome += Number.parseFloat(request.sum || 0);
         return false;
       }
-      if (request.status !== "Завершено") {
+      if (request.status !== 'Завершено') {
         return false;
       }
       return true;
@@ -217,7 +218,7 @@ const IncomeStatsBigPanel = ({
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         curMonthIncome += Number.parseFloat(request.sum || 0);
         return true;
@@ -228,7 +229,7 @@ const IncomeStatsBigPanel = ({
     const monthsIncome = getFullYearData(requests, currDate);
     const monthsAccumilationIncome = getFullYearAccumilationData(
       requests,
-      currDate
+      currDate,
     );
     const incomeByClients = getIncomeByClients(requests, currDate);
     const defaultOptions = {
@@ -255,7 +256,7 @@ const IncomeStatsBigPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
           loadData={loadData}
         />
       ),
@@ -279,7 +280,7 @@ const IncomeStatsBigPanel = ({
             isStacked={true}
             options={{
               ...defaultOptions,
-              legend: { position: "right" },
+              legend: { position: 'right' },
             }}
           />
           <BarChart
@@ -302,10 +303,10 @@ const IncomeStatsBigPanel = ({
         />
       ),
       value: `${addSpaceDelimiter(
-        Number.parseInt(Math.floor(curMonthIncome * 100) / 100)
+        Number.parseInt(Math.floor(curMonthIncome * 100) / 100),
       )} ₽`,
       prevValue: `${addSpaceDelimiter(
-        Number.parseInt(Math.floor(prevMonthIncome * 100) / 100)
+        Number.parseInt(Math.floor(prevMonthIncome * 100) / 100),
       )} ₽`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
@@ -313,7 +314,7 @@ const IncomeStatsBigPanel = ({
           ((curMonthIncome - prevMonthIncome) /
             (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

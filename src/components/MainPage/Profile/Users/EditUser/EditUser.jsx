@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./EditUser.scss";
-import "../../../../../utils/Form/Form.scss";
+import React, { useEffect, useState } from 'react';
+import './EditUser.scss';
+import '../../../../../utils/Form/Form.scss';
 import {
   getUserById,
   editUser,
-} from "../../../../../utils/RequestsAPI/Users.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../../utils/hooks/useForm";
-import { usersDefaultInputs } from "../objects";
+} from '../../../../../utils/RequestsAPI/Users.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../../utils/hooks/useForm';
+import { usersDefaultInputs } from '../objects';
 
 const EditUser = (props) => {
   const [userId, setUserId] = useState(1);
@@ -28,22 +28,22 @@ const EditUser = (props) => {
     setIsLoading(true);
     editUser(formInputs, userId)
       .then(() => {
-        props.history.push("/profile/users");
+        props.history.push('/profile/users');
         document.location.reload();
       })
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование пользователя";
-    const id = props.history.location.pathname.split("/profile/users/edit/")[1];
+    document.title = 'Редактирование пользователя';
+    const id = props.history.location.pathname.split('/profile/users/edit/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
-      props.history.push("/profile/users");
+      alert('Неправильный индекс заявки!');
+      props.history.push('/profile/users');
     } else {
       setUserId(id);
       getUserById(id)
@@ -56,8 +56,8 @@ const EditUser = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс заявки!");
-          props.history.push("/profile/users");
+          alert('Неправильный индекс заявки!');
+          props.history.push('/profile/users');
         });
     }
   }, []);
@@ -76,7 +76,7 @@ const EditUser = (props) => {
           defaultValue={formInputs.username}
           name="username"
           handleInputChange={({ target }) =>
-            handleInputChange("username", target.value)
+            handleInputChange('username', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -87,7 +87,7 @@ const EditUser = (props) => {
           error={formErrors.password}
           name="password"
           handleInputChange={({ target }) =>
-            handleInputChange("password", target.value)
+            handleInputChange('password', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -99,7 +99,7 @@ const EditUser = (props) => {
           defaultValue={formInputs.email}
           name="email"
           handleInputChange={({ target }) =>
-            handleInputChange("email", target.value)
+            handleInputChange('email', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -111,7 +111,7 @@ const EditUser = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/profile/users")}
+            onClick={() => props.history.push('/profile/users')}
             text="Вернуться назад"
           />
           <Button

@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import "./ViewFeedback.scss";
-import "../../../../utils/Form/Form.scss";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import FeedbackChat from "../FeedbackChat/FeedbackChat.jsx";
+import React, { useState, useEffect } from 'react';
+import './ViewFeedback.scss';
+import '../../../../utils/Form/Form.scss';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx';
 import {
   getFeedbackById,
   editFeedback,
-} from "../../../../utils/RequestsAPI/Feedback/feedback.js";
+} from '../../../../utils/RequestsAPI/Feedback/feedback.js';
 import {
   addMessage,
   getMessagesByDiscussionId,
-} from "../../../../utils/RequestsAPI/Feedback/messages";
-import { formatDateStringWithTime } from "../../../../utils/functions.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+} from '../../../../utils/RequestsAPI/Feedback/messages';
+import { formatDateStringWithTime } from '../../../../utils/functions.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const ViewFeedback = (props) => {
   const [formInputs, setFormInputs] = useState({
     date: new Date(),
-    subject: "",
-    text: "",
+    subject: '',
+    text: '',
     author: props.userData.username,
-    status: "in-progress",
+    status: 'in-progress',
     messages: [],
     isRead: true,
   });
@@ -28,12 +28,12 @@ const ViewFeedback = (props) => {
   const [feedbackId, setFeedbackId] = useState(0);
 
   useEffect(() => {
-    document.title = "Просмотр обсуждения";
-    const id = props.history.location.pathname.split("/feedback/view/")[1];
+    document.title = 'Просмотр обсуждения';
+    const id = props.history.location.pathname.split('/feedback/view/')[1];
     setFeedbackId(id);
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс обсуждения!");
-      props.history.push("/feedback");
+      alert('Неправильный индекс обсуждения!');
+      props.history.push('/feedback');
     } else {
       loadData(id);
     }
@@ -48,7 +48,7 @@ const ViewFeedback = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log("handleEditSubmit");
+    console.log('handleEditSubmit');
     setIsLoading(true);
     console.log(formInputs);
     editFeedback(
@@ -60,13 +60,13 @@ const ViewFeedback = (props) => {
         status: formInputs.status,
         isRead: formInputs.isRead,
       },
-      feedbackId
+      feedbackId,
     )
       .then(() => setIsLoading(false))
       // .then(() => props.history.push('/feedback'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при изменении записи");
+        alert('Ошибка при изменении записи');
       });
   };
 
@@ -92,7 +92,7 @@ const ViewFeedback = (props) => {
               messages: res ? res : [],
             });
             setIsLoading(false);
-          })
+          }),
       );
   };
 
@@ -134,12 +134,12 @@ const ViewFeedback = (props) => {
                       isRead: formInputs.isRead,
                       status: value,
                     },
-                    feedbackId
+                    feedbackId,
                   );
                 }}
                 value={formInputs.status}
                 disabled={
-                  props.userHasAccess(["ROLE_ADMIN"]) ? false : "disabled"
+                  props.userHasAccess(['ROLE_ADMIN']) ? false : 'disabled'
                 }
               >
                 <option value="in-progress">В процессе</option>
@@ -163,7 +163,7 @@ const ViewFeedback = (props) => {
               name="text"
               defaultValue={formInputs.text}
               handleInputChange={handleInputChange}
-              readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+              readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
             />
             <FeedbackChat
               messages={formInputs.messages}
@@ -172,7 +172,7 @@ const ViewFeedback = (props) => {
               handleReadMessages={() => {
                 setIsLoading(true);
                 // console.log(formInputs)
-                console.log("handleReadMessages", formInputs.isRead);
+                console.log('handleReadMessages', formInputs.isRead);
                 return (
                   editFeedback(
                     {
@@ -183,7 +183,7 @@ const ViewFeedback = (props) => {
                       status: formInputs.status,
                       isRead: true,
                     },
-                    feedbackId
+                    feedbackId,
                   )
                     .then(() => setIsLoading(false))
                     .then(() => {
@@ -192,12 +192,12 @@ const ViewFeedback = (props) => {
                     // .then(() => props.history.push('/feedback'))
                     .catch((error) => {
                       setIsLoading(false);
-                      alert("Ошибка при изменении записи");
+                      alert('Ошибка при изменении записи');
                     })
                 );
               }}
               handleSubmit={(message) => {
-                console.log("handleSubmit");
+                console.log('handleSubmit');
                 return addMessage({
                   author: props.userData.username,
                   date: new Date().getTime() / 1000,
@@ -218,7 +218,7 @@ const ViewFeedback = (props) => {
                         status: formInputs.status,
                         isRead: false,
                       },
-                      feedbackId
+                      feedbackId,
                     );
                   })
                   .then(() => {
@@ -235,7 +235,7 @@ const ViewFeedback = (props) => {
               className="main-form__submit main-form__submit--inverted"
               onClick={() => props.history.push(`/feedback#${feedbackId}`)}
             />
-            {props.userHasAccess(["ROLE_ADMIN"]) && (
+            {props.userHasAccess(['ROLE_ADMIN']) && (
               <Button
                 text="Редактировать содержание"
                 isLoading={isLoading}

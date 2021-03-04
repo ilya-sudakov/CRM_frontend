@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import TitleHeader from "../../MainWindow/TitleHeader/TitleHeader.jsx";
+import React, { useEffect, useState } from 'react';
+import TitleHeader from '../../MainWindow/TitleHeader/TitleHeader.jsx';
 
 const useTitleHeader = (title, menuItems, initPage, updates = []) => {
   const [curPage, setCurPage] = useState(initPage);

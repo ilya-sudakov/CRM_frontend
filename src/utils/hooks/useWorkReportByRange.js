@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { formatDateString } from "../functions.jsx";
-import { getRecordedWorkByDateRange } from "../RequestsAPI/WorkManaging/WorkControl.jsx";
+import { useEffect, useState } from 'react';
+import { formatDateString } from '../functions.jsx';
+import { getRecordedWorkByDateRange } from '../RequestsAPI/WorkManaging/WorkControl.jsx';
 
 const useWorkReportByRange = (datesList) => {
   const [workData, setWorkData] = useState([]);
@@ -16,7 +16,7 @@ const useWorkReportByRange = (datesList) => {
       datesList[datesList.length - 1].getDate(),
       datesList[datesList.length - 1].getMonth() + 1,
       datesList[datesList.length - 1].getFullYear(),
-      signal
+      signal,
     )
       .then((res) => res.json())
       .then((res) => {

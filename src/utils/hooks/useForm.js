@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import ErrorMessage from "../Form/ErrorMessage/ErrorMessage.jsx";
+import React, { useEffect, useState } from 'react';
+import ErrorMessage from '../Form/ErrorMessage/ErrorMessage.jsx';
 
 const useForm = (defaultInputs = []) => {
   const [formInputs, setFormInputs] = useState({});
@@ -11,19 +11,19 @@ const useForm = (defaultInputs = []) => {
     const type = typeof value;
     let isValid = true;
     switch (type) {
-      case "date":
+      case 'date':
         value === null && (isValid = false);
         break;
-      case "number":
+      case 'number':
         value === 0 && (isValid = false);
         break;
-      case "string":
-        value === "" && (isValid = false);
+      case 'string':
+        value === '' && (isValid = false);
         break;
-      case "array":
+      case 'array':
         value.length === 0 && (isValid = false);
         break;
-      case "object":
+      case 'object':
         value.length === null && (isValid = false);
         break;
       default:
@@ -111,7 +111,7 @@ const useForm = (defaultInputs = []) => {
           [input.name]:
             inputs[input.name] !== undefined &&
             inputs[input.name] !== null &&
-            inputs[input.name] !== "",
+            inputs[input.name] !== '',
         };
       }
     });

@@ -14,7 +14,7 @@ export const sortEmployees = (employees) => {
 
 export const areWorkshopItemsMinimized = (workshopItems) => {
   return Object.values(workshopItems)[0]?.isMinimized;
-}; 
+};
 
 export const combineOriginalAndNewWorks = (
   works,
@@ -22,7 +22,7 @@ export const combineOriginalAndNewWorks = (
   setIsLoading,
   workshops,
   setWorkTimeInputs,
-  worktimeInputs
+  worktimeInputs,
 ) => {
   setIsLoading(true);
   let newWorkshops = {};
@@ -64,7 +64,7 @@ export const combineOriginalAndNewWorks = (
 export const combineWorksForSamePeople = (
   works,
   setEmployeesMap,
-  setIsLoading
+  setIsLoading,
 ) => {
   // let newEmployeesWorkMap = [];
   let newEmployeesMap = {};
@@ -122,7 +122,7 @@ export const combineWorksForSamePeople = (
           },
         }));
       }
-    })
+    }),
   )
     .then(() => {
       setEmployeesMap(newEmployeesMap);

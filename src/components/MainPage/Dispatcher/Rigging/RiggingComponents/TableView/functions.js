@@ -19,8 +19,8 @@ export const searchQuery = (data, query) => {
       item.name.toLowerCase().includes(newQuery) ||
       item.number
         .toLowerCase()
-        .replace(re, "")
-        .includes(newQuery.replace(re, ""))
+        .replace(re, '')
+        .includes(newQuery.replace(re, '')),
   );
 };
 

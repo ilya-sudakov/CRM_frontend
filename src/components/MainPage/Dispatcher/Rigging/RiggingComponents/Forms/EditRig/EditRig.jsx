@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "./EditRig.scss";
-import "../../../../../../../utils/Form/Form.scss";
-import SelectParts from "../../../SelectParts/SelectParts.jsx";
+import React, { useState, useEffect } from 'react';
+import './EditRig.scss';
+import '../../../../../../../utils/Form/Form.scss';
+import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import {
   getStampById,
   editStamp,
   editPartsOfStamp,
   addPartsToStamp,
   deletePartsFromStamp,
-} from "../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import InputText from "../../../../../../../utils/Form/InputText/InputText.jsx";
-import ErrorMessage from "../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import Button from "../../../../../../../utils/Form/Button/Button.jsx";
-import { formatDateString } from "../../../../../../../utils/functions.jsx";
-import { rigTypes } from "../../rigsVariables.js";
-import useQuery from "../../../../../../../utils/hooks/useQuery.js";
+} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import InputText from '../../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from '../../../../../../../utils/Form/Button/Button.jsx';
+import { formatDateString } from '../../../../../../../utils/functions.jsx';
+import { rigTypes } from '../../rigsVariables.js';
+import useQuery from '../../../../../../../utils/hooks/useQuery.js';
 
 const EditRig = (props) => {
   const { query } = useQuery();
   const [rigInputs, setRigInputs] = useState({
-    name: "",
-    number: "",
-    comment: "",
+    name: '',
+    number: '',
+    comment: '',
     parts: [],
     lastEdited: new Date(),
     status: props.type,
@@ -43,7 +43,7 @@ const EditRig = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "parts":
+      case 'parts':
         setValidInputs({
           ...validInputs,
           parts: value.length > 0,
@@ -53,7 +53,7 @@ const EditRig = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -112,7 +112,7 @@ const EditRig = (props) => {
                     ...selected,
                     riggingId: stampId,
                   },
-                  selected.id
+                  selected.id,
                 )
               : addPartsToStamp({
                   ...selected,
@@ -133,14 +133,14 @@ const EditRig = (props) => {
             });
             Promise.all(partsArr).then(() => {
               props.history.push(
-                `${rigTypes[props.type].redirectURL}#${stampId}`
+                `${rigTypes[props.type].redirectURL}#${stampId}`,
               );
             });
           });
         })
         .catch((error) => {
           setIsLoading(false);
-          alert("Ошибка при добавлении записи");
+          alert('Ошибка при добавлении записи');
           console.log(error);
         });
   };
@@ -159,7 +159,7 @@ const EditRig = (props) => {
   };
 
   const handlePartsChange = (newParts) => {
-    validateField("parts", newParts);
+    validateField('parts', newParts);
     setRigInputs({
       ...rigInputs,
       parts: newParts,
@@ -171,11 +171,11 @@ const EditRig = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Редактирование записи";
-    const id = props.history.location.pathname.split("/edit/")[1];
+    document.title = 'Редактирование записи';
+    const id = props.history.location.pathname.split('/edit/')[1];
     setStampId(id);
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс!");
+      alert('Неправильный индекс!');
       props.history.push(rigTypes[props.type].redirectURL);
     } else {
       getStampById(id)
@@ -236,7 +236,7 @@ const EditRig = (props) => {
           <SelectParts
             handlePartsChange={handlePartsChange}
             defaultValue={rigInputs.stampParts}
-            scrollToId={query.get("part")}
+            scrollToId={query.get('part')}
             isMinimizedDefault={true}
             searchPlaceholder="Введите название продукта для поиска..."
           />
@@ -254,13 +254,13 @@ const EditRig = (props) => {
               className="main-form__submit main-form__submit--inverted"
               type="submit"
               onClick={() => {
-                const part = query.get("part")
-                  ? `&part=${query.get("part")}`
-                  : "";
+                const part = query.get('part')
+                  ? `&part=${query.get('part')}`
+                  : '';
                 props.history.push(
                   `${rigTypes[props.type].redirectURL}?rig=${
                     rigInputs.id
-                  }${part}`
+                  }${part}`,
                 );
               }}
               value="Вернуться назад"

@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, withRouter } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 
-import ContractImg from "../../../assets/sidemenu/contract.inline.svg";
-import PlusImg from "../../../assets/sidemenu/plus.inline.svg";
+import ContractImg from '../../../assets/sidemenu/contract.inline.svg';
+import PlusImg from '../../../assets/sidemenu/plus.inline.svg';
 
-import "./SideMenu.scss";
+import './SideMenu.scss';
 import {
   getClientCategories,
   getSupplierCategories,
-} from "../../utils/RequestsAPI/Clients/Categories.js";
-import UserContext from "../../App.js";
-import { getDefaultItems, sortCategories } from "./functions";
+} from '../../utils/RequestsAPI/Clients/Categories.js';
+import UserContext from '../../App.js';
+import { getDefaultItems, sortCategories } from './functions';
 
 const SideMenu = (props) => {
   const userContext = useContext(UserContext);
   const [sidemenuItems, setSidemenuItems] = useState(
-    getDefaultItems(userContext)
+    getDefaultItems(userContext),
   );
 
   const isSmallScreen =
@@ -34,30 +34,30 @@ const SideMenu = (props) => {
             ...temp[clientsIndex],
             linkTo: `/clients/${
               res.length > 0
-                ? "category/" + res[res.length - 1].name + "/active"
-                : "categories"
+                ? 'category/' + res[res.length - 1].name + '/active'
+                : 'categories'
             }`,
             dropdownMenu: [
               {
-                name: "Создать клиента",
-                pathname: "/clients/new",
-                link: "/clients/new",
+                name: 'Создать клиента',
+                pathname: '/clients/new',
+                link: '/clients/new',
                 renderIcon: () => <PlusImg className="sidemenu__img" />,
-                mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               {
-                name: "Управление категориями",
-                pathname: "/clients/categories",
-                link: "/clients/categories",
+                name: 'Управление категориями',
+                pathname: '/clients/categories',
+                link: '/clients/categories',
                 renderIcon: () => <ContractImg className="sidemenu__img" />,
-                mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
                 return {
                   name: item.name,
-                  pathname: "/clients/category/" + item.name + "/",
-                  mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
-                  link: "/clients/category/" + item.name + "/active",
+                  pathname: '/clients/category/' + item.name + '/',
+                  mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+                  link: '/clients/category/' + item.name + '/active',
                 };
               }),
             ],
@@ -78,42 +78,42 @@ const SideMenu = (props) => {
             ...temp[suppliersIndex],
             linkTo: `/suppliers/${
               res.length > 0
-                ? "category/" + res[res.length - 1].name + "/active"
-                : "categories"
+                ? 'category/' + res[res.length - 1].name + '/active'
+                : 'categories'
             }`,
             dropdownMenu: [
               {
-                name: "Создать поставщика",
-                pathname: "/suppliers/new",
-                link: "/suppliers/new",
+                name: 'Создать поставщика',
+                pathname: '/suppliers/new',
+                link: '/suppliers/new',
                 renderIcon: () => <PlusImg className="sidemenu__img" />,
                 mainRoles: [
-                  "ROLE_ADMIN",
-                  "ROLE_MANAGER",
-                  "ROLE_DISPATCHER",
-                  "ROLE_WORKSHOP",
-                  "ROLE_ENGINEER",
+                  'ROLE_ADMIN',
+                  'ROLE_MANAGER',
+                  'ROLE_DISPATCHER',
+                  'ROLE_WORKSHOP',
+                  'ROLE_ENGINEER',
                 ],
               },
               {
-                name: "Управление категориями",
-                pathname: "/suppliers/categories",
-                link: "/suppliers/categories",
+                name: 'Управление категориями',
+                pathname: '/suppliers/categories',
+                link: '/suppliers/categories',
                 renderIcon: () => <ContractImg className="sidemenu__img" />,
-                mainRoles: ["ROLE_ADMIN", "ROLE_MANAGER"],
+                mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
                 return {
                   name: item.name,
-                  pathname: "/suppliers/category/" + item.name + "/",
+                  pathname: '/suppliers/category/' + item.name + '/',
                   mainRoles: [
-                    "ROLE_ADMIN",
-                    "ROLE_MANAGER",
-                    "ROLE_DISPATCHER",
-                    "ROLE_WORKSHOP",
-                    "ROLE_ENGINEER",
+                    'ROLE_ADMIN',
+                    'ROLE_MANAGER',
+                    'ROLE_DISPATCHER',
+                    'ROLE_WORKSHOP',
+                    'ROLE_ENGINEER',
                   ],
-                  link: "/suppliers/category/" + item.name + "/active",
+                  link: '/suppliers/category/' + item.name + '/active',
                 };
               }),
             ],
@@ -132,7 +132,7 @@ const SideMenu = (props) => {
   }, [props.location.pathname]);
 
   return (
-    <div className={props.hidden ? "sidemenu sidemenu--hidden" : "sidemenu"}>
+    <div className={props.hidden ? 'sidemenu sidemenu--hidden' : 'sidemenu'}>
       {/* ADD BUTTONS ON THE TOP */}
       <div className="sidemenu__add-buttons">
         {sidemenuItems.map((item) => {
@@ -142,12 +142,12 @@ const SideMenu = (props) => {
                 item.addButtonName &&
                 userContext.userHasAccess(item.addButtonRoles) &&
                 props.location.pathname.includes(item.pathname) &&
-                item.pathname !== "/"
-                  ? "sidemenu__item--add"
+                item.pathname !== '/'
+                  ? 'sidemenu__item--add'
                   : props.location.pathname.length === 1 &&
                     props.location.pathname.includes(item.pathname)
-                  ? "sidemenu__item--add"
-                  : "sidemenu__item--add sidemenu__item--hidden"
+                  ? 'sidemenu__item--add'
+                  : 'sidemenu__item--add sidemenu__item--hidden'
               }
               onClick={() =>
                 isSmallScreen && item.dropdownMenu === undefined
@@ -157,7 +157,7 @@ const SideMenu = (props) => {
               to={
                 item.addButtonLinkTo
                   ? item.addButtonLinkTo
-                  : item.pathname + "/new"
+                  : item.pathname + '/new'
               }
             >
               <span>{item.addButtonName}</span>
@@ -173,12 +173,12 @@ const SideMenu = (props) => {
             <div
               className={
                 props.location.pathname.includes(item.pathname) &&
-                item.pathname !== "/"
-                  ? "sidemenu__item sidemenu__item--active"
+                item.pathname !== '/'
+                  ? 'sidemenu__item sidemenu__item--active'
                   : props.location.pathname.length === 1 &&
                     props.location.pathname.includes(item.pathname)
-                  ? "sidemenu__item sidemenu__item--active"
-                  : "sidemenu__item"
+                  ? 'sidemenu__item sidemenu__item--active'
+                  : 'sidemenu__item'
               }
             >
               <Link
@@ -194,10 +194,10 @@ const SideMenu = (props) => {
                 <span>{item.name}</span>
               </Link>
               {item.addButtonName &&
-                item.pathname !== "/" &&
+                item.pathname !== '/' &&
                 userContext.userHasAccess(item.addButtonRoles) && (
                   <Link
-                    to={item.pathname + "/new"}
+                    to={item.pathname + '/new'}
                     onClick={() =>
                       isSmallScreen ? props.setSideMenu(!props.hidden) : null
                     }
@@ -215,15 +215,15 @@ const SideMenu = (props) => {
                         <Link
                           className={
                             props.location.pathname.includes(
-                              dropdownMenuItem.pathname
-                            ) && dropdownMenuItem.pathname !== "/"
-                              ? "sidemenu__item sidemenu__item--active"
+                              dropdownMenuItem.pathname,
+                            ) && dropdownMenuItem.pathname !== '/'
+                              ? 'sidemenu__item sidemenu__item--active'
                               : props.location.pathname.length === 1 &&
                                 props.location.pathname.includes(
-                                  dropdownMenuItem.pathname
+                                  dropdownMenuItem.pathname,
                                 )
-                              ? "sidemenu__item sidemenu__item--active"
-                              : "sidemenu__item"
+                              ? 'sidemenu__item sidemenu__item--active'
+                              : 'sidemenu__item'
                           }
                           to={dropdownMenuItem.link}
                           onClick={() => {

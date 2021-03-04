@@ -1,13 +1,13 @@
-import React from "react";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React from 'react';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateString,
   formatDateStringNoYear,
   dateDiffInDays,
-} from "../../../../../utils/functions.jsx";
-import { conditions } from "../objects.js";
-import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
+} from '../../../../../utils/functions.jsx';
+import { conditions } from '../objects.js';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const TasksList = ({
   tasks = [],
@@ -58,22 +58,22 @@ const ListWrapper = ({
   return (
     <div
       className={`tasks-widget__date-wrapper ${
-        isExpired ? "tasks-widget__date-wrapper--expired" : ""
+        isExpired ? 'tasks-widget__date-wrapper--expired' : ''
       }`}
     >
       <div
         className={`tasks-widget__date ${
-          isExpired ? "tasks-widget__date--expired" : ""
+          isExpired ? 'tasks-widget__date--expired' : ''
         }`}
       >{`до ${formatDateStringNoYear(date[0])} ${
         isExpired
           ? `- опоздание ${dateDiffInDays(new Date(date[0]), new Date())} дн.`
-          : ""
+          : ''
       }`}</div>
       {tasks
         .filter(
           (task) =>
-            formatDateString(task.dateControl) === formatDateString(date[0])
+            formatDateString(task.dateControl) === formatDateString(date[0]),
         )
         .map((task) => (
           <ListItem task={task} userHasAccess={userHasAccess} />
@@ -93,9 +93,9 @@ ListWrapper.propTypes = {
 const ListItem = ({
   task = {
     id: 1,
-    description: "",
-    condition: "",
-    status: "",
+    description: '',
+    condition: '',
+    status: '',
     dateCreated: new Date(),
     dateControl: new Date(),
   },
@@ -119,14 +119,14 @@ const ListItem = ({
           <span className="condition condition--status">{task.condition}</span>
           <span
             className={`condition condition--date ${
-              !userHasAccess(["ROLE_ADMIN"]) &&
-              (task.status === "" || task.status === null)
-                ? "condition--hidden"
-                : ""
+              !userHasAccess(['ROLE_ADMIN']) &&
+              (task.status === '' || task.status === null)
+                ? 'condition--hidden'
+                : ''
             }`}
           >{`от ${formatDateStringNoYear(task.dateCreated)}`}</span>
           <span className="condition condition--description">
-            {userHasAccess(["ROLE_ADMIN"]) ? task.responsible : task.status}
+            {userHasAccess(['ROLE_ADMIN']) ? task.responsible : task.status}
           </span>
         </span>
       </div>

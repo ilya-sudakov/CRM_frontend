@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import TimeIcon from "../../../../../assets/etc/time.inline.svg";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import TimeIcon from '../../../../../assets/etc/time.inline.svg';
 import {
   dateDiffInDays,
   formatDateStringNoDate,
-} from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+} from '../../../../utils/functions.jsx';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const RequestsAverageTimeCompletionPanel = ({
   requests,
@@ -15,10 +15,10 @@ const RequestsAverageTimeCompletionPanel = ({
   getPrevData,
 }) => {
   const [stats, setStats] = useState({
-    category: "Средняя прод. выполнения заказа",
+    category: 'Средняя прод. выполнения заказа',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
+    linkTo: '/requests',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -45,11 +45,11 @@ const RequestsAverageTimeCompletionPanel = ({
       const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         prevMonthAverage += dateDiffInDays(
           new Date(request.date),
-          new Date(request.shippingDate || new Date())
+          new Date(request.shippingDate || new Date()),
         );
         prevMonthQuantity++;
         return false;
@@ -60,11 +60,11 @@ const RequestsAverageTimeCompletionPanel = ({
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         curMonthAverage += dateDiffInDays(
           new Date(request.date),
-          new Date(request.shippingDate || new Date())
+          new Date(request.shippingDate || new Date()),
         );
         curMonthQuantity++;
         return true;
@@ -83,14 +83,14 @@ const RequestsAverageTimeCompletionPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
       isLoading: false,
       value:
         Math.floor(curMonthAverage * 100) / 100 === 0
-          ? "Нет данных"
+          ? 'Нет данных'
           : `${Math.floor(curMonthAverage * 100) / 100} дн.`,
       difference:
         Math.floor(curMonthAverage * 100) / 100 === 0
@@ -103,7 +103,7 @@ const RequestsAverageTimeCompletionPanel = ({
               ((curMonthAverage - prevMonthAverage) /
                 (prevMonthAverage !== 0 ? prevMonthAverage : 1)) *
                 100 *
-                100
+                100,
             ) / 100,
     }));
   };

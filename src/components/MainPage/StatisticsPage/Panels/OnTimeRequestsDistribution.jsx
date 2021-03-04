@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import ClockIcon from "../../../../../assets/etc/time.inline.svg";
-import { dateDiffInDays } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import ClockIcon from '../../../../../assets/etc/time.inline.svg';
+import { dateDiffInDays } from '../../../../utils/functions.jsx';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const OnTimeRequestsDistribution = ({
   requests,
@@ -12,10 +12,10 @@ const OnTimeRequestsDistribution = ({
   getPrevData,
 }) => {
   const [stats, setStats] = useState({
-    category: "Вовремя выполненные заказы",
+    category: 'Вовремя выполненные заказы',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
+    linkTo: '/requests',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -41,15 +41,15 @@ const OnTimeRequestsDistribution = ({
       const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        (request.status === "Завершено" || request.status === "Отгружено")
+        (request.status === 'Завершено' || request.status === 'Отгружено')
       ) {
         //если заказ отгружен вовремя
         if (
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
-              new Date(request.shippingDate)
-            )
+              new Date(request.shippingDate),
+            ),
           ) <= 7
         ) {
           prevMonthOnTimeQuantity++;
@@ -65,15 +65,15 @@ const OnTimeRequestsDistribution = ({
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        (request.status === "Завершено" || request.status === "Отгружено")
+        (request.status === 'Завершено' || request.status === 'Отгружено')
       ) {
         //если заказ отгружен вовремя
         if (
           Math.abs(
             dateDiffInDays(
               new Date(request.date),
-              new Date(request.shippingDate)
-            )
+              new Date(request.shippingDate),
+            ),
           ) <= 7
         ) {
           curMonthOnTimeQuantity++;
@@ -89,7 +89,7 @@ const OnTimeRequestsDistribution = ({
       Math.floor(
         (curMonthOnTimeQuantity /
           (curMonthAllQuantity !== 0 ? curMonthAllQuantity : 1)) *
-          100
+          100,
       ) / 100;
 
     //соотношение вовремя выпол. заказов в пред. месяце
@@ -97,7 +97,7 @@ const OnTimeRequestsDistribution = ({
       Math.floor(
         (prevMonthOnTimeQuantity /
           (prevMonthAllQuantity !== 0 ? prevMonthAllQuantity : 1)) *
-          100
+          100,
       ) / 100;
 
     setStats((stats) => ({
@@ -106,7 +106,7 @@ const OnTimeRequestsDistribution = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
@@ -119,7 +119,7 @@ const OnTimeRequestsDistribution = ({
           ((curMonthValue - prevMonthValue) /
             (prevMonthValue !== 0 ? prevMonthValue : 1)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./NewLtd.scss";
-import Button from "../../../../../../utils/Form/Button/Button.jsx";
-import { addLTD } from "../../../../../../utils/RequestsAPI/PriceList/lts_list.js";
-import FileUploader from "../../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import { fetchINNData, getInputsListFromArray } from "../functions";
+import React, { useState, useEffect } from 'react';
+import './NewLtd.scss';
+import Button from '../../../../../../utils/Form/Button/Button.jsx';
+import { addLTD } from '../../../../../../utils/RequestsAPI/PriceList/lts_list.js';
+import FileUploader from '../../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import { fetchINNData, getInputsListFromArray } from '../functions';
 import {
   ltdFormNameInputs,
   ltdListDefaultInputs,
@@ -11,8 +11,8 @@ import {
   ltdFormContactsInputs,
   ltdFormBankInputs,
   ltdFormEmployeesInputs,
-} from "../objects.js";
-import useForm from "../../../../../../utils/hooks/useForm.js";
+} from '../objects.js';
+import useForm from '../../../../../../utils/hooks/useForm.js';
 
 const NewLtd = (props) => {
   const {
@@ -31,19 +31,19 @@ const NewLtd = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     addLTD(formInputs)
-      .then(() => props.history.push("/ltd-list"))
+      .then(() => props.history.push('/ltd-list'))
       .catch(() => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
       });
   };
 
   useEffect(() => {
-    document.title = "Добавление ООО";
+    document.title = 'Добавление ООО';
   }, []);
 
   const allOtherInputs = [
-    { name: "inn", inputName: "ИНН", required: true },
+    { name: 'inn', inputName: 'ИНН', required: true },
     {
       custom: (
         <Button
@@ -54,16 +54,16 @@ const NewLtd = (props) => {
             fetchINNData(formInputs, setIsLoading, updateFormInputs)
           }
           isLoading={isLoading}
-          style={{ margin: "-15px auto 20px 10px" }}
+          style={{ margin: '-15px auto 20px 10px' }}
         />
       ),
     },
-    { name: "kpp", inputName: "КПП", required: true },
-    { name: "ogrn", inputName: "ОГРН", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
-    { name: "okved", inputName: "ОКВЭД", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
-    { name: "okpo", inputName: "ОКПО", required: true },
+    { name: 'kpp', inputName: 'КПП', required: true },
+    { name: 'ogrn', inputName: 'ОГРН', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
+    { name: 'okved', inputName: 'ОКВЭД', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
+    { name: 'okpo', inputName: 'ОКПО', required: true },
   ];
 
   const defaultInputsListParams = [
@@ -81,14 +81,14 @@ const NewLtd = (props) => {
           {errorWindow}
           {getInputsListFromArray(
             ltdFormNameInputs,
-            ...defaultInputsListParams
+            ...defaultInputsListParams,
           )}
           <div className="main-form__fieldset">
             <div className="main-form__group-name">Адреса</div>
             <div className="main-form__group-content">
               {getInputsListFromArray(
                 ltdFormAddressInputs,
-                ...defaultInputsListParams
+                ...defaultInputsListParams,
               )}
             </div>
           </div>
@@ -97,7 +97,7 @@ const NewLtd = (props) => {
             <div className="main-form__group-content">
               {getInputsListFromArray(
                 ltdFormContactsInputs,
-                ...defaultInputsListParams
+                ...defaultInputsListParams,
               )}
             </div>
           </div>
@@ -106,19 +106,19 @@ const NewLtd = (props) => {
             <div className="main-form__group-name">Банковская информация</div>
             {getInputsListFromArray(
               ltdFormBankInputs,
-              ...defaultInputsListParams
+              ...defaultInputsListParams,
             )}
           </div>
           {getInputsListFromArray(
             ltdFormEmployeesInputs,
-            ...defaultInputsListParams
+            ...defaultInputsListParams,
           )}
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader
               previewImage={formInputs.logo}
               error={formErrors.logo}
-              onChange={(value) => handleInputChange("logo", value)}
+              onChange={(value) => handleInputChange('logo', value)}
               hideError={() => setFormErrors({ ...formErrors, logo: false })}
             />
           </div>
@@ -130,7 +130,7 @@ const NewLtd = (props) => {
               inverted
               isLoading={isLoading}
               className="main-form__submit main-form__submit--inverted"
-              onClick={() => props.history.push("/ltd-list")}
+              onClick={() => props.history.push('/ltd-list')}
               text="Вернуться назад"
             />
             <Button

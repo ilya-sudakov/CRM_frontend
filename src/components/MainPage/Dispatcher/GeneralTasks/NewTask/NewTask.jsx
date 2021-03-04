@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./NewTask.scss";
-import "../../../../../utils/Form/Form.scss";
-import { addMainTask } from "../../../../../utils/RequestsAPI/MainTasks.js";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import UserContext from "../../../../../App.js";
-import useForm from "../../../../../utils/hooks/useForm";
-import { getTasksDefaultInputs } from "../functions";
+import React, { useContext, useEffect, useState } from 'react';
+import './NewTask.scss';
+import '../../../../../utils/Form/Form.scss';
+import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.js';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import UserContext from '../../../../../App.js';
+import useForm from '../../../../../utils/hooks/useForm';
+import { getTasksDefaultInputs } from '../functions';
 
 const NewTask = (props) => {
   const userContext = useContext(UserContext);
@@ -26,16 +26,16 @@ const NewTask = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     addMainTask(formInputs)
-      .then(() => props.history.push("/dispatcher/general-tasks"))
+      .then(() => props.history.push('/dispatcher/general-tasks'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Создание основной задачи";
+    document.title = 'Создание основной задачи';
   }, []);
 
   return (
@@ -53,7 +53,7 @@ const NewTask = (props) => {
           selected={formInputs.dateCreated}
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
-          handleDateChange={(date) => handleInputChange("dateCreated", date)}
+          handleDateChange={(date) => handleInputChange('dateCreated', date)}
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Сведения</div>
@@ -64,7 +64,7 @@ const NewTask = (props) => {
             error={formErrors.description}
             name="description"
             handleInputChange={({ target }) =>
-              handleInputChange("description", target.value)
+              handleInputChange('description', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -78,7 +78,7 @@ const NewTask = (props) => {
             name="responsible"
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
-            handleUserChange={(user) => handleInputChange("responsible", user)}
+            handleUserChange={(user) => handleInputChange('responsible', user)}
             searchPlaceholder="Введите имя пользователя для поиска..."
           />
         </div>
@@ -90,14 +90,14 @@ const NewTask = (props) => {
           setErrorsArr={setFormErrors}
           name="dateControl"
           selected={formInputs.dateControl}
-          handleDateChange={(date) => handleInputChange("dateControl", date)}
+          handleDateChange={(date) => handleInputChange('dateControl', date)}
         />
         <InputText
           inputName="Состояние"
           name="status"
           type="textarea"
           handleInputChange={({ target }) =>
-            handleInputChange("status", target.value)
+            handleInputChange('status', target.value)
           }
         />
         <div className="main-form__input_hint">
@@ -108,7 +108,7 @@ const NewTask = (props) => {
             text="Вернуться назад"
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/dispatcher/general-tasks")}
+            onClick={() => props.history.push('/dispatcher/general-tasks')}
           />
           <Button
             text="Добавить задачу"

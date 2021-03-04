@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import TableActions from "../../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
-import editSVG from "../../../../../../assets/tableview/edit.svg";
-import okSVG from "../../../../../../assets/tableview/ok.svg";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import editSVG from '../../../../../../assets/tableview/edit.svg';
+import okSVG from '../../../../../../assets/tableview/ok.svg';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
-import "./TableView.scss";
+import './TableView.scss';
 
 const TableView = ({
   data,
@@ -58,10 +58,10 @@ const TableView = ({
                 <TableActions
                   actionsList={[
                     {
-                      title: "Редактирование",
+                      title: 'Редактирование',
                       link: `/ltd-list/edit/${item.id}`,
                       imgSrc: editSVG,
-                      isRendered: userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]),
+                      isRendered: userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']),
                     },
                     {
                       customElement: (
@@ -72,7 +72,7 @@ const TableView = ({
                       ),
                       isRendered:
                         (deleteItem ? deleteItem : false) &&
-                        userHasAccess(["ROLE_ADMIN"]),
+                        userHasAccess(['ROLE_ADMIN']),
                     },
                   ]}
                 />

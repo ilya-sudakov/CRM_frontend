@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import "./FloatingPlus.scss";
-import plusIcon from "../../../../assets/sidemenu/plus.svg";
-import { Link } from "react-router-dom";
-import UserContext from "../../../App.js";
+import React, { useContext, useState } from 'react';
+import './FloatingPlus.scss';
+import plusIcon from '../../../../assets/sidemenu/plus.svg';
+import { Link } from 'react-router-dom';
+import UserContext from '../../../App.js';
 
 const FloatingPlus = (props) => {
   const userContext = useContext(UserContext);
@@ -12,8 +12,8 @@ const FloatingPlus = (props) => {
     return (
       <Link
         className="floating-plus"
-        to={props.linkTo ? props.linkTo : "/"}
-        title={props.title ? props.title : "Создать"}
+        to={props.linkTo ? props.linkTo : '/'}
+        title={props.title ? props.title : 'Создать'}
         onClick={
           props.onClick
             ? (event) => {
@@ -42,7 +42,7 @@ const FloatingPlus = (props) => {
       </Link>
     );
   } else {
-    return "";
+    return '';
   }
 };
 

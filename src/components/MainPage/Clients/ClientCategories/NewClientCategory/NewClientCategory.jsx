@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
-import './NewClientCategory.scss'
-import '../../../../../utils/Form/Form.scss'
-import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx'
-import InputText from '../../../../../utils/Form/InputText/InputText.jsx'
-import { addClientCategory } from '../../../../../utils/RequestsAPI/Clients/Categories.js'
-import Button from '../../../../../utils/Form/Button/Button.jsx'
+import React, { useState } from 'react';
+import './NewClientCategory.scss';
+import '../../../../../utils/Form/Form.scss';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
 
 const NewClientCategory = (props) => {
   const [formInputs, setFormInputs] = useState({
     name: '',
     visibility: 'all',
-  })
+  });
   const [formErrors, setFormErrors] = useState({
     name: false,
-  })
+  });
   const [validInputs, setValidInputs] = useState({
     name: false,
-  })
-  const [showError, setShowError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  });
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
@@ -27,70 +26,70 @@ const NewClientCategory = (props) => {
           setValidInputs({
             ...validInputs,
             [fieldName]: value !== '',
-          })
+          });
         }
-        break
+        break;
     }
-  }
+  };
 
   const formIsValid = () => {
-    let check = true
+    let check = true;
     let newErrors = Object.assign({
       name: false,
-    })
+    });
     for (let item in validInputs) {
       // console.log(item, validInputs[item]);
       if (validInputs[item] === false) {
-        check = false
+        check = false;
         newErrors = Object.assign({
           ...newErrors,
           [item]: true,
-        })
+        });
       }
     }
-    setFormErrors(newErrors)
+    setFormErrors(newErrors);
     if (check === true) {
-      return true
+      return true;
     } else {
       // alert("Форма не заполнена");
-      setIsLoading(false)
-      setShowError(true)
-      return false
+      setIsLoading(false);
+      setShowError(true);
+      return false;
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     // event.preventDefault()
-    setIsLoading(true)
-    console.log(formInputs)
+    setIsLoading(true);
+    console.log(formInputs);
     formIsValid() &&
       props
         .addCategory(formInputs)
         .then(() => {
-          setIsLoading(false)
-          props.onSubmit()
-          props.setShowWindow(!props.showWindow)
+          setIsLoading(false);
+          props.onSubmit();
+          props.setShowWindow(!props.showWindow);
           // props.history.push("/clients/categories");
         })
         .catch((error) => {
-          setIsLoading(false)
-          alert('Ошибка при добавлении записи')
-          console.log(error)
-        })
-  }
+          setIsLoading(false);
+          alert('Ошибка при добавлении записи');
+          console.log(error);
+        });
+  };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    validateField(name, value)
+    const { name, value } = e.target;
+    validateField(name, value);
     setFormInputs({
       ...formInputs,
       [name]: value,
-    })
+    });
     setFormErrors({
       ...formErrors,
       [name]: false,
-    })
-  }
+    });
+  };
 
   return (
     <div className="new-client-category">
@@ -138,7 +137,7 @@ const NewClientCategory = (props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewClientCategory
+export default NewClientCategory;

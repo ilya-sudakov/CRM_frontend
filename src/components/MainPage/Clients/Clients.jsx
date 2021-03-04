@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./Clients.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import "../../../utils/Form/Form.scss";
-import { searchClients } from "../../../utils/RequestsAPI/Clients.jsx";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import { Link } from "react-router-dom";
-import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
-import Button from "../../../utils/Form/Button/Button.jsx";
-import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import EditWorkHistory from "./MainComponents/EditWorkHistory.jsx";
-import EditNextContactDate from "./MainComponents/EditContactDay.jsx";
-import ClientsList from "./MainComponents/ClientsList.jsx";
-import UserContext from "../../../App.js";
-import { getEmailsExcel } from "./MainComponents/functions.js";
-import { changeSortOrder } from "../../../utils/functions.jsx";
-import { clientTypes } from "./MainComponents/objects.js";
-import usePagination from "../../../utils/hooks/usePagination/usePagination";
+import React, { useState, useEffect, useContext } from 'react';
+import './Clients.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import '../../../utils/Form/Form.scss';
+import { searchClients } from '../../../utils/RequestsAPI/Clients.jsx';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import { Link } from 'react-router-dom';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import Button from '../../../utils/Form/Button/Button.jsx';
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';
+import EditNextContactDate from './MainComponents/EditContactDay.jsx';
+import ClientsList from './MainComponents/ClientsList.jsx';
+import UserContext from '../../../App.js';
+import { getEmailsExcel } from './MainComponents/functions.js';
+import { changeSortOrder } from '../../../utils/functions.jsx';
+import { clientTypes } from './MainComponents/objects.js';
+import usePagination from '../../../utils/hooks/usePagination/usePagination';
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);
-  const [curCategory, setCurCategory] = useState("");
-  const [curClientType, setCurClientType] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [curCategory, setCurCategory] = useState('');
+  const [curClientType, setCurClientType] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const {
     pagination,
     curPage,
@@ -33,23 +33,23 @@ const Clients = (props) => {
     data,
     setSortOrder,
   } = usePagination(
-    curCategory !== "" ? () => loadData(curCategory, curClientType) : null,
+    curCategory !== '' ? () => loadData(curCategory, curClientType) : null,
     [curClientType, curCategory],
-    "dynamic",
+    'dynamic',
     {
       sortOrder: {
-        curSort: "name",
-        name: "asc",
-        nextDateContact: "asc",
+        curSort: 'name',
+        name: 'asc',
+        nextDateContact: 'asc',
       },
       size: 10,
-    }
+    },
   );
   const [isLoadingClients, setIsLoadingClients] = useState(false);
   const [itemsActiveCount, setItemsActiveCount] = useState(0);
   const [itemsPotentialCount, setItemsPotentialCount] = useState(0);
   const [itemsProgressCount, setItemsProgressCount] = useState(0);
-  const [curForm, setCurForm] = useState("nextContactDate");
+  const [curForm, setCurForm] = useState('nextContactDate');
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
@@ -57,18 +57,18 @@ const Clients = (props) => {
 
   const menuItems = [
     {
-      link: "active",
-      name: "Активные",
+      link: 'active',
+      name: 'Активные',
       count: itemsActiveCount,
     },
     {
-      link: "potential",
-      name: "Потенциальные",
+      link: 'potential',
+      name: 'Потенциальные',
       count: itemsPotentialCount,
     },
     {
-      link: "in-progress",
-      name: "В разработке",
+      link: 'in-progress',
+      name: 'В разработке',
       count: itemsProgressCount,
     },
   ];
@@ -78,22 +78,22 @@ const Clients = (props) => {
     setIsLoadingClients(true);
     return Promise.all(
       client.legalEntities.map((item) =>
-        clientTypes[props.type].deleteLegalEntityFunction(item.id)
-      )
+        clientTypes[props.type].deleteLegalEntityFunction(item.id),
+      ),
     )
       .then(() =>
         Promise.all(
           client.contacts.map((item) =>
-            clientTypes[props.type].deleteContactsFunction(item.id)
-          )
-        )
+            clientTypes[props.type].deleteContactsFunction(item.id),
+          ),
+        ),
       )
       .then(() =>
         Promise.all(
           client.histories.map((item) =>
-            clientTypes[props.type].deleteWorkHistoryFunction(item.id)
-          )
-        )
+            clientTypes[props.type].deleteWorkHistoryFunction(item.id),
+          ),
+        ),
       )
       .then(() => {
         setIsLoadingClients(false);
@@ -105,7 +105,7 @@ const Clients = (props) => {
       })
       .catch((error) => {
         setIsLoadingClients(false);
-        alert("Ошибка при удалении");
+        alert('Ошибка при удалении');
         console.log(error);
       });
   };
@@ -113,15 +113,15 @@ const Clients = (props) => {
   const loadClientsTotalByType = (category) => {
     const clientCategories = [
       {
-        clientType: "Активные",
+        clientType: 'Активные',
         setter: (count) => setItemsActiveCount(count),
       },
       {
-        clientType: "Потенциальные",
+        clientType: 'Потенциальные',
         setter: (count) => setItemsPotentialCount(count),
       },
       {
-        clientType: "В разработке",
+        clientType: 'В разработке',
         setter: (count) => setItemsProgressCount(count),
       },
     ];
@@ -135,43 +135,43 @@ const Clients = (props) => {
             },
             1,
             1,
-            sortOrder
+            sortOrder,
           )
           .then((res) => res.json())
-          .then((res) => item.setter(res.totalElements))
-      )
+          .then((res) => item.setter(res.totalElements)),
+      ),
     );
   };
 
   const loadData = (category, type, signal) => {
-    setSearchQuery("");
+    setSearchQuery('');
     return clientTypes[props.type].loadItemsByCategory(
       {
         categoryName: category,
         clientType:
-          type === "active"
-            ? "Активные"
-            : type === "potential"
-            ? "Потенциальные"
-            : "В разработке",
+          type === 'active'
+            ? 'Активные'
+            : type === 'potential'
+            ? 'Потенциальные'
+            : 'В разработке',
       },
       curPage,
       itemsPerPage,
       sortOrder,
-      signal
+      signal,
     );
   };
 
   const initialLoad = () => {
     const curCategoryTemp = props.location.pathname
-      .split("/category/")[1]
-      .split("/")[0];
+      .split('/category/')[1]
+      .split('/')[0];
     const curClientTypeTemp = props.location.pathname
-      .split("/category/")[1]
-      .split("/")[1];
+      .split('/category/')[1]
+      .split('/')[1];
     if (
-      curCategory !== "" &&
-      curClientTypeTemp !== "" &&
+      curCategory !== '' &&
+      curClientTypeTemp !== '' &&
       (curCategoryTemp !== curCategory || curClientTypeTemp !== curClientType)
     )
       setCurPage(1);
@@ -194,8 +194,8 @@ const Clients = (props) => {
     <div className="clients">
       <div className="main-window">
         <FloatingPlus
-          linkTo={"/" + props.type + "/new"}
-          visibility={["ROLE_ADMIN", "ROLE_MANAGER"]}
+          linkTo={'/' + props.type + '/new'}
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">
@@ -226,7 +226,7 @@ const Clients = (props) => {
           searchQuery={searchQuery}
           onButtonClick={(query) => {
             setIsLoadingClients(true);
-            if (query === "") {
+            if (query === '') {
               setIsLoadingClients(false);
               loadData(curCategory, curClientType);
             } else {
@@ -248,13 +248,13 @@ const Clients = (props) => {
         />
         <FormWindow
           title={
-            curForm === "nextContactDate"
-              ? "Дата следующего контакта"
-              : "Запись действия"
+            curForm === 'nextContactDate'
+              ? 'Дата следующего контакта'
+              : 'Запись действия'
           }
           content={
             <React.Fragment>
-              {curForm === "nextContactDate" ? (
+              {curForm === 'nextContactDate' ? (
                 <EditNextContactDate
                   selectedItem={selectedItem}
                   showWindow={showWindow}
@@ -308,7 +308,7 @@ const Clients = (props) => {
         <ClientsList
           isLoading={isLoadingClients || isLoading}
           itemsPerPage={itemsPerPage}
-          clients={searchQuery === "" ? data : clients}
+          clients={searchQuery === '' ? data : clients}
           searchQuery={searchQuery}
           sortOrder={sortOrder}
           deleteItem={deleteItem}
@@ -321,7 +321,7 @@ const Clients = (props) => {
           setCurForm={setCurForm}
           editItemFunction={clientTypes[props.type].editItemFunction}
         />
-        {searchQuery === "" ? pagination : null}
+        {searchQuery === '' ? pagination : null}
       </div>
     </div>
   );
@@ -334,8 +334,8 @@ const MenuItem = ({ type, curCategory, item, location }) => {
       to={`/${type}/category/${curCategory}/${item.link}`}
       className={
         location.pathname.includes(item.link) === true
-          ? "main-window__item--active main-window__item"
-          : "main-window__item"
+          ? 'main-window__item--active main-window__item'
+          : 'main-window__item'
       }
     >
       <div>

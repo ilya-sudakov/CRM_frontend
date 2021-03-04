@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const useStickyElement = (
   element,
   offsetTop = 0,
-  stickyClassName = "main-window__list-item--sticky"
+  stickyClassName = 'main-window__list-item--sticky',
 ) => {
   const getAllParentsHeight = (element) => {
     if (element === null) return 0;
@@ -14,13 +14,13 @@ const useStickyElement = (
 
   useEffect(() => {
     if (!element) return;
-    const scrollCallBack = window.addEventListener("scroll", () => {
+    const scrollCallBack = window.addEventListener('scroll', () => {
       const headerHeight =
-        document.getElementsByClassName("header")[0]?.clientHeight ?? 60;
+        document.getElementsByClassName('header')[0]?.clientHeight ?? 60;
       console.log(
         window.pageYOffset,
         getAllParentsHeight(element) + headerHeight,
-        window.pageYOffset - getAllParentsHeight(element) + headerHeight
+        window.pageYOffset - getAllParentsHeight(element) + headerHeight,
       );
       if (window.pageYOffset > getAllParentsHeight(element) - headerHeight) {
         element.classList.add(stickyClassName);
@@ -33,7 +33,7 @@ const useStickyElement = (
       }
     });
     return () => {
-      window.removeEventListener("scroll", scrollCallBack);
+      window.removeEventListener('scroll', scrollCallBack);
     };
   }, [element]);
 };

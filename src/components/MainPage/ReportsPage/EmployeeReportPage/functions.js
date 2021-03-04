@@ -29,7 +29,7 @@ export const getPreviousQuarterDates = (date, value) => {
   let endDate;
 
   switch (value) {
-    case "current":
+    case 'current':
       startDate = new Date(today.getFullYear(), quarter * 3, 1);
       endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 3, 0);
       break;
@@ -52,7 +52,7 @@ export const getPreviousMonthDates = (date, value) => {
   let endDate;
 
   switch (value) {
-    case "current":
+    case 'current':
       startDate = new Date(today.getFullYear(), month, 1);
       endDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
       break;

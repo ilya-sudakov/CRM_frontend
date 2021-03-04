@@ -1,6 +1,6 @@
-import React from "react";
-import CheckBox from "../../../../../utils/Form/CheckBox/CheckBox.jsx";
-import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
+import React from 'react';
+import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
+import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const CategoryHeader = ({
   category,
@@ -25,7 +25,7 @@ const CategoryHeader = ({
       />
       <div className="main-form__input_field">
         <FileUploader
-          uniqueId={"categoryImg" + categoryIndex}
+          uniqueId={'categoryImg' + categoryIndex}
           onChange={(result) => {
             let originalList = categories;
             originalList.splice(categoryIndex, 1, {

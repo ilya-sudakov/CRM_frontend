@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import MoneyIcon from "../../../../../assets/etc/bx-ruble.inline.svg";
-import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
   const [stats, setStats] = useState({
-    category: "Доход",
+    category: 'Доход',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
+    linkTo: '/requests',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -34,12 +34,12 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
       const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         prevMonthIncome += Number.parseFloat(request.sum || 0);
         return false;
       }
-      if (request.status !== "Завершено") {
+      if (request.status !== 'Завершено') {
         return false;
       }
       return true;
@@ -50,7 +50,7 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         curMonthIncome += Number.parseFloat(request.sum || 0);
         return true;
@@ -64,13 +64,13 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
       isLoading: false,
       value: `${addSpaceDelimiter(
-        Math.floor(curMonthIncome * 100) / 100
+        Math.floor(curMonthIncome * 100) / 100,
       )} руб.`,
       difference: curMonthIncome - prevMonthIncome,
       percentage:
@@ -78,7 +78,7 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
           ((curMonthIncome - prevMonthIncome) /
             (prevMonthIncome === 0 ? 1 : prevMonthIncome)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

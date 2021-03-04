@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "./WorkshopRequests.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import PrintIcon from "../../../../../assets/print.png";
-import TableView from "../TableView/TableView.jsx";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
+import React, { useState, useEffect } from 'react';
+import './WorkshopRequests.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import PrintIcon from '../../../../../assets/print.png';
+import TableView from '../TableView/TableView.jsx';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import {
   getRequestsByWorkshop,
   transferRequest,
   getRequests,
-} from "../../../../utils/RequestsAPI/Requests.jsx";
+} from '../../../../utils/RequestsAPI/Requests.jsx';
 import {
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
-} from "../../../../utils/functions.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { pages, requstsSortOptions } from "../objects.js";
-import chevronDown from "../../../../../assets/tableview/chevron-down.svg";
-import useSort from "../../../../utils/hooks/useSort/useSort.js";
-import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
-import { sortByField } from "../../../../utils/sorting/sorting";
-import { requestStatuses, workshops } from "../workshopVariables.js";
+} from '../../../../utils/functions.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { pages, requstsSortOptions } from '../objects.js';
+import chevronDown from '../../../../../assets/tableview/chevron-down.svg';
+import useSort from '../../../../utils/hooks/useSort/useSort.js';
+import useTitleHeader from '../../../../utils/hooks/uiComponents/useTitleHeader';
+import { sortByField } from '../../../../utils/sorting/sorting';
+import { requestStatuses, workshops } from '../workshopVariables.js';
 import {
   copySelectedRequest,
   deleteItem,
@@ -30,17 +30,17 @@ import {
   filterRequestsByStatuses,
   getPageByRequest,
   printRequestsList,
-} from "../functions.js";
-import useFormWindow from "../../../../utils/hooks/useFormWindow";
+} from '../functions.js';
+import useFormWindow from '../../../../utils/hooks/useFormWindow';
 
 const WorkshopRequests = (props) => {
   const [requests, setRequests] = useState([]);
   const [dates, setDates] = useState([]);
   const [productsQuantities, setProductsQuantities] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(props.type === "requests");
-  const [toWorkshop, setToWorkshop] = useState("lemz"); //Название цеха для переноса заявки
+  const [isMinimized, setIsMinimized] = useState(props.type === 'requests');
+  const [toWorkshop, setToWorkshop] = useState('lemz'); //Название цеха для переноса заявки
   const [requestId, setRequestId] = useState(0);
 
   const handleTransferRequest = () => {
@@ -54,19 +54,19 @@ const WorkshopRequests = (props) => {
         props.history.push(
           `/${toWorkshop}/workshop-${toWorkshop}/${getPageByRequest(request)}#${
             request.id
-          }`
+          }`,
         );
         window.location.reload();
       })
       .catch((error) => {
         console.log(error);
-        alert("Ошибка при копировании записи");
+        alert('Ошибка при копировании записи');
         setIsLoading(false);
       });
   };
 
   const { formWindow, showWindow, setShowWindow } = useFormWindow(
-    "Перенос заявки в план производства",
+    'Перенос заявки в план производства',
     <>
       <div className="main-form">
         <div className="main-form__form">
@@ -93,25 +93,25 @@ const WorkshopRequests = (props) => {
         </div>
       </div>
     </>,
-    []
+    [],
   );
   const { sortOrder, sortPanel } = useSort([], {
     ignoreURL: false,
     sortOrder: {
-      curSort: "date",
-      date: "desc",
+      curSort: 'date',
+      date: 'desc',
     },
     sortOptions: requstsSortOptions,
   });
   const [workshopsFilter, setWorkshopsFilter] = useState([
     {
-      filter: ["lemz", "lepsari", null, "requests"],
-      fullName: "Все",
+      filter: ['lemz', 'lepsari', null, 'requests'],
+      fullName: 'Все',
       visible: true,
     },
-    { filter: ["lemz"], fullName: "ЦехЛЭМЗ", visible: false },
-    { filter: ["lepsari"], fullName: "ЦехЛепсари", visible: false },
-    { filter: [null, "requests"], fullName: "Не перенесенные", visible: false },
+    { filter: ['lemz'], fullName: 'ЦехЛЭМЗ', visible: false },
+    { filter: ['lepsari'], fullName: 'ЦехЛепсари', visible: false },
+    { filter: [null, 'requests'], fullName: 'Не перенесенные', visible: false },
   ]);
 
   //Перенести заявку
@@ -131,7 +131,7 @@ const WorkshopRequests = (props) => {
 
   const loadRequests = (signal) => {
     setIsLoading(true);
-    return (props.type === "requests"
+    return (props.type === 'requests'
       ? getRequests(signal)
       : getRequestsByWorkshop(props.type, signal)
     )
@@ -147,7 +147,7 @@ const WorkshopRequests = (props) => {
 
   //Статусы заявок
   const [statuses, setStatuses] = useState(
-    requestStatuses.map((status) => ({ ...status, visible: false }))
+    requestStatuses.map((status) => ({ ...status, visible: false })),
   );
 
   const filterRequestsByWorkshop = (data) => {
@@ -158,50 +158,50 @@ const WorkshopRequests = (props) => {
     return filterRequestsBySearchQuery(
       filterRequestsByStatuses(
         filterRequestsByPage(
-          props.type === "requests"
+          props.type === 'requests'
             ? requests
             : filterRequestsByWorkshop(requests),
-          pages[curPage].name
+          pages[curPage].name,
         ),
-        statuses
+        statuses,
       ),
-      searchQuery
+      searchQuery,
     );
   };
 
   const getCategoriesCount = (category) => {
     return filterRequestsByPage(
-      props.type === "requests" ? requests : filterRequestsByWorkshop(requests),
-      category
+      props.type === 'requests' ? requests : filterRequestsByWorkshop(requests),
+      category,
     ).length;
   };
 
   const pageNameInURL = props.location.pathname.split(
-    `${workshops[props.type].redirectURL}/`
+    `${workshops[props.type].redirectURL}/`,
   )[1];
   const menuItems = [
     {
-      pageName: "open",
-      pageTitle: "Открытые",
-      count: getCategoriesCount("Открытые"),
+      pageName: 'open',
+      pageTitle: 'Открытые',
+      count: getCategoriesCount('Открытые'),
       link: `${workshops[props.type].redirectURL}/open`,
     },
     {
-      pageName: "shipped",
-      pageTitle: "Отгружено",
-      count: getCategoriesCount("Отгружено"),
+      pageName: 'shipped',
+      pageTitle: 'Отгружено',
+      count: getCategoriesCount('Отгружено'),
       link: `${workshops[props.type].redirectURL}/shipped`,
     },
     {
-      pageName: "completed",
-      pageTitle: "Завершено",
+      pageName: 'completed',
+      pageTitle: 'Завершено',
       link: `${workshops[props.type].redirectURL}/completed`,
     },
   ];
   const { curPage, titleHeader } = useTitleHeader(
-    props.type === "requests" ? "Заявки" : undefined,
+    props.type === 'requests' ? 'Заявки' : undefined,
     menuItems,
-    pages[pageNameInURL] !== undefined ? pageNameInURL : "open"
+    pages[pageNameInURL] !== undefined ? pageNameInURL : 'open',
   );
 
   const handleItemClick = (array, setArray, item, index) => {
@@ -225,17 +225,17 @@ const WorkshopRequests = (props) => {
           onClick={() => setIsMinimized(!isMinimized)}
           iconSrc={chevronDown}
           title="Свернуть заявки"
-          visibility={["ROLE_ADMIN", "ROLE_WORKSHOP"]}
-          iconStyles={{ transform: isMinimized ? "rotate(180deg)" : "" }}
+          visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
+          iconStyles={{ transform: isMinimized ? 'rotate(180deg)' : '' }}
         />
-        {props.type === "requests" ? titleHeader : null}
+        {props.type === 'requests' ? titleHeader : null}
         <SearchBar
           fullSize
           placeholder="Введите название продукции для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        {props.type !== "requests" ? titleHeader : null}
-        {props.type === "requests" && formWindow}
+        {props.type !== 'requests' ? titleHeader : null}
+        {props.type === 'requests' && formWindow}
         <ControlPanel
           itemsCount={`Всего: ${requests.length} записей`}
           buttons={
@@ -249,7 +249,7 @@ const WorkshopRequests = (props) => {
                 printRequestsList(
                   setIsLoading,
                   productsQuantities,
-                  workshops[props.type].fullName
+                  workshops[props.type].fullName,
                 )
               }
             />
@@ -263,9 +263,9 @@ const WorkshopRequests = (props) => {
                     <div
                       className={
                         (status.visible
-                          ? "main-window__button"
-                          : "main-window__button main-window__button--inverted") +
-                        " main-window__list-item--" +
+                          ? 'main-window__button'
+                          : 'main-window__button main-window__button--inverted') +
+                        ' main-window__list-item--' +
                         status.className
                       }
                       onClick={() =>
@@ -277,10 +277,10 @@ const WorkshopRequests = (props) => {
                   );
                 })}
               </div>
-              {props.type === "requests" && (
+              {props.type === 'requests' && (
                 <div
                   className="main-window__filter-pick"
-                  style={{ marginTop: "10px" }}
+                  style={{ marginTop: '10px' }}
                 >
                   <div>Фильтр по цехам: </div>
                   {workshopsFilter.map((workshop, index) => {
@@ -288,15 +288,15 @@ const WorkshopRequests = (props) => {
                       <div
                         className={`main-window__button ${
                           workshop.visible
-                            ? ""
-                            : "main-window__button--inverted"
+                            ? ''
+                            : 'main-window__button--inverted'
                         }`}
                         onClick={() =>
                           handleItemClick(
                             workshopsFilter,
                             setWorkshopsFilter,
                             workshop,
-                            index
+                            index,
                           )
                         }
                       >

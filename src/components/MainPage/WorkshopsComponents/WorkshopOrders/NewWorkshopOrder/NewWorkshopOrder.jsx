@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import "./NewWorkshopOrder.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import SelectItems from "../../../../../utils/Form/SelectItems/SelectItems.jsx";
+import React, { useState, useEffect } from 'react';
+import './NewWorkshopOrder.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
 import {
   addOrder,
   addProductToOrder,
-} from "../../../../../utils/RequestsAPI/Workshop/Orders.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { workshops } from "../../workshopVariables";
-import useForm from "../../../../../utils/hooks/useForm";
-import { getWorkshopOrdersDefaultInputs } from "../../functions";
+} from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { workshops } from '../../workshopVariables';
+import useForm from '../../../../../utils/hooks/useForm';
+import { getWorkshopOrdersDefaultInputs } from '../../functions';
 
 const NewWorkshopOrder = (props) => {
   const {
@@ -43,7 +43,7 @@ const NewWorkshopOrder = (props) => {
               ...product,
               equipmentId: orderId,
             });
-          })
+          }),
         ).then(() => {
           setIsLoading(false);
           props.history.push(workshops[props.type].ordersRedirectURL);
@@ -69,7 +69,7 @@ const NewWorkshopOrder = (props) => {
             error={formErrors.date}
             name="date"
             selected={Date.parse(formInputs.date)}
-            handleDateChange={(date) => handleInputChange("date", date)}
+            handleDateChange={(date) => handleInputChange('date', date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -79,7 +79,7 @@ const NewWorkshopOrder = (props) => {
             error={formErrors.name}
             name="name"
             handleInputChange={({ target }) =>
-              handleInputChange("name", target.value)
+              handleInputChange('name', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -88,7 +88,7 @@ const NewWorkshopOrder = (props) => {
             inputName="Комплектация"
             name="assembly"
             handleInputChange={({ target }) =>
-              handleInputChange("assembly", target.value)
+              handleInputChange('assembly', target.value)
             }
           />
           <InputDate
@@ -97,7 +97,7 @@ const NewWorkshopOrder = (props) => {
             error={formErrors.deliverBy}
             name="deliverBy"
             selected={Date.parse(formInputs.deliverBy)}
-            handleDateChange={(date) => handleInputChange("deliverBy", date)}
+            handleDateChange={(date) => handleInputChange('deliverBy', date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -106,7 +106,7 @@ const NewWorkshopOrder = (props) => {
             userHasAccess={props.userHasAccess}
             defaultValue={formInputs.products}
             required
-            onChange={(value) => handleInputChange("products", value)}
+            onChange={(value) => handleInputChange('products', value)}
             error={formErrors.products}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -117,7 +117,7 @@ const NewWorkshopOrder = (props) => {
               <select
                 name="status"
                 onChange={({ target }) =>
-                  handleInputChange("status", target.value)
+                  handleInputChange('status', target.value)
                 }
                 value={formInputs.status}
               >

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "./NewCategory.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import { addCategory } from "../../../../../utils/RequestsAPI/Products/Categories.js";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../../utils/hooks/useForm";
-import { productCategoriesDefaultInputs } from "../../objects";
+import React, { useEffect, useState } from 'react';
+import './NewCategory.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import { addCategory } from '../../../../../utils/RequestsAPI/Products/Categories.js';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../../utils/hooks/useForm';
+import { productCategoriesDefaultInputs } from '../../objects';
 
 const NewCategory = (props) => {
   const {
@@ -22,16 +22,16 @@ const NewCategory = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     addCategory(formInputs)
-      .then(() => props.history.push("/products"))
+      .then(() => props.history.push('/products'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Создание категории";
+    document.title = 'Создание категории';
   }, []);
 
   return (
@@ -48,7 +48,7 @@ const NewCategory = (props) => {
           name="category"
           defaultValue={formInputs.category}
           handleInputChange={({ target }) =>
-            handleInputChange("category", target.value)
+            handleInputChange('category', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -60,7 +60,7 @@ const NewCategory = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/products")}
+            onClick={() => props.history.push('/products')}
             text="Вернуться назад"
           />
           <Button

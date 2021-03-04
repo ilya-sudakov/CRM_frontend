@@ -4,4 +4,4 @@ export const conditions = {
   ['В процессе']: 'in-progress',
   ['Отложено']: 'delayed',
   ['Проблема']: 'problem',
-}
+};

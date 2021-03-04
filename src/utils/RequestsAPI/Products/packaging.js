@@ -1,11 +1,11 @@
-import { request } from '../../utilsAPI.jsx'
+import { request } from '../../utilsAPI.jsx';
 
 export function getPackaging(signal) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/packing/',
     method: 'GET',
     signal: signal,
-  })
+  });
 }
 
 export function getPackagingById(id, signal) {
@@ -13,7 +13,7 @@ export function getPackagingById(id, signal) {
     url: process.env.API_BASE_URL + '/api/v1/packing/' + id,
     method: 'GET',
     signal: signal,
-  })
+  });
 }
 
 export function addPackaging(packaging, signal) {
@@ -22,7 +22,7 @@ export function addPackaging(packaging, signal) {
     method: 'POST',
     body: JSON.stringify(packaging),
     signal: signal,
-  })
+  });
 }
 
 export function editPackaging(id, packaging, signal) {
@@ -31,7 +31,7 @@ export function editPackaging(id, packaging, signal) {
     method: 'PUT',
     body: JSON.stringify(packaging),
     signal: signal,
-  })
+  });
 }
 
 export function deletePackaging(id, signal) {
@@ -39,7 +39,7 @@ export function deletePackaging(id, signal) {
     url: process.env.API_BASE_URL + '/api/v1/packing/' + id,
     method: 'DELETE',
     signal: signal,
-  })
+  });
 }
 
 export function addPackagingToProduct(newPackaging, id) {
@@ -47,16 +47,16 @@ export function addPackagingToProduct(newPackaging, id) {
     url: process.env.API_BASE_URL + '/api/v1/product/add/' + id,
     method: 'POST',
     body: JSON.stringify(newPackaging),
-  })
+  });
 }
 
 export function deletePackagingFromProduct(productId) {
   const newPackaging = {
     packings: [],
-  }
+  };
   return request({
     url: process.env.API_BASE_URL + '/api/v1/product/add/' + productId,
     method: 'POST',
     body: JSON.stringify(newPackaging),
-  })
+  });
 }

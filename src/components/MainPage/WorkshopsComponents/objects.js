@@ -1,57 +1,57 @@
 export const defaultPrintObject = {
-  ["id"]: {
+  ['id']: {
     visible: true,
   },
-  ["date"]: {
+  ['date']: {
     visible: false,
   },
-  ["products"]: {
+  ['products']: {
     visible: true,
   },
-  ["client"]: {
+  ['client']: {
     visible: true,
   },
-  ["responsible"]: {
+  ['responsible']: {
     visible: true,
   },
-  ["status"]: {
+  ['status']: {
     visible: true,
   },
-  ["date-shipping"]: {
+  ['date-shipping']: {
     visible: true,
   },
-  ["comment"]: {
+  ['comment']: {
     visible: true,
   },
-  ["price"]: {
+  ['price']: {
     visible: true,
   },
 };
 
 export const pages = {
   open: {
-    name: "Открытые",
+    name: 'Открытые',
   },
   shipped: {
-    name: "Отгружено",
+    name: 'Отгружено',
   },
   completed: {
-    name: "Завершено",
+    name: 'Завершено',
   },
 };
 
 export const requstsSortOptions = [
-  { value: "date desc", text: "По дате (убыв.)" },
-  { value: "date asc", text: "По дате (возр.)" },
-  { value: "sum desc", text: "По сумме (убыв.)" },
-  { value: "sum asc", text: "По сумме (возр.)" },
-  { value: "shippingDate desc", text: "По даты отгрузки (убыв.)" },
-  { value: "shippingDate asc", text: "По даты отгрузки (возр.)" },
+  { value: 'date desc', text: 'По дате (убыв.)' },
+  { value: 'date asc', text: 'По дате (возр.)' },
+  { value: 'sum desc', text: 'По сумме (убыв.)' },
+  { value: 'sum asc', text: 'По сумме (возр.)' },
+  { value: 'shippingDate desc', text: 'По даты отгрузки (убыв.)' },
+  { value: 'shippingDate asc', text: 'По даты отгрузки (возр.)' },
 ];
 
 export const workshopStorageDefaultInputs = [
-  { name: "number", defaultValue: "", isRequired: true },
-  { name: "name", defaultValue: "", isRequired: true },
-  { name: "quantity", defaultValue: "", isRequired: true },
-  { name: "comment", defaultValue: "", isRequired: true },
+  { name: 'number', defaultValue: '', isRequired: true },
+  { name: 'name', defaultValue: '', isRequired: true },
+  { name: 'quantity', defaultValue: '', isRequired: true },
+  { name: 'comment', defaultValue: '', isRequired: true },
 ];

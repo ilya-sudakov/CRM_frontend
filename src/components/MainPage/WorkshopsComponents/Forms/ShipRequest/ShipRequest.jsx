@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import "./ShipRequest.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
-import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import UserContext from "../../../../../App.js";
+import React, { useEffect, useState, useContext } from 'react';
+import './ShipRequest.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import UserContext from '../../../../../App.js';
 import {
   editRequest,
   editProductsToRequest,
@@ -15,23 +15,23 @@ import {
   deleteProductsToRequest,
   getRequestById,
   connectClientToRequest,
-} from "../../../../../utils/RequestsAPI/Requests.jsx";
-import { requestStatuses, workshops } from "../../workshopVariables.js";
-import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
+} from '../../../../../utils/RequestsAPI/Requests.jsx';
+import { requestStatuses, workshops } from '../../workshopVariables.js';
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 
 const ShipRequest = (props) => {
   const [requestId, setRequestId] = useState(1);
   const userContext = useContext(UserContext);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [requestInputs, setRequestInputs] = useState({
-    date: "",
+    date: '',
     products: [],
     // quantity: "",
-    codeWord: "",
-    responsible: "",
-    status: "Не готово",
-    shippingDate: "",
-    comment: "",
+    codeWord: '',
+    responsible: '',
+    status: 'Не готово',
+    shippingDate: '',
+    comment: '',
     sum: 0,
     clientId: 0,
     client: null,
@@ -47,7 +47,7 @@ const ShipRequest = (props) => {
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "requestProducts":
+      case 'requestProducts':
         setValidInputs({
           ...validInputs,
           requestProducts: value.length > 0,
@@ -57,7 +57,7 @@ const ShipRequest = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -111,10 +111,10 @@ const ShipRequest = (props) => {
         {
           ...requestInputs,
           status: checkIfAllProductsAreShipped(selectedProducts)
-            ? "Отгружено"
-            : "Частично отгружено",
+            ? 'Отгружено'
+            : 'Частично отгружено',
         },
-        requestId
+        requestId,
       )
         .then(() => {
           return Promise.all(
@@ -133,13 +133,13 @@ const ShipRequest = (props) => {
                 {
                   requestId: requestId,
                   quantity: diff < 0 ? 0 : diff,
-                  status: diff <= 0 ? "completed" : selected.status,
+                  status: diff <= 0 ? 'completed' : selected.status,
                   packaging: selected.packaging,
                   name: selected.name,
                 },
-                selected.id
+                selected.id,
               );
-            })
+            }),
           );
         })
         .then(() => props.history.push(workshops[props.type].redirectURL))
@@ -163,7 +163,7 @@ const ShipRequest = (props) => {
   };
 
   const handleProductsChange = (newProducts) => {
-    validateField("requestProducts", newProducts);
+    validateField('requestProducts', newProducts);
     setSelectedProducts(newProducts);
     setRequestErrors({
       ...requestErrors,
@@ -172,10 +172,10 @@ const ShipRequest = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Отгрузка продукции";
-    const id = props.history.location.pathname.split("ship/")[1];
+    document.title = 'Отгрузка продукции';
+    const id = props.history.location.pathname.split('ship/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
+      alert('Неправильный индекс заявки!');
       props.history.push(workshops[props.type].redirectURL);
     } else {
       setRequestId(id);
@@ -200,19 +200,19 @@ const ShipRequest = (props) => {
             client: oldRequest.client,
             clientId: oldRequest.client ? oldRequest.client.id : 0,
           });
-          oldRequest.client && validateField("clientId", oldRequest.client.id);
+          oldRequest.client && validateField('clientId', oldRequest.client.id);
           setSelectedProducts(
             oldRequest.requestProducts.map((product) => {
               return {
                 ...product,
                 quantityNew: product.quantity,
               };
-            })
+            }),
           );
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс заявки!");
+          alert('Неправильный индекс заявки!');
           props.history.push(workshops[props.type].redirectURL);
         });
     }
@@ -264,16 +264,16 @@ const ShipRequest = (props) => {
                 readOnly: true,
               },
               packaging: {
-                customName: "Фасовка",
+                customName: 'Фасовка',
                 readOnly: true,
-                marginRight: "10px",
+                marginRight: '10px',
               },
               quantity: {
-                customName: "Исх. кол-во (шт.)",
+                customName: 'Исх. кол-во (шт.)',
                 readOnly: true,
               },
               newQuantity: {
-                customName: "Отгружено (шт.)",
+                customName: 'Отгружено (шт.)',
               },
             }}
           />
@@ -301,9 +301,9 @@ const ShipRequest = (props) => {
               type="submit"
               onClick={(event) => {
                 event.preventDefault();
-                const id = props.history.location.pathname.split("ship/")[1];
+                const id = props.history.location.pathname.split('ship/')[1];
                 props.history.push(
-                  `${workshops[props.type].redirectURL}#${id}`
+                  `${workshops[props.type].redirectURL}#${id}`,
                 );
               }}
               value="Вернуться назад"

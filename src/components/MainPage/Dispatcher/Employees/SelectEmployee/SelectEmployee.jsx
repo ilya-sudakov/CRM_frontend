@@ -1,34 +1,38 @@
-import React, { useState, useEffect } from "react";
-import "./SelectEmployee.scss";
-import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
-import SearchBar from "../../../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
-import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
-import useSort from "../../../../../utils/hooks/useSort/useSort";
-import { filterEmployeesBySearchQuery } from "../functions";
-import useEmployeesList from "../../../../../utils/hooks/useEmployeesList";
+import React, { useState, useEffect } from 'react';
+import './SelectEmployee.scss';
+import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import SearchBar from '../../../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import useSort from '../../../../../utils/hooks/useSort/useSort';
+import { filterEmployeesBySearchQuery } from '../functions';
+import useEmployeesList from '../../../../../utils/hooks/useEmployeesList';
 
 const SelectEmployee = (props) => {
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [employee, setEmployee] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [fullName, setFullName] = useState('');
   const { employees, setEmployees, isLoadingEmployees } = useEmployeesList(
-    !props.employees
+    !props.employees,
   );
-  const { sortedData, sortPanel } = useSort(employees, {
-    sortOrder: {
-      curSort: "lastName",
-      lastName: "asc",
+  const { sortedData, sortPanel } = useSort(
+    employees,
+    {
+      sortOrder: {
+        curSort: 'lastName',
+        lastName: 'asc',
+      },
+      sortOptions: [
+        { value: 'lastName asc', text: 'По фамилии (А-Я)' },
+        { value: 'lastName desc', text: 'По фамилии (Я-А)' },
+      ],
+      ignoreURL: true,
     },
-    sortOptions: [
-      { value: "lastName asc", text: "По фамилии (А-Я)" },
-      { value: "lastName desc", text: "По фамилии (Я-А)" },
-    ],
-    ignoreURL: true,
-  }, [employees]);
+    [employees],
+  );
 
   useEffect(() => {
     if (props.employees && employees.length === 0) {
@@ -38,7 +42,7 @@ const SelectEmployee = (props) => {
 
   useEffect(() => {
     if (
-      typeof props.defaultValue === "object" &&
+      typeof props.defaultValue === 'object' &&
       props.defaultValue?.lastName
     ) {
       setEmployee(props.defaultValue);
@@ -56,7 +60,7 @@ const SelectEmployee = (props) => {
     <div className="select-employee">
       <div className="select-employee__input">
         <div className="select-employee__input_name main-form__input_name--header">
-          {`${props.inputName} ${props.required ? "*" : ""}`}
+          {`${props.inputName} ${props.required ? '*' : ''}`}
           {!props.readOnly && (
             <SelectFromButton
               text="Выбрать сотрудника"
@@ -73,16 +77,16 @@ const SelectEmployee = (props) => {
             <div className="employee-info__position">{employee.position}</div>
           </div>
         ) : (
-          ((props.defaultValue && typeof props.defaultValue !== "object") ||
+          ((props.defaultValue && typeof props.defaultValue !== 'object') ||
             fullName) && (
-            <div className={"select-employee__input_field"}>
+            <div className={'select-employee__input_field'}>
               <div className="select-employee__searchbar">
                 <input
                   type="text"
                   className={
                     props.error === true
-                      ? "select-employee__input select-employee__input--error"
-                      : "select-employee__input"
+                      ? 'select-employee__input select-employee__input--error'
+                      : 'select-employee__input'
                   }
                   defaultValue={
                     props.defaultValue ? props.defaultValue : fullName

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { dateDiffInDays } from "../functions.jsx";
+import { useEffect, useState } from 'react';
+import { dateDiffInDays } from '../functions.jsx';
 import {
   getEmployeesByComingBirthday,
   getEmployeesByExpiredDocuments,
-} from "../RequestsAPI/Employees.jsx";
+} from '../RequestsAPI/Employees.jsx';
 
 const useEmployeesNotifications = () => {
   const [employees, setEmployees] = useState([]);
@@ -16,40 +16,40 @@ const useEmployeesNotifications = () => {
       .then((res) => res.json())
       .then((res) => {
         const filteredEmployees = res
-          .filter((item) => item.relevance !== "Уволен")
+          .filter((item) => item.relevance !== 'Уволен')
           .map((item) => {
             const expirationTime = new Date(
-              new Date(item.dateOfBirth).setFullYear(new Date().getFullYear())
+              new Date(item.dateOfBirth).setFullYear(new Date().getFullYear()),
             );
-            let birthdayDays = "";
+            let birthdayDays = '';
             console.log(
               expirationTime,
               new Date(),
-              dateDiffInDays(new Date(), expirationTime)
+              dateDiffInDays(new Date(), expirationTime),
             );
             if (expirationTime.getDate() === new Date().getDate()) {
-              birthdayDays = "Сегодня день рождения";
+              birthdayDays = 'Сегодня день рождения';
             }
             const dateDiff = dateDiffInDays(new Date(), expirationTime);
             if (dateDiff <= 0) {
               birthdayDays = `День рождения был ${Math.abs(
-                dateDiff
+                dateDiff,
               )} дн. назад`;
             }
             if (dateDiff > 0) {
               birthdayDays = `День рождения будет через ${dateDiffInDays(
                 new Date(),
-                expirationTime
+                expirationTime,
               )} дн.`;
             }
             if (expirationTime.getDate() === new Date().getDate()) {
-              birthdayDays = "Сегодня день рождения!";
+              birthdayDays = 'Сегодня день рождения!';
             }
             return {
               id: item.id,
               name: `${item.lastName} ${item.name} ${item.middleName}`,
               description: birthdayDays,
-              type: "ДР",
+              type: 'ДР',
               expirationTime: item.dateOfBirth,
               read: true,
               link: `/dispatcher/employees/edit/${item.id}`,
@@ -61,7 +61,7 @@ const useEmployeesNotifications = () => {
       .then((res) => res.json())
       .then((res) => {
         const filteredEmployees = res
-          .filter((item) => item.relevance !== "Уволен")
+          .filter((item) => item.relevance !== 'Уволен')
           .map((item) => {
             return {
               id: item.id,
@@ -69,9 +69,9 @@ const useEmployeesNotifications = () => {
               description:
                 item.patentExpirationDate === null ||
                 item.registrationExpirationDate === null
-                  ? "Не указаны сроки документов"
-                  : "Просроченные документы",
-              type: "Просроченные документы",
+                  ? 'Не указаны сроки документов'
+                  : 'Просроченные документы',
+              type: 'Просроченные документы',
               expirationTime: item.patentExpirationDate,
               read: true,
               link: `/dispatcher/employees/edit/${item.id}`,

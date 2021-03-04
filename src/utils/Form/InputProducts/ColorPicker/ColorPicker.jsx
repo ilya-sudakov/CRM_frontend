@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import chevronDownIcon from "../../../../../assets/tableview/chevron-down.svg";
-import "./ColorPicker.scss";
+import React, { useState } from 'react';
+import chevronDownIcon from '../../../../../assets/tableview/chevron-down.svg';
+import './ColorPicker.scss';
 
 const ColorPicker = (props) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
@@ -9,7 +9,7 @@ const ColorPicker = (props) => {
     // const id = Number.parseInt(event.target.getAttribute("index"));
     const id = props.id;
     const color = event.target.classList[1].split(
-      "select-product__color_option--"
+      'select-product__color_option--',
     )[1];
     const req = Object.assign({
       color: color,
@@ -24,8 +24,8 @@ const ColorPicker = (props) => {
       <div
         className={
           showColorPicker
-            ? "select-product__color_overlay"
-            : "select-product__color_overlay select-product__color_overlay--hidden"
+            ? 'select-product__color_overlay'
+            : 'select-product__color_overlay select-product__color_overlay--hidden'
         }
         onClick={() => setShowColorPicker(!showColorPicker)}
       ></div>
@@ -43,8 +43,8 @@ const ColorPicker = (props) => {
       <div
         className={
           showColorPicker
-            ? "select-product__color_picker"
-            : "select-product__color_picker select-product__color_picker--hidden"
+            ? 'select-product__color_picker'
+            : 'select-product__color_picker select-product__color_picker--hidden'
         }
       >
         <div

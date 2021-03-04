@@ -1,11 +1,11 @@
-import React from "react";
-import "./WorkListWidget.scss";
+import React from 'react';
+import './WorkListWidget.scss';
 import {
   numberToString,
   roundUpWorkHours,
-} from "../../../../../utils/functions.jsx";
-import { filterEmployeesObject, sortEmployeesObject } from "./functions.js";
-import { Link } from "react-router-dom";
+} from '../../../../../utils/functions.jsx';
+import { filterEmployeesObject, sortEmployeesObject } from './functions.js';
+import { Link } from 'react-router-dom';
 
 const WorkList = ({
   workshops,
@@ -19,7 +19,7 @@ const WorkList = ({
       {workshops.map((workshop) => {
         const filteredEmployees = filterEmployeesObject(
           Object.entries(employees),
-          workshop
+          workshop,
         );
         if (
           userContext.userHasAccess(workshop.visibility) &&
@@ -61,17 +61,17 @@ const ListItem = ({ item, employeesMap, date = new Date() }) => {
         item.id
       }&date=${date.getFullYear()},${date.getMonth() + 1},${date.getDate()}`}
       className={`work-list-widget__item ${
-        employeesMap[item.id] ? "" : "work-list-widget__item--no-data"
+        employeesMap[item.id] ? '' : 'work-list-widget__item--no-data'
       }`}
     >
-      <div>{item.lastName + " " + item.name + " " + item.middleName}</div>
+      <div>{item.lastName + ' ' + item.name + ' ' + item.middleName}</div>
       <div>
         {employeesMap[item.id] !== undefined && employeesMap !== undefined ? (
           roundUpWorkHours(employeesMap[item.id]?.hours) +
-          " " +
+          ' ' +
           numberToString(
             Number.parseInt(roundUpWorkHours(employeesMap[item.id]?.hours)),
-            ["час", "часа", "часов"]
+            ['час', 'часа', 'часов'],
           )
         ) : (
           <span className="work-list-widget__info-message">Нет записи</span>

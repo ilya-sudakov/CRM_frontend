@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import "./Products.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
-import { deleteProduct } from "../../../utils/RequestsAPI/Products.js";
-import { deleteCategory } from "../../../utils/RequestsAPI/Products/Categories.js";
-import { deletePackagingFromProduct } from "../../../utils/RequestsAPI/Products/packaging.js";
-import FormWindow from "../../../utils/Form/FormWindow/FormWindow.jsx";
-import TableViewCategory from "./CategoryManagement/TableView/TableViewCategory.jsx";
-import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import useProductsList from "../../../utils/hooks/useProductsList/useProductsList.js";
-import useSort from "../../../utils/hooks/useSort/useSort";
+import React, { useEffect, useState } from 'react';
+import './Products.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
+import { deleteProduct } from '../../../utils/RequestsAPI/Products.js';
+import { deleteCategory } from '../../../utils/RequestsAPI/Products/Categories.js';
+import { deletePackagingFromProduct } from '../../../utils/RequestsAPI/Products/packaging.js';
+import FormWindow from '../../../utils/Form/FormWindow/FormWindow.jsx';
+import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import useProductsList from '../../../utils/hooks/useProductsList/useProductsList.js';
+import useSort from '../../../utils/hooks/useSort/useSort';
 
 const Products = (props) => {
   const { products, categories, isProductsLoading } = useProductsList();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchQueryCategory, setSearchQueryCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQueryCategory, setSearchQueryCategory] = useState('');
   const [showWindow, setShowWindow] = useState(false);
 
   const filterSearchQuery = (data) => {
@@ -36,20 +36,20 @@ const Products = (props) => {
     {
       ignoreURL: true,
       sortOrder: {
-        curSort: "name",
-        name: "asc",
+        curSort: 'name',
+        name: 'asc',
       },
       sortOptions: [
-        { value: "name asc", text: "По алфавиту (А-Я)" },
-        { value: "name desc", text: "По алфавиту (Я-А)" },
-        { value: "weight desc", text: "По весу" },
+        { value: 'name asc', text: 'По алфавиту (А-Я)' },
+        { value: 'name desc', text: 'По алфавиту (Я-А)' },
+        { value: 'weight desc', text: 'По весу' },
       ],
     },
-    [products]
+    [products],
   );
 
   useEffect(() => {
-    document.title = "Продукция";
+    document.title = 'Продукция';
   }, []);
 
   const deleteItem = (event) => {
@@ -69,15 +69,15 @@ const Products = (props) => {
       <div className="main-window">
         <FloatingPlus
           linkTo="/products/new"
-          visibility={["ROLE_ADMIN", "ROLE_MANAGER"]}
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">
             <span>Продукция</span>
             {props.userHasAccess([
-              "ROLE_ADMIN",
-              "ROLE_MANAGER",
-              "ROLE_ENGINEER",
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_ENGINEER',
             ]) && (
               <div
                 className="main-window__button"
@@ -86,10 +86,10 @@ const Products = (props) => {
                 Категории
               </div>
             )}
-            {props.userHasAccess(["ROLE_ADMIN"]) && (
+            {props.userHasAccess(['ROLE_ADMIN']) && (
               <div
                 className="main-window__button"
-                onClick={() => props.history.push("/packaging")}
+                onClick={() => props.history.push('/packaging')}
               >
                 Упаковки
               </div>
@@ -102,7 +102,7 @@ const Products = (props) => {
             <>
               <FloatingPlus
                 linkTo="/products/category/new"
-                visibility={["ROLE_ADMIN"]}
+                visibility={['ROLE_ADMIN']}
               />
               <SearchBar
                 fullSize

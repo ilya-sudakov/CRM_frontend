@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import "./Transportation.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import PrintIcon from "../../../../../assets/print.png";
-import TableView from "./TableView/TableView.jsx";
+import React, { useEffect, useState } from 'react';
+import './Transportation.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import PrintIcon from '../../../../../assets/print.png';
+import TableView from './TableView/TableView.jsx';
 import {
   getTransportations,
   deleteTransportation,
-} from "../../../../utils/RequestsAPI/Transportation.jsx";
+} from '../../../../utils/RequestsAPI/Transportation.jsx';
 import {
   createPDF,
   getTransportationListPdfText,
-} from "../../../../utils/pdfFunctions.js";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
-import { formatDateString } from "../../../../utils/functions.jsx";
-import useSort from "../../../../utils/hooks/useSort/useSort.js";
-import { sortByField } from "../../../../utils/sorting/sorting.js";
+} from '../../../../utils/pdfFunctions.js';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import usePagination from '../../../../utils/hooks/usePagination/usePagination.js';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import useSort from '../../../../utils/hooks/useSort/useSort.js';
+import { sortByField } from '../../../../utils/sorting/sorting.js';
 
 const Transportation = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [transportation, setTransportation] = useState([]);
   const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
     transportation,
@@ -36,7 +36,7 @@ const Transportation = (props) => {
         item.sender.toLowerCase().includes(query) ||
         item.recipient.toLowerCase().includes(query) ||
         item.driver.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
+        item.id.toString().includes(query),
     );
   };
 
@@ -63,36 +63,36 @@ const Transportation = (props) => {
   const { pagination, data } = usePagination(
     () => handleFilterData(sortedData),
     [searchQuery, sortOrder, sortedData],
-    "static"
+    'static',
   );
   const [isLoading, setIsLoading] = useState(true);
   const [workshops, setWorkshops] = useState([
     {
-      name: "ЦехЛЭМЗ",
-      visibility: ["ROLE_ADMIN", "ROLE_LEMZ"],
+      name: 'ЦехЛЭМЗ',
+      visibility: ['ROLE_ADMIN', 'ROLE_LEMZ'],
       senderActive: true,
       recipientActive: true,
     },
     {
-      name: "ЦехЛепсари",
-      visibility: ["ROLE_ADMIN", "ROLE_LEPSARI"],
+      name: 'ЦехЛепсари',
+      visibility: ['ROLE_ADMIN', 'ROLE_LEPSARI'],
       senderActive: true,
       recipientActive: true,
     },
     {
-      name: "ЦехЛиговский",
+      name: 'ЦехЛиговский',
       visibility: [
-        "ROLE_ADMIN",
-        "ROLE_LIGOVSKIY",
-        "ROLE_DISPATCHER",
-        "ROLE_MANAGER",
+        'ROLE_ADMIN',
+        'ROLE_LIGOVSKIY',
+        'ROLE_DISPATCHER',
+        'ROLE_MANAGER',
       ],
       senderActive: true,
       recipientActive: true,
     },
     {
-      name: "Офис",
-      visibility: ["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_MANAGER"],
+      name: 'Офис',
+      visibility: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_MANAGER'],
       senderActive: true,
       recipientActive: true,
     },
@@ -100,15 +100,15 @@ const Transportation = (props) => {
   const printTransportationList = () => {
     let dd = getTransportationListPdfText(
       sortByField(filterTransportation(transportation), {
-        fieldName: "date",
-        direction: "desc",
-      })
+        fieldName: 'date',
+        direction: 'desc',
+      }),
     );
     createPDF(dd);
   };
 
   useEffect(() => {
-    document.title = "Реестр транспортировок";
+    document.title = 'Реестр транспортировок';
     let abortController = new AbortController();
     loadTransportation(abortController.signal);
     return function cancel() {
@@ -138,7 +138,7 @@ const Transportation = (props) => {
       <div className="main-window">
         <FloatingPlus
           linkTo="/dispatcher/transportation/new"
-          visibility={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Реестр транспортировок</div>
@@ -173,8 +173,8 @@ const Transportation = (props) => {
                         <div
                           className={
                             item.senderActive
-                              ? "main-window__button"
-                              : "main-window__button main-window__button--inverted"
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
                           }
                           onClick={() => {
                             let temp = workshops;
@@ -200,8 +200,8 @@ const Transportation = (props) => {
                         <div
                           className={
                             item.recipientActive
-                              ? "main-window__button"
-                              : "main-window__button main-window__button--inverted"
+                              ? 'main-window__button'
+                              : 'main-window__button main-window__button--inverted'
                           }
                           onClick={() => {
                             let temp = workshops;

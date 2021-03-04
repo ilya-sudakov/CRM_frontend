@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import "./LogListPage.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import TableView from "./TableView/TableView.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { logItemsTypes } from "./objects.js";
-import { getLogsListByType } from "../../../utils/RequestsAPI/Logs/logs.js";
-import usePagination from "../../../utils/hooks/usePagination/usePagination";
-import useSort from "../../../utils/hooks/useSort/useSort";
-import useQuery from "../../../utils/hooks/useQuery";
+import React, { useState } from 'react';
+import './LogListPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import TableView from './TableView/TableView.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { logItemsTypes } from './objects.js';
+import { getLogsListByType } from '../../../utils/RequestsAPI/Logs/logs.js';
+import usePagination from '../../../utils/hooks/usePagination/usePagination';
+import useSort from '../../../utils/hooks/useSort/useSort';
+import useQuery from '../../../utils/hooks/useQuery';
 
 const LogListPage = () => {
   const { query, pushParamToURL } = useQuery();
   const [curCategory, setCurCategory] = useState(
-    query.get("category") ?? "request"
+    query.get('category') ?? 'request',
   );
   const { sortOrder, sortPanel } = useSort(data, {}, [data]);
   const {
@@ -25,13 +25,13 @@ const LogListPage = () => {
   } = usePagination(
     () => getLogsListByType(curCategory, itemsPerPage, curPage - 1, sortOrder),
     [curCategory, sortOrder, setCurPage, curPage],
-    "dynamic"
+    'dynamic',
   );
 
   const handleCategoryChange = (item) => {
     setCurPage(1);
-    pushParamToURL("page", 1);
-    pushParamToURL("category", item.originalName);
+    pushParamToURL('page', 1);
+    pushParamToURL('category', item.originalName);
     setCurCategory(item.originalName);
   };
 
@@ -45,8 +45,8 @@ const LogListPage = () => {
               <div
                 className={
                   curCategory === item.originalName
-                    ? "main-window__item--active main-window__item"
-                    : "main-window__item"
+                    ? 'main-window__item--active main-window__item'
+                    : 'main-window__item'
                 }
                 onClick={() => handleCategoryChange(item)}
               >

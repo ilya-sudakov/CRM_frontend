@@ -1,10 +1,10 @@
-import React from "react";
-import editIcon from "../../../../../../assets/tableview/edit.svg";
-import "./TableView.scss";
-import { addSpaceDelimiter } from "../../../../../utils/functions.jsx";
-import TableActions from "../../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React from 'react';
+import editIcon from '../../../../../../assets/tableview/edit.svg';
+import './TableView.scss';
+import { addSpaceDelimiter } from '../../../../../utils/functions.jsx';
+import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = ({ data, deleteItem, userHasAccess, link, isLoading }) => {
   return (
@@ -49,7 +49,7 @@ const TableView = ({ data, deleteItem, userHasAccess, link, isLoading }) => {
                       customElement: (
                         <DeleteItemAction
                           onClick={() => deleteItem(storage.id)}
-                          isRendered={userHasAccess(["ROLE_ADMIN"])}
+                          isRendered={userHasAccess(['ROLE_ADMIN'])}
                         />
                       ),
                     },

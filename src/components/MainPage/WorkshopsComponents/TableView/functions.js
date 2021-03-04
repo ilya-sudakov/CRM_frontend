@@ -1,42 +1,42 @@
-import React from "react";
+import React from 'react';
 import {
   formatDateString,
   saveCanvasAsImage,
-} from "../../../../utils/functions.jsx";
-import { requestStatuses } from "../workshopVariables.js";
-import html2canvas from "html2canvas";
-import { sortByField } from "../../../../utils/sorting/sorting.js";
+} from '../../../../utils/functions.jsx';
+import { requestStatuses } from '../workshopVariables.js';
+import html2canvas from 'html2canvas';
+import { sortByField } from '../../../../utils/sorting/sorting.js';
 
 export const getRequestItemClassName = (request, isMinimized) => {
   return `main-window__list-item main-window__list-item--${
     requestStatuses.find(
-      (item) => item.name === request.status || item.oldName === request.status
+      (item) => item.name === request.status || item.oldName === request.status,
     )?.className
   } ${
     request?.requestProducts?.length > 1 && !isMinimized
-      ? "main-window__list-item--multiple-items"
-      : ""
+      ? 'main-window__list-item--multiple-items'
+      : ''
   } ${
     request.factory === undefined ||
-    request.factory === "requests" ||
+    request.factory === 'requests' ||
     request.factory === null
-      ? " main-window__list-item--message main-window__list-item--warning"
-      : ""
-  } ${isMinimized ? "main-window__list-item--is-minimized" : ""}`;
+      ? ' main-window__list-item--message main-window__list-item--warning'
+      : ''
+  } ${isMinimized ? 'main-window__list-item--is-minimized' : ''}`;
 };
 
 export const downloadImage = async (
   product,
   workshop,
   setSelectedProduct,
-  setLabelIsHidden
+  setLabelIsHidden,
 ) => {
   setSelectedProduct({
     ...product,
     workshop: workshop,
   });
   setLabelIsHidden(false);
-  const element = document.getElementById("label");
+  const element = document.getElementById('label');
   setTimeout(async () => {
     await html2canvas(element, {
       windowWidth: element.scrollWidth,
@@ -48,7 +48,7 @@ export const downloadImage = async (
       setLabelIsHidden(true);
       saveCanvasAsImage(
         canvas,
-        `${formatDateString(new Date())}_${product.name}.jpeg`
+        `${formatDateString(new Date())}_${product.name}.jpeg`,
       );
     });
   }, 1500);
@@ -58,7 +58,7 @@ export const handleMinimizeRequestItem = (
   requests,
   setRequests,
   curRequest,
-  isMinimized
+  isMinimized,
 ) => {
   if (!isMinimized) return;
   let newReqs = requests;
@@ -90,16 +90,16 @@ export const printRequestsByDates = (
   requests,
   printConfig,
   sortOrder,
-  printRequests
+  printRequests,
 ) => {
   return dates.map((date) => {
     let filteredReqs = sortRequests(
       requests.filter(
         (request) =>
           formatDateString(new Date(request.date)) ===
-          formatDateString(new Date(date))
+          formatDateString(new Date(date)),
       ),
-      sortOrder
+      sortOrder,
     );
     if (filteredReqs.length > 0) {
       return (

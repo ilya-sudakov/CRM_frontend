@@ -1,8 +1,8 @@
 export const defaultPriceItemObject = {
-  number: "",
-  units: "",
-  name: "",
-  description: "",
+  number: '',
+  units: '',
+  name: '',
+  description: '',
   retailPrice: 0,
   lessThan1500Price: 0,
   lessThan5000Price: 0,

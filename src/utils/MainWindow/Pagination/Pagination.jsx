@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import useQuery from "../../hooks/useQuery";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import useQuery from '../../hooks/useQuery';
 
 const Pagination = ({
   itemsPerPage = 20,
@@ -63,7 +63,7 @@ const Pagination = ({
     const item = curPage - 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    pushParamToURL("page", item, ignoreURL);
+    pushParamToURL('page', item, ignoreURL);
     if (lastPage <= 5) return;
     if (isFirstPageNotInTheFirstPlace) {
       return setPaginationList(calcPagesForSkippedPages(-1));
@@ -76,7 +76,7 @@ const Pagination = ({
 
   const handleInBetweenPageClick = (item) => {
     setCurPage(item);
-    pushParamToURL("page", item, ignoreURL);
+    pushParamToURL('page', item, ignoreURL);
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     if (lastPage <= 5) return;
     const calcPagesForBetweenPage = (index) => {
@@ -105,7 +105,7 @@ const Pagination = ({
   const handleLastPageClick = () => {
     const item = Math.ceil(itemsCount / itemsPerPage);
     setCurPage(item);
-    pushParamToURL("page", item, ignoreURL);
+    pushParamToURL('page', item, ignoreURL);
     if (item <= 5) return;
     let temp = [];
     for (let i = item - 5; i <= item; i++) {
@@ -118,7 +118,7 @@ const Pagination = ({
     if (curPage >= lastPage) return;
     const item = curPage + 1;
     setCurPage(item);
-    pushParamToURL("page", item, ignoreURL);
+    pushParamToURL('page', item, ignoreURL);
     if (lastPage < 5) return;
     if (isFirstPageNotInTheFirstPlace) {
       return setPaginationList(calcPagesForSkippedPages(-1));
@@ -132,7 +132,7 @@ const Pagination = ({
     const item = 1;
     const lastPage = Math.floor(itemsCount / itemsPerPage);
     setCurPage(item);
-    pushParamToURL("page", item, ignoreURL);
+    pushParamToURL('page', item, ignoreURL);
     if (lastPage <= 5) return;
     let temp = [];
     for (let i = item; i <= lastPage && i <= 5; i++) {
@@ -171,8 +171,8 @@ const Pagination = ({
           <div
             className={
               curPage == item
-                ? "main-window__page-number main-window__page-number--active"
-                : "main-window__page-number"
+                ? 'main-window__page-number main-window__page-number--active'
+                : 'main-window__page-number'
             }
             onClick={() => handleInBetweenPageClick(item)}
           >
@@ -226,7 +226,7 @@ const ItemsPerPage = ({
       <select
         value={itemsPerPage}
         onChange={({ target }) => {
-          pushParamToURL("size", target.value, ignoreURL);
+          pushParamToURL('size', target.value, ignoreURL);
           setItemsPerPage(target.value);
         }}
       >

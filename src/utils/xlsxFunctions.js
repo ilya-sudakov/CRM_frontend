@@ -1,6 +1,6 @@
-import XLSX2 from "xlsx";
-import FileSaver from "file-saver";
-import { sortByField } from "./sorting/sorting.js";
+import XLSX2 from 'xlsx';
+import FileSaver from 'file-saver';
+import { sortByField } from './sorting/sorting.js';
 
 export const saveExcelFile = async (workBook, fileName) => {
   const buffer = await workBook.xlsx.writeBuffer();
@@ -23,11 +23,11 @@ const clientColWidths = [
 
 const saveEmailsCSV = (wb, fileName) => {
   var wboutput = XLSX2.write(wb, {
-    bookType: "xlsx",
+    bookType: 'xlsx',
     bookSST: false,
-    type: "binary",
+    type: 'binary',
   });
-  FileSaver.saveAs(new Blob([s2ab(wboutput)], { type: "" }), fileName);
+  FileSaver.saveAs(new Blob([s2ab(wboutput)], { type: '' }), fileName);
 };
 
 const addClientContacts = (dataWS, client, index) => {
@@ -39,7 +39,7 @@ const addClientContacts = (dataWS, client, index) => {
       dataWS = XLSX2.utils.aoa_to_sheet(clientRow);
     } else {
       dataWS = XLSX2.utils.sheet_add_aoa(dataWS, clientRow, {
-        origin: "A" + index,
+        origin: 'A' + index,
       });
     }
     index++;
@@ -51,13 +51,13 @@ export const exportClientsEmailsCSV = (clients) => {
   let dataWS = null;
   Promise.all(
     sortByField(clients, {
-      fieldName: "name",
-      direction: "asc",
-    }).map((client) => addClientContacts(dataWS, client, index))
+      fieldName: 'name',
+      direction: 'asc',
+    }).map((client) => addClientContacts(dataWS, client, index)),
   ).then(() => {
-    dataWS["!cols"] = clientColWidths; //Новая ширина столбцов
+    dataWS['!cols'] = clientColWidths; //Новая ширина столбцов
     let wb = XLSX2.utils.book_new(); //Создание новой workbook
-    XLSX2.utils.book_append_sheet(wb, dataWS, "Почты");
-    saveEmailsCSV(wb, "ЭлПочты_SendPulse.xlsx");
+    XLSX2.utils.book_append_sheet(wb, dataWS, 'Почты');
+    saveEmailsCSV(wb, 'ЭлПочты_SendPulse.xlsx');
   });
 };

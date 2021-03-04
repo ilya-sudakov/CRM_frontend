@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
-import EditSVG from "../../../../../../assets/tableview/edit.inline.svg";
-import ShareSVG from "../../../../../../assets/tableview/bx-window-open.inline.svg";
-import AddToButton from "../../../../../utils/Form/AddToButton/AddToButton.jsx";
+import React, { useState } from 'react';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
+import EditSVG from '../../../../../../assets/tableview/edit.inline.svg';
+import ShareSVG from '../../../../../../assets/tableview/bx-window-open.inline.svg';
+import AddToButton from '../../../../../utils/Form/AddToButton/AddToButton.jsx';
 import {
   dateDiffInDays,
   formatDateStringNoYear,
-} from "../../../../../utils/functions.jsx";
-import { Link } from "react-router-dom";
-import { sortByField } from "../../../../../utils/sorting/sorting.js";
-import { defaultJournalWorkshops } from "./objects.js";
+} from '../../../../../utils/functions.jsx';
+import { Link } from 'react-router-dom';
+import { sortByField } from '../../../../../utils/sorting/sorting.js';
+import { defaultJournalWorkshops } from './objects.js';
 
 const TableView = ({
   isLoading,
@@ -26,11 +26,11 @@ const TableView = ({
     const query = searchQuery.toLowerCase();
     return employees.filter(
       (employee) =>
-        employee?.relevance !== "Уволен" &&
-        employee?.workshop !== "Уволенные" &&
+        employee?.relevance !== 'Уволен' &&
+        employee?.workshop !== 'Уволенные' &&
         (employee?.lastName?.toLowerCase()?.includes(query) ||
           employee?.name?.toLowerCase()?.includes(query) ||
-          employee?.middleName?.toLowerCase()?.includes(query))
+          employee?.middleName?.toLowerCase()?.includes(query)),
     );
   };
 
@@ -39,12 +39,12 @@ const TableView = ({
       {Object.values(workshops).map((workshop) => {
         const filteredEmployees = sortByField(
           filterEmployees(employees, searchQuery).filter(
-            (employee) => employee.workshop === workshop.name
+            (employee) => employee.workshop === workshop.name,
           ),
           {
-            fieldName: "lastName",
-            direction: "asc",
-          }
+            fieldName: 'lastName',
+            direction: 'asc',
+          },
         );
         if (filteredEmployees.length === 0) return null;
         return (
@@ -63,7 +63,7 @@ const TableView = ({
               {workshop.name}
               <ChevronSVG
                 className={`main-window__img ${
-                  !workshop.active ? "main-window__img--rotated" : ""
+                  !workshop.active ? 'main-window__img--rotated' : ''
                 }`}
               />
             </span>
@@ -73,7 +73,7 @@ const TableView = ({
               ) : workshop.active ? (
                 filteredEmployees.map((employee) => {
                   const prevDay = new Date(
-                    new Date(curDay).setDate(curDay.getDate() - 1)
+                    new Date(curDay).setDate(curDay.getDate() - 1),
                   );
                   const isWeekend =
                     prevDay.getDay() === 0 || prevDay.getDay() === 6;
@@ -139,7 +139,7 @@ export default TableView;
 const DayItem = ({
   isWeekend,
   handleOpenWorkForm,
-  dayType = "yesterday",
+  dayType = 'yesterday',
   employee,
   workshopName,
   works,
@@ -148,21 +148,21 @@ const DayItem = ({
   const isOldData = Math.abs(dateDiffInDays(curDay, new Date())) >= 1;
   const prevDay = new Date(new Date(curDay).setDate(curDay.getDate() - 1));
   const dayTypes = {
-    yesterday: "Вчера",
-    today: "Сегодня",
+    yesterday: 'Вчера',
+    today: 'Сегодня',
   };
   return (
-    <span className={`employees__day ${isWeekend ? "employees__weekend" : ""}`}>
+    <span className={`employees__day ${isWeekend ? 'employees__weekend' : ''}`}>
       <div className="employees__day-header">
         <AddToButton
           text="Добавить работу"
           onClick={() =>
-            handleOpenWorkForm(dayType, "new", workshopName, employee, works)
+            handleOpenWorkForm(dayType, 'new', workshopName, employee, works)
           }
         />
         <span>
           {isOldData
-            ? formatDateStringNoYear(dayType === "yesterday" ? prevDay : curDay)
+            ? formatDateStringNoYear(dayType === 'yesterday' ? prevDay : curDay)
             : dayTypes[dayType]}
         </span>
         {works?.length > 0 ? (
@@ -185,11 +185,11 @@ const DayItem = ({
             onClick={() =>
               handleOpenWorkForm(
                 dayType,
-                "edit",
+                'edit',
                 workshopName,
                 employee,
                 works,
-                work.id
+                work.id,
               )
             }
           />
@@ -200,12 +200,12 @@ const DayItem = ({
 
 const WorkItem = ({ work, onClick }) => {
   const noProductError =
-    work.product.length === 0 && work.workType === "Продукция";
-  const noDraftError = work.draft.length === 0 && work.workType === "Чертеж";
+    work.product.length === 0 && work.workType === 'Продукция';
+  const noDraftError = work.draft.length === 0 && work.workType === 'Чертеж';
   return (
     <div
       className={`employees__work-item ${
-        noProductError || noDraftError ? "employees__work-item--no-product" : ""
+        noProductError || noDraftError ? 'employees__work-item--no-product' : ''
       }`}
       onClick={onClick}
     >
@@ -228,7 +228,7 @@ const WorkItem = ({ work, onClick }) => {
           ))}
         </div>
       ) : null}
-      {work.comment !== "" ? (
+      {work.comment !== '' ? (
         <div className="employees__comment">
           <span>Комментарий:</span>
           <span>{work.comment}</span>

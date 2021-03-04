@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import FactoryIcon from "../../../assets/sidemenu/factory.inline.svg";
+import FactoryIcon from '../../../assets/sidemenu/factory.inline.svg';
 
 import {
   mainPage,
@@ -31,7 +31,7 @@ import {
   feedback,
   etcetera,
   packaging,
-} from "./objects.js";
+} from './objects.js';
 
 export const getDefaultItems = (userContext) => {
   return [
@@ -44,31 +44,31 @@ export const getDefaultItems = (userContext) => {
     products,
     priceList,
     {
-      pathname: "/lemz/",
-      linkTo: userContext.userHasAccess(["ROLE_DISPATCHER"])
-        ? "/lemz/workshop-orders"
-        : "/lemz/workshop-lemz",
-      mainRoles: ["ROLE_ADMIN", "ROLE_LEMZ", "ROLE_DISPATCHER"],
-      name: "ЦехЛЭМЗ",
+      pathname: '/lemz/',
+      linkTo: userContext.userHasAccess(['ROLE_DISPATCHER'])
+        ? '/lemz/workshop-orders'
+        : '/lemz/workshop-lemz',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
+      name: 'ЦехЛЭМЗ',
       renderIcon: () => (
         <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
       ),
-      iconClassName: "sidemenu__img",
+      iconClassName: 'sidemenu__img',
       dropdownMenu: lemzDropdown,
     },
     workshopLEMZ,
     reportTable,
     {
-      pathname: "/lepsari/",
-      linkTo: userContext.userHasAccess(["ROLE_DISPATCHER"])
-        ? "/lepsari/workshop-orders"
-        : "/lepsari/workshop-lepsari",
-      mainRoles: ["ROLE_ADMIN", "ROLE_LEPSARI", "ROLE_DISPATCHER"],
-      name: "ЦехЛепсари",
+      pathname: '/lepsari/',
+      linkTo: userContext.userHasAccess(['ROLE_DISPATCHER'])
+        ? '/lepsari/workshop-orders'
+        : '/lepsari/workshop-lepsari',
+      mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
+      name: 'ЦехЛепсари',
       renderIcon: () => (
         <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
       ),
-      iconClassName: "sidemenu__img",
+      iconClassName: 'sidemenu__img',
       dropdownMenu: lepsariDropdown,
     },
     workshopLigosvkiy,

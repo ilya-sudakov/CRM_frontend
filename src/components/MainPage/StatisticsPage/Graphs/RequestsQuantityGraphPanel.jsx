@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import GraphPanel from './GraphPanel.jsx'
-import ListIcon from '../../../../../assets/sidemenu/list.inline.svg'
-import { months } from '../../../../utils/dataObjects'
-import { formatDateString } from '../../../../utils/functions.jsx'
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
+import React, { useState, useEffect } from 'react';
+import GraphPanel from './GraphPanel.jsx';
+import ListIcon from '../../../../../assets/sidemenu/list.inline.svg';
+import { months } from '../../../../utils/dataObjects';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
 
 const RequestsQuantityGraphPanel = ({ data, curDate }) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Заказы',
     isLoaded: false,
@@ -17,44 +17,44 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
       months[curDate.getMonth()]
     }`,
     renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
-  })
+  });
 
   const getStats = (data, curDate = new Date()) => {
-    let curMonthData = []
-    let prevMonthData = []
-    let dates = []
+    let curMonthData = [];
+    let prevMonthData = [];
+    let dates = [];
     for (
       let i = 1;
       i <= new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate();
       i++
     ) {
-      dates.push(i)
+      dates.push(i);
     }
     dates.map((item) => {
       const curMonthDate = new Date(
         curDate.getFullYear(),
         curDate.getMonth(),
         item,
-      )
+      );
       const prevDate = new Date(
         curDate.getFullYear(),
         curDate.getMonth() - 1,
         item,
-      )
+      );
 
-      let curSum = 0
-      let prevSum = 0
+      let curSum = 0;
+      let prevSum = 0;
       data.map((request) => {
         if (formatDateString(request.date) === formatDateString(curMonthDate)) {
-          return curSum++
+          return curSum++;
         }
         if (formatDateString(request.date) === formatDateString(prevDate)) {
-          return prevSum++
+          return prevSum++;
         }
-      })
-      curMonthData.push(curSum)
-      prevMonthData.push(prevSum)
-    })
+      });
+      curMonthData.push(curSum);
+      prevMonthData.push(prevSum);
+    });
     let dataset = {
       labels: dates,
       datasets: [
@@ -71,23 +71,23 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
           backgroundColor: 'rgba(142, 94, 162, 0.2)',
         },
       ],
-    }
-    renderGraph(dataset)
-  }
+    };
+    renderGraph(dataset);
+  };
 
   const renderGraph = (dataset) => {
     if (!canvasLoaded) {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-      }))
+      }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
         `panel__chart panel__chart--${stats.chartName}`,
-      )
+      );
     }
 
-    setCanvasLoaded(true)
+    setCanvasLoaded(true);
     const options = {
       type: 'line',
       data: dataset,
@@ -144,10 +144,10 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
           ],
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
           options,
@@ -155,31 +155,31 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
             `panel__chart--${stats.chartName}`,
           )[0],
         ),
-      )
-    }, 150)
-  }
+      );
+    }, 150);
+  };
 
   //При первом рендере
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data, curDate)
-  }, [data, stats])
+    !stats.isLoaded && data.length > 1 && getStats(data, curDate);
+  }, [data, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
     if (!stats.isLoading && data.length > 0) {
-      setCanvasLoaded(false)
+      setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,
         timePeriod: `${months[curDate.getMonth() - 1]} - ${
           months[curDate.getMonth()]
         }`,
-      }))
-      graph.destroy()
-      getStats(data, curDate)
+      }));
+      graph.destroy();
+      getStats(data, curDate);
     }
-  }, [curDate])
+  }, [curDate]);
 
-  return <GraphPanel {...stats} />
-}
+  return <GraphPanel {...stats} />;
+};
 
-export default RequestsQuantityGraphPanel
+export default RequestsQuantityGraphPanel;

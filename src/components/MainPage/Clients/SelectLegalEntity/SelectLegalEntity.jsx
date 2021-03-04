@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import "./SelectLegalEntity.scss";
+import React, { useState, useEffect } from 'react';
+import './SelectLegalEntity.scss';
 import {
   getInfoByINN,
   getBIKByINN,
-} from "../../../../utils/RequestsAPI/Clients.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
-import AddToButton from "../../../../utils/Form/AddToButton/AddToButton.jsx";
+} from '../../../../utils/RequestsAPI/Clients.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import AddToButton from '../../../../utils/Form/AddToButton/AddToButton.jsx';
 
 const SelectLegalEntity = (props) => {
   const newEntity = {
-    name: "",
-    inn: "",
-    kpp: "",
-    ogrn: "",
-    bik: "",
-    checkingAccount: "",
-    legalAddress: "",
-    factualAddress: "",
+    name: '',
+    inn: '',
+    kpp: '',
+    ogrn: '',
+    bik: '',
+    checkingAccount: '',
+    legalAddress: '',
+    factualAddress: '',
     isMinimized: true,
   };
   const [selected, setSelected] = useState([newEntity]);
@@ -75,7 +75,7 @@ const SelectLegalEntity = (props) => {
   const fetchINNData = (item, index) => {
     setIsLoading(true);
     //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-    getInfoByINN({ query: item.inn, branch_type: "MAIN" })
+    getInfoByINN({ query: item.inn, branch_type: 'MAIN' })
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -104,14 +104,14 @@ const SelectLegalEntity = (props) => {
                 ...item,
                 ...newData,
                 bik:
-                  res.suggestions.length > 0 ? res.suggestions[0].data.bic : "",
+                  res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
               });
               setSelected([...temp]);
               props.handleLegalEntityChange([...temp]);
               setIsLoading(false);
             });
         } else {
-          alert("Не найдено данных с данным ИНН");
+          alert('Не найдено данных с данным ИНН');
           setIsLoading(false);
         }
       });
@@ -154,56 +154,56 @@ const SelectLegalEntity = (props) => {
               isMinimizedDefault={props.isMinimizedDefault}
               headerItems={[
                 {
-                  text: "Название",
+                  text: 'Название',
                   value: item.name,
-                  placeholder: "Введите название...",
-                  style: { flex: "0 1 30%" },
+                  placeholder: 'Введите название...',
+                  style: { flex: '0 1 30%' },
                 },
                 {
-                  text: "Адрес",
+                  text: 'Адрес',
                   value: item.legalAddress,
-                  placeholder: "Введите адрес...",
-                  style: { flex: "0 1 50%" },
+                  placeholder: 'Введите адрес...',
+                  style: { flex: '0 1 50%' },
                 },
                 {
-                  text: "ИНН",
+                  text: 'ИНН',
                   value: item.inn,
-                  placeholder: "Введите ИНН...",
-                  style: { flex: "0 1 20%", maxWidth: "120px" },
+                  placeholder: 'Введите ИНН...',
+                  style: { flex: '0 1 20%', maxWidth: '120px' },
                 },
               ]}
               formInputs={[
                 {
-                  name: "Название",
-                  element: getInputElement("name", index, item),
+                  name: 'Название',
+                  element: getInputElement('name', index, item),
                 },
                 {
-                  name: "ИНН",
-                  element: getInputElement("inn", index, item),
+                  name: 'ИНН',
+                  element: getInputElement('inn', index, item),
                 },
                 {
-                  name: "КПП",
-                  element: getInputElement("kpp", index, item),
+                  name: 'КПП',
+                  element: getInputElement('kpp', index, item),
                 },
                 {
-                  name: "ОГРН",
-                  element: getInputElement("ogrn", index, item),
+                  name: 'ОГРН',
+                  element: getInputElement('ogrn', index, item),
                 },
                 {
-                  name: "БИК",
-                  element: getInputElement("bik", index, item),
+                  name: 'БИК',
+                  element: getInputElement('bik', index, item),
                 },
                 {
-                  name: "Расчетный счет",
-                  element: getInputElement("checkingAccount", index, item),
+                  name: 'Расчетный счет',
+                  element: getInputElement('checkingAccount', index, item),
                 },
                 {
-                  name: "Юридический адрес",
-                  element: getInputElement("legalAddress", index, item),
+                  name: 'Юридический адрес',
+                  element: getInputElement('legalAddress', index, item),
                 },
                 {
-                  name: "Фактический адрес",
-                  element: getInputElement("factualAddress", index, item),
+                  name: 'Фактический адрес',
+                  element: getInputElement('factualAddress', index, item),
                 },
               ]}
               bottomButton={

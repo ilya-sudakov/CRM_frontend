@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./RecordWork.scss";
-import "../../../../../utils/Form/Form.scss";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import SelectEmployee from "../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
-import SelectWork from "../SelectWork/SelectWork.jsx";
-import SelectWorkHours from "../SelectWorkHours/SelectWorkHours.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useProductsList from "../../../../../utils/hooks/useProductsList/useProductsList.js";
-import { submitWorkData } from "./functions.js";
-import useQuery from "../../../../../utils/hooks/useQuery";
-import { getWorkReportByDateAndEmployee } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import UserContext from "../../../../../App.js";
-import { getEmployeeById } from "../../../../../utils/RequestsAPI/Employees.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import './RecordWork.scss';
+import '../../../../../utils/Form/Form.scss';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
+import SelectWork from '../SelectWork/SelectWork.jsx';
+import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useProductsList from '../../../../../utils/hooks/useProductsList/useProductsList.js';
+import { submitWorkData } from './functions.js';
+import useQuery from '../../../../../utils/hooks/useQuery';
+import { getWorkReportByDateAndEmployee } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import UserContext from '../../../../../App.js';
+import { getEmployeeById } from '../../../../../utils/RequestsAPI/Employees.jsx';
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({
@@ -30,16 +30,16 @@ const NewRecordWork = (props) => {
   const [curEmployee, setCurEmployee] = useState(null);
   const { query } = useQuery();
   const [curDate, setCurDate] = useState(
-    query.get("date") ? new Date(query.get("date")) : new Date()
+    query.get('date') ? new Date(query.get('date')) : new Date(),
   );
   const { products, categories, isLoadingProducts } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [curPage, setCurPage] = useState(0);
-  const [wrapperHeight, setWrapperHeight] = useState("0px");
+  const [wrapperHeight, setWrapperHeight] = useState('0px');
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "works":
+      case 'works':
         setValidInputs({
           ...validInputs,
           works: value !== null,
@@ -49,7 +49,7 @@ const NewRecordWork = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -89,24 +89,24 @@ const NewRecordWork = (props) => {
         worktimeInputs,
         curDate,
         curEmployee,
-        setIsLoading
-      ).then(() => props.history.push("/work-management"));
+        setIsLoading,
+      ).then(() => props.history.push('/work-management'));
     }
   };
 
   useEffect(() => {
-    document.title = "Запись о работе";
+    document.title = 'Запись о работе';
     const abortController = new AbortController();
-    const employeeId = query.get("employee")
-      ? Number.parseInt(query.get("employee")) !== curEmployee?.id &&
+    const employeeId = query.get('employee')
+      ? Number.parseInt(query.get('employee')) !== curEmployee?.id &&
         curEmployee !== null
         ? curEmployee?.id
-        : query.get("employee")
+        : query.get('employee')
       : curEmployee?.id;
     if (!employeeId || !curDate) return;
-    if (query.get("employee") && curEmployee === null) {
+    if (query.get('employee') && curEmployee === null) {
       setIsLoading(true);
-      getEmployeeById(query.get("employee"))
+      getEmployeeById(query.get('employee'))
         .then((res) => res.json())
         .then((res) => setCurEmployee(res))
         .then(() => setIsLoading(false));
@@ -123,7 +123,7 @@ const NewRecordWork = (props) => {
       employeeId,
       curDate.getFullYear(),
       curDate.getMonth() + 1,
-      curDate.getDate()
+      curDate.getDate(),
     )
       .then(({ data }) => {
         const works = data.map((item) => ({
@@ -163,8 +163,8 @@ const NewRecordWork = (props) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("Ошибка при загрузке работы!");
-        props.history.push("/");
+        alert('Ошибка при загрузке работы!');
+        props.history.push('/');
       });
     return function cancel() {
       abortController.abort();
@@ -173,7 +173,7 @@ const NewRecordWork = (props) => {
 
   useEffect(() => {
     setWrapperHeight(
-      document.getElementById(`${curPage}page`)?.clientHeight + "px"
+      document.getElementById(`${curPage}page`)?.clientHeight + 'px',
     );
   });
 
@@ -182,7 +182,7 @@ const NewRecordWork = (props) => {
       let temp = curPage - 1;
       setCurPage(temp);
     } else {
-      props.history.push("/");
+      props.history.push('/');
     }
   };
 
@@ -212,7 +212,7 @@ const NewRecordWork = (props) => {
             className="main-form__wrapper"
             style={{
               left: `calc(-100% * ${curPage} + (${
-                screenIsMobile ? "20px" : "35px"
+                screenIsMobile ? '20px' : '35px'
               } + 15px * ${curPage}))`,
               height: `calc(${wrapperHeight})`,
             }}
@@ -240,7 +240,7 @@ const NewRecordWork = (props) => {
               {/* Создание работы */}
               <SelectWork
                 handleWorkChange={(value) => {
-                  validateField("works", value);
+                  validateField('works', value);
                   setWorkTimeInputs({
                     ...worktimeInputs,
                     works: value,
@@ -272,9 +272,9 @@ const NewRecordWork = (props) => {
                 />
                 {worktimeInputs.works.length > 0 &&
                 worktimeInputs.works.reduce((sum, cur) => {
-                  if (cur.workType === "Без продукции/чертежа") {
+                  if (cur.workType === 'Без продукции/чертежа') {
                     return sum + 1;
-                  } else if (cur.workType === "Чертеж") {
+                  } else if (cur.workType === 'Чертеж') {
                     return sum + 1;
                   } else return cur?.product.length;
                 }, 0) > 0 ? (
@@ -292,7 +292,7 @@ const NewRecordWork = (props) => {
                 workArray={worktimeInputs.works}
                 date={curDate}
                 onChange={(value) => {
-                  validateField("works", value);
+                  validateField('works', value);
                   setWorkTimeInputs({
                     ...worktimeInputs,
                     works: value,

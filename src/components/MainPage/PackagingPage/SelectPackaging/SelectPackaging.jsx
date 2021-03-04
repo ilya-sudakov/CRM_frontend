@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import "./SelectPackaging.scss";
-import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
-import { getPackaging } from "../../../../utils/RequestsAPI/Products/packaging.js";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import deleteSVG from "../../../../../assets/tableview/delete.svg";
-import okSVG from "../../../../../assets/tableview/ok.svg";
-import TableLoading from "../../../../utils/TableView/TableLoading/TableLoading.jsx";
-import SelectFromButton from "../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
+import React, { useEffect, useState } from 'react';
+import './SelectPackaging.scss';
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import { getPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import deleteSVG from '../../../../../assets/tableview/delete.svg';
+import okSVG from '../../../../../assets/tableview/ok.svg';
+import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
+import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectPackaging = (props) => {
   const [selected, setSelected] = useState([]);
   const [packages, setPackages] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const loadData = (signal) => {
@@ -75,7 +75,7 @@ const SelectPackaging = (props) => {
       />
       <div className="select-packaging__input">
         <div className="select-packaging__input_name main-form__input_name--header">
-          {"Упаковка" + (props.required ? "*" : "")}
+          {'Упаковка' + (props.required ? '*' : '')}
           {!props.readOnly && (
             <SelectFromButton
               text="Выбрать упаковку"

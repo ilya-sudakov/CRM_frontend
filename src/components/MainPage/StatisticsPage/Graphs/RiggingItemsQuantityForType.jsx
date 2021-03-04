@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import GraphPanel from './GraphPanel.jsx'
-import WrenchIcon from '../../../../../assets/sidemenu/wrench.inline.svg'
-import { months } from '../../../../utils/dataObjects'
-import { createGraph, loadCanvas } from '../../../../utils/graphs.js'
-import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js'
+import React, { useState, useEffect } from 'react';
+import GraphPanel from './GraphPanel.jsx';
+import WrenchIcon from '../../../../../assets/sidemenu/wrench.inline.svg';
+import { months } from '../../../../utils/dataObjects';
+import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js';
 
 const RiggingItemsQuantityForType = ({ data }) => {
-  const [graph, setGraph] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [canvasLoaded, setCanvasLoaded] = useState(false)
+  const [graph, setGraph] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canvasLoaded, setCanvasLoaded] = useState(false);
 
   const [stats, setStats] = useState({
     category: 'Кол-во деталей оснастки в производстве',
@@ -16,7 +16,7 @@ const RiggingItemsQuantityForType = ({ data }) => {
     chartName: 'rigging-items-quantity-graph',
     timePeriod: 'За все время',
     renderIcon: () => <WrenchIcon className="panel__img panel__img--wrench" />,
-  })
+  });
 
   const [statuses, setStatuses] = useState({
     cuttingDimensions: {
@@ -44,23 +44,23 @@ const RiggingItemsQuantityForType = ({ data }) => {
       previous: 'grinding',
       data: 0,
     },
-  })
+  });
 
   const getStats = (data) => {
-    setIsLoading(true)
-    let newStatuses = statuses
+    setIsLoading(true);
+    let newStatuses = statuses;
     Object.entries(statuses).map((status) => {
       // console.log(status)
-      let temp = 0
+      let temp = 0;
       temp = data.filter((draft) => {
         if (
           (draft[status[0]] === '' || draft[status[0]] === null) &&
           checkRiggingTypesInputs(draft, status[0])
         ) {
-          return true
+          return true;
         }
-        return false
-      }).length
+        return false;
+      }).length;
 
       return (newStatuses = {
         ...newStatuses,
@@ -68,25 +68,25 @@ const RiggingItemsQuantityForType = ({ data }) => {
           ...newStatuses[status[0]],
           data: temp,
         },
-      })
-    })
-    setStatuses({ ...newStatuses })
-    setIsLoading(false)
-    renderGraph(newStatuses)
-  }
+      });
+    });
+    setStatuses({ ...newStatuses });
+    setIsLoading(false);
+    renderGraph(newStatuses);
+  };
 
   const renderGraph = (dataset) => {
     if (!canvasLoaded) {
       setStats((stats) => ({
         ...stats,
         isLoaded: true,
-      }))
+      }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
         `panel__chart panel__chart--${stats.chartName}`,
-      )
+      );
     }
-    setCanvasLoaded(true)
+    setCanvasLoaded(true);
     const options = {
       type: 'pie',
       data: {
@@ -120,10 +120,10 @@ const RiggingItemsQuantityForType = ({ data }) => {
           mode: 'index',
         },
       },
-    }
+    };
     setTimeout(() => {
-      setIsLoading(false)
-      canvasLoaded && graph.destroy()
+      setIsLoading(false);
+      canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
           options,
@@ -131,19 +131,19 @@ const RiggingItemsQuantityForType = ({ data }) => {
             `panel__chart--${stats.chartName}`,
           )[0],
         ),
-      )
-    }, 150)
-  }
+      );
+    }, 150);
+  };
 
   useEffect(() => {
     // console.log(statuses)
     if (stats.isLoaded || data.length === 0 || isLoading) {
-      return
+      return;
     }
-    getStats(data)
-  }, [data, stats, statuses])
+    getStats(data);
+  }, [data, stats, statuses]);
 
-  return <GraphPanel {...stats} />
-}
+  return <GraphPanel {...stats} />;
+};
 
-export default RiggingItemsQuantityForType
+export default RiggingItemsQuantityForType;

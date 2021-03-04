@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import useDraftsList from "../../../../utils/hooks/useDraftsList";
-import { getRecordedWorkByDateRange } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import RiggingItemsQuantityForType from "../Graphs/RiggingItemsQuantityForType.jsx";
+import React, { useEffect, useState } from 'react';
+import useDraftsList from '../../../../utils/hooks/useDraftsList';
+import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import RiggingItemsQuantityForType from '../Graphs/RiggingItemsQuantityForType.jsx';
 
 const ProductionPage = ({ curDate }) => {
   const { drafts, isLoadingDrafts } = useDraftsList();
@@ -14,8 +14,8 @@ const ProductionPage = ({ curDate }) => {
 
     prevMonday = new Date(
       prevMonday.setDate(
-        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7
-      )
+        prevMonday.getDate() - ((prevMonday.getDay() + 6) % 7) - 7,
+      ),
     );
     getRecordedWorkByDateRange(
       prevMonday.getDate(),
@@ -24,7 +24,7 @@ const ProductionPage = ({ curDate }) => {
       curMonday.getDate(),
       curMonday.getMonth() + 1,
       curMonday.getFullYear(),
-      signal
+      signal,
     )
       .then((res) => res.json())
       .then((res) => {

@@ -1,40 +1,40 @@
-import { useContext, useEffect, useState } from "react";
-import UserContext from "../../App.js";
+import { useContext, useEffect, useState } from 'react';
+import UserContext from '../../App.js';
 import {
   getEmployees,
   getEmployeesByWorkshop,
-} from "../RequestsAPI/Employees.jsx";
+} from '../RequestsAPI/Employees.jsx';
 
 const useEmployeesList = (shouldExecute = true) => {
   const [employees, setEmployees] = useState([]);
   const [isLoadingEmployees, setIsLoadingEmployees] = useState(false);
   const userContext = useContext(UserContext);
-  const workshops = ["ЦехЛЭМЗ", "ЦехЛепсари", "ЦехЛиговский", "Офис"];
+  const workshops = ['ЦехЛЭМЗ', 'ЦехЛепсари', 'ЦехЛиговский', 'Офис'];
 
   const loadData = () => {
     setIsLoadingEmployees(true);
     let workshop = Object.assign({
-      workshop: userContext.userHasAccess(["ROLE_ADMIN"])
-        ? "Админ"
-        : userContext.userHasAccess(["ROLE_DISPATCHER"])
-        ? "Диспетчер"
-        : userContext.userHasAccess(["ROLE_LEMZ"])
-        ? "ЦехЛЭМЗ"
-        : userContext.userHasAccess(["ROLE_LEPSARI"])
-        ? "ЦехЛепсари"
-        : userContext.userHasAccess(["ROLE_LIGOVSKIY"])
-        ? "ЦехЛиговский"
-        : userContext.userHasAccess(["ROLE_ENGINEER"])
-        ? "Офис"
-        : userContext.userHasAccess(["ROLE_MANAGER"]) && "Офис",
+      workshop: userContext.userHasAccess(['ROLE_ADMIN'])
+        ? 'Админ'
+        : userContext.userHasAccess(['ROLE_DISPATCHER'])
+        ? 'Диспетчер'
+        : userContext.userHasAccess(['ROLE_LEMZ'])
+        ? 'ЦехЛЭМЗ'
+        : userContext.userHasAccess(['ROLE_LEPSARI'])
+        ? 'ЦехЛепсари'
+        : userContext.userHasAccess(['ROLE_LIGOVSKIY'])
+        ? 'ЦехЛиговский'
+        : userContext.userHasAccess(['ROLE_ENGINEER'])
+        ? 'Офис'
+        : userContext.userHasAccess(['ROLE_MANAGER']) && 'Офис',
     });
-    if (workshop.workshop === "Админ" || workshop.workshop === "Диспетчер") {
+    if (workshop.workshop === 'Админ' || workshop.workshop === 'Диспетчер') {
       getEmployees()
         .then((res) => res.json())
         .then((res) => {
           setIsLoadingEmployees(false);
           const filteredEmployees = res.filter(
-            (item) => item.relevance !== "Уволен"
+            (item) => item.relevance !== 'Уволен',
           );
           setEmployees(filteredEmployees);
         })
@@ -48,7 +48,7 @@ const useEmployeesList = (shouldExecute = true) => {
         .then((res) => {
           setIsLoadingEmployees(false);
           const filteredEmployees = res.filter(
-            (item) => item.relevance !== "Уволен"
+            (item) => item.relevance !== 'Уволен',
           );
           setEmployees(filteredEmployees);
         })

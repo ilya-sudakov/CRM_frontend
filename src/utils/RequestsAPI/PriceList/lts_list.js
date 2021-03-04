@@ -1,5 +1,5 @@
-import { getAuthHeaders } from "../../utilsAPI.jsx";
-import axios from "axios";
+import { getAuthHeaders } from '../../utilsAPI.jsx';
+import axios from 'axios';
 
 export function getLTDList() {
   const headers = getAuthHeaders();
@@ -21,7 +21,7 @@ export function updateLTD(newLtd, id) {
   return axios.post(
     `${process.env.API_BASE_URL}/api/v1/plc/${id}`,
     newLtd,
-    headers
+    headers,
   );
 }
 

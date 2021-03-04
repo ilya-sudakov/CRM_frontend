@@ -1,0 +1,9 @@
+/node_modules/
+package-lock.json
+.env
+/coverage/
+public/
+bin/
+src/static/built
+src/templates
+assets/

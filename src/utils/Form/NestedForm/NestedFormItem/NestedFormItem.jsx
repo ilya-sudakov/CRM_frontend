@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import DeleteSVG from "../../../../../assets/tableview/delete.inline.svg";
-import "./NestedFormItem.scss";
-import ChevronSVG from "../../../../../assets/tableview/chevron-down.inline.svg";
-import { useRef } from "react";
-import PropTypes from "prop-types";
-import useMessageForUser from "../../../hooks/useMessageForUser.js";
+import React, { useEffect, useState } from 'react';
+import DeleteSVG from '../../../../../assets/tableview/delete.inline.svg';
+import './NestedFormItem.scss';
+import ChevronSVG from '../../../../../assets/tableview/chevron-down.inline.svg';
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
+import useMessageForUser from '../../../hooks/useMessageForUser.js';
 
 const NestedFormItem = ({
   readOnly,
@@ -21,10 +21,10 @@ const NestedFormItem = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const formRef = useRef(null);
   const { messageForUser, showMessage, setShowMessage } = useMessageForUser({
-    title: "Удаление элемента",
-    message: "Вы действительно хотите удалить этот элемент?",
+    title: 'Удаление элемента',
+    message: 'Вы действительно хотите удалить этот элемент?',
     onClick: () => handleDeleteItem(selectedIndex),
-    buttonText: "ОК",
+    buttonText: 'ОК',
   });
   const [formHeight, setFormHeight] = useState(formRef?.current?.clientHeight);
 
@@ -33,7 +33,7 @@ const NestedFormItem = ({
   }, [formRef.current]);
 
   useEffect(() => {
-    if (!isMinimized && formHeight === "0px")
+    if (!isMinimized && formHeight === '0px')
       setFormHeight(`${formRef.current.clientHeight}px`);
   }, [isMinimized]);
 
@@ -41,8 +41,8 @@ const NestedFormItem = ({
     <div
       className={
         !readOnly && itemsLength > 1
-          ? "form-item form-item--minimized"
-          : "form-item"
+          ? 'form-item form-item--minimized'
+          : 'form-item'
       }
     >
       {headerItems ? (
@@ -55,7 +55,7 @@ const NestedFormItem = ({
           {headerItems.map((headerItem) => (
             <div className="form-item__name" style={{ ...headerItem.style }}>
               <span>{headerItem.text}</span>
-              {headerItem.value !== "" ? (
+              {headerItem.value !== '' ? (
                 <span>{headerItem.value}</span>
               ) : (
                 <span className="form-item__name--placeholder">
@@ -66,7 +66,7 @@ const NestedFormItem = ({
           ))}
           <ChevronSVG
             className={`main-form__img ${
-              !isMinimized ? "main-form__img--rotated" : ""
+              !isMinimized ? 'main-form__img--rotated' : ''
             }`}
           />
         </div>
@@ -74,12 +74,12 @@ const NestedFormItem = ({
       <div
         className={
           isMinimized
-            ? "form-item__form form-item__form--hidden"
-            : "form-item__form"
+            ? 'form-item__form form-item__form--hidden'
+            : 'form-item__form'
         }
         style={{
-          height: isMinimized ? "0px" : "auto",
-          transition: "0s ease-in",
+          height: isMinimized ? '0px' : 'auto',
+          transition: '0s ease-in',
         }}
         ref={formRef}
       >

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./EditTransportation.scss";
-import "../../../../../utils/Form/Form.scss";
+import React, { useEffect, useState } from 'react';
+import './EditTransportation.scss';
+import '../../../../../utils/Form/Form.scss';
 import {
   getTransportationById,
   editTransportation,
-} from "../../../../../utils/RequestsAPI/Transportation.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../../utils/hooks/useForm.js";
-import { transportationDefaultInputs } from "../objects.js";
+} from '../../../../../utils/RequestsAPI/Transportation.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../../utils/hooks/useForm.js';
+import { transportationDefaultInputs } from '../objects.js';
 
 const EditTransportation = (props) => {
   const {
@@ -28,22 +28,22 @@ const EditTransportation = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     editTransportation(formInputs, transportationId)
-      .then(() => props.history.push("/dispatcher/transportation"))
+      .then(() => props.history.push('/dispatcher/transportation'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование записи транспортировки";
+    document.title = 'Редактирование записи транспортировки';
     const id = props.history.location.pathname.split(
-      "/dispatcher/transportation/edit/"
+      '/dispatcher/transportation/edit/',
     )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс транспортировки!");
-      props.history.push("/dispatcher/transportation");
+      alert('Неправильный индекс транспортировки!');
+      props.history.push('/dispatcher/transportation');
     } else {
       setTransportationId(id);
       getTransportationById(id)
@@ -51,8 +51,8 @@ const EditTransportation = (props) => {
         .then((data) => updateFormInputs(data))
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс транспортировки!");
-          props.history.push("/dispatcher/transportation");
+          alert('Неправильный индекс транспортировки!');
+          props.history.push('/dispatcher/transportation');
         });
     }
   }, []);
@@ -71,7 +71,7 @@ const EditTransportation = (props) => {
           error={formErrors.date}
           name="date"
           selected={Date.parse(formInputs.date)}
-          handleDateChange={(value) => handleInputChange("date", value)}
+          handleDateChange={(value) => handleInputChange('date', value)}
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
         />
@@ -84,7 +84,7 @@ const EditTransportation = (props) => {
             error={formErrors.cargo}
             name="cargo"
             handleInputChange={({ target }) =>
-              handleInputChange("cargo", target.value)
+              handleInputChange('cargo', target.value)
             }
             defaultValue={formInputs.cargo}
             errorsArr={formErrors}
@@ -95,7 +95,7 @@ const EditTransportation = (props) => {
             name="quantity"
             defaultValue={formInputs.quantity}
             handleInputChange={({ target }) =>
-              handleInputChange("quantity", target.value)
+              handleInputChange('quantity', target.value)
             }
           />
           <div className="main-form__row">
@@ -105,7 +105,7 @@ const EditTransportation = (props) => {
                 <select
                   name="sender"
                   onChange={({ target }) =>
-                    handleInputChange("sender", target.value)
+                    handleInputChange('sender', target.value)
                   }
                   value={formInputs.sender}
                 >
@@ -121,7 +121,7 @@ const EditTransportation = (props) => {
                 <select
                   name="recipient"
                   onChange={({ target }) =>
-                    handleInputChange("recipient", target.value)
+                    handleInputChange('recipient', target.value)
                   }
                   value={formInputs.recipient}
                 >
@@ -139,7 +139,7 @@ const EditTransportation = (props) => {
           error={formErrors.driver}
           name="driver"
           handleInputChange={({ target }) =>
-            handleInputChange("driver", target.value)
+            handleInputChange('driver', target.value)
           }
           defaultValue={formInputs.driver}
           errorsArr={formErrors}
@@ -152,7 +152,7 @@ const EditTransportation = (props) => {
           <input
             className="main-form__submit main-form__submit--inverted"
             type="submit"
-            onClick={() => props.history.push("/dispatcher/transportation")}
+            onClick={() => props.history.push('/dispatcher/transportation')}
             value="Вернуться назад"
           />
           <Button

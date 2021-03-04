@@ -1,9 +1,9 @@
-import React from "react";
-import deleteSVG from "../../../../assets/select/delete.svg";
-import ColorPicker from "./ColorPicker/ColorPicker.jsx";
+import React from 'react';
+import deleteSVG from '../../../../assets/select/delete.svg';
+import ColorPicker from './ColorPicker/ColorPicker.jsx';
 
 const defaultPropsForLayoutFunctions = {
-  numberInput: "text",
+  numberInput: 'text',
   readOnly: false,
   workshop: false,
   handleParamChange: () => {},
@@ -16,9 +16,9 @@ export const renderQuantity = (
   item,
   props = defaultPropsForLayoutFunctions,
   options = {
-    customName: `Кол-во (шт.)${!props.readOnly ? "*" : ""}`,
+    customName: `Кол-во (шт.)${!props.readOnly ? '*' : ''}`,
     readOnly: false,
-  }
+  },
 ) => {
   return (
     <div className="select__selected_quantity">
@@ -42,9 +42,9 @@ export const renderNewQuantity = (
   item,
   props = defaultPropsForLayoutFunctions,
   options = {
-    customName: `Отгружено (шт.)${!props.readOnly ? "*" : ""}`,
+    customName: `Отгружено (шт.)${!props.readOnly ? '*' : ''}`,
     readOnly: false,
-  }
+  },
 ) => {
   return (
     <div className="select__selected_quantity">
@@ -68,10 +68,10 @@ export const renderPackaging = (
   item,
   props = defaultPropsForLayoutFunctions,
   options = {
-    customName: `Фасовка${!props.readOnly ? "*" : ""}`,
+    customName: `Фасовка${!props.readOnly ? '*' : ''}`,
     readOnly: false,
-    marginRight: "0px",
-  }
+    marginRight: '0px',
+  },
 ) => {
   return (
     <div
@@ -97,7 +97,7 @@ export const renderSelectPackaging = (
   index,
   item,
   props = defaultPropsForLayoutFunctions,
-  products
+  products,
 ) => {
   return (
     <select
@@ -125,13 +125,13 @@ export const renderSelectedItemName = (
     readOnly: false,
     showColorPicker: true,
     showDelete: true,
-  }
+  },
 ) => {
   return (
     <div
       className={
-        "select__selected_item select__selected_item--" +
-        (item.status ? item.status : "production")
+        'select__selected_item select__selected_item--' +
+        (item.status ? item.status : 'production')
       }
     >
       {!props.readOnly && options.showColorPicker ? (

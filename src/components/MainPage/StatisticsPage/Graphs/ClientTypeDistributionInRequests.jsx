@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import GraphPanel from "./GraphPanel.jsx";
-import ClientIcon from "../../../../../assets/sidemenu/client.inline.svg";
-import { months } from "../../../../utils/dataObjects";
-import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import React, { useState, useEffect } from 'react';
+import GraphPanel from './GraphPanel.jsx';
+import ClientIcon from '../../../../../assets/sidemenu/client.inline.svg';
+import { months } from '../../../../utils/dataObjects';
+import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
-    category: "Типы клиентов по заказам",
+    category: 'Типы клиентов по заказам',
     isLoaded: false,
-    chartName: "client-type-distribution-graph",
+    chartName: 'client-type-distribution-graph',
     timePeriod: timeText,
     renderIcon: () => <ClientIcon className="panel__img panel__img--money" />,
   });
@@ -22,14 +22,14 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
     let clientTypes = {
       Активные: 0,
       Потенциальные: 0,
-      "В разработке": 0,
+      'В разработке': 0,
     };
     const filteredRequests = data.filter((request) => {
       if (
         checkIfDateIsInRange(
           request.date,
           currDate.startDate,
-          currDate.endDate
+          currDate.endDate,
         ) &&
         request.client !== null &&
         clientTypes[request.client.clientType] !== undefined
@@ -50,7 +50,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
     }));
@@ -65,27 +65,27 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
       }));
       loadCanvas(
         `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`
+        `panel__chart panel__chart--${stats.chartName}`,
       );
     }
 
     setCanvasLoaded(true);
     const options = {
-      type: "pie",
+      type: 'pie',
       data: {
         labels: Object.entries(dataset).map((item) => item[0]),
         datasets: [
           {
             // label: 'Population (millions)',
             backgroundColor: [
-              "#3e95cd",
-              "#8e5ea2",
-              "#3cba9f",
-              "#e8c3b9",
-              "#c45850",
-              "#bbbbbb",
-              "#bbbbbb",
-              "#bbbbbb",
+              '#3e95cd',
+              '#8e5ea2',
+              '#3cba9f',
+              '#e8c3b9',
+              '#c45850',
+              '#bbbbbb',
+              '#bbbbbb',
+              '#bbbbbb',
             ],
             data: Object.entries(dataset).map((item) => item[1]),
           },
@@ -100,10 +100,10 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
             ? true
             : false,
         animation: {
-          easing: "easeInOutCirc",
+          easing: 'easeInOutCirc',
         },
         tooltips: {
-          mode: "index",
+          mode: 'index',
         },
       },
     };
@@ -113,8 +113,10 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
       setGraph(
         createGraph(
           options,
-          document.getElementsByClassName(`panel__chart--${stats.chartName}`)[0]
-        )
+          document.getElementsByClassName(
+            `panel__chart--${stats.chartName}`,
+          )[0],
+        ),
       );
     }, 150);
   };

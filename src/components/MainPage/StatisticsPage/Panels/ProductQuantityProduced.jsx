@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import SmallPanel from './SmallPanel.jsx'
-import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg'
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg';
 import {
   addSpaceDelimiter,
   dateDiffInDays,
-} from '../../../../utils/functions.jsx'
+} from '../../../../utils/functions.jsx';
 
 const ProductQuantityProduced = ({ data, curDate }) => {
   const [stats, setStats] = useState({
@@ -17,31 +17,31 @@ const ProductQuantityProduced = ({ data, curDate }) => {
     timePeriod: 'От прошлой недели',
     difference: 0,
     renderIcon: () => <BoxIcon className="panel__img panel__img--default" />,
-  })
+  });
 
   const getStats = (data, curDate = new Date()) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
-    }))
+    }));
 
-    let prevWeekQuantity = 0
-    let curWeekQuantity = 0
+    let prevWeekQuantity = 0;
+    let curWeekQuantity = 0;
 
     //получаем след. понедельник
-    let curMonday = curDate
+    let curMonday = curDate;
     curMonday = new Date(
       curMonday.setDate(
         curMonday.getDate() - ((curMonday.getDay() + 6) % 7) + 7,
       ),
-    )
+    );
 
     data.map((workItem) => {
       let productCount = workItem.workControlProduct.reduce(
         (sum, cur) => sum + cur.quantity,
         0,
-      )
+      );
       //если неделя не текущая, до прибавляем к счетчику пред. недели
       if (
         dateDiffInDays(
@@ -49,11 +49,11 @@ const ProductQuantityProduced = ({ data, curDate }) => {
           curMonday,
         ) > 7
       ) {
-        prevWeekQuantity += productCount
+        prevWeekQuantity += productCount;
       } else {
-        curWeekQuantity += productCount
+        curWeekQuantity += productCount;
       }
-    })
+    });
 
     setStats((stats) => ({
       ...stats,
@@ -68,8 +68,8 @@ const ProductQuantityProduced = ({ data, curDate }) => {
             100 *
             100,
         ) / 100,
-    }))
-  }
+    }));
+  };
 
   useEffect(() => {
     if (
@@ -78,17 +78,17 @@ const ProductQuantityProduced = ({ data, curDate }) => {
       data.length === 0 ||
       data === undefined
     )
-      return
-    getStats(data)
-  }, [data, stats])
+      return;
+    getStats(data);
+  }, [data, stats]);
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoaded && data.length === 0) return
-    getStats(data)
-  }, [curDate])
+    if (!stats.isLoaded && data.length === 0) return;
+    getStats(data);
+  }, [curDate]);
 
-  return <SmallPanel {...stats} />
-}
+  return <SmallPanel {...stats} />;
+};
 
-export default ProductQuantityProduced
+export default ProductQuantityProduced;

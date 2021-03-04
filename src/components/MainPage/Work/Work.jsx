@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import "./Work.scss";
-import SearchBar from "../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
+import React, { useEffect, useState } from 'react';
+import './Work.scss';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
 import {
   deleteWork,
   getWork,
-} from "../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
-import "../../../utils/MainWindow/MainWindow.scss";
-import FloatingPlus from "../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+} from '../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import '../../../utils/MainWindow/MainWindow.scss';
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const Work = (props) => {
   const [work, setWork] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    document.title = "Работы";
+    document.title = 'Работы';
     let abortController = new AbortController();
     loadWork(abortController.signal);
     return function cancel() {
@@ -41,7 +41,7 @@ const Work = (props) => {
   return (
     <div className="work">
       <div className="main-window">
-        <FloatingPlus linkTo="/work-list/new" visibility={["ROLE_ADMIN"]} />
+        <FloatingPlus linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Работы</div>
         </div>

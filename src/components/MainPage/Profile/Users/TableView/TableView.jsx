@@ -1,21 +1,21 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import editSVG from "../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../assets/tableview/delete.svg";
-import "./TableView.scss";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import TableActions from "../../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import editSVG from '../../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import './TableView.scss';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 
 const TableView = (props) => {
   const roles = {
-    ROLE_ADMIN: "Руководитель",
-    ROLE_MANAGER: "Менеджер",
-    ROLE_DISPATCHER: "Диспетчер",
-    ROLE_LEMZ: "ЦехЛЭМЗ",
-    ROLE_LEPSARI: "ЦехЛепсари",
-    ROLE_LIGOSVKIY: "ЦехЛиговский",
-    ROLE_ENGINEER: "Инженер1",
+    ROLE_ADMIN: 'Руководитель',
+    ROLE_MANAGER: 'Менеджер',
+    ROLE_DISPATCHER: 'Диспетчер',
+    ROLE_LEMZ: 'ЦехЛЭМЗ',
+    ROLE_LEPSARI: 'ЦехЛепсари',
+    ROLE_LIGOSVKIY: 'ЦехЛиговский',
+    ROLE_ENGINEER: 'Инженер1',
   };
   return (
     <div className="tableview_users">
@@ -49,7 +49,7 @@ const TableView = (props) => {
                 <span>
                   <div className="main-window__mobile-text">Роль:</div>
                   {user.roles.map((item) =>
-                    !item.name ? null : roles[item.name]
+                    !item.name ? null : roles[item.name],
                   )}
                 </span>
                 <TableActions
@@ -57,10 +57,10 @@ const TableView = (props) => {
                     {
                       link: `/profile/users/edit/${user.id}`,
                       imgSrc: editSVG,
-                      title: "Редактировать пользователя",
+                      title: 'Редактировать пользователя',
                     },
                     {
-                      isRendered: props.userHasAccess(["ROLE_ADMIN"]),
+                      isRendered: props.userHasAccess(['ROLE_ADMIN']),
                       customElement: (
                         <DeleteItemAction
                           onClick={() => props.deleteItem(user.id)}

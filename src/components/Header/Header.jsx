@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
-import exitSVG from "../../../assets/header/exit.svg";
-import HistorySVG from "../../../assets/statistics/history-outlined.inline.svg";
-import employeeSVG from "../../../assets/header/employee.svg";
-import logoMobile from "../../../assets/header/header_small-logo.png";
-import ChevronSVG from "../../../assets/tableview/chevron-down.inline.svg";
-import notificationBellSVG from "../../../assets/notifications/notification_bell.svg";
-import { Link, withRouter } from "react-router-dom";
-import "./Header.scss";
-import UserContext from "../../App.js";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useContext } from 'react';
+import exitSVG from '../../../assets/header/exit.svg';
+import HistorySVG from '../../../assets/statistics/history-outlined.inline.svg';
+import employeeSVG from '../../../assets/header/employee.svg';
+import logoMobile from '../../../assets/header/header_small-logo.png';
+import ChevronSVG from '../../../assets/tableview/chevron-down.inline.svg';
+import notificationBellSVG from '../../../assets/notifications/notification_bell.svg';
+import { Link, withRouter } from 'react-router-dom';
+import './Header.scss';
+import UserContext from '../../App.js';
+import PropTypes from 'prop-types';
 
 const Header = (props) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -23,8 +23,8 @@ const Header = (props) => {
         <div
           className={
             !props.sidemenuHidden
-              ? "header__sidemenu header__sidemenu--hidden"
-              : "header__sidemenu"
+              ? 'header__sidemenu header__sidemenu--hidden'
+              : 'header__sidemenu'
           }
           onClick={sideMenuClickDesktop}
         >
@@ -42,8 +42,8 @@ const Header = (props) => {
         <Link
           className={
             userContext.newNotifications > 0
-              ? "header__item header__item--notification"
-              : "header__item header__item--notification header__item--notification-empty"
+              ? 'header__item header__item--notification'
+              : 'header__item header__item--notification header__item--notification-empty'
           }
           data-notifications={userContext.newNotifications}
           // to="/notifications"
@@ -59,8 +59,8 @@ const Header = (props) => {
           <div
             className={
               userContext.lastNotification.visible
-                ? "header__notification-message"
-                : "header__notification-message header__notification-message--hidden"
+                ? 'header__notification-message'
+                : 'header__notification-message header__notification-message--hidden'
             }
           >
             <span>{userContext.lastNotification.title}</span>
@@ -76,8 +76,8 @@ const Header = (props) => {
           <div
             className={
               showProfileMenu
-                ? "header__profile_overlay"
-                : "header__profile_overlay header__profile_overlay--hidden"
+                ? 'header__profile_overlay'
+                : 'header__profile_overlay header__profile_overlay--hidden'
             }
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           ></div>
@@ -87,7 +87,7 @@ const Header = (props) => {
             </div>
             <ChevronSVG
               className={`header__userimg ${
-                showProfileMenu ? "main-window__img--rotated" : ""
+                showProfileMenu ? 'main-window__img--rotated' : ''
               }`}
               alt=""
             />
@@ -122,11 +122,11 @@ const HeaderMenu = ({
     <div
       className={
         showProfileMenu
-          ? "header__profile_menu"
-          : "header__profile_menu header__profile_menu--hidden"
+          ? 'header__profile_menu'
+          : 'header__profile_menu header__profile_menu--hidden'
       }
     >
-      {userHasAccess(["ROLE_ADMIN"]) ? (
+      {userHasAccess(['ROLE_ADMIN']) ? (
         <HeaderMenuItem
           showProfileMenu={showProfileMenu}
           setShowProfileMenu={setShowProfileMenu}
@@ -136,7 +136,7 @@ const HeaderMenu = ({
           icon={<img className="header__img" src={employeeSVG} alt="" />}
         />
       ) : null}
-      {userHasAccess(["ROLE_ADMIN"]) ? (
+      {userHasAccess(['ROLE_ADMIN']) ? (
         <HeaderMenuItem
           showProfileMenu={showProfileMenu}
           setShowProfileMenu={setShowProfileMenu}
@@ -172,7 +172,7 @@ const HeaderMenuItem = ({
     <Link
       to={link}
       className={`header__profile_item ${
-        location.pathname.includes(link) ? "header__profile_item--active" : ""
+        location.pathname.includes(link) ? 'header__profile_item--active' : ''
       }`}
       onClick={() => setShowProfileMenu(!showProfileMenu)}
     >

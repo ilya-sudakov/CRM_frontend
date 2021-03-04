@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import './InputText.scss'
+import React from 'react';
+import PropTypes from 'prop-types';
+import './InputText.scss';
 
 const InputText = ({
   inputName,
@@ -67,10 +67,10 @@ const InputText = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default InputText
+export default InputText;
 
 InputText.propTypes = {
   inputName: PropTypes.string,
@@ -84,4 +84,4 @@ InputText.propTypes = {
   disabled: PropTypes.bool,
   setErrorsArr: PropTypes.func,
   errorsArr: PropTypes.object,
-}
+};

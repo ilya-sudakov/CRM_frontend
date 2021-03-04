@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import "../../../../../utils/MainWindow/MainWindow.scss";
-import editSVG from "../../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../../assets/tableview/delete.svg";
-import okSVG from "../../../../../../assets/tableview/ok.svg";
-import "./TableViewCategory.scss";
-import { sortByField } from "../../../../../utils/sorting/sorting";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../../../../../utils/MainWindow/MainWindow.scss';
+import editSVG from '../../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import okSVG from '../../../../../../assets/tableview/ok.svg';
+import './TableViewCategory.scss';
+import { sortByField } from '../../../../../utils/sorting/sorting';
 
 const TableViewCategory = (props) => {
   const searchQuery = (data) => {
@@ -13,14 +13,14 @@ const TableViewCategory = (props) => {
     return data.filter(
       (item) =>
         item.category.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
+        item.id.toString().includes(query),
     );
   };
 
   const sortProducts = (data) => {
     return sortByField(searchQuery(data), {
-      fieldName: "name",
-      direction: "asc",
+      fieldName: 'name',
+      direction: 'asc',
     });
   };
 
@@ -52,16 +52,16 @@ const TableViewCategory = (props) => {
                 </span>
                 <div className="main-window__actions">
                   {props.userHasAccess &&
-                    props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
+                    props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
                       <Link
-                        to={"/products/category/edit/" + category.id}
+                        to={'/products/category/edit/' + category.id}
                         className="main-window__action"
                         title="Редактировать категорию"
                       >
                         <img className="main-window__img" src={editSVG} />
                       </Link>
                     )}
-                  {props.userHasAccess && props.userHasAccess(["ROLE_ADMIN"]) && (
+                  {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
                     <div
                       data-id={category.id}
                       className="main-window__action"

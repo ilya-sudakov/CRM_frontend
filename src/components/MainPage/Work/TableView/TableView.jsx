@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 // import sortIcon from '../../../../../assets/tableview/sort_icon.png'
-import editSVG from "../../../../../assets/tableview/edit.svg";
-import deleteSVG from "../../../../../assets/tableview/delete.svg";
-import "./TableView.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { sortByField } from "../../../../utils/sorting/sorting";
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../assets/tableview/delete.svg';
+import './TableView.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from '../../../../utils/sorting/sorting';
 
 const TableView = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,13 +16,13 @@ const TableView = (props) => {
     return data.filter(
       (item) =>
         item.work.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
+        item.id.toString().includes(query),
     );
   };
 
   const sortWorkItems = (data) => {
     return searchQuery(
-      sortByField(data, { fieldName: "work", direction: "asc" })
+      sortByField(data, { fieldName: 'work', direction: 'asc' }),
     );
   };
 
@@ -58,9 +58,9 @@ const TableView = (props) => {
               </span>
               <div className="main-window__actions">
                 {props.userHasAccess &&
-                  props.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) && (
+                  props.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) && (
                     <Link
-                      to={"/work-list/edit/" + work.id}
+                      to={'/work-list/edit/' + work.id}
                       className="main-window__action"
                       title="Редактирование"
                     >
@@ -68,7 +68,7 @@ const TableView = (props) => {
                       {/* Редактировать */}
                     </Link>
                   )}
-                {props.userHasAccess && props.userHasAccess(["ROLE_ADMIN"]) && (
+                {props.userHasAccess && props.userHasAccess(['ROLE_ADMIN']) && (
                   <div
                     className="main-window__action"
                     title="Удаление"

@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from "react";
-import "./StatisticsPage.scss";
-import { formatDateStringNoYear } from "../../../utils/functions.jsx";
-import { months } from "../../../utils/dataObjects.js";
+import React, { useEffect, useState } from 'react';
+import './StatisticsPage.scss';
+import { formatDateStringNoYear } from '../../../utils/functions.jsx';
+import { months } from '../../../utils/dataObjects.js';
 
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import {
   getDaysArray,
   getPreviousMonthDates,
   getPreviousWeekDays,
   getPreviousQuarterDates,
   getPreviousYearDates,
-} from "./functions.js";
-import useTitleHeader from "../../../utils/hooks/uiComponents/useTitleHeader.js";
-import ProductionPage from "./Pages/ProductionPage.jsx";
-import RequestsPage from "./Pages/RequestsPage.jsx";
+} from './functions.js';
+import useTitleHeader from '../../../utils/hooks/uiComponents/useTitleHeader.js';
+import ProductionPage from './Pages/ProductionPage.jsx';
+import RequestsPage from './Pages/RequestsPage.jsx';
 
 const StatisticsPage = () => {
-  const [curPeriod, setCurPeriod] = useState("month");
+  const [curPeriod, setCurPeriod] = useState('month');
   const { titleHeader, curPage } = useTitleHeader(
-    "Статистика",
+    'Статистика',
     [
-      { pageTitle: "Заявки", pageName: "requests" },
-      { pageTitle: "Производство", pageName: "production" },
+      { pageTitle: 'Заявки', pageName: 'requests' },
+      { pageTitle: 'Производство', pageName: 'production' },
     ],
-    "requests"
+    'requests',
   );
   const [currDate, setCurrDate] = useState({
-    startDate: getPreviousMonthDates(new Date(), "current").startDate,
-    endDate: getPreviousMonthDates(new Date(), "current").endDate,
+    startDate: getPreviousMonthDates(new Date(), 'current').startDate,
+    endDate: getPreviousMonthDates(new Date(), 'current').endDate,
   });
 
   const timePeriod = {
     month: {
-      name: "Месяц",
+      name: 'Месяц',
       prevButton: {
-        text: "Пред. месяц",
+        text: 'Пред. месяц',
         onClick: () =>
           setCurrDate({
             startDate: getPreviousMonthDates(currDate.startDate).startDate,
@@ -42,29 +42,29 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. месяц",
+        text: 'Тек. месяц',
         onClick: () =>
           setCurrDate({
-            startDate: getPreviousMonthDates(new Date(), "current").startDate,
-            endDate: getPreviousMonthDates(new Date(), "current").endDate,
+            startDate: getPreviousMonthDates(new Date(), 'current').startDate,
+            endDate: getPreviousMonthDates(new Date(), 'current').endDate,
           }),
       },
       getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
       displayDates: () => currDate.startDate.getMonth(),
       initData: () =>
         setCurrDate({
-          startDate: getPreviousMonthDates(new Date(), "current").startDate,
-          endDate: getPreviousMonthDates(new Date(), "current").endDate,
+          startDate: getPreviousMonthDates(new Date(), 'current').startDate,
+          endDate: getPreviousMonthDates(new Date(), 'current').endDate,
         }),
-      timeTextSmallPanel: "От прошлого месяца",
+      timeTextSmallPanel: 'От прошлого месяца',
       timeTextGraphPanel: months[currDate.startDate.getMonth()],
       itemsCount: `${months[currDate.startDate.getMonth()]}`,
       getPrevData: (date, value) => getPreviousMonthDates(date, value),
     },
     week: {
-      name: "Неделя",
+      name: 'Неделя',
       prevButton: {
-        text: "Пред. неделя",
+        text: 'Пред. неделя',
         onClick: () =>
           setCurrDate({
             startDate: getPreviousWeekDays(currDate.startDate).startDate,
@@ -72,33 +72,33 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. неделя",
+        text: 'Тек. неделя',
         onClick: () =>
           setCurrDate({
-            startDate: getPreviousWeekDays(new Date(), "current").startDate,
-            endDate: getPreviousWeekDays(new Date(), "current").endDate,
+            startDate: getPreviousWeekDays(new Date(), 'current').startDate,
+            endDate: getPreviousWeekDays(new Date(), 'current').endDate,
           }),
       },
       getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
       displayDates: () => currDate.startDate.getMonth(),
       initData: () =>
         setCurrDate({
-          startDate: getPreviousWeekDays(new Date(), "current").startDate,
-          endDate: getPreviousWeekDays(new Date(), "current").endDate,
+          startDate: getPreviousWeekDays(new Date(), 'current').startDate,
+          endDate: getPreviousWeekDays(new Date(), 'current').endDate,
         }),
-      timeTextSmallPanel: "От прошлой недели",
+      timeTextSmallPanel: 'От прошлой недели',
       timeTextGraphPanel: `${formatDateStringNoYear(
-        currDate.startDate
+        currDate.startDate,
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
       itemsCount: `${formatDateStringNoYear(
-        currDate.startDate
+        currDate.startDate,
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
       getPrevData: (date, value) => getPreviousWeekDays(date, value),
     },
     quarter: {
-      name: "Квартал",
+      name: 'Квартал',
       prevButton: {
-        text: "Пред. квартал",
+        text: 'Пред. квартал',
         onClick: () =>
           setCurrDate({
             startDate: getPreviousQuarterDates(currDate.startDate).startDate,
@@ -106,33 +106,33 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. квартал",
+        text: 'Тек. квартал',
         onClick: () =>
           setCurrDate({
-            startDate: getPreviousQuarterDates(new Date(), "current").startDate,
-            endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+            startDate: getPreviousQuarterDates(new Date(), 'current').startDate,
+            endDate: getPreviousQuarterDates(new Date(), 'current').endDate,
           }),
       },
       getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
       displayDates: () => currDate.startDate.getMonth(),
       initData: () =>
         setCurrDate({
-          startDate: getPreviousQuarterDates(new Date(), "current").startDate,
-          endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+          startDate: getPreviousQuarterDates(new Date(), 'current').startDate,
+          endDate: getPreviousQuarterDates(new Date(), 'current').endDate,
         }),
-      timeTextSmallPanel: "От прошлого квартала",
+      timeTextSmallPanel: 'От прошлого квартала',
       timeTextGraphPanel: `${formatDateStringNoYear(
-        currDate.startDate
+        currDate.startDate,
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
       itemsCount: `${formatDateStringNoYear(
-        currDate.startDate
+        currDate.startDate,
       )} - ${formatDateStringNoYear(currDate.endDate)}`,
       getPrevData: (date, value) => getPreviousQuarterDates(date, value),
     },
     year: {
-      name: "Год",
+      name: 'Год',
       prevButton: {
-        text: "Пред. год",
+        text: 'Пред. год',
         onClick: () =>
           setCurrDate({
             startDate: getPreviousYearDates(currDate.startDate).startDate,
@@ -140,21 +140,21 @@ const StatisticsPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. год",
+        text: 'Тек. год',
         onClick: () =>
           setCurrDate({
-            startDate: getPreviousYearDates(new Date(), "current").startDate,
-            endDate: getPreviousYearDates(new Date(), "current").endDate,
+            startDate: getPreviousYearDates(new Date(), 'current').startDate,
+            endDate: getPreviousYearDates(new Date(), 'current').endDate,
           }),
       },
       getDateList: () => getDaysArray(currDate.startDate, currDate.endDate),
       displayDates: () => currDate.startDate.getMonth(),
       initData: () =>
         setCurrDate({
-          startDate: getPreviousYearDates(new Date(), "current").startDate,
-          endDate: getPreviousYearDates(new Date(), "current").endDate,
+          startDate: getPreviousYearDates(new Date(), 'current').startDate,
+          endDate: getPreviousYearDates(new Date(), 'current').endDate,
         }),
-      timeTextSmallPanel: "От прошлого года",
+      timeTextSmallPanel: 'От прошлого года',
       timeTextGraphPanel: currDate.startDate.getFullYear(),
       itemsCount: currDate.startDate.getFullYear(),
       getPrevData: (date, value) => getPreviousYearDates(date, value),

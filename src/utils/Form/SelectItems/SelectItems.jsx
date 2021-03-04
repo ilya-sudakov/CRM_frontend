@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import deleteSVG from "../../../../assets/select/delete.svg";
-import AddToButton from "../AddToButton/AddToButton.jsx";
-import "./SelectItems.scss";
+import React, { useEffect, useState } from 'react';
+import deleteSVG from '../../../../assets/select/delete.svg';
+import AddToButton from '../AddToButton/AddToButton.jsx';
+import './SelectItems.scss';
 
 const SelectItems = (props) => {
   const [items, setItems] = useState([]);
@@ -51,15 +51,15 @@ const SelectItems = (props) => {
     <div className="select-items">
       <div className="select-items__input">
         <div className="select-items__input_name">
-          {props.inputName + (props.required ? "*" : "")}
+          {props.inputName + (props.required ? '*' : '')}
           {!props.readOnly && (
             <AddToButton
               text="Добавить элемент"
               onClick={() => {
                 let temp = items;
                 temp.push({
-                  name: "",
-                  quantity: "",
+                  name: '',
+                  quantity: '',
                 });
                 setItems([...temp]);
                 props.onChange([...temp]);
@@ -90,23 +90,23 @@ const SelectItems = (props) => {
                 <div className="select-items__list-item">
                   {getInputElement(
                     {
-                      title: "Название",
-                      placeholder: "Введите название...",
-                      type: "text",
-                      name: "name",
+                      title: 'Название',
+                      placeholder: 'Введите название...',
+                      type: 'text',
+                      name: 'name',
                     },
                     index,
-                    item
+                    item,
                   )}
                   {getInputElement(
                     {
-                      title: "Кол-во",
-                      placeholder: "Введите кол-во...",
-                      type: "number",
-                      name: "quantity",
+                      title: 'Кол-во',
+                      placeholder: 'Введите кол-во...',
+                      type: 'number',
+                      name: 'quantity',
                     },
                     index,
-                    item
+                    item,
                   )}
                   {!props.readOnly && (
                     <img

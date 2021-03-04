@@ -1,64 +1,64 @@
-import React from "react";
-import TasksWidget from "./TasksWidget.jsx";
-import "@testing-library/jest-dom/extend-expect";
-import { cleanup } from "@testing-library/react";
-import { renderWithRouterAndContext } from "../../../../utils/testing/functions.js";
+import React from 'react';
+import TasksWidget from './TasksWidget.jsx';
+import '@testing-library/jest-dom/extend-expect';
+import { cleanup } from '@testing-library/react';
+import { renderWithRouterAndContext } from '../../../../utils/testing/functions.js';
 import {
   filterTasks,
   filterTasksByUser,
   getTasksControlDatesList,
   getTasksList,
-} from "./functions.js";
-import "isomorphic-fetch";
+} from './functions.js';
+import 'isomorphic-fetch';
 
 afterEach(cleanup);
 
-describe("TasksWidget component", () => {
+describe('TasksWidget component', () => {
   //COMPONENT
-  it("renders", () => {
+  it('renders', () => {
     renderWithRouterAndContext(<TasksWidget />);
   });
 
-  it("matches snapshot", () => {
+  it('matches snapshot', () => {
     const { asFragment } = renderWithRouterAndContext(<TasksWidget />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   // FUNCTIONS
-  it("filters tasks", () => {
-    const tasks = [{ condition: "Выполнено" }, { condition: "123" }];
-    const expectedTasks = [{ condition: "123" }];
+  it('filters tasks', () => {
+    const tasks = [{ condition: 'Выполнено' }, { condition: '123' }];
+    const expectedTasks = [{ condition: '123' }];
     expect(filterTasks(tasks)).toEqual(expectedTasks);
   });
 
-  it("filters tasks by User", () => {
+  it('filters tasks by User', () => {
     const tasks = [
-      { condition: "Выполнено" },
-      { condition: "123", responsible: "admin" },
+      { condition: 'Выполнено' },
+      { condition: '123', responsible: 'admin' },
     ];
-    const expectedTasks = [{ condition: "123", responsible: "admin" }];
+    const expectedTasks = [{ condition: '123', responsible: 'admin' }];
     expect(filterTasksByUser(tasks)).toEqual(expectedTasks);
   });
 
-  it("fetches tasks list", () => {
+  it('fetches tasks list', () => {
     expect(getTasksList());
   });
 
-  it("getTasksControlDates", () => {
+  it('getTasksControlDates', () => {
     const tasks = [
-      { condition: "Выполнено", dateControl: new Date(2012, 1, 1) },
+      { condition: 'Выполнено', dateControl: new Date(2012, 1, 1) },
       {
-        condition: "123",
-        responsible: "admin",
+        condition: '123',
+        responsible: 'admin',
         dateControl: new Date(2012, 1, 1),
       },
     ];
     const expectedDates = {
       [new Date(2012, 1, 1)]: [
-        { condition: "Выполнено", dateControl: new Date(2012, 1, 1) },
+        { condition: 'Выполнено', dateControl: new Date(2012, 1, 1) },
         {
-          condition: "123",
-          responsible: "admin",
+          condition: '123',
+          responsible: 'admin',
           dateControl: new Date(2012, 1, 1),
         },
       ],

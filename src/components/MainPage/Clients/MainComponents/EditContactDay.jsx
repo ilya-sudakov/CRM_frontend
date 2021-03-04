@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import InputDate from "../../../../utils/Form/InputDate/InputDate.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+import React, { useState, useEffect } from 'react';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 
 const EditNextContactDate = (props) => {
   const [date, setDate] = useState(new Date());
@@ -17,11 +17,11 @@ const EditNextContactDate = (props) => {
         setIsLoading(false);
         props.loadData(
           props.selectedItem.category.name,
-          props.selectedItem.clientType === "Активные"
-            ? "active"
-            : props.selectedItem.clientType === "Потенциальные"
-            ? "potential"
-            : "in-progress"
+          props.selectedItem.clientType === 'Активные'
+            ? 'active'
+            : props.selectedItem.clientType === 'Потенциальные'
+            ? 'potential'
+            : 'in-progress',
         );
         props.setCloseWindow(!props.closeWindow);
       });

@@ -1,48 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { MainPageWorkspace } from "../lazyImports.jsx";
-import { Link } from "react-router-dom";
-import "./GeneralPage.scss";
-import "../../../utils/MainWindow/MainWindow.scss";
-import DownloadIcon from "../../../../assets/download.svg";
-import StatsIcon from "../../../../assets/statistics/bar-chart-line.inline.svg";
-import HistoryIcon from "../../../../assets/statistics/history-outlined.inline.svg";
-import ReportIcon from "../../../../assets/statistics/report.svg";
-import calenderIcon from "../../../../assets/tableview/calendar.svg";
-import { getReportTableExcel } from "./ReportTablePage/getReportTableExcel.js";
-import Button from "../../../utils/Form/Button/Button.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import React, { useState, useEffect } from 'react';
+import { MainPageWorkspace } from '../lazyImports.jsx';
+import { Link } from 'react-router-dom';
+import './GeneralPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import DownloadIcon from '../../../../assets/download.svg';
+import StatsIcon from '../../../../assets/statistics/bar-chart-line.inline.svg';
+import HistoryIcon from '../../../../assets/statistics/history-outlined.inline.svg';
+import ReportIcon from '../../../../assets/statistics/report.svg';
+import calenderIcon from '../../../../assets/tableview/calendar.svg';
+import { getReportTableExcel } from './ReportTablePage/getReportTableExcel.js';
+import Button from '../../../utils/Form/Button/Button.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const GeneralPage = (props) => {
   const workshops = [
-    "ЦехЛЭМЗ",
-    "ЦехЛепсари",
-    "ЦехЛиговский",
-    "Офис",
-    "Уволенные",
+    'ЦехЛЭМЗ',
+    'ЦехЛепсари',
+    'ЦехЛиговский',
+    'Офис',
+    'Уволенные',
   ];
   const [isLoading, setIsLoading] = useState(false);
 
   const getFilteredWorkshops = () => {
     if (
-      props.userHasAccess(["ROLE_ADMIN"]) ||
-      props.userHasAccess(["ROLE_DISPATCHER"])
+      props.userHasAccess(['ROLE_ADMIN']) ||
+      props.userHasAccess(['ROLE_DISPATCHER'])
     ) {
       return workshops;
     }
-    if (props.userHasAccess(["ROLE_LEMZ"])) {
-      return ["ЦехЛЭМЗ"];
+    if (props.userHasAccess(['ROLE_LEMZ'])) {
+      return ['ЦехЛЭМЗ'];
     }
-    if (props.userHasAccess(["ROLE_LEPSARI"])) {
-      return ["ЦехЛепсари"];
+    if (props.userHasAccess(['ROLE_LEPSARI'])) {
+      return ['ЦехЛепсари'];
     }
-    if (props.userHasAccess(["ROLE_LIGOVSKIY"])) {
-      return ["ЦехЛиговский"];
+    if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
+      return ['ЦехЛиговский'];
     }
-    if (props.userHasAccess(["ROLE_ENGINEER"])) {
-      return ["Офис"];
+    if (props.userHasAccess(['ROLE_ENGINEER'])) {
+      return ['Офис'];
     }
-    if (props.userHasAccess(["ROLE_MANAGER"])) {
-      return ["Офис"];
+    if (props.userHasAccess(['ROLE_MANAGER'])) {
+      return ['Офис'];
     }
   };
 
@@ -54,7 +54,7 @@ const GeneralPage = (props) => {
   }
 
   useEffect(() => {
-    document.title = "Главная страница";
+    document.title = 'Главная страница';
   }, []);
 
   return (
@@ -67,11 +67,11 @@ const GeneralPage = (props) => {
           buttons={
             <>
               {props.userHasAccess([
-                "ROLE_ADMIN",
-                "ROLE_DISPATCHER",
-                "ROLE_MANAGER",
-                "ROLE_WORKSHOP",
-                "ROLE_ENGINEER",
+                'ROLE_ADMIN',
+                'ROLE_DISPATCHER',
+                'ROLE_MANAGER',
+                'ROLE_WORKSHOP',
+                'ROLE_ENGINEER',
               ]) && (
                 <Link
                   className="main-window__button"
@@ -81,10 +81,10 @@ const GeneralPage = (props) => {
                 </Link>
               )}
               {props.userHasAccess([
-                "ROLE_ADMIN",
-                "ROLE_WORKSHOP",
-                "ROLE_ENGINEER",
-                "ROLE_MANAGER",
+                'ROLE_ADMIN',
+                'ROLE_WORKSHOP',
+                'ROLE_ENGINEER',
+                'ROLE_MANAGER',
               ]) && (
                 <Link
                   className="main-window__button"
@@ -97,19 +97,19 @@ const GeneralPage = (props) => {
                 <img className="main-window__img" src={calenderIcon} />
                 Табель
               </Link>
-              {props.userHasAccess(["ROLE_ADMIN"]) && (
+              {props.userHasAccess(['ROLE_ADMIN']) && (
                 <Link className="main-window__button" to="/reports">
                   <img className="main-window__img" src={ReportIcon} />
                   Отчеты
                 </Link>
               )}
-              {props.userHasAccess(["ROLE_ADMIN"]) && (
+              {props.userHasAccess(['ROLE_ADMIN']) && (
                 <Link className="main-window__button" to="/statistics">
                   <StatsIcon className="main-window__img" />
                   Статистика
                 </Link>
               )}
-              {props.userHasAccess(["ROLE_ADMIN"]) && (
+              {props.userHasAccess(['ROLE_ADMIN']) && (
                 <Link className="main-window__button" to="/profile/log-list">
                   <HistoryIcon className="main-window__img" />
                   Логи
@@ -128,13 +128,13 @@ const GeneralPage = (props) => {
         />
         <div className="main-window__content">
           {props.userHasAccess([
-            "ROLE_ADMIN",
-            "ROLE_DISPATCHER",
-            "ROLE_MANAGER",
-            "ROLE_LIGOVSKIY",
-            "ROLE_LEMZ",
-            "ROLE_LEPSARI",
-            "ROLE_ENGINEER",
+            'ROLE_ADMIN',
+            'ROLE_DISPATCHER',
+            'ROLE_MANAGER',
+            'ROLE_LIGOVSKIY',
+            'ROLE_LEMZ',
+            'ROLE_LEPSARI',
+            'ROLE_ENGINEER',
           ]) && <MainPageWorkspace userHasAccess={props.userHasAccess} />}
         </div>
       </div>

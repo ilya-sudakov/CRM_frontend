@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import FormWindow from "../Form/FormWindow/FormWindow.jsx";
+import React, { useEffect, useState } from 'react';
+import FormWindow from '../Form/FormWindow/FormWindow.jsx';
 
 const useFormWindow = (
-  windowTitle = "",
+  windowTitle = '',
   content,
   updates = [],
-  headerButton
+  headerButton,
 ) => {
   const [showWindow, setShowWindow] = useState(false);
 

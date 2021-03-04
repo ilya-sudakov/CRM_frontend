@@ -1,4 +1,4 @@
-import { animateScroll as scroll } from "react-scroll";
+import { animateScroll as scroll } from 'react-scroll';
 
 const getDateMonthString = (date) =>
   date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
@@ -7,7 +7,7 @@ const getDateMonthString = (date) =>
 export const formatDateString = (dateString) => {
   const date = new Date(dateString);
   return `${
-    date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
   }.${getDateMonthString(date)}.${date.getFullYear()}`;
 };
 
@@ -19,16 +19,16 @@ export const formatDateStringNoDate = (dateString) => {
 export const formatDateStringNoYear = (dateString) => {
   const date = new Date(dateString);
   return `${
-    date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
+    date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
   }.${getDateMonthString(date)}`;
 };
 
 export const formatDateStringToTime = (dateString) => {
   const date = new Date(dateString);
   return (
-    (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) +
-    ":" +
-    (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes())
+    (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
+    ':' +
+    (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
   );
 };
 
@@ -56,7 +56,7 @@ export const numberToString = (number, wordForms) => {
 
 const contextToBlob = (blob, imageName) => {
   // получаем содержимое как JPEG Blob
-  let link = document.createElement("a");
+  let link = document.createElement('a');
   link.download = imageName;
   link.href = URL.createObjectURL(blob);
   link.click();
@@ -68,8 +68,8 @@ const contextToBlob = (blob, imageName) => {
 export const imgToBlobDownload = (imageSrc, imageName) => {
   let img = new Image();
   img.src = imageSrc;
-  let c = document.createElement("canvas");
-  let ctx = c.getContext("2d");
+  let c = document.createElement('canvas');
+  let ctx = c.getContext('2d');
   c.width = img.naturalWidth;
   c.height = img.naturalHeight;
   ctx.drawImage(img, 0, 0);
@@ -77,11 +77,11 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
     function (blob) {
       contextToBlob(blob, imageName);
     },
-    "image/jpeg",
-    1
+    'image/jpeg',
+    1,
   );
-  img.crossOrigin = ""; // if from different origin
-  img.src = "url-to-image";
+  img.crossOrigin = ''; // if from different origin
+  img.src = 'url-to-image';
 };
 
 //Получение URI из полученной картинки
@@ -89,14 +89,14 @@ export function getDataUri(url, extension, quality) {
   return new Promise((resolve, reject) => {
     var img = new Image();
     img.onload = () => {
-      var canvas = document.createElement("canvas");
+      var canvas = document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
-      var ctx = canvas.getContext("2d");
+      var ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
       var dataURL = canvas.toDataURL(
-        extension ? "image/" + extension : "image/png",
-        quality ? quality : 0.92
+        extension ? 'image/' + extension : 'image/png',
+        quality ? quality : 0.92,
       );
       resolve(dataURL);
     };
@@ -109,8 +109,8 @@ export function getDataUri(url, extension, quality) {
 
 //Функция для изменения порядка сортировки
 export const changeSortOrder = (event) => {
-  const name = event.target.value.split(" ")[0];
-  const order = event.target.value.split(" ")[1];
+  const name = event.target.value.split(' ')[0];
+  const order = event.target.value.split(' ')[1];
   return Object.assign({
     curSort: name,
     [name]: order,
@@ -150,7 +150,7 @@ export const getAllProductsFromWorkCount = (works) => {
 export const getAllDraftsFromWorkCount = (works) => {
   let parts = { Stamp: {}, Press: {}, Detail: {}, Bench: {} };
   works.map((work) => {
-    const draftTypes = ["Stamp", "Press", "Detail", "Bench"];
+    const draftTypes = ['Stamp', 'Press', 'Detail', 'Bench'];
     draftTypes.map((draftType) => {
       return work.partsWorks.map((draft) => {
         if (draft.partType !== draftType) return;
@@ -173,7 +173,7 @@ export const getAllDraftsFromWorkCount = (works) => {
   });
   let newParts = [];
   Object.values(parts).map((draftType) =>
-    Object.values(draftType).map((draft) => newParts.push(draft))
+    Object.values(draftType).map((draft) => newParts.push(draft)),
   );
   return newParts;
 };
@@ -229,8 +229,8 @@ export const getDatesAndWorkItems = (works) => {
 
 //Получить случайный цвет формата hex
 export const getRandomColor = () => {
-  const letters = "0123456789ABCDEF";
-  let color = "#";
+  const letters = '0123456789ABCDEF';
+  let color = '#';
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
@@ -245,7 +245,7 @@ export const randomMinMaxInteger = (min, max) => {
 export const getRandomNiceColor = () => {
   return `hsl(${randomMinMaxInteger(0, 360)},${randomMinMaxInteger(
     42,
-    98
+    98,
   )}%,${randomMinMaxInteger(40, 90)}%)`;
 };
 
@@ -265,14 +265,14 @@ export const getRandomColorShades = (numOfShades = 10) => {
 export const addHexColor = (color1, color2) => {
   var hexStr = (parseInt(color1, 16) + parseInt(color2, 16)).toString(16);
   while (hexStr.length < 6) {
-    hexStr = "0" + hexStr;
+    hexStr = '0' + hexStr;
   }
   return hexStr;
 };
 
 //Добавить разделитель пробел для полученной строки
 export const addSpaceDelimiter = (str) => {
-  return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, "$1 ");
+  return str.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
 };
 
 export const sortRequestsByDates = (requests) => {
@@ -282,7 +282,7 @@ export const sortRequestsByDates = (requests) => {
     curDate = new Date(
       curDate.getFullYear(),
       curDate.getMonth(),
-      curDate.getDate()
+      curDate.getDate(),
     );
     if (dates[curDate] !== undefined) {
       dates = {
@@ -319,7 +319,7 @@ export const getDatesFromRequests = (requests) => {
 
 export const createLabelForProduct = () => {
   // we create a canvas element
-  let canvas = document.createElement("canvas");
+  let canvas = document.createElement('canvas');
   let height = 100;
   let width = 100;
 };
@@ -327,9 +327,9 @@ export const createLabelForProduct = () => {
 export const getQuantityOfProductsFromRequests = (requests) => {
   let products = {};
   requests.map((request) => {
-    if (request.status !== "Завершено" && request.status !== "completed") {
+    if (request.status !== 'Завершено' && request.status !== 'completed') {
       return request.requestProducts.map((product) => {
-        if (product.status !== "completed") {
+        if (product.status !== 'completed') {
           return (products = {
             ...products,
             [product.name]:
@@ -375,15 +375,15 @@ export const saveCanvasAsImage = (canvas, fileName) => {
     function (blob) {
       contextToBlob(blob, fileName);
     },
-    "image/jpeg",
-    1
+    'image/jpeg',
+    1,
   );
 };
 
 export const changeVisibilityOfListItem = (list, index) => {
   index = Number.parseInt(index);
   return list.map((element) =>
-    element.id == index ? { id: index, hidden: !element.hidden } : element
+    element.id == index ? { id: index, hidden: !element.hidden } : element,
   );
 };
 

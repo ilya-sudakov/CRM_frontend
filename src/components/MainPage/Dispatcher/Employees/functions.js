@@ -1,13 +1,13 @@
 import {
   formatDateString,
   getEmployeeNameText,
-} from "../../../../utils/functions.jsx";
+} from '../../../../utils/functions.jsx';
 import {
   createPDF,
   getPDFTitleObject,
   getInputElementTextPDF,
   defaultStylesPDF,
-} from "../../../../utils/pdfFunctions.js";
+} from '../../../../utils/pdfFunctions.js';
 
 export const filterEmployeesBySearchQuery = (data, searchQuery) => {
   const query = searchQuery.toLowerCase();
@@ -32,14 +32,14 @@ export const filterEmployeesBySearchQuery = (data, searchQuery) => {
 const getEmployeesTablePDF = (employeeInfo) => {
   return {
     table: {
-      widths: ["*", 70, 80, 120, 100],
+      widths: ['*', 70, 80, 120, 100],
       body: [
         [
-          { text: "ФИО", style: "tableHeader" },
-          { text: "Дата рождения", style: "tableHeader" },
-          { text: "Гражданство", style: "tableHeader" },
-          { text: "Должность", style: "tableHeader" },
-          { text: "", style: "tableHeader" },
+          { text: 'ФИО', style: 'tableHeader' },
+          { text: 'Дата рождения', style: 'tableHeader' },
+          { text: 'Гражданство', style: 'tableHeader' },
+          { text: 'Должность', style: 'tableHeader' },
+          { text: '', style: 'tableHeader' },
         ],
         ...employeeInfo,
       ],
@@ -56,7 +56,7 @@ export const getEmployeesByWorkshopListPdfText = (employees = [], workshop) => {
       formatDateString(item.yearOfBirth),
       item.citizenship,
       item.position,
-      "",
+      '',
     ]);
   });
   employeesList.push(getEmployeesTablePDF(employeeInfo));
@@ -76,19 +76,19 @@ export const getEmployeesByWorkshopListPdfText = (employees = [], workshop) => {
 export const getEmployeesListPdfText = (employees, workshops) => {
   const employeesList = [];
   workshops.map((workshop) => {
-    employeesList.push(getInputElementTextPDF("Подразделение", workshop));
+    employeesList.push(getInputElementTextPDF('Подразделение', workshop));
     let employeeInfo = [];
     employees.map((employee) => {
       if (
-        (workshop === employee.workshop && employee.relevance !== "Уволен") ||
-        (workshop === "Уволенные" && employee.relevance === "Уволен")
+        (workshop === employee.workshop && employee.relevance !== 'Уволен') ||
+        (workshop === 'Уволенные' && employee.relevance === 'Уволен')
       ) {
         employeeInfo.push([
           getEmployeeNameText(employee),
           formatDateString(employee.yearOfBirth),
           employee.citizenship,
           employee.position,
-          "",
+          '',
         ]);
       }
     });
@@ -96,7 +96,7 @@ export const getEmployeesListPdfText = (employees, workshops) => {
   });
   const dd = {
     info: {
-      title: "Список сотрудников",
+      title: 'Список сотрудников',
     },
     content: [getPDFTitleObject(`Список сотрудников`), ...employeesList],
     styles: defaultStylesPDF,

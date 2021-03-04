@@ -1,53 +1,53 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./GeneralTasks.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
+import React, { useContext, useEffect, useState } from 'react';
+import './GeneralTasks.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
 import {
   getMainTasks,
   deleteMainTask,
-} from "../../../../utils/RequestsAPI/MainTasks.js";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import UserContext from "../../../../App.js";
-import useSort from "../../../../utils/hooks/useSort/useSort";
+} from '../../../../utils/RequestsAPI/MainTasks.js';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import UserContext from '../../../../App.js';
+import useSort from '../../../../utils/hooks/useSort/useSort';
 import {
   filterCompletedTasks,
   filterSearchQuery,
   filterTasksUsers,
-} from "./functions";
-import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader";
+} from './functions';
+import useTitleHeader from '../../../../utils/hooks/uiComponents/useTitleHeader';
 
 const GeneralTasks = (props) => {
   const userContext = useContext(UserContext);
   const [generalTasks, setGeneralTasks] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   //Статусы задач
   const [taskStatuses, setTaskStatuses] = useState([
     {
-      name: "Выполнено",
-      className: "completed",
+      name: 'Выполнено',
+      className: 'completed',
       visible: false,
     },
     {
-      name: "Отложено",
-      className: "delayed",
+      name: 'Отложено',
+      className: 'delayed',
       visible: false,
     },
     {
-      name: "Материалы",
-      className: "materials",
+      name: 'Материалы',
+      className: 'materials',
       visible: false,
     },
     {
-      name: "В процессе",
-      className: "in-progress",
+      name: 'В процессе',
+      className: 'in-progress',
       visible: false,
     },
     {
-      name: "Проблема",
-      className: "problem",
+      name: 'Проблема',
+      className: 'problem',
       visible: false,
     },
   ]);
@@ -55,7 +55,7 @@ const GeneralTasks = (props) => {
   const [taskUsers, setTaskUsers] = useState({});
 
   useEffect(() => {
-    document.title = "Основные задачи";
+    document.title = 'Основные задачи';
     let abortController = new AbortController();
     loadTasks(abortController.signal);
 
@@ -87,7 +87,7 @@ const GeneralTasks = (props) => {
     tasks.map((task) => {
       if (
         users[task.responsible] === undefined &&
-        task.responsible !== "" &&
+        task.responsible !== '' &&
         task.responsible !== null
       ) {
         users = {
@@ -108,25 +108,25 @@ const GeneralTasks = (props) => {
     const filteredSearch = filterSearchQuery(tasks, searchQuery);
     const filteredCompletedTasks = filterCompletedTasks(
       filteredSearch,
-      curPage
+      curPage,
     );
     const filteredUsers = filterTasksUsers(filteredCompletedTasks, taskUsers);
     return filteredUsers;
   };
 
   const { titleHeader, curPage } = useTitleHeader(
-    "Основные задачи",
+    'Основные задачи',
     [
       {
-        pageName: "В процессе",
-        pageTitle: "В процессе",
+        pageName: 'В процессе',
+        pageTitle: 'В процессе',
       },
       {
-        pageName: "Завершено",
-        pageTitle: "Завершено",
+        pageName: 'Завершено',
+        pageTitle: 'Завершено',
       },
     ],
-    "В процессе"
+    'В процессе',
   );
 
   const { sortPanel, sortedData } = useSort(
@@ -134,17 +134,17 @@ const GeneralTasks = (props) => {
     {
       ignoreURL: false,
       sortOrder: {
-        curSort: "dateCreated",
-        dateCreated: "asc",
+        curSort: 'dateCreated',
+        dateCreated: 'asc',
       },
       sortOptions: [
-        { value: "dateCreated asc", text: "По дате постановки (убыв.)" },
-        { value: "dateCreated desc", text: "По дате постановки (возр.)" },
-        { value: "dateControl asc", text: "По дате контроля (убыв.)" },
-        { value: "dateControl desc", text: "По дате контроля (возр.)" },
+        { value: 'dateCreated asc', text: 'По дате постановки (убыв.)' },
+        { value: 'dateCreated desc', text: 'По дате постановки (возр.)' },
+        { value: 'dateControl asc', text: 'По дате контроля (убыв.)' },
+        { value: 'dateControl desc', text: 'По дате контроля (возр.)' },
       ],
     },
-    [generalTasks, curPage, taskUsers, searchQuery]
+    [generalTasks, curPage, taskUsers, searchQuery],
   );
 
   const handleFilterUserClick = (user) => {
@@ -169,7 +169,7 @@ const GeneralTasks = (props) => {
       <div className="main-window">
         <FloatingPlus
           linkTo="/dispatcher/general-tasks/new"
-          visibility={["ROLE_ADMIN", "ROLE_DISPATCHER", "ROLE_ENGINEER"]}
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
         />
         {titleHeader}
         <SearchBar
@@ -181,7 +181,7 @@ const GeneralTasks = (props) => {
           itemsCount={`Всего: ${generalTasks.length} записей`}
           sorting={sortPanel}
           content={
-            userContext.userHasAccess(["ROLE_ADMIN"]) ? (
+            userContext.userHasAccess(['ROLE_ADMIN']) ? (
               <div className="main-window__info-panel">
                 <div className="main-window__filter-pick">
                   <div>Фильтр по пользователям: </div>
@@ -190,8 +190,8 @@ const GeneralTasks = (props) => {
                       <div
                         className={
                           user[1]
-                            ? "main-window__button"
-                            : "main-window__button main-window__button--inverted"
+                            ? 'main-window__button'
+                            : 'main-window__button main-window__button--inverted'
                         }
                         onClick={() => handleFilterUserClick(user)}
                       >

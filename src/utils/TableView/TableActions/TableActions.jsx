@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import DotsIcon from "../../../../assets/sidemenu/more.inline.svg";
-import "./TableActions.scss";
-import ActionItem from "./Actions/ActionItem.jsx";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import DotsIcon from '../../../../assets/sidemenu/more.inline.svg';
+import './TableActions.scss';
+import ActionItem from './Actions/ActionItem.jsx';
 
 const TableActions = ({ actionsList = [] }) => {
   const [isHidden, setIsHidden] = useState(true);
@@ -10,14 +10,14 @@ const TableActions = ({ actionsList = [] }) => {
   return (
     <div
       className={`main-window__table-actions ${
-        isHidden ? "main-window__table-actions--is-hidden" : ""
+        isHidden ? 'main-window__table-actions--is-hidden' : ''
       }`}
       onMouseEnter={() => setIsHidden(false)}
       onMouseLeave={() => setIsHidden(true)}
     >
       <DotsIcon
         className="main-window__img main-window__img--more"
-        style={{ transform: "rotate(90deg)" }}
+        style={{ transform: 'rotate(90deg)' }}
         width={50}
         height={30}
         alt=""

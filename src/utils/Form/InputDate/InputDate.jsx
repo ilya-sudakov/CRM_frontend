@@ -1,10 +1,10 @@
-import React from 'react'
-import DatePicker from 'react-datepicker'
-import PropTypes from 'prop-types'
-import ru from 'date-fns/locale/ru'
-import 'react-datepicker/dist/react-datepicker.css'
+import React from 'react';
+import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
+import ru from 'date-fns/locale/ru';
+import 'react-datepicker/dist/react-datepicker.css';
 // import '../../../../../../../node_modules/react-datepicker/dist/react-datepicker.css'
-import './InputDate.scss'
+import './InputDate.scss';
 
 const InputDate = (props) => {
   return (
@@ -46,10 +46,10 @@ const InputDate = (props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default InputDate
+export default InputDate;
 
 InputDate.propTypes = {
   inputName: PropTypes.string,
@@ -63,4 +63,4 @@ InputDate.propTypes = {
   showMonthYearPicker: PropTypes.bool,
   setErrorsArr: PropTypes.func,
   errorsArr: PropTypes.object,
-}
+};

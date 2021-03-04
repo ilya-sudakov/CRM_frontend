@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
-import editSVG from "../../../../../assets/tableview/edit.svg";
-import starSVG from "../../../../../assets/tableview/star.svg";
-import starBorderedSVG from "../../../../../assets/tableview/star_border.svg";
-import phoneSVG from "../../../../../assets/tableview/phone.svg";
-import calendarSVG from "../../../../../assets/tableview/calendar.svg";
-import eyeSVG from "../../../../../assets/tableview/eye-invisible-outlined.svg";
-import { formatDateString } from "../../../../utils/functions.jsx";
-import { sortClients } from "./functions.js";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
-import UserContext from "../../../../App.js";
+import React, { useContext, useEffect } from 'react';
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import starSVG from '../../../../../assets/tableview/star.svg';
+import starBorderedSVG from '../../../../../assets/tableview/star_border.svg';
+import phoneSVG from '../../../../../assets/tableview/phone.svg';
+import calendarSVG from '../../../../../assets/tableview/calendar.svg';
+import eyeSVG from '../../../../../assets/tableview/eye-invisible-outlined.svg';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import { sortClients } from './functions.js';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from '../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import UserContext from '../../../../App.js';
 
 const ClientsList = ({
   isLoading,
@@ -143,7 +143,7 @@ const ListItem = ({
         });
         //   loadData(item.categoryName, item.clientType);
         setClients([...temp]);
-        alert("Клиент успешно скрыт");
+        alert('Клиент успешно скрыт');
       })
       .catch((error) => {
         console.log(error);
@@ -153,40 +153,40 @@ const ListItem = ({
   const actionsList = [
     {
       title: item.favorite
-        ? "Убрать из избранных клиентов"
-        : "Добавить в избранных клиентов",
+        ? 'Убрать из избранных клиентов'
+        : 'Добавить в избранных клиентов',
       onClick: () => handleFavouriteClick(item, clients),
       imgSrc: item.favorite ? starSVG : starBorderedSVG,
-      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
     {
-      title: "Скрыть клиента",
+      title: 'Скрыть клиента',
       onClick: () => handleHideClient(item, clients),
       imgSrc: eyeSVG,
-      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
     {
-      title: "Совершить действие",
+      title: 'Совершить действие',
       onClick: () => {
         setCloseWindow(false);
         setSelectedItem(item);
         setShowWindow(true);
-        setCurForm("workHistory");
+        setCurForm('workHistory');
       },
       imgSrc: phoneSVG,
     },
     {
-      title: "Дата следующего контакта",
+      title: 'Дата следующего контакта',
       onClick: () => {
         setCloseWindow(false);
         setSelectedItem(item);
         setShowWindow(true);
-        setCurForm("nextContactDate");
+        setCurForm('nextContactDate');
       },
       imgSrc: calendarSVG,
     },
     {
-      title: "Редактирование клиента",
+      title: 'Редактирование клиента',
       link: `/${type}/edit/${item.id}`,
       openInNewTab: true,
       imgSrc: editSVG,
@@ -198,7 +198,7 @@ const ListItem = ({
           onClick={() => deleteItem(item.id, index)}
         />
       ),
-      isRendered: userContext.userHasAccess(["ROLE_ADMIN"]),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
   ];
 
@@ -214,31 +214,31 @@ const ListItem = ({
           className="main-window__link"
           title={item.site}
           href={
-            item.site.split("//").length > 1
+            item.site.split('//').length > 1
               ? item.site
-              : "https://" + item.site
+              : 'https://' + item.site
           }
           target="_blank"
         >
-          {item.site.split("//").length > 1
-            ? item.site.split("//")[1]
+          {item.site.split('//').length > 1
+            ? item.site.split('//')[1]
             : item.site}
         </a>
       </span>
       <span
         title={
           item.contacts?.length > 0
-            ? (item.contacts[0].name !== ""
-                ? item.contacts[0].name + ", "
-                : "") + item.contacts[0].phoneNumber
-            : "Не указаны контакт. данные"
+            ? (item.contacts[0].name !== ''
+                ? item.contacts[0].name + ', '
+                : '') + item.contacts[0].phoneNumber
+            : 'Не указаны контакт. данные'
         }
       >
         <div className="main-window__mobile-text">Контактное лицо: </div>
         {item.contacts?.length > 0
-          ? (item.contacts[0].name !== "" ? item.contacts[0].name + ", " : "") +
+          ? (item.contacts[0].name !== '' ? item.contacts[0].name + ', ' : '') +
             item.contacts[0].phoneNumber
-          : "Не указаны контакт. данные"}
+          : 'Не указаны контакт. данные'}
       </span>
       <span title={item.comment}>
         <div className="main-window__mobile-text">Комментарий: </div>

@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { withRouter } from "react-router-dom";
-import editIcon from "../../../../../../../assets/tableview/edit.svg";
-import deleteIcon from "../../../../../../../assets/tableview/delete.svg";
-import "./TableView.scss";
-import { scrollToElement } from "../../../../../../utils/functions.jsx";
-import { rigStatuses, rigTypes } from "../rigsVariables";
-import { editStampColor } from "../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import TableActions from "../../../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
-import useQuery from "../../../../../../utils/hooks/useQuery.js";
-import useSort from "../../../../../../utils/hooks/useSort/useSort.js";
-import { isPartHidden, searchQuery, sortStampParts } from "./functions.js";
-import { riggingListOptionsHeader } from "./objects.js";
-import PartItem from "./PartItem.jsx";
+import React, { useState, useEffect, useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
+import editIcon from '../../../../../../../assets/tableview/edit.svg';
+import deleteIcon from '../../../../../../../assets/tableview/delete.svg';
+import './TableView.scss';
+import { scrollToElement } from '../../../../../../utils/functions.jsx';
+import { rigStatuses, rigTypes } from '../rigsVariables';
+import { editStampColor } from '../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from '../../../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import useQuery from '../../../../../../utils/hooks/useQuery.js';
+import useSort from '../../../../../../utils/hooks/useSort/useSort.js';
+import { isPartHidden, searchQuery, sortStampParts } from './functions.js';
+import { riggingListOptionsHeader } from './objects.js';
+import PartItem from './PartItem.jsx';
 
 const TableView = (props) => {
   const [partsVisible, setPartsVisible] = useState([]);
@@ -24,17 +24,17 @@ const TableView = (props) => {
     {
       ignoreURL: false,
       sortOrder: {
-        curSort: "id",
-        id: "desc",
+        curSort: 'id',
+        id: 'desc',
       },
-      sortOptions: [{ value: "id desc", text: "id" }],
+      sortOptions: [{ value: 'id desc', text: 'id' }],
     },
-    [props.data]
+    [props.data],
   );
 
   useEffect(() => {
-    if (query.get("rig"))
-      return setPartsVisible([...checkPart(query.get("rig"))]);
+    if (query.get('rig'))
+      return setPartsVisible([...checkPart(query.get('rig'))]);
   }, []);
 
   useEffect(() => {
@@ -76,17 +76,17 @@ const TableView = (props) => {
   };
 
   const handleClickStamp = (event) => {
-    const id = event.currentTarget.getAttribute("id");
-    !event.target.className.includes("main-window__status_select") &&
-      !event.target.className.includes("main-window__action") &&
-      !event.target.className.includes("main-window__img") &&
+    const id = event.currentTarget.getAttribute('id');
+    !event.target.className.includes('main-window__status_select') &&
+      !event.target.className.includes('main-window__action') &&
+      !event.target.className.includes('main-window__img') &&
       setPartsVisible([...checkPart(id)]);
   };
 
   const prevRef = useCallback(
     (node) => {
-      const rig = Number.parseInt(query.get("rig"));
-      const part = Number.parseInt(query.get("part"));
+      const rig = Number.parseInt(query.get('rig'));
+      const part = Number.parseInt(query.get('part'));
 
       if (
         !props.data ||
@@ -100,7 +100,7 @@ const TableView = (props) => {
         setScrolledToPrev(true);
       }
     },
-    [props.data]
+    [props.data],
   );
 
   return (
@@ -126,14 +126,14 @@ const TableView = (props) => {
             <div
               id={stamp.id}
               ref={
-                Number.parseInt(query.get("rig")) === stamp.id &&
-                query.get("part") === null
+                Number.parseInt(query.get('rig')) === stamp.id &&
+                query.get('part') === null
                   ? prevRef
                   : null
               }
               className={
-                "main-window__list-item main-window__list-item--" +
-                (stamp.color || "production")
+                'main-window__list-item main-window__list-item--' +
+                (stamp.color || 'production')
               }
               onClick={handleClickStamp}
             >
@@ -155,21 +155,21 @@ const TableView = (props) => {
               </span>
               <span
                 className={
-                  "main-window__list-item--" +
-                  rigStatuses[stamp.color || "production"].className
+                  'main-window__list-item--' +
+                  rigStatuses[stamp.color || 'production'].className
                 }
               >
                 <div className="main-window__mobile-text">Статус заявки:</div>
                 <select
                   id={stamp.id}
                   className="main-window__status_select"
-                  value={stamp.color || "production"}
+                  value={stamp.color || 'production'}
                   onChange={({ target }) => {
                     return editStampColor(
                       {
                         color: target.value,
                       },
-                      stamp.id
+                      stamp.id,
                     ).then(() => props.loadData());
                   }}
                 >
@@ -184,7 +184,7 @@ const TableView = (props) => {
                     link: `${rigTypes[props.type].redirectURL}/edit/${
                       stamp.id
                     }`,
-                    title: "Редактирование",
+                    title: 'Редактирование',
                     imgSrc: editIcon,
                   },
                   {
@@ -203,17 +203,17 @@ const TableView = (props) => {
               id={stamp.id}
               className={`main-window__list-options ${
                 !isPartHidden(partsVisible, stamp.id) ||
-                Number.parseInt(query.get("rig")) === stamp.id
-                  ? ""
-                  : "main-window__list-options--hidden"
+                Number.parseInt(query.get('rig')) === stamp.id
+                  ? ''
+                  : 'main-window__list-options--hidden'
               }`}
             >
               <div className="main-window__list">
                 {riggingListOptionsHeader}
                 {sortStampParts(stamp.stampParts).map((part) => {
                   const ref =
-                    Number.parseInt(query.get("rig")) === stamp.id &&
-                    Number.parseInt(query.get("part")) === part.id
+                    Number.parseInt(query.get('rig')) === stamp.id &&
+                    Number.parseInt(query.get('part')) === part.id
                       ? prevRef
                       : null;
                   return (

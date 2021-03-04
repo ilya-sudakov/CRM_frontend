@@ -1,38 +1,38 @@
-import React, { useEffect } from "react";
-import "./ViewRequests.scss";
-import TableView from "../../WorkshopsComponents/TableView/TableView.jsx";
-import usePagination from "../../../../utils/hooks/usePagination/usePagination";
-import { sortRequests } from "../../WorkshopsComponents/TableView/functions.js";
+import React, { useEffect } from 'react';
+import './ViewRequests.scss';
+import TableView from '../../WorkshopsComponents/TableView/TableView.jsx';
+import usePagination from '../../../../utils/hooks/usePagination/usePagination';
+import { sortRequests } from '../../WorkshopsComponents/TableView/functions.js';
 
 const ViewRequests = (data) => {
-  const sortBy = { curSort: "id", id: "desc" };
+  const sortBy = { curSort: 'id', id: 'desc' };
 
   const printConfig = {
-    ["id"]: {
+    ['id']: {
       visible: true,
     },
-    ["date"]: {
+    ['date']: {
       visible: false,
     },
-    ["products"]: {
+    ['products']: {
       visible: true,
     },
-    ["client"]: {
+    ['client']: {
       visible: false,
     },
-    ["responsible"]: {
+    ['responsible']: {
       visible: true,
     },
-    ["status"]: {
+    ['status']: {
       visible: false,
     },
-    ["date-shipping"]: {
+    ['date-shipping']: {
       visible: true,
     },
-    ["comment"]: {
+    ['comment']: {
       visible: true,
     },
-    ["price"]: {
+    ['price']: {
       visible: true,
     },
   };
@@ -40,11 +40,11 @@ const ViewRequests = (data) => {
   const pages = usePagination(
     () => sortRequests(data.requests, sortBy),
     [data.requests],
-    "static",
+    'static',
     {
       size: 10,
       ignoreURL: true,
-    }
+    },
   );
 
   return (

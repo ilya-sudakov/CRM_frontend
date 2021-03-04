@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import deleteSVG from "../../../../../assets/select/delete.svg";
-import AddToButton from "../../../../utils/Form/AddToButton/AddToButton.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
-import "./SelectContacts.scss";
+import React, { useState, useEffect } from 'react';
+import deleteSVG from '../../../../../assets/select/delete.svg';
+import AddToButton from '../../../../utils/Form/AddToButton/AddToButton.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import './SelectContacts.scss';
 
 const SelectContacts = (props) => {
   const [selected, setSelected] = useState([
     {
-      name: "",
-      lastName: "",
-      email: "",
-      position: "",
-      phoneNumber: "",
+      name: '',
+      lastName: '',
+      email: '',
+      position: '',
+      phoneNumber: '',
       isMinimized: false,
     },
   ]);
@@ -35,22 +35,22 @@ const SelectContacts = (props) => {
     setSelected([
       ...selected,
       {
-        name: "",
-        lastName: "",
-        email: "",
-        position: "",
-        phoneNumber: "",
+        name: '',
+        lastName: '',
+        email: '',
+        position: '',
+        phoneNumber: '',
         isMinimized: true,
       },
     ]);
     props.handleContactsChange([
       ...selected,
       {
-        name: "",
-        lastName: "",
-        email: "",
-        position: "",
-        phoneNumber: "",
+        name: '',
+        lastName: '',
+        email: '',
+        position: '',
+        phoneNumber: '',
       },
     ]);
   };
@@ -63,8 +63,8 @@ const SelectContacts = (props) => {
   };
 
   const handleInputChange = (event) => {
-    const id = event.target.getAttribute("index");
-    const name = event.target.getAttribute("name");
+    const id = event.target.getAttribute('index');
+    const name = event.target.getAttribute('name');
     let value = event.target.value;
     let temp = selected;
     let originalItem = selected[id];
@@ -100,27 +100,27 @@ const SelectContacts = (props) => {
                 isMinimizedDefault={props.isMinimizedDefault}
                 headerItems={[
                   {
-                    text: "ФИО",
+                    text: 'ФИО',
                     value:
-                      item.lastName === "" && item.name === ""
-                        ? ""
+                      item.lastName === '' && item.name === ''
+                        ? ''
                         : `${item.lastName} ${item.name}`,
-                    placeholder: "Введите ФИО...",
+                    placeholder: 'Введите ФИО...',
                   },
                   {
-                    text: "E-mail",
+                    text: 'E-mail',
                     value: item.email,
-                    placeholder: "Введите email...",
+                    placeholder: 'Введите email...',
                   },
                   {
-                    text: "Телефон",
+                    text: 'Телефон',
                     value: item.phoneNumber,
-                    placeholder: "Введите телефон...",
+                    placeholder: 'Введите телефон...',
                   },
                 ]}
                 formInputs={[
                   {
-                    name: "Имя",
+                    name: 'Имя',
                     element: (
                       <input
                         type="text"
@@ -134,7 +134,7 @@ const SelectContacts = (props) => {
                     ),
                   },
                   {
-                    name: "Фамилия",
+                    name: 'Фамилия',
                     element: (
                       <input
                         type="text"
@@ -148,7 +148,7 @@ const SelectContacts = (props) => {
                     ),
                   },
                   {
-                    name: "Должность",
+                    name: 'Должность',
                     element: (
                       <input
                         type="text"
@@ -162,7 +162,7 @@ const SelectContacts = (props) => {
                     ),
                   },
                   {
-                    name: "E-mail",
+                    name: 'E-mail',
                     element: (
                       <input
                         type="text"
@@ -176,7 +176,7 @@ const SelectContacts = (props) => {
                     ),
                   },
                   {
-                    name: "Номер телефона",
+                    name: 'Номер телефона',
                     element: (
                       <input
                         type="text"

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import '../ErrorPage/ErrorPage.scss'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import '../ErrorPage/ErrorPage.scss';
 
 const NotAllowedPage = () => {
   return (
@@ -23,7 +23,7 @@ const NotAllowedPage = () => {
         На главную
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default NotAllowedPage
+export default NotAllowedPage;

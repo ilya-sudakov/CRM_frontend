@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import SearchBar from "../../../SearchBar/SearchBar.jsx";
-import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import TableView from "./TableView.jsx";
-import MessageForUser from "../../../../../utils/Form/MessageForUser/MessageForUser.jsx";
-import { formatDateStringNoYear } from "../../../../../utils/functions.jsx";
-import { days } from "../../../../../utils/dataObjects.js";
+import { useEffect, useState } from 'react';
+import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
+import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import TableView from './TableView.jsx';
+import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
+import { formatDateStringNoYear } from 'Utils/functions.jsx';
+import { days } from 'Utils/dataObjects.js';
 
-import "./ProductionJournal.scss";
-import useWorkReport from "../../../../../utils/hooks/useWorkReport.js";
-import useFormWindow from "../../../../../utils/hooks/useFormWindow.js";
-import RecordWorkForm from "./RecordWorkForm.jsx";
-import { createWorkListPDF, updateData } from "./functions.js";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
+import './ProductionJournal.scss';
+import useWorkReport from 'Utils/hooks/useWorkReport.js';
+import useFormWindow from 'Utils/hooks/useFormWindow.js';
+import RecordWorkForm from './RecordWorkForm.jsx';
+import { createWorkListPDF, updateData } from './functions.js';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 const ProductionJournal = ({}) => {
   const [showMessage, setShowMessage] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
   const [curWorkItem, setCurWorkItem] = useState({
-    day: "today",
-    title: "Создание записи о работе",
-    type: "new",
-    workshop: "lemz",
+    day: 'today',
+    title: 'Создание записи о работе',
+    type: 'new',
+    workshop: 'lemz',
     employee: {},
     worksList: [],
     workId: 0,
@@ -42,9 +42,9 @@ const ProductionJournal = ({}) => {
       showWindow={() => showWindow}
       setShowWindow={setShowWindow}
     />,
-    [curWorkItem]
+    [curWorkItem],
   );
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const {
     worktimeInputs: todaysWork,
     employees,
@@ -58,28 +58,28 @@ const ProductionJournal = ({}) => {
   } = useWorkReport(new Date(new Date(curDay).setDate(curDay.getDate() - 1)));
 
   useEffect(() => {
-    document.title = "Дневник производства";
+    document.title = 'Дневник производства';
     console.log(todaysWork, yesterdaysWork);
   }, [todaysWork, yesterdaysWork]);
 
   const defaultWorkItem = {
     product: [],
     draft: [],
-    workName: "",
-    workType: "",
+    workName: '',
+    workType: '',
     workId: null,
     hours: 0,
-    comment: "",
+    comment: '',
     isOld: false,
   };
 
   const handleOpenWorkForm = (
-    day = "today",
-    type = "new",
-    workshop = "lemz",
+    day = 'today',
+    type = 'new',
+    workshop = 'lemz',
     employee,
     worksList,
-    workId
+    workId,
   ) => {
     handleCloseWindow();
     const deletedWork = worksList
@@ -114,28 +114,28 @@ const ProductionJournal = ({}) => {
     setCurWorkItem({
       day: day,
       date:
-        day === "today"
+        day === 'today'
           ? curDay
           : new Date(new Date(curDay).setDate(curDay.getDate() - 1)),
       type: type,
       workshop: workshop,
       employee: employee,
-      works: type === "new" ? [defaultWorkItem] : [selectedWork],
+      works: type === 'new' ? [defaultWorkItem] : [selectedWork],
       title:
-        type === "new"
-          ? "Создание записи о работе"
-          : "Редактирование записи о работе",
+        type === 'new'
+          ? 'Создание записи о работе'
+          : 'Редактирование записи о работе',
       hideWindow: () => setShowWindow(!showWindow),
       updateSelectedDaysWork: (newData) =>
-        day === "today"
+        day === 'today'
           ? updateSelectedDaysWork(todaysWork, setTodaysWork, newData)
           : updateSelectedDaysWork(yesterdaysWork, setYesterdaysWork, newData),
       deleteSelectedDaysWork: () =>
-        day === "today"
+        day === 'today'
           ? deleteSelectedDaysWork(todaysWork, setTodaysWork)
           : deleteSelectedDaysWork(yesterdaysWork, setYesterdaysWork),
       addSelectedDaysWork: (newData) =>
-        day === "today"
+        day === 'today'
           ? addSelectedDaysWork(todaysWork, setTodaysWork, newData)
           : addSelectedDaysWork(yesterdaysWork, setYesterdaysWork, newData),
     });
@@ -207,18 +207,18 @@ const ProductionJournal = ({}) => {
 
 export default ProductionJournal;
 
-const ChangeDayButton = ({ day = "prevDay", setCurDay, curDay }) => {
+const ChangeDayButton = ({ day = 'prevDay', setCurDay, curDay }) => {
   return (
     <ChevronSVG
       className="main-window__img"
-      style={{ transform: `rotate(${day === "prevDay" ? "90deg" : "-90deg"})` }}
+      style={{ transform: `rotate(${day === 'prevDay' ? '90deg' : '-90deg'})` }}
       onClick={() =>
         setCurDay(
           new Date(
             new Date(curDay).setDate(
-              curDay.getDate() + (day === "prevDay" ? 1 : -1)
-            )
-          )
+              curDay.getDate() + (day === 'nextDay' ? 1 : -1),
+            ),
+          ),
         )
       }
     />

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import "./Button.scss";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import './Button.scss';
 
 const Button = ({
   inverted = false,
-  className = "",
+  className = '',
   isLoading = false,
-  imgSrc = "",
-  type = "button",
-  text = "Нажмите",
+  imgSrc = '',
+  type = 'button',
+  text = 'Нажмите',
   onClick = null,
   style = {},
   isRecent = false,
 }) => {
   const [newClassName] = useState(
-    `button ${inverted ? ` button--inverted` : ""}`
+    `button ${inverted ? ` button--inverted` : ''}`,
   );
 
   const handleClick = (event) => {
@@ -26,22 +26,22 @@ const Button = ({
 
   return (
     <button
-      className={`${newClassName} ${className ?? ""} ${
-        isRecent ? "main-window__button--recent" : ""
+      className={`${newClassName} ${className ?? ''} ${
+        isRecent ? 'main-window__button--recent' : ''
       }`}
       onClick={handleClick}
-      type={type ? type : "button"}
+      type={type ? type : 'button'}
       style={{ ...style }}
     >
       {imgSrc && (
         <img
-          className={`button__img ${isLoading ? "button__img--hidden" : ""}`}
+          className={`button__img ${isLoading ? 'button__img--hidden' : ''}`}
           src={imgSrc}
           alt=""
         />
       )}
       <span
-        className={`button__text ${isLoading ? "button__text--hidden" : ""}`}
+        className={`button__text ${isLoading ? 'button__text--hidden' : ''}`}
       >
         {text}
       </span>

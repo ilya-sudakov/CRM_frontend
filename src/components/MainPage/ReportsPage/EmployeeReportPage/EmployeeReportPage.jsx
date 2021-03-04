@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import SelectEmployee from "../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+import React, { useContext, useEffect, useState } from 'react';
+import SelectEmployee from '../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 // import EmployeeInfoPanel from "./EmployeeInfo.jsx";
-import EmployeeInfoPanel from "../../GeneralPage/ReportTablePage/EmployeeInfo/EmployeeInfo.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { formatDateString } from "../../../../utils/functions.jsx";
-import useWorkReportByRange from "../../../../utils/hooks/useWorkReportByRange.js";
-import UserContext from "../../../../App.js";
-import "./EmployeeReportPage.scss";
-import { months } from "../../../../utils/dataObjects.js";
+import EmployeeInfoPanel from '../../GeneralPage/ReportTablePage/EmployeeInfo/EmployeeInfo.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { formatDateString } from '../../../../utils/functions.jsx';
+import useWorkReportByRange from '../../../../utils/hooks/useWorkReportByRange.js';
+import UserContext from '../../../../App.js';
+import './EmployeeReportPage.scss';
+import { months } from '../../../../utils/dataObjects.js';
 import {
   getWeekDays,
   getPreviousMonthDates,
   getPreviousQuarterDates,
   getDaysArray,
-} from "./functions.js";
+} from './functions.js';
 
 const EmployeeReportPage = () => {
   const [selectedInfo, setSelectedInfo] = useState(null);
@@ -22,7 +22,7 @@ const EmployeeReportPage = () => {
     startDate: getWeekDays(new Date()).startDate,
     endDate: getWeekDays(new Date()).endDate,
   });
-  const [curPeriod, setCurPeriod] = useState("week");
+  const [curPeriod, setCurPeriod] = useState('week');
   const userContext = useContext(UserContext);
 
   const handleEmployeeChange = (value, name, employee) => {
@@ -42,15 +42,15 @@ const EmployeeReportPage = () => {
 
   const timePeriods = {
     week: {
-      name: "Неделя",
+      name: 'Неделя',
       prevButton: {
-        text: "Пред. неделя",
+        text: 'Пред. неделя',
         onClick: () =>
           setSelectedDate((selectedDate) => {
             const newDate = new Date(
               new Date(selectedDate.startDate).setTime(
-                selectedDate.startDate.getTime() - 7 * 24 * 60 * 60 * 1000
-              )
+                selectedDate.startDate.getTime() - 7 * 24 * 60 * 60 * 1000,
+              ),
             );
             return {
               startDate: newDate,
@@ -59,7 +59,7 @@ const EmployeeReportPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. неделя",
+        text: 'Тек. неделя',
         onClick: () =>
           setSelectedDate({
             startDate: getWeekDays(new Date()).startDate,
@@ -70,7 +70,7 @@ const EmployeeReportPage = () => {
         getDaysArray(selectedDate.startDate, selectedDate.endDate),
       displayDates: () =>
         `${formatDateString(selectedDate.startDate)} - ${formatDateString(
-          selectedDate.endDate
+          selectedDate.endDate,
         )}`,
       initData: () =>
         setSelectedDate({
@@ -79,9 +79,9 @@ const EmployeeReportPage = () => {
         }),
     },
     month: {
-      name: "Месяц",
+      name: 'Месяц',
       prevButton: {
-        text: "Пред. месяц",
+        text: 'Пред. месяц',
         onClick: () =>
           setSelectedDate((selectedDate) => {
             return {
@@ -92,11 +92,11 @@ const EmployeeReportPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. месяц",
+        text: 'Тек. месяц',
         onClick: () =>
           setSelectedDate({
-            startDate: getPreviousMonthDates(new Date(), "current").startDate,
-            endDate: getPreviousMonthDates(new Date(), "current").endDate,
+            startDate: getPreviousMonthDates(new Date(), 'current').startDate,
+            endDate: getPreviousMonthDates(new Date(), 'current').endDate,
           }),
       },
       getDateList: () =>
@@ -104,14 +104,14 @@ const EmployeeReportPage = () => {
       displayDates: () => months[selectedDate.startDate.getMonth()],
       initData: () =>
         setSelectedDate({
-          startDate: getPreviousMonthDates(new Date(), "current").startDate,
-          endDate: getPreviousMonthDates(new Date(), "current").endDate,
+          startDate: getPreviousMonthDates(new Date(), 'current').startDate,
+          endDate: getPreviousMonthDates(new Date(), 'current').endDate,
         }),
     },
     quarter: {
-      name: "Квартал",
+      name: 'Квартал',
       prevButton: {
-        text: "Пред. квартал",
+        text: 'Пред. квартал',
         onClick: () =>
           setSelectedDate((selectedDate) => {
             return {
@@ -122,29 +122,29 @@ const EmployeeReportPage = () => {
           }),
       },
       nextButton: {
-        text: "Тек. квартал",
+        text: 'Тек. квартал',
         onClick: () =>
           setSelectedDate({
-            startDate: getPreviousQuarterDates(new Date(), "current").startDate,
-            endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+            startDate: getPreviousQuarterDates(new Date(), 'current').startDate,
+            endDate: getPreviousQuarterDates(new Date(), 'current').endDate,
           }),
       },
       getDateList: () =>
         getDaysArray(selectedDate.startDate, selectedDate.endDate),
       displayDates: () =>
         `${formatDateString(selectedDate.startDate)} - ${formatDateString(
-          selectedDate.endDate
+          selectedDate.endDate,
         )}`,
       initData: () =>
         setSelectedDate({
-          startDate: getPreviousQuarterDates(new Date(), "current").startDate,
-          endDate: getPreviousQuarterDates(new Date(), "current").endDate,
+          startDate: getPreviousQuarterDates(new Date(), 'current').startDate,
+          endDate: getPreviousQuarterDates(new Date(), 'current').endDate,
         }),
     },
   };
 
   const [workData, isLoadingWorkData] = useWorkReportByRange(
-    timePeriods[curPeriod].getDateList()
+    timePeriods[curPeriod].getDateList(),
   );
 
   useEffect(() => {
@@ -161,7 +161,7 @@ const EmployeeReportPage = () => {
             }) ?? [],
         works:
           workData.filter(
-            (item) => item.employee.id === selectedInfo.employeeId
+            (item) => item.employee.id === selectedInfo.employeeId,
           ) ?? [],
       });
     }
@@ -174,7 +174,7 @@ const EmployeeReportPage = () => {
           <div className="main-window__title">Отчет сотрудника</div>
         </div>
         <ControlPanel
-          styles={{ marginTop: "-5px" }}
+          styles={{ marginTop: '-5px' }}
           itemsCount={timePeriods[curPeriod].displayDates()}
           buttons={
             <>

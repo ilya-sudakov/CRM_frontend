@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import editIcon from "../../../../../../assets/tableview/edit.svg";
-import deleteIcon from "../../../../../../assets/tableview/delete.svg";
-import printSVG from "../../../../../../assets/tableview/print.svg";
-import "./TableView.scss";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import editIcon from '../../../../../../assets/tableview/edit.svg';
+import deleteIcon from '../../../../../../assets/tableview/delete.svg';
+import printSVG from '../../../../../../assets/tableview/print.svg';
+import './TableView.scss';
 import {
   changeVisibilityOfListItem,
   formatDateString,
-} from "../../../../../utils/functions.jsx";
-import { getEmployeesByWorkshopListPdfText } from "../functions.js";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { sortByField } from "../../../../../utils/sorting/sorting";
-import { filterEmployeesBySearchQuery } from "../functions.js";
+} from '../../../../../utils/functions.jsx';
+import { getEmployeesByWorkshopListPdfText } from '../functions.js';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from '../../../../../utils/sorting/sorting';
+import { filterEmployeesBySearchQuery } from '../functions.js';
 
 const TableView = (props) => {
   const workshops = [
-    "ЦехЛЭМЗ",
-    "ЦехЛепсари",
-    "ЦехЛиговский",
-    "Офис",
-    "Уволенные",
+    'ЦехЛЭМЗ',
+    'ЦехЛепсари',
+    'ЦехЛиговский',
+    'Офис',
+    'Уволенные',
   ];
   const [workshopsVisible, setWorkshopsVisible] = useState([]);
 
   const sortEmployees = (data) => {
     return sortByField(filterEmployeesBySearchQuery(data, props.searchQuery), {
-      fieldName: "lastName",
-      direction: "asc",
+      fieldName: 'lastName',
+      direction: 'asc',
     });
   };
 
@@ -51,8 +51,8 @@ const TableView = (props) => {
     return data.filter(
       (employee) =>
         (workshopItem === employee.workshop &&
-          employee.relevance !== "Уволен") ||
-        (workshopItem === "Уволенные" && employee.relevance === "Уволен")
+          employee.relevance !== 'Уволен') ||
+        (workshopItem === 'Уволенные' && employee.relevance === 'Уволен'),
     );
   };
 
@@ -63,7 +63,7 @@ const TableView = (props) => {
         temp.push({
           id: index,
           hidden: true,
-        })
+        }),
       );
       setWorkshopsVisible([...temp]);
     }
@@ -78,7 +78,7 @@ const TableView = (props) => {
         </div>
         {workshops.map((item, index) => {
           const sortedEmployees = sortEmployees(
-            filterEmployees(props.data, item)
+            filterEmployees(props.data, item),
           );
           return (
             <>
@@ -89,12 +89,12 @@ const TableView = (props) => {
                 <span>
                   <div className="main-window__mobile-text">Подразделение:</div>
                   {item}
-                  {item !== "Уволенные" ? (
+                  {item !== 'Уволенные' ? (
                     <span className="main-window__items-count">
                       {
                         filterEmployeesBySearchQuery(
                           sortedEmployees,
-                          props.searchQuery
+                          props.searchQuery,
                         ).length
                       }
                     </span>
@@ -116,8 +116,8 @@ const TableView = (props) => {
               <div
                 className={
                   isWorkshopHidden(index)
-                    ? "main-window__list-options main-window__list-options--hidden"
-                    : "main-window__list-options"
+                    ? 'main-window__list-options main-window__list-options--hidden'
+                    : 'main-window__list-options'
                 }
               >
                 <div className="main-window__list">
@@ -136,7 +136,7 @@ const TableView = (props) => {
                     />
                   )}
                   {sortedEmployees.map((employee, employee_id) => (
-                    <div key={employee_id} className={"main-window__list-item"}>
+                    <div key={employee_id} className={'main-window__list-item'}>
                       <span>
                         <div className="main-window__mobile-text">ФИО:</div>
                         {`${employee.lastName} ${employee.name} ${employee.middleName}`}
@@ -175,7 +175,7 @@ const TableView = (props) => {
                             alt=""
                           />
                         </Link>
-                        {props.userHasAccess(["ROLE_ADMIN"]) && (
+                        {props.userHasAccess(['ROLE_ADMIN']) && (
                           <div
                             className="main-window__action"
                             onClick={() => props.deleteItem(employee.id)}

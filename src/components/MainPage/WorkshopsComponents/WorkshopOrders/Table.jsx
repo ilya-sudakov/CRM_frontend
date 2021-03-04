@@ -1,13 +1,13 @@
-import React from "react";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React from 'react';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateString,
   addSpaceDelimiter,
-} from "../../../../utils/functions.jsx";
+} from '../../../../utils/functions.jsx';
 
-import editSVG from "../../../../../assets/tableview/edit.svg";
-import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import TableActions from '../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 
 const Tableview = ({
   data,
@@ -39,7 +39,7 @@ const Tableview = ({
         return (
           <div
             className={
-              "main-window__list-item main-window__list-item--" + order.status
+              'main-window__list-item main-window__list-item--' + order.status
             }
           >
             <span>
@@ -67,14 +67,14 @@ const Tableview = ({
               <div className="main-window__mobile-text">Назначение: </div>
               {order.assembly}
             </span>
-            <span className={"main-window__list-item--" + order.status}>
+            <span className={'main-window__list-item--' + order.status}>
               <div className="main-window__mobile-text">Статус: </div>
               {statuses.find((item) => item.className === order.status)?.name}
             </span>
             <span>
               <div className="main-window__mobile-text">Дата поставки: </div>
               {new Date(order.deliverBy) < new Date() &&
-              order.status !== "completed" ? (
+              order.status !== 'completed' ? (
                 <div className="main-window__reminder">
                   <div>!</div>
                   <div>{formatDateString(order.deliverBy)}</div>
@@ -88,7 +88,7 @@ const Tableview = ({
                 {
                   link: `${link}/edit/${order.id}`,
                   imgSrc: editSVG,
-                  title: "Редактирование заказа",
+                  title: 'Редактирование заказа',
                 },
                 {
                   customElement: (
@@ -97,7 +97,7 @@ const Tableview = ({
                       onClick={() => deleteItem(order)}
                     />
                   ),
-                  isRendered: userHasAccess(["ROLE_ADMIN"]),
+                  isRendered: userHasAccess(['ROLE_ADMIN']),
                 },
               ]}
             />

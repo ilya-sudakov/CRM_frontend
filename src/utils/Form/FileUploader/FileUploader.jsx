@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import "./FileUploader.scss";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import './FileUploader.scss';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
-  type = "readAsDataURL",
+  type = 'readAsDataURL',
   onChange,
   previewImage,
   maxSize = 5,
@@ -19,14 +19,14 @@ const FileUploader = ({
   const dropRef = React.createRef();
 
   const formats = {
-    "/.+\\.(jpeg|jpg|png|img)/": {
-      text: "Форматы JPEG, PNG, IMG",
+    '/.+\\.(jpeg|jpg|png|img)/': {
+      text: 'Форматы JPEG, PNG, IMG',
     },
-    "/.+\\.(xlsx|csv)/": {
-      text: "Форматы XLSX и CSV",
+    '/.+\\.(xlsx|csv)/': {
+      text: 'Форматы XLSX и CSV',
     },
-    "/.+\\.(docx)/": {
-      text: "Формат DOCX",
+    '/.+\\.(docx)/': {
+      text: 'Формат DOCX',
     },
   };
 
@@ -65,9 +65,9 @@ const FileUploader = ({
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null)
-      return setHasError("Некорректный формат файла!");
+      return setHasError('Некорректный формат файла!');
 
-    if (type === "fileOnly") return onChange(file);
+    if (type === 'fileOnly') return onChange(file);
 
     let reader = new FileReader();
     const { size } = file;
@@ -79,10 +79,10 @@ const FileUploader = ({
     setHasError(false);
     //Для разных типов файла - разные функции обработки данных
     switch (type) {
-      case "readAsArrayBuffer":
+      case 'readAsArrayBuffer':
         reader.readAsArrayBuffer(file);
         break;
-      case "readAsDataURL":
+      case 'readAsDataURL':
         reader.readAsDataURL(file);
         break;
       default:
@@ -99,21 +99,21 @@ const FileUploader = ({
   const handleDeleteFile = (event) => {
     event.preventDefault();
     setData(null);
-    onChange("");
+    onChange('');
   };
 
   useEffect(() => {
     const div = dropRef.current;
-    div.addEventListener("dragenter", onDragEnter);
-    div.addEventListener("dragleave", onDragLeave);
-    div.addEventListener("dragover", onDragOver);
-    div.addEventListener("drop", handleDropFile);
+    div.addEventListener('dragenter', onDragEnter);
+    div.addEventListener('dragleave', onDragLeave);
+    div.addEventListener('dragover', onDragOver);
+    div.addEventListener('drop', handleDropFile);
 
     return () => {
-      div.removeEventListener("dragenter", onDragEnter);
-      div.removeEventListener("dragleave", onDragLeave);
-      div.removeEventListener("dragover", onDragOver);
-      div.removeEventListener("drop", handleDropFile);
+      div.removeEventListener('dragenter', onDragEnter);
+      div.removeEventListener('dragleave', onDragLeave);
+      div.removeEventListener('dragover', onDragOver);
+      div.removeEventListener('drop', handleDropFile);
     };
   }, []);
 
@@ -121,25 +121,25 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader">
-      {previewImage && previewImage !== "" ? (
+      {previewImage && previewImage !== '' ? (
         <img className="file-uploader__preview-image" src={previewImage} />
       ) : null}
       <div
         className={`file-uploader__wrapper ${
-          isDraggingOver ? "file-uploader__wrapper--dragging" : ""
-        } ${hasError || error ? "file-uploader__wrapper--error" : ""}`}
+          isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
+        } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
         ref={dropRef}
         style={{
           minHeight:
-            data || (previewImage && previewImage !== "")
-              ? "fit-content"
-              : "var(--file-uploader__min-height)",
+            data || (previewImage && previewImage !== '')
+              ? 'fit-content'
+              : 'var(--file-uploader__min-height)',
         }}
       >
-        {data || (previewImage && previewImage !== "") ? (
+        {data || (previewImage && previewImage !== '') ? (
           <ul className="file-uploader__file-list">
             <li>
-              <div>{data?.name ?? "фотография.jpeg"}</div>
+              <div>{data?.name ?? 'фотография.jpeg'}</div>
               <div onClick={handleDeleteFile}>удалить</div>
             </li>
           </ul>
@@ -189,7 +189,7 @@ const FileUploader = ({
             setHasError(false);
           }}
         >
-          {error ? "Поле не заполнено!" : hasError}
+          {error ? 'Поле не заполнено!' : hasError}
         </div>
       )}
       {formats[regex.toString()] && (

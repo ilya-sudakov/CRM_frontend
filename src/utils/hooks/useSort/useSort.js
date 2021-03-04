@@ -1,7 +1,7 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import useQuery from "../useQuery.js";
-import { sortByField } from "../../sorting/sorting.js";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import useQuery from '../useQuery.js';
+import { sortByField } from '../../sorting/sorting.js';
 
 const useSort = (
   data = [],
@@ -9,31 +9,31 @@ const useSort = (
     //default values
     ignoreURL: false,
   },
-  changableParams = []
+  changableParams = [],
 ) => {
   const { query, pushParamToURL } = useQuery();
   const [sortedData, setSortedData] = useState(data);
-  const sortParamInURL = query.get("sort")
+  const sortParamInURL = query.get('sort')
     ? {
-        curSort: query.get("sort").split(",")[0],
-        date: query.get("sort").split(",")[1],
+        curSort: query.get('sort').split(',')[0],
+        date: query.get('sort').split(',')[1],
       }
     : null;
 
   const defaultSort = {
-    curSort: "date",
-    date: "desc",
+    curSort: 'date',
+    date: 'desc',
   };
 
   const [sortOrder, setSortOrder] = useState(
     props.sortOrder ??
-      (props.ignoreURL ? defaultSort : sortParamInURL ?? defaultSort)
+      (props.ignoreURL ? defaultSort : sortParamInURL ?? defaultSort),
   );
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(" ")[0];
-    const order = event.target.value.split(" ")[1];
-    pushParamToURL("sort", `${name},${order}`, props.ignoreURL);
+    const name = event.target.value.split(' ')[0];
+    const order = event.target.value.split(' ')[1];
+    pushParamToURL('sort', `${name},${order}`, props.ignoreURL);
     setSortOrder({
       curSort: name,
       [name]: order,
@@ -41,8 +41,8 @@ const useSort = (
   };
 
   const defaultOptions = [
-    { value: "date desc", text: "По дате (убыв.)" },
-    { value: "date asc", text: "По дате (возр.)" },
+    { value: 'date desc', text: 'По дате (убыв.)' },
+    { value: 'date asc', text: 'По дате (возр.)' },
   ];
 
   const sortPanel = (

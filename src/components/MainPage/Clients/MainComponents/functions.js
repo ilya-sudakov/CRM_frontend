@@ -1,22 +1,22 @@
-import { exportClientsEmailsCSV } from "../../../../utils/xlsxFunctions.js";
-import { getClients } from "../../../../utils/RequestsAPI/Clients.jsx";
+import { exportClientsEmailsCSV } from '../../../../utils/xlsxFunctions.js';
+import { getClients } from '../../../../utils/RequestsAPI/Clients.jsx';
 
 export const sortClients = (clients, searchQuery, sortOrder) => {
   return clients.sort((a, b) => {
-    if (searchQuery !== "") {
+    if (searchQuery !== '') {
       const first =
-          sortOrder.curSort === "nextDateContact"
+          sortOrder.curSort === 'nextDateContact'
             ? new Date(a[sortOrder.curSort])
             : a[sortOrder.curSort],
         second =
-          sortOrder.curSort === "nextDateContact"
+          sortOrder.curSort === 'nextDateContact'
             ? new Date(b[sortOrder.curSort])
             : b[sortOrder.curSort];
       if (first < second) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
       }
       if (first > second) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
       }
       return 0;
     }

@@ -1,21 +1,21 @@
-import React from "react";
-import { cleanup, screen } from "@testing-library/react";
-import PrivateRoute from "./PrivateRoute.jsx";
-import "@testing-library/jest-dom/extend-expect";
+import React from 'react';
+import { cleanup, screen } from '@testing-library/react';
+import PrivateRoute from './PrivateRoute.jsx';
+import '@testing-library/jest-dom/extend-expect';
 import {
   renderWithContext,
   renderWithRouter,
   renderWithRouterAndContext,
-} from "../../utils/testing/functions.js";
-import UserContext from "../../App.js";
+} from '../../utils/testing/functions.js';
+import UserContext from '../../App.js';
 
 //Данные пользователя
 const defaultUser = {
-  email: "",
-  username: "",
-  firstName: "",
-  lastName: "",
-  roles: ["ROLE_MANAGER"],
+  email: '',
+  username: '',
+  firstName: '',
+  lastName: '',
+  roles: ['ROLE_MANAGER'],
   id: 0,
 };
 
@@ -32,31 +32,31 @@ const userHasAccess = (rolesNeeded = []) => {
   return check;
 };
 
-describe("PrivateRoute component", () => {
+describe('PrivateRoute component', () => {
   afterEach(cleanup);
 
-  it("matches snapshot", () => {
+  it('matches snapshot', () => {
     const { asFragment } = renderWithContext(<PrivateRoute />);
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it("renders w/ context", () => {
+  it('renders w/ context', () => {
     renderWithContext(<PrivateRoute />);
   });
 
-  it("renders w/ router & context", () => {
+  it('renders w/ router & context', () => {
     renderWithRouterAndContext(<PrivateRoute />);
   });
 
-  it("redirect to LoginPage if token is not stored", () => {
+  it('redirect to LoginPage if token is not stored', () => {
     renderWithRouterAndContext(<PrivateRoute />);
     setTimeout(
-      () => expect(mockHistoryPush).toHaveBeenCalledWith("/login"),
-      1000
+      () => expect(mockHistoryPush).toHaveBeenCalledWith('/login'),
+      1000,
     );
   });
 
-  it("renders component if user is not allowed", () => {
+  it('renders component if user is not allowed', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
@@ -65,20 +65,20 @@ describe("PrivateRoute component", () => {
           userHasAccess,
         }}
       >
-        <PrivateRoute allowedRoles={["ROLE_ADMIN"]}>123</PrivateRoute>
-      </UserContext.Provider>
+        <PrivateRoute allowedRoles={['ROLE_ADMIN']}>123</PrivateRoute>
+      </UserContext.Provider>,
     );
 
     setTimeout(
       async () =>
         expect(
-          await screen.findByText("Доступ на эту страницу запрещен")
+          await screen.findByText('Доступ на эту страницу запрещен'),
         ).toBeInTheDocument(),
-      1000
+      1000,
     );
   });
 
-  it("renders component if no restrictions are provided", () => {
+  it('renders component if no restrictions are provided', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
@@ -88,16 +88,16 @@ describe("PrivateRoute component", () => {
         }}
       >
         <PrivateRoute>123</PrivateRoute>
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     setTimeout(
-      async () => expect(await screen.findByText("123")).toBeInTheDocument(),
-      1000
+      async () => expect(await screen.findByText('123')).toBeInTheDocument(),
+      1000,
     );
   });
 
-  it("renders component if user is allowed", () => {
+  it('renders component if user is allowed', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
@@ -106,19 +106,19 @@ describe("PrivateRoute component", () => {
           userHasAccess,
         }}
       >
-        <PrivateRoute allowedRoles={["ROLE_ADMIN", "ROLE_MANAGER"]}>
+        <PrivateRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}>
           123
         </PrivateRoute>
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     setTimeout(
-      async () => expect(await screen.findByText("123")).toBeInTheDocument(),
-      1000
+      async () => expect(await screen.findByText('123')).toBeInTheDocument(),
+      1000,
     );
   });
 
-  it("renders component if no restrictions are provided", () => {
+  it('renders component if no restrictions are provided', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
@@ -128,16 +128,16 @@ describe("PrivateRoute component", () => {
         }}
       >
         <PrivateRoute>123</PrivateRoute>
-      </UserContext.Provider>
+      </UserContext.Provider>,
     );
 
     setTimeout(
-      async () => expect(await screen.findByText("123")).toBeInTheDocument(),
-      1000
+      async () => expect(await screen.findByText('123')).toBeInTheDocument(),
+      1000,
     );
   });
 
-  it("doesnt render anything while loading", () => {
+  it('doesnt render anything while loading', () => {
     renderWithRouter(
       <UserContext.Provider
         value={{
@@ -146,16 +146,16 @@ describe("PrivateRoute component", () => {
           userHasAccess,
         }}
       >
-        <PrivateRoute allowedRoles={["ROLE_ADMIN"]}>123</PrivateRoute>
-      </UserContext.Provider>
+        <PrivateRoute allowedRoles={['ROLE_ADMIN']}>123</PrivateRoute>
+      </UserContext.Provider>,
     );
 
     setTimeout(
       async () =>
-        expect(await screen.findByText("123"))
+        expect(await screen.findByText('123'))
           .not()
           .toBeInTheDocument(),
-      1000
+      1000,
     );
   });
 });

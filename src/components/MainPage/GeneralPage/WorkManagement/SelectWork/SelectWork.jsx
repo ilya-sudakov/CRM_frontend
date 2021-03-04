@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
-import deleteSVG from "../../../../../../assets/select/delete.svg";
-import "./SelectWork.scss";
-import SelectWorkItem from "../../../Work/SelectWorkItem/SelectWorkItem.jsx";
-import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
-import SelectDraft from "../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx";
-import UserContext from "../../../../../App.js";
-import AddToButton from "../../../../../utils/Form/AddToButton/AddToButton.jsx";
-import useMessageForUser from "../../../../../utils/hooks/useMessageForUser";
+import React, { useState, useEffect, useContext } from 'react';
+import deleteSVG from '../../../../../../assets/select/delete.svg';
+import './SelectWork.scss';
+import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
+import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
+import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx';
+import UserContext from '../../../../../App.js';
+import AddToButton from '../../../../../utils/Form/AddToButton/AddToButton.jsx';
+import useMessageForUser from '../../../../../utils/hooks/useMessageForUser';
 
 const SelectWork = (props) => {
   const [selected, setSelected] = useState(props.defaultConfig ?? []);
   const userContext = useContext(UserContext);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { messageForUser, showMessage, setShowMessage } = useMessageForUser({
-    title: "Удаление элемента",
-    message: "Вы действительно хотите удалить этот элемент?",
+    title: 'Удаление элемента',
+    message: 'Вы действительно хотите удалить этот элемент?',
     onClick: () => deletePart(selectedIndex),
-    buttonText: "ОК",
+    buttonText: 'ОК',
   });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const SelectWork = (props) => {
       setSelected([...props.defaultValue]);
       const total = props.defaultValue.reduce(
         (sum, cur) => sum + Number.parseFloat(cur.hours),
-        0
+        0,
       );
       if (!props.setTotalHours) return;
       if (isNaN(total)) {
@@ -41,11 +41,11 @@ const SelectWork = (props) => {
       {
         product: [],
         draft: [],
-        workName: "",
-        workType: "",
+        workName: '',
+        workType: '',
         workId: null,
         hours: 0,
-        comment: "",
+        comment: '',
       },
     ]);
     props.handleWorkChange([
@@ -53,11 +53,11 @@ const SelectWork = (props) => {
       {
         product: [],
         draft: [],
-        workName: "",
+        workName: '',
         workId: null,
-        workType: "",
+        workType: '',
         hours: 0,
-        comment: "",
+        comment: '',
         isOld: false,
       },
     ]);
@@ -69,7 +69,7 @@ const SelectWork = (props) => {
     setSelected([...temp]);
     const total = temp.reduce(
       (sum, cur) => sum + Number.parseFloat(cur.hours),
-      0
+      0,
     );
     if (!props.setTotalHours) return;
     if (isNaN(total)) {
@@ -79,8 +79,8 @@ const SelectWork = (props) => {
   };
 
   const handleInputChange = (event) => {
-    const id = event.target.getAttribute("index");
-    const name = event.target.getAttribute("name");
+    const id = event.target.getAttribute('index');
+    const name = event.target.getAttribute('name');
     let value = event.target.value;
     const curSum = selected.reduce((sum, cur, curIndex) => {
       if (Number.parseInt(id) === curIndex) {
@@ -89,11 +89,11 @@ const SelectWork = (props) => {
         return Math.floor((sum + Number.parseFloat(cur.hours)) * 10) / 10;
       }
     }, 0);
-    if (name === "hours") {
+    if (name === 'hours') {
       if (Number.parseFloat(event.target.value) > 12) {
         value = 12;
       } else {
-        if (event.target.value === "") {
+        if (event.target.value === '') {
           value = 0;
         } else {
           value = Number.parseFloat(event.target.value);
@@ -110,7 +110,7 @@ const SelectWork = (props) => {
       [name]: value,
     });
     if (!props.setTotalHours) return;
-    if (name === "hours") {
+    if (name === 'hours') {
       if (isNaN(curSum)) {
         props.setTotalHours(0);
       } else {
@@ -137,8 +137,8 @@ const SelectWork = (props) => {
               <div
                 className={
                   !props.readOnly && selected.length > 1
-                    ? "select-work__selected_item select-work__selected_item--minimized"
-                    : "select-work__selected_item"
+                    ? 'select-work__selected_item select-work__selected_item--minimized'
+                    : 'select-work__selected_item'
                 }
                 key={index}
               >
@@ -165,9 +165,9 @@ const SelectWork = (props) => {
                     workItems={props.workItems}
                     readOnly={props.readOnly}
                   />
-                  {selected[index].workType === "Продукция" ||
+                  {selected[index].workType === 'Продукция' ||
                   selected[index].workType === undefined ||
-                  selected[index].typeOfWork === "Продукция" ? (
+                  selected[index].typeOfWork === 'Продукция' ? (
                     <div className="select-work__item select-work__item--products">
                       <div className="select-work__input_field">
                         <InputProducts
@@ -195,7 +195,7 @@ const SelectWork = (props) => {
                         />
                       </div>
                     </div>
-                  ) : selected[index].workType === "Чертеж" ? (
+                  ) : selected[index].workType === 'Чертеж' ? (
                     <SelectDraft
                       options
                       defaultValue={item.draft}

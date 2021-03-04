@@ -1,20 +1,20 @@
-import XLSX from "xlsx";
+import XLSX from 'xlsx';
 
 export const getPriceListColumnValue = (column, item) => {
-  return column.property === "partnerPrice"
+  return column.property === 'partnerPrice'
     ? item.partnerName
-    : column.property === "dealerPrice"
+    : column.property === 'dealerPrice'
     ? item.dealerName
-    : column.property === "distributorPrice" && item.distributorName;
+    : column.property === 'distributorPrice' && item.distributorName;
 };
 
 const getPriceListDefaultParsedObject = (item) => ({
   id: item.id,
-  groupImg1: "",
-  groupImg2: "",
-  groupImg3: "",
-  groupImg4: "",
-  footerImg: "",
+  groupImg1: '',
+  groupImg2: '',
+  groupImg3: '',
+  groupImg4: '',
+  footerImg: '',
   number: item.number,
   category: item.category,
   name: item.groupName,
@@ -55,29 +55,29 @@ const getPriceListParsedProduct = (item) => ({
   distributorPrice: item.distributorPrice
     ? item.distributorPrice.toFixed(2)
     : 0,
-  onSale: item.onSale === "да" ? true : false,
+  onSale: item.onSale === 'да' ? true : false,
 });
 
 export const parseExcelData = (result) => {
   let data = new Uint8Array(result);
-  let wb = XLSX.read(data, { type: "array" });
+  let wb = XLSX.read(data, { type: 'array' });
   var firstSheetName = wb.SheetNames[0];
   let firstSheet = wb.Sheets[firstSheetName];
   var excelRows = XLSX.utils.sheet_to_json(firstSheet);
   if (excelRows.length === 0) {
-    return alert("Файл пустой либо заполнен некорректно!");
+    return alert('Файл пустой либо заполнен некорректно!');
   }
   const disclaimer = excelRows[excelRows.length - 1].id;
   const titlePage = {
     to: excelRows[0].titlePage,
     date: excelRows[1].titlePage,
     slogan: excelRows[2].titlePage,
-    list: excelRows[3].titlePage.split("/"),
+    list: excelRows[3].titlePage.split('/'),
     active: true,
     isMinimized: true,
   };
   let parsedData = [];
-  let tempNumber = "000";
+  let tempNumber = '000';
   let groupData = null;
   let startId = 0,
     endId = 0;

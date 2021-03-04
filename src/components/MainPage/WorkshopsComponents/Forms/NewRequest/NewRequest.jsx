@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 
-import "./NewRequest.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
-import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import UserContext from "../../../../../App.js";
+import './NewRequest.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import UserContext from '../../../../../App.js';
 import {
   addRequest,
   addProductsToRequest,
   connectClientToRequest,
-} from "../../../../../utils/RequestsAPI/Requests.jsx";
-import { requestStatuses, workshops } from "../../workshopVariables.js";
-import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
-import { getPageByRequest, getRequestsDefaultInputs } from "../../functions.js";
-import useForm from "../../../../../utils/hooks/useForm";
+} from '../../../../../utils/RequestsAPI/Requests.jsx';
+import { requestStatuses, workshops } from '../../workshopVariables.js';
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
+import { getPageByRequest, getRequestsDefaultInputs } from '../../functions.js';
+import useForm from '../../../../../utils/hooks/useForm';
 
 const NewRequest = (props) => {
   const userContext = useContext(UserContext);
   const requestsDefaultInputs = getRequestsDefaultInputs(
     userContext.userData.username,
-    props.type
+    props.type,
   );
   const {
     handleInputChange,
@@ -51,17 +51,17 @@ const NewRequest = (props) => {
               packaging: item.packaging,
               status: item.status,
               name: item.name,
-            })
-          )
-        )
+            }),
+          ),
+        ),
       )
       .then(() => connectClientToRequest(id, formInputs.clientId))
       .then(() =>
         props.history.push(
           `${workshops[props.type].redirectURL}/${getPageByRequest(
-            formInputs
-          )}#${id}`
-        )
+            formInputs,
+          )}#${id}`,
+        ),
       )
       .catch((error) => {
         setIsLoading(false);
@@ -70,7 +70,7 @@ const NewRequest = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Создание заявки";
+    document.title = 'Создание заявки';
   }, []);
 
   return (
@@ -90,7 +90,7 @@ const NewRequest = (props) => {
               error={formErrors.date}
               name="date"
               selected={Date.parse(formInputs.date)}
-              handleDateChange={(value) => handleInputChange("date", value)}
+              handleDateChange={(value) => handleInputChange('date', value)}
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
             />
@@ -99,7 +99,7 @@ const NewRequest = (props) => {
               name="shippingDate"
               selected={formInputs.shippingDate}
               handleDateChange={(value) =>
-                handleInputChange("shippingDate", value)
+                handleInputChange('shippingDate', value)
               }
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
@@ -112,7 +112,7 @@ const NewRequest = (props) => {
             options
             name="requestProducts"
             onChange={(products) =>
-              handleInputChange("requestProducts", products)
+              handleInputChange('requestProducts', products)
             }
             defaultValue={formInputs.requestProducts}
             error={formErrors.requestProducts}
@@ -127,7 +127,7 @@ const NewRequest = (props) => {
             error={formErrors.responsible}
             defaultValue={formInputs.responsible}
             name="responsible"
-            handleUserChange={(user) => handleInputChange("responsible", user)}
+            handleUserChange={(user) => handleInputChange('responsible', user)}
             searchPlaceholder="Введите имя пользователя для поиска..."
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -138,7 +138,7 @@ const NewRequest = (props) => {
               <select
                 name="status"
                 onChange={({ target }) =>
-                  handleInputChange("status", target.value)
+                  handleInputChange('status', target.value)
                 }
                 value={formInputs.status}
               >
@@ -169,7 +169,7 @@ const NewRequest = (props) => {
             name="comment"
             defaultValue={formInputs.comment}
             handleInputChange={({ target }) =>
-              handleInputChange("comment", target.value)
+              handleInputChange('comment', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -180,7 +180,7 @@ const NewRequest = (props) => {
             type="number"
             defaultValue={formInputs.sum}
             handleInputChange={({ target }) =>
-              handleInputChange("sum", target.value)
+              handleInputChange('sum', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -189,7 +189,7 @@ const NewRequest = (props) => {
             inputName="Клиент"
             userHasAccess={userContext.userHasAccess}
             required
-            onChange={(value) => handleInputChange("clientId", value)}
+            onChange={(value) => handleInputChange('clientId', value)}
             error={formErrors.clientId}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}

@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import usePagination from "../../../../utils/hooks/usePagination/usePagination.js";
-import useSort from "../../../../utils/hooks/useSort/useSort.js";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
+import React, { useContext, useEffect, useState } from 'react';
+import usePagination from '../../../../utils/hooks/usePagination/usePagination.js';
+import useSort from '../../../../utils/hooks/useSort/useSort.js';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import {
   deleteLTD,
   getLTDList,
-} from "../../../../utils/RequestsAPI/PriceList/lts_list.js";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import UserContext from "../../../../App.js";
-import TableView from "./TableView/TableView.jsx";
+} from '../../../../utils/RequestsAPI/PriceList/lts_list.js';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import UserContext from '../../../../App.js';
+import TableView from './TableView/TableView.jsx';
 
-import "./LtdListPage.scss";
+import './LtdListPage.scss';
 
 const LtdListPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [ltdData, setLtdData] = useState([]);
   const userContext = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,21 +22,21 @@ const LtdListPage = () => {
     ltdData,
     {
       sortOrder: {
-        curSort: "name",
-        name: "asc",
+        curSort: 'name',
+        name: 'asc',
       },
       sortOptions: [
-        { value: "name asc", text: "По названию (А-Я)" },
-        { value: "name desc", text: "По названию (Я-А)" },
+        { value: 'name asc', text: 'По названию (А-Я)' },
+        { value: 'name desc', text: 'По названию (Я-А)' },
       ],
       ignoreURL: false,
     },
-    [ltdData]
+    [ltdData],
   );
   const { pagination, data } = usePagination(
     () => filterSearchQuery(sortedData),
     [searchQuery, sortOrder, sortedData],
-    "static"
+    'static',
   );
 
   const filterSearchQuery = (data) => {
@@ -46,12 +46,12 @@ const LtdListPage = () => {
         item.name?.toLowerCase().includes(query) ||
         item.inn?.toLowerCase().includes(query) ||
         item.kpp?.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
+        item.id.toString().includes(query),
     );
   };
 
   useEffect(() => {
-    document.title = "Список ООО";
+    document.title = 'Список ООО';
     loadLTDList();
   }, []);
 
@@ -78,8 +78,8 @@ const LtdListPage = () => {
           <div className="main-window__title">Список ООО</div>
         </div>
         <FloatingPlus
-          visibility={["ROLE_ADMIN", "ROLE_MANAGER"]}
-          linkTo={"/ltd-list/new"}
+          visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
+          linkTo={'/ltd-list/new'}
         />
         <SearchBar
           fullSize

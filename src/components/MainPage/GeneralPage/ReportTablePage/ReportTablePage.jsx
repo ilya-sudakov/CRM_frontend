@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import "./ReportTablePage.scss";
-import { getRecordedWorkByMonth } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import UserContext from "../../../../App.js";
-import FloatingPlus from "../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx";
-import SummaryPage from "./SummaryPage/SummaryPage.jsx";
-import { getMonthDates } from "./functions.js";
+import React, { useEffect, useState, useContext } from 'react';
+import './ReportTablePage.scss';
+import { getRecordedWorkByMonth } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import UserContext from '../../../../App.js';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import SummaryPage from './SummaryPage/SummaryPage.jsx';
+import { getMonthDates } from './functions.js';
 
 const ReportTablePage = () => {
   const [date, setDate] = useState(new Date());
@@ -14,7 +14,7 @@ const ReportTablePage = () => {
   const [workList, setWorkList] = useState({});
   const [showWindow, setShowWindow] = useState(false);
   const [selectedInfo, setSelectedInfo] = useState({});
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const userContext = useContext(UserContext);
 
   const getAllEmployeesWorkData = (date, signal) => {
@@ -30,7 +30,7 @@ const ReportTablePage = () => {
       getRecordedWorkByMonth(
         curDate.getMonth() + 1,
         curDate.getFullYear(),
-        signal
+        signal,
       )
         .then((res) => res.json())
         //Создаем объект с работами сотрудников, в которых их id - поля объекта,
@@ -59,8 +59,8 @@ const ReportTablePage = () => {
                     },
                   ],
                 },
-              }))
-          )
+              })),
+          ),
         )
         .then(() => {
           //Объединяем работы за одни и те же дни
@@ -129,7 +129,7 @@ const ReportTablePage = () => {
   };
 
   useEffect(() => {
-    document.title = "Табель";
+    document.title = 'Табель';
     let abortController = new AbortController();
     getAllEmployeesWorkData(date, abortController.signal);
     return function cancel() {
@@ -145,7 +145,7 @@ const ReportTablePage = () => {
         </div>
         <FloatingPlus
           linkTo="/work-management/record-time"
-          visibility={["ROLE_ADMIN", "ROLE_DISPATCHER"]}
+          visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />
         <SummaryPage
           isLoading={isLoading}

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import "./PlaceholderLoading.scss";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import './PlaceholderLoading.scss';
 
 const PlaceholderLoading = ({
   items = 3,
   itemClassName,
-  minHeight = "1.5rem",
+  minHeight = '1.5rem',
   placeholderContent,
   wrapperClassName,
 }) => {
@@ -19,7 +19,7 @@ const PlaceholderLoading = ({
         <div
           className={`placeholder-loading__item ${itemClassName}`}
           style={{ minHeight: minHeight }}
-        ></div>
+        ></div>,
       );
     }
     setElements([...temp]);

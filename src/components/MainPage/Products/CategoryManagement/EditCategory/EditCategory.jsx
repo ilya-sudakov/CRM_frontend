@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./EditCategory.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import React, { useEffect, useState } from 'react';
+import './EditCategory.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import {
   getCategoryById,
   editCategory,
-} from "../../../../../utils/RequestsAPI/Products/Categories.js";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { productCategoriesDefaultInputs } from "../../objects";
-import useForm from "../../../../../utils/hooks/useForm";
+} from '../../../../../utils/RequestsAPI/Products/Categories.js';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { productCategoriesDefaultInputs } from '../../objects';
+import useForm from '../../../../../utils/hooks/useForm';
 
 const EditCategory = (props) => {
   const {
@@ -27,22 +27,22 @@ const EditCategory = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     editCategory(formInputs, categoryId)
-      .then(() => props.history.push("/products"))
+      .then(() => props.history.push('/products'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование категории";
+    document.title = 'Редактирование категории';
     const id = props.history.location.pathname.split(
-      "/products/category/edit/"
+      '/products/category/edit/',
     )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
-      props.history.push("/products");
+      alert('Неправильный индекс заявки!');
+      props.history.push('/products');
     } else {
       setCategoryId(id);
       getCategoryById(id)
@@ -54,8 +54,8 @@ const EditCategory = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс категории!");
-          props.history.push("/products");
+          alert('Неправильный индекс категории!');
+          props.history.push('/products');
         });
     }
   }, []);
@@ -73,7 +73,7 @@ const EditCategory = (props) => {
           error={formErrors.category}
           defaultValue={formInputs.category}
           handleInputChange={({ target }) =>
-            handleInputChange("category", target.value)
+            handleInputChange('category', target.value)
           }
           name="category"
           errorsArr={formErrors}
@@ -86,7 +86,7 @@ const EditCategory = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/products")}
+            onClick={() => props.history.push('/products')}
             text="Вернуться назад"
           />
           <Button

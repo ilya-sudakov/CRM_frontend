@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
-import deleteSVG from "../../../../../../assets/select/delete.svg";
-import "./SelectDraft.scss";
-import SearchBar from "../../../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
-import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
-import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
-import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
+import React, { useState, useEffect, useCallback } from 'react';
+import deleteSVG from '../../../../../../assets/select/delete.svg';
+import './SelectDraft.scss';
+import SearchBar from '../../../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
+import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
 
 const SelectDraft = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchQueryCategory, setSearchQueryCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQueryCategory, setSearchQueryCategory] = useState('');
   const [selected, setSelected] = useState([]);
   const [drafts, setDrafts] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
@@ -21,7 +21,7 @@ const SelectDraft = (props) => {
     // console.log(drafts);
     let re = /[.,\s\-_]/gi;
     const query = searchQuery.toLowerCase();
-    let searchArr = query.split(" ");
+    let searchArr = query.split(' ');
     return (props.drafts ? props.drafts : drafts).filter((item) => {
       let check = true;
       searchArr.map((searchWord) => {
@@ -30,8 +30,8 @@ const SelectDraft = (props) => {
             false &&
           item.number
             .toLowerCase()
-            .replace(re, "")
-            .includes(query.replace(re, "")) === false
+            .replace(re, '')
+            .includes(query.replace(re, '')) === false
         )
           check = false;
       });
@@ -61,7 +61,7 @@ const SelectDraft = (props) => {
                 ...stamp,
                 value: stamp.id,
                 label: `${stamp.number}, ${stamp.name}`,
-                type: "Stamp",
+                type: 'Stamp',
               });
             });
           });
@@ -71,10 +71,10 @@ const SelectDraft = (props) => {
   }
 
   const clickOnOption = (event) => {
-    const value = event.currentTarget.getAttribute("name");
-    const id = event.currentTarget.getAttribute("id");
-    const type = event.currentTarget.getAttribute("type");
-    const number = event.currentTarget.getAttribute("number");
+    const value = event.currentTarget.getAttribute('name');
+    const id = event.currentTarget.getAttribute('id');
+    const type = event.currentTarget.getAttribute('type');
+    const number = event.currentTarget.getAttribute('number');
     setShowOptions(!showOptions);
     setSelected([
       ...selected,
@@ -122,7 +122,7 @@ const SelectDraft = (props) => {
   };
 
   const clickOnSelected = (event) => {
-    const id = event.target.getAttribute("id");
+    const id = event.target.getAttribute('id');
     let newSelected = selected;
     newSelected.splice(id, 1);
     setSelected([...newSelected]);
@@ -131,8 +131,8 @@ const SelectDraft = (props) => {
 
   const handleParamChange = (event) => {
     const value = event.target.value;
-    const name = event.target.getAttribute("name");
-    const id = event.target.getAttribute(name + "_id");
+    const name = event.target.getAttribute('name');
+    const id = event.target.getAttribute(name + '_id');
     let newSelected = selected;
     newSelected = newSelected.map((item, index) => {
       return {
@@ -155,11 +155,11 @@ const SelectDraft = (props) => {
       setSelected([...props.defaultValue]);
       setDefaultValueLoaded(true);
     }
-    document.addEventListener("keydown", pressEscKey, false);
+    document.addEventListener('keydown', pressEscKey, false);
     drafts.length === 0 && loadDrafts();
     // loadDrafts();
     return () => {
-      document.removeEventListener("keydown", pressEscKey, false);
+      document.removeEventListener('keydown', pressEscKey, false);
     };
   }, [props.defaultValue, props.categories, showOptions]);
 
@@ -177,8 +177,8 @@ const SelectDraft = (props) => {
       <div
         className={
           showOptions
-            ? "select-draft__overlay"
-            : "select-draft__overlay select-draft__overlay--hidden"
+            ? 'select-draft__overlay'
+            : 'select-draft__overlay select-draft__overlay--hidden'
         }
         onClick={() => setShowOptions(!showOptions)}
       ></div>
@@ -188,14 +188,14 @@ const SelectDraft = (props) => {
             type="text"
             className={
               props.error === true
-                ? "select-draft__input select-draft__input--error"
-                : "select-draft__input"
+                ? 'select-draft__input select-draft__input--error'
+                : 'select-draft__input'
             }
             onChange={handleInputChange}
             onClick={() => {
               !props.readOnly && setShowOptions(!showOptions);
             }}
-            placeholder={"Введите артикул чертежа для поиска..."}
+            placeholder={'Введите артикул чертежа для поиска...'}
             readOnly={props.readOnly || props.workshop}
           />
           <FormWindow
@@ -243,8 +243,8 @@ const SelectDraft = (props) => {
         <div
           className={
             showOptions
-              ? "select-draft__options"
-              : "select-draft__options select-draft__options--hidden"
+              ? 'select-draft__options'
+              : 'select-draft__options select-draft__options--hidden'
           }
         >
           {search().map((item, index) => (
@@ -257,7 +257,7 @@ const SelectDraft = (props) => {
               className="select-draft__option_item"
               onClick={clickOnOption}
             >
-              <div>{item.number + ", " + item.name}</div>
+              <div>{item.number + ', ' + item.name}</div>
             </div>
           ))}
         </div>
@@ -273,8 +273,8 @@ const SelectDraft = (props) => {
                 name="name"
                 autoComplete="off"
                 readOnly
-                value={`${item.number || ""}, ${item.name}`}
-                onChange={item.type === "new" ? handleParamChange : null}
+                value={`${item.number || ''}, ${item.name}`}
+                onChange={item.type === 'new' ? handleParamChange : null}
               />
               {!props.readOnly && !props.workshop && (
                 <img
@@ -288,7 +288,7 @@ const SelectDraft = (props) => {
             </div>
             <div className="select-draft__selected_quantity">
               <span className="select-draft__input-name">
-                Кол-во (шт.){!props.readOnly && "*"}
+                Кол-во (шт.){!props.readOnly && '*'}
               </span>
               <input
                 quantity_id={index}

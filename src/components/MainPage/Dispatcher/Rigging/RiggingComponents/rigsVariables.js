@@ -24,7 +24,7 @@ export const rigTypes = {
     type: 'parts',
     title: 'Запчасти',
   },
-}
+};
 
 export const rigStatuses = {
   production: {
@@ -39,7 +39,7 @@ export const rigStatuses = {
     name: 'Приоритет',
     className: 'defect',
   },
-}
+};
 
 export const riggingTypeList = {
   cuttingDimensions: {
@@ -60,20 +60,20 @@ export const riggingTypeList = {
   controll: {
     prev: 'erosion',
   },
-}
+};
 
 export const checkRiggingTypesInputs = (inputs, type = 'controll') => {
-  let check = true
-  let curType = riggingTypeList[type].prev
+  let check = true;
+  let curType = riggingTypeList[type].prev;
   while (curType !== null) {
     if (inputs[curType] === '' || inputs[curType] === null) {
-      check = false
-      return
+      check = false;
+      return;
     }
-    curType = riggingTypeList[curType].prev
+    curType = riggingTypeList[curType].prev;
   }
-  return check
-}
+  return check;
+};
 
 export const workshopsLocations = {
   lemz: {
@@ -85,4 +85,4 @@ export const workshopsLocations = {
   ligovskiy: {
     name: 'ЦехЛиговский',
   },
-}
+};

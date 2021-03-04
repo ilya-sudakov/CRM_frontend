@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import deleteSVG from "../../../../assets/select/delete.svg";
-import Select from "react-select";
-import "./SelectUser.scss";
-import { getUsers } from "../../../utils/RequestsAPI/Users.jsx";
-import { customSelectStyles } from "../../../utils/dataObjects";
+import React, { useState, useEffect, useCallback } from 'react';
+import deleteSVG from '../../../../assets/select/delete.svg';
+import Select from 'react-select';
+import './SelectUser.scss';
+import { getUsers } from '../../../utils/RequestsAPI/Users.jsx';
+import { customSelectStyles } from '../../../utils/dataObjects';
 
 const SelectUser = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [options, setOptions] = useState([]);
-  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedUser, setSelectedUser] = useState('');
   const [customUser, setCustomUser] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -50,8 +50,8 @@ const SelectUser = (props) => {
   };
 
   const clickOnOption = (event) => {
-    const value = event.target.getAttribute("name");
-    const id = event.target.getAttribute("id");
+    const value = event.target.getAttribute('name');
+    const id = event.target.getAttribute('id');
     clickOnInput();
     setSelectedUser(value);
     props.onChange(value, id);
@@ -76,9 +76,9 @@ const SelectUser = (props) => {
     if (props.defaultValue) {
       setSelectedUser(props.defaultValue);
     }
-    document.addEventListener("keydown", pressEscKey, false);
+    document.addEventListener('keydown', pressEscKey, false);
     return () => {
-      document.removeEventListener("keydown", pressEscKey, false);
+      document.removeEventListener('keydown', pressEscKey, false);
     };
   }, [props.defaultValue]);
 
@@ -88,8 +88,8 @@ const SelectUser = (props) => {
         <div
           className={
             showOptions
-              ? "select_user__overlay"
-              : "select_user__overlay select_user__overlay--hidden"
+              ? 'select_user__overlay'
+              : 'select_user__overlay select_user__overlay--hidden'
           }
           onClick={() => setShowOptions(!showOptions)}
         ></div>
@@ -107,8 +107,8 @@ const SelectUser = (props) => {
         <div
           className={
             showOptions
-              ? "select_user__options"
-              : "select_user__options select_user__options--hidden"
+              ? 'select_user__options'
+              : 'select_user__options select_user__options--hidden'
           }
         >
           {search().map((item, index) => (

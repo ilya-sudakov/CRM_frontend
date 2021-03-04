@@ -1,9 +1,9 @@
-import React from "react";
-import { getDataUri } from "../../../../../utils/functions.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import CheckBox from "../../../../../utils/Form/CheckBox/CheckBox.jsx";
-import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
-import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
+import React from 'react';
+import { getDataUri } from '../../../../../utils/functions.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
+import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
+import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
 
 const GroupTitlePage = ({ titlePage, setTitlePage }) => {
   const handleActivateTitlePageGroup = (value) => {
@@ -29,13 +29,13 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
             uniqueId={`fileTitlePage${index}`}
             onChange={async (result) => {
               const downgraded =
-                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
+                result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
               setTitlePage({
                 ...titlePage,
                 [name]: downgraded,
               });
             }}
-            previewImage={titlePage[name] !== "" ? titlePage[name] : null}
+            previewImage={titlePage[name] !== '' ? titlePage[name] : null}
           />
         </div>
       </div>
@@ -55,7 +55,7 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
           className={`main-window__img`}
           style={{ transform: `rotate(${titlePage.isMinimized ? 0 : 180}deg)` }}
           title={`${
-            titlePage.isMinimized ? "Раскрыть" : "Скрыть"
+            titlePage.isMinimized ? 'Раскрыть' : 'Скрыть'
           } Титульный лист`}
           onClick={handleMinimizeTitlePageGroup}
         />
@@ -74,9 +74,9 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
             }}
           />
           <div className="price-list__images-wrapper">
-            {getTitlePagePhotoInputElement("Фотография 1", 1, "img1")}
-            {getTitlePagePhotoInputElement("Фотография 2", 2, "img2")}
-            {getTitlePagePhotoInputElement("Фотография 3", 3, "img3")}
+            {getTitlePagePhotoInputElement('Фотография 1', 1, 'img1')}
+            {getTitlePagePhotoInputElement('Фотография 2', 2, 'img2')}
+            {getTitlePagePhotoInputElement('Фотография 3', 3, 'img3')}
           </div>
         </div>
       ) : null}

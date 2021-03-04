@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import './ClientCategories.scss'
-import editSVG from '../../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../../assets/tableview/delete.svg'
-import '../../../../utils/MainWindow/MainWindow.scss'
-import SearchBar from '../../SearchBar/SearchBar.jsx'
+import React, { useState, useEffect } from 'react';
+import './ClientCategories.scss';
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../../assets/tableview/delete.svg';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
   getClientCategories,
   deleteClientCategory,
   addClientCategory,
   editClientCategory,
   getSupplierCategories,
-} from '../../../../utils/RequestsAPI/Clients/Categories.js'
-import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx'
-import NewClientCategory from './NewClientCategory/NewClientCategory.jsx'
-import EditClientCategory from './EditClientCategory/EditClientCategory.jsx'
-import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx'
-import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+} from '../../../../utils/RequestsAPI/Clients/Categories.js';
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
+import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
+import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
+import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const ClientCategories = (props) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showWindow, setShowWindow] = useState(false)
-  const [categories, setCategories] = useState([])
-  const [curForm, setCurForm] = useState('new')
-  const [editCategory, setEditCategory] = useState(null)
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showWindow, setShowWindow] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [curForm, setCurForm] = useState('new');
+  const [editCategory, setEditCategory] = useState(null);
 
   const clientTypes = {
     clients: {
@@ -47,44 +47,44 @@ const ClientCategories = (props) => {
       deleteCategoryFunction: (id) => deleteClientCategory(id),
       visibility: ['ROLE_ADMIN'],
     },
-  }
+  };
 
   useEffect(() => {
-    loadData()
-  }, [props.type])
+    loadData();
+  }, [props.type]);
 
   const loadData = () => {
     clientTypes[props.type]
       .getCategoriesFunction()
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
-        setCategories(res)
-        setIsLoading(false)
-      })
-  }
+        console.log(res);
+        setCategories(res);
+        setIsLoading(false);
+      });
+  };
 
   const deleteItem = (id) => {
     clientTypes[props.type]
       .deleteCategoryFunction(id)
       .then(() => {
-        loadData()
+        loadData();
       })
       .catch((error) => {
         alert(
           'Ошибка при удалении записи! Убедитесь что в категории нет клиентов',
-        )
-        console.log(error)
-      })
-  }
+        );
+        console.log(error);
+      });
+  };
 
   return (
     <div className="client-categories">
       <div className="main-window">
         <FloatingPlus
           onClick={() => {
-            setCurForm('new')
-            setShowWindow(!showWindow)
+            setCurForm('new');
+            setShowWindow(!showWindow);
           }}
           visibility={clientTypes[props.type].visibility}
         />
@@ -95,8 +95,8 @@ const ClientCategories = (props) => {
               <div
                 className="main-window__button"
                 onClick={() => {
-                  setCurForm('new')
-                  setShowWindow(!showWindow)
+                  setCurForm('new');
+                  setShowWindow(!showWindow);
                 }}
               >
                 Создать категорию
@@ -155,20 +155,22 @@ const ClientCategories = (props) => {
           )}
           {categories
             .filter((item) => {
-              return item.name.toLowerCase().includes(searchQuery.toLowerCase())
+              return item.name
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
             })
             .sort((a, b) => {
               if (
                 a.name.localeCompare(b.name, undefined, { numeric: true }) < 0
               ) {
-                return -1
+                return -1;
               }
               if (
                 a.name.localeCompare(b.name, undefined, { numeric: true }) > 0
               ) {
-                return 1
+                return 1;
               }
-              return 0
+              return 0;
             })
             .map((item) => {
               return (
@@ -185,9 +187,9 @@ const ClientCategories = (props) => {
                     <div
                       className="main-window__action"
                       onClick={() => {
-                        setEditCategory(item)
-                        setCurForm('edit')
-                        setShowWindow(!showWindow)
+                        setEditCategory(item);
+                        setCurForm('edit');
+                        setShowWindow(!showWindow);
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />
@@ -196,7 +198,7 @@ const ClientCategories = (props) => {
                       <div
                         className="main-window__action"
                         onClick={() => {
-                          deleteItem(item.id)
+                          deleteItem(item.id);
                         }}
                       >
                         <img className="main-window__img" src={deleteSVG} />
@@ -204,12 +206,12 @@ const ClientCategories = (props) => {
                     )}
                   </div>
                 </div>
-              )
+              );
             })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ClientCategories
+export default ClientCategories;

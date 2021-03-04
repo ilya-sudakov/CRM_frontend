@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import ClientsIcon from "../../../../../assets/sidemenu/client.inline.svg";
-import { addSpaceDelimiter } from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import ClientsIcon from '../../../../../assets/sidemenu/client.inline.svg';
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const NewClientsStatsPanel = ({
   requests,
@@ -12,10 +12,10 @@ const NewClientsStatsPanel = ({
   getPrevData,
 }) => {
   const [stats, setStats] = useState({
-    category: "Новые клиенты",
+    category: 'Новые клиенты',
     percentage: 0,
     value: null,
-    linkTo: "/clients/categories",
+    linkTo: '/clients/categories',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -43,18 +43,18 @@ const NewClientsStatsPanel = ({
         !checkIfDateIsInRange(
           request.date,
           prevMonth.startDate,
-          prevMonth.endDate
+          prevMonth.endDate,
         ) &&
         !checkIfDateIsInRange(
           request.date,
           currDate.startDate,
-          currDate.endDate
+          currDate.endDate,
         ) &&
         clients[request.client.id] === undefined
       ) {
         clients = {
           ...clients,
-          [request.client.id]: "",
+          [request.client.id]: '',
         };
         return false;
       }
@@ -68,14 +68,14 @@ const NewClientsStatsPanel = ({
         checkIfDateIsInRange(
           request.date,
           prevMonth.startDate,
-          prevMonth.endDate
+          prevMonth.endDate,
         ) &&
         clients[request.client.id] === undefined
       ) {
         prevMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: "",
+          [request.client.id]: '',
         };
         return false;
       }
@@ -92,14 +92,14 @@ const NewClientsStatsPanel = ({
         checkIfDateIsInRange(
           request.date,
           currDate.startDate,
-          currDate.endDate
+          currDate.endDate,
         ) &&
         clients[request.client.id] === undefined
       ) {
         curMonthNewClients++;
         clients = {
           ...clients,
-          [request.client.id]: "",
+          [request.client.id]: '',
         };
         return true;
       }
@@ -112,7 +112,7 @@ const NewClientsStatsPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequestsNew}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
@@ -124,7 +124,7 @@ const NewClientsStatsPanel = ({
           ((curMonthNewClients - prevMonthNewClients) /
             (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

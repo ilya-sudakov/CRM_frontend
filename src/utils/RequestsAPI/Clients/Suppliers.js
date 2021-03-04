@@ -1,10 +1,10 @@
-import { request, requestINN } from '../../utilsAPI.jsx'
+import { request, requestINN } from '../../utilsAPI.jsx';
 
 export function getSuppliers(elements) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/' + '?size=' + elements,
     method: 'GET',
-  })
+  });
 }
 
 export function searchSuppliers(query) {
@@ -12,7 +12,7 @@ export function searchSuppliers(query) {
     url: process.env.API_BASE_URL + '/api/v1/client/search/',
     method: 'POST',
     body: JSON.stringify(query),
-  })
+  });
 }
 
 export function getSuppliersByCategory(category) {
@@ -20,7 +20,7 @@ export function getSuppliersByCategory(category) {
     url: process.env.API_BASE_URL + '/api/v1/client/category/',
     method: 'POST',
     body: JSON.stringify(category),
-  })
+  });
 }
 
 export function editNextContactDateSupplier(date) {
@@ -28,7 +28,7 @@ export function editNextContactDateSupplier(date) {
     url: process.env.API_BASE_URL + '/api/v1/client/date/',
     method: 'POST',
     body: JSON.stringify(date),
-  })
+  });
 }
 
 export function getSuppliersByCategoryAndType(
@@ -56,7 +56,7 @@ export function getSuppliersByCategoryAndType(
     method: 'POST',
     body: JSON.stringify(category_type),
     signal: signal,
-  })
+  });
 }
 
 export function searchSuppliersByCategoryAndType(query, signal) {
@@ -65,14 +65,14 @@ export function searchSuppliersByCategoryAndType(query, signal) {
     method: 'POST',
     body: JSON.stringify(query),
     signal: signal,
-  })
+  });
 }
 
 export function getClientById(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/' + id,
     method: 'GET',
-  })
+  });
 }
 
 export function addClient(newClient) {
@@ -80,7 +80,7 @@ export function addClient(newClient) {
     url: process.env.API_BASE_URL + '/api/v1/client',
     method: 'POST',
     body: JSON.stringify(newClient),
-  })
+  });
 }
 
 export function editClient(newClient, id) {
@@ -88,14 +88,14 @@ export function editClient(newClient, id) {
     url: process.env.API_BASE_URL + '/api/v1/client/' + id,
     method: 'PUT',
     body: JSON.stringify(newClient),
-  })
+  });
 }
 
 export function deleteClient(id) {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/client/' + id,
     method: 'DELETE',
-  })
+  });
 }
 
 export function getInfoByINN(INN) {
@@ -103,7 +103,7 @@ export function getInfoByINN(INN) {
     url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party',
     method: 'POST',
     body: JSON.stringify(INN),
-  })
+  });
 }
 
 export function getBIKByINN(INN) {
@@ -111,5 +111,5 @@ export function getBIKByINN(INN) {
     url: 'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/bank',
     method: 'POST',
     body: JSON.stringify(INN),
-  })
+  });
 }

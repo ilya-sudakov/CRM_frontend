@@ -1,15 +1,15 @@
-export const request = (options, contentType = "application/json") => {
+export const request = (options, contentType = 'application/json') => {
   const headers = new Headers({
-    "Content-Type": contentType,
+    'Content-Type': contentType,
   });
 
   if (
-    localStorage.getItem("accessToken") &&
-    !options.url.includes("refreshToken")
+    localStorage.getItem('accessToken') &&
+    !options.url.includes('refreshToken')
   ) {
     headers.append(
-      "Authorization",
-      "Bearer_" + localStorage.getItem("accessToken")
+      'Authorization',
+      'Bearer_' + localStorage.getItem('accessToken'),
     );
   }
 
@@ -27,11 +27,11 @@ export const request = (options, contentType = "application/json") => {
 
 export const requestINN = (options) => {
   const headers = new Headers({
-    "Content-Type": "application/json",
-    Accept: "application/json",
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
   });
 
-  headers.append("Authorization", "Token " + process.env.INN_TOKEN);
+  headers.append('Authorization', 'Token ' + process.env.INN_TOKEN);
 
   const defaults = { headers: headers };
 
@@ -45,15 +45,15 @@ export const requestINN = (options) => {
   });
 };
 
-export const getAuthHeaders = (contentType = "application/json") => {
+export const getAuthHeaders = (contentType = 'application/json') => {
   let headers = Object.assign({
-    "Content-Type": contentType,
+    'Content-Type': contentType,
   });
 
-  if (localStorage.getItem("accessToken")) {
+  if (localStorage.getItem('accessToken')) {
     headers = {
       ...headers,
-      authorization: `Bearer_${localStorage.getItem("accessToken")}`,
+      authorization: `Bearer_${localStorage.getItem('accessToken')}`,
     };
   }
   return { headers: headers };

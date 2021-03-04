@@ -1,13 +1,13 @@
-import React from "react";
-import { MemoryRouter } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import UserContext, { App } from "../../App.js";
-import { render } from "@testing-library/react";
+import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import UserContext, { App } from '../../App.js';
+import { render } from '@testing-library/react';
 
 const mockHistoryPush = jest.fn();
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
     push: mockHistoryPush,
   }),
@@ -32,7 +32,7 @@ export const renderWithRouterAndContext = (component) => {
     ...render(
       <MemoryRouter history={history}>
         {<App value={UserContext}>{component}</App>}
-      </MemoryRouter>
+      </MemoryRouter>,
     ),
   };
 };

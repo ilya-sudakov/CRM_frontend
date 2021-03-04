@@ -1,10 +1,10 @@
-import { getMainTasks } from "../../../../utils/RequestsAPI/MainTasks.js";
+import { getMainTasks } from '../../../../utils/RequestsAPI/MainTasks.js';
 
 export const filterTasks = (tasks) => {
-  return tasks.filter((task) => task.condition !== "Выполнено");
+  return tasks.filter((task) => task.condition !== 'Выполнено');
 };
 
-export const filterTasksByUser = (tasks, userRole = "admin") => {
+export const filterTasksByUser = (tasks, userRole = 'admin') => {
   return tasks.filter((task) => task.responsible === userRole);
 };
 
@@ -38,7 +38,7 @@ export const getTasksControlDatesList = (tasks) => {
       curDate = new Date(
         curDate.getFullYear(),
         curDate.getMonth(),
-        curDate.getDate()
+        curDate.getDate(),
       );
 
       return (controlDates = {

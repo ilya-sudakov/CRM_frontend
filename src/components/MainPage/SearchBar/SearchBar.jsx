@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import searchImg from '../../../../assets/searchbar/search.svg'
-import './SearchBar.scss'
+import React, { useState, useEffect } from 'react';
+import searchImg from '../../../../assets/searchbar/search.svg';
+import './SearchBar.scss';
 
 const SearchBar = (props) => {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    props.setSearchQuery(query)
-    props.onButtonClick && props.onButtonClick(query)
-  }
+    props.setSearchQuery(query);
+    props.onButtonClick && props.onButtonClick(query);
+  };
 
   const handleEnterPress = (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault()
-      handleSearch()
+      e.preventDefault();
+      handleSearch();
     }
-  }
+  };
 
   const clearQuery = () => {
-    const emptyField = ''
+    const emptyField = '';
     if (query !== '') {
-      setQuery(emptyField)
-      props.setSearchQuery(emptyField)
-      props.onButtonClick && props.onButtonClick(emptyField)
+      setQuery(emptyField);
+      props.setSearchQuery(emptyField);
+      props.onButtonClick && props.onButtonClick(emptyField);
     }
-  }
+  };
 
   useEffect(() => {
     // console.log(props.searchQuery);
-  }, [props.searchQuery])
+  }, [props.searchQuery]);
 
   return (
     <div
@@ -62,7 +62,7 @@ const SearchBar = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

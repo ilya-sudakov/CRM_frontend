@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 // import "./ReportTablePage.scss";
-import DownloadIcon from "../../../../../../assets/download.svg";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import SearchBar from "../../../SearchBar/SearchBar.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { getReportTableExcel } from "../getReportTableExcel.js";
-import ControlPanel from "../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import TableView from "./TableView.jsx";
-import { EmployeeInfo } from "./InfoComponents.jsx";
-import { formatDateString } from "../../../../../utils/functions.jsx";
-import { getDaysArray } from "../functions.js";
+import DownloadIcon from '../../../../../../assets/download.svg';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import SearchBar from '../../../SearchBar/SearchBar.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { getReportTableExcel } from '../getReportTableExcel.js';
+import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import TableView from './TableView.jsx';
+import { EmployeeInfo } from './InfoComponents.jsx';
+import { formatDateString } from '../../../../../utils/functions.jsx';
+import { getDaysArray } from '../functions.js';
 
 const SummaryPage = ({
   setSearchQuery,
@@ -54,11 +54,11 @@ const SummaryPage = ({
               onClick={async () => {
                 setExcelIsLoading(true);
                 const filteredWorkshops = [
-                  "ЦехЛЭМЗ",
-                  "ЦехЛепсари",
-                  "ЦехЛиговский",
-                  "Офис",
-                  "Уволенные",
+                  'ЦехЛЭМЗ',
+                  'ЦехЛепсари',
+                  'ЦехЛиговский',
+                  'Офис',
+                  'Уволенные',
                 ];
                 await getReportTableExcel(new Date(date), filteredWorkshops);
                 setExcelIsLoading(false);
@@ -74,7 +74,7 @@ const SummaryPage = ({
         header={
           selectedInfo?.selectedDay?.endDate
             ? `Отчет за период ${formatDateString(
-                selectedInfo.selectedDay?.startDate
+                selectedInfo.selectedDay?.startDate,
               )} - ${formatDateString(selectedInfo.selectedDay?.endDate)}`
             : formatDateString(selectedInfo.selectedDay?.startDate)
         }
@@ -82,7 +82,7 @@ const SummaryPage = ({
           selectedInfo?.selectedDay?.endDate
             ? getDaysArray(
                 selectedInfo.selectedDay.startDate,
-                selectedInfo.selectedDay.endDate
+                selectedInfo.selectedDay.endDate,
               )
             : [selectedInfo?.selectedDay?.startDate]
         }

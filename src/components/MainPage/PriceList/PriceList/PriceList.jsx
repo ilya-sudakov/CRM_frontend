@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from "react";
-import "./PriceList.scss";
-import "../../../../utils/Form/Form.scss";
+import React, { useState, useEffect } from 'react';
+import './PriceList.scss';
+import '../../../../utils/Form/Form.scss';
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
-} from "../../../../utils/RequestsAPI/PriceList/PriceList.jsx";
-import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import CheckBox from "../../../../utils/Form/CheckBox/CheckBox.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
+} from '../../../../utils/RequestsAPI/PriceList/PriceList.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
 import {
   defaultCategories,
   defaultOptionalColumns,
   locationTypes,
   defaultTitlePage,
-} from "./objects.js";
-import { getPriceListPdf } from "./getPriceListPdf.js";
-import { getPriceListExcel } from "./getPriceListExcel.js";
-import { Link } from "react-router-dom";
-import SelectLtd from "../LtdListPage/SelectLtd/SelectLtd.jsx";
-import { sortByField } from "../../../../utils/sorting/sorting";
-import { parseExcelData } from "./functions.js";
-import GroupTitlePage from "./components/GroupTitlePage.jsx";
-import CategoryHeader from "./components/CategoryHeader.jsx";
-import GroupOfProducts from "./components/GroupOfProducts.jsx";
+} from './objects.js';
+import { getPriceListPdf } from './getPriceListPdf.js';
+import { getPriceListExcel } from './getPriceListExcel.js';
+import { Link } from 'react-router-dom';
+import SelectLtd from '../LtdListPage/SelectLtd/SelectLtd.jsx';
+import { sortByField } from '../../../../utils/sorting/sorting';
+import { parseExcelData } from './functions.js';
+import GroupTitlePage from './components/GroupTitlePage.jsx';
+import CategoryHeader from './components/CategoryHeader.jsx';
+import GroupOfProducts from './components/GroupOfProducts.jsx';
 
 const PriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -31,13 +31,13 @@ const PriceList = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectAllCategories, setSelectAllCategories] = useState(true);
   const [selectAllGroups, setSelectAllGroups] = useState(true);
-  const [disclaimer, setDisclaimer] = useState("");
+  const [disclaimer, setDisclaimer] = useState('');
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
   const [selectedLtd, setSelectedLtd] = useState(null);
 
   const loadTitlePageImages = (_titlePage) => {
     setIsLoading(true);
-    return getPriceGroupImageByName("titlePage")
+    return getPriceGroupImageByName('titlePage')
       .then((res) => res.json())
       .then((res) => {
         setTitlePage({
@@ -75,7 +75,7 @@ const PriceList = () => {
           .catch((error) => {
             console.log(error);
           });
-      })
+      }),
     ).then(() => loadTitlePageImages(_titlePage));
   };
 
@@ -90,29 +90,29 @@ const PriceList = () => {
           imgThree: item.groupImg3,
           imgFour: item.groupImg4,
           imgFive: item.footerImg,
-        })
-      )
+        }),
+      ),
     )
       .then(() =>
-        updatePriceGroupByName("titlePage", {
-          name: "titlePage",
+        updatePriceGroupByName('titlePage', {
+          name: 'titlePage',
           imgOne: titlePage.img1,
           imgTwo: titlePage.img2,
           imgThree: titlePage.img3,
-        })
+        }),
       )
       .then(() => {
         setIsLoading(false);
-        alert("Данные были успешно сохранены!");
+        alert('Данные были успешно сохранены!');
       });
   };
 
   useEffect(() => {
-    document.title = "Прайс-лист";
+    document.title = 'Прайс-лист';
   }, [priceList]);
 
   const sortPriceList = (priceList) => {
-    return sortByField(priceList, { fieldName: "id", direction: "asc" });
+    return sortByField(priceList, { fieldName: 'id', direction: 'asc' });
   };
 
   const handleOpenPDF = (newPDF = false) => {
@@ -122,14 +122,14 @@ const PriceList = () => {
       priceList.filter((item) => item.active),
       {
         optionalCols: sortPriceList(
-          optionalCols.filter((item) => item.active && item)
+          optionalCols.filter((item) => item.active && item),
         ),
         locationTypes: locationTypes,
         disclaimer: disclaimer,
         titlePage: titlePage,
         companyContacts: selectedLtd,
         isMini: newPDF,
-      }
+      },
     ).then(() => {
       setIsLoading(false);
     });
@@ -142,10 +142,10 @@ const PriceList = () => {
       priceList.filter((item) => item.active),
       {
         optionalCols: sortPriceList(
-          optionalCols.filter((item) => item.active && item)
+          optionalCols.filter((item) => item.active && item),
         ),
         isMini: newXLSX,
-      }
+      },
     ).then(() => {
       setIsLoading(false);
     });
@@ -153,8 +153,8 @@ const PriceList = () => {
 
   const sortCategories = (categories) => {
     return sortByField(categories, {
-      fieldName: "name",
-      direction: "asc",
+      fieldName: 'name',
+      direction: 'asc',
     });
   };
 
@@ -199,7 +199,7 @@ const PriceList = () => {
               type="readAsArrayBuffer"
               onChange={(result) => {
                 const { parsedData, disclaimer, titlePage } = parseExcelData(
-                  result
+                  result,
                 );
                 setDisclaimer(disclaimer);
                 setTitlePage(titlePage);
@@ -249,13 +249,13 @@ const PriceList = () => {
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
               <div className="new-price-item__checkbox-container">
-                {getSelectAllCheckbox("Выделить все категории", {
+                {getSelectAllCheckbox('Выделить все категории', {
                   checked: selectAllCategories,
                   setAll: (value) => setSelectAllCategories(value),
                   list: categories,
                   setList: (value) => setCategories(value),
                 })}
-                {getSelectAllCheckbox("Выделить все группы товаров", {
+                {getSelectAllCheckbox('Выделить все группы товаров', {
                   checked: selectAllGroups,
                   setAll: (value) => setSelectAllGroups(value),
                   list: priceList,
@@ -269,8 +269,8 @@ const PriceList = () => {
                     <div
                       className={
                         item.active
-                          ? "main-form__button"
-                          : "main-form__button main-form__button--inverted"
+                          ? 'main-form__button'
+                          : 'main-form__button main-form__button--inverted'
                       }
                       onClick={() => {
                         let temp = optionalCols;

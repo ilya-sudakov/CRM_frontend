@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react'
-import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js'
+import { useEffect, useState } from 'react';
+import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js';
 
 const useProductCategoriesList = () => {
-  const [categories, setCategories] = useState([])
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const [categories, setCategories] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
 
   const loadData = () => {
-    setIsLoadingCategories(true)
+    setIsLoadingCategories(true);
     return getCategoriesNames() //Только категории
       .then((res) => res.json())
       .then((res) => {
-        setCategories(res)
-        setIsLoadingCategories(false)
-        return
+        setCategories(res);
+        setIsLoadingCategories(false);
+        return;
       })
       .catch((error) => {
-        setIsLoadingCategories(false)
-        console.error(error)
-        return
-      })
-  }
+        setIsLoadingCategories(false);
+        console.error(error);
+        return;
+      });
+  };
 
   useEffect(() => {
-    const abortController = new AbortController()
-    loadData(abortController.signal)
+    const abortController = new AbortController();
+    loadData(abortController.signal);
 
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
-  return { categories, isLoadingCategories }
-}
+  return { categories, isLoadingCategories };
+};
 
-export default useProductCategoriesList
+export default useProductCategoriesList;

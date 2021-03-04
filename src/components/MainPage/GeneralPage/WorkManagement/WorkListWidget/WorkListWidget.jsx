@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
-import { withRouter } from "react-router-dom";
-import openWidget from "../../../../../../assets/tableview/bx-window-open.svg";
-import { getRecordedWorkByDay } from "../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import { formatDateString } from "../../../../../utils/functions.jsx";
-import UserContext from "../../../../../App.js";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { workshopsList } from "./objects.js";
-import WorkList from "./WorkList.jsx";
-import Widget from "../../Widget/Widget.jsx";
-import useEmployeesList from "../../../../../utils/hooks/useEmployeesList.js";
+import React, { useEffect, useState, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
+import openWidget from '../../../../../../assets/tableview/bx-window-open.svg';
+import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { formatDateString } from '../../../../../utils/functions.jsx';
+import UserContext from '../../../../../App.js';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { workshopsList } from './objects.js';
+import WorkList from './WorkList.jsx';
+import Widget from '../../Widget/Widget.jsx';
+import useEmployeesList from '../../../../../utils/hooks/useEmployeesList.js';
 
-import "./WorkListWidget.scss";
+import './WorkListWidget.scss';
 
 const WorkListWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +34,8 @@ const WorkListWidget = () => {
                     Number.parseInt(work.hours)
                   : [work.hours],
             },
-          }))
-      )
+          })),
+      ),
     ).then(() => {
       // console.log(newEmployeesMap)
       setEmployeesMap(newEmployeesMap);
@@ -52,7 +52,7 @@ const WorkListWidget = () => {
         date.getMonth() + 1,
         date.getDate(),
         date.getFullYear(),
-        abortController.signal
+        abortController.signal,
       )
         .then((res) => res.json())
         .then((res) => {
@@ -74,11 +74,11 @@ const WorkListWidget = () => {
       className="work-list-widget"
       title="Отчет производства"
       subTitle={formatDateString(
-        new Date(new Date().setDate(new Date().getDate() - 1))
+        new Date(new Date().setDate(new Date().getDate() - 1)),
       )}
       linkTo={{
-        address: "/work-management",
-        text: "Открыть",
+        address: '/work-management',
+        text: 'Открыть',
         img: openWidget,
       }}
       content={

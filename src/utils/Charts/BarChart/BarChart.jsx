@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import Chartjs from "chart.js";
-import "./BarChart.scss";
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import Chartjs from 'chart.js';
+import './BarChart.scss';
 
 const browserScreen =
   window.innerWidth ||
@@ -14,17 +14,17 @@ const chartConfig = {
   responsive: true,
   maintainAspectRatio: screenWidthLessThan500PX ? true : false,
   animation: {
-    easing: "easeInOutCirc",
+    easing: 'easeInOutCirc',
   },
 };
 
 const BarChart = ({
   data = [],
   labels = [],
-  title = "",
+  title = '',
   color,
-  chartClassName = "",
-  wrapperClassName = "",
+  chartClassName = '',
+  wrapperClassName = '',
   isStacked = false,
   options = {},
 }) => {
@@ -53,15 +53,15 @@ const BarChart = ({
   };
 
   const defaultTooltips = {
-    mode: "index",
+    mode: 'index',
     callbacks: {
       label:
         options?.tooltips?.callbacks?.label ??
         function (tooltipItem, data) {
-          var label = data.datasets[tooltipItem.datasetIndex].label || "";
+          var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
           if (label) {
-            label += ": ";
+            label += ': ';
           }
           label += Math.round(tooltipItem.yLabel * 100) / 100;
           return label;
@@ -127,7 +127,7 @@ const BarChart = ({
     if (!chartContainer || !chartContainer.current) return;
     if (chartInstance !== null) chartInstance.destroy();
     const newChartInstance = new Chartjs(chartContainer.current, {
-      type: screenWidthLessThan500PX ? "bar" : "horizontalBar",
+      type: screenWidthLessThan500PX ? 'bar' : 'horizontalBar',
       data: {
         labels: labels,
         datasets: getDatasets(data),
@@ -135,7 +135,7 @@ const BarChart = ({
       options: {
         ...chartConfig,
         legend: {
-          position: options?.legend?.position ?? "top",
+          position: options?.legend?.position ?? 'top',
           display: options?.legend?.display ?? true,
         },
         onClick: options?.onClick ?? function () {},
@@ -156,7 +156,7 @@ const BarChart = ({
   return (
     <div className="bar-chart">
       {title && <div className="main-window__title">{title}</div>}
-      <div className={wrapperClassName} style={{ width: "100%" }}>
+      <div className={wrapperClassName} style={{ width: '100%' }}>
         <canvas className={chartClassName} ref={chartContainer} />
       </div>
     </div>

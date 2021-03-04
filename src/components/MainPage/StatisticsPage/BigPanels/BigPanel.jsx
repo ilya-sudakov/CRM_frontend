@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
+import React, { useEffect, useState } from 'react';
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 
 const BigPanel = ({
   isLoaded,
@@ -29,12 +29,12 @@ const BigPanel = ({
   return (
     <div
       className={`panel panel--big ${
-        isLoaded && !isLoading ? "" : "panel--placeholder"
+        isLoaded && !isLoading ? '' : 'panel--placeholder'
       }`}
       // to={linkTo || "/"}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>
-        <span>{category || "Категория"}</span>
+        <span>{category || 'Категория'}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
       {windowContent || windowCharts ? (
@@ -56,7 +56,7 @@ const BigPanel = ({
         />
       ) : null}
       <div className="panel__values">
-        {curPeriod.name === "Месяц" &&
+        {curPeriod.name === 'Месяц' &&
         currDate.startDate.getMonth() === 0 ? null : (
           <div className="panel__value panel__value--previous">
             <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
@@ -68,37 +68,37 @@ const BigPanel = ({
           <div>{isLoaded ? value || 0 : null}</div>
         </div>
       </div>
-      {curPeriod.name === "Месяц" &&
+      {curPeriod.name === 'Месяц' &&
       currDate.startDate.getMonth() === 0 ? null : (
         <div
           className={`panel__difference panel__difference--${
             invertedStats === true
               ? percentage === 0 || !isLoaded
-                ? "equal"
+                ? 'equal'
                 : percentage >= 0
-                ? "negative"
-                : "positive"
+                ? 'negative'
+                : 'positive'
               : percentage === 0 || !isLoaded
-              ? "equal"
+              ? 'equal'
               : percentage < 0
-              ? "negative"
-              : "positive"
+              ? 'negative'
+              : 'positive'
           }`}
         >
           <div className="panel__arrow"></div>
           <div className="panel__percentage">
-            {isLoaded ? `${Math.abs(percentage)}%` : ""}
+            {isLoaded ? `${Math.abs(percentage)}%` : ''}
           </div>
-          <div className="panel__time-period">{isLoaded ? timePeriod : ""}</div>
+          <div className="panel__time-period">{isLoaded ? timePeriod : ''}</div>
         </div>
       )}
       <div
         className={`panel__difference panel__difference--${
           percentage === 0 || !isLoaded
-            ? "equal"
+            ? 'equal'
             : percentage < 0
-            ? "negative"
-            : "positive"
+            ? 'negative'
+            : 'positive'
         }`}
       ></div>
       {content}

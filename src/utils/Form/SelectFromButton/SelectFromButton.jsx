@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import ChevronSVG from "../../../../assets/tableview/chevron-down.inline.svg";
-import "./SelectFromButton.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ChevronSVG from '../../../../assets/tableview/chevron-down.inline.svg';
+import './SelectFromButton.scss';
 
-const SelectFromButton = ({ text = "Выбрать", onClick }) => {
+const SelectFromButton = ({ text = 'Выбрать', onClick }) => {
   return (
     <div className="select-from-button">
       <div

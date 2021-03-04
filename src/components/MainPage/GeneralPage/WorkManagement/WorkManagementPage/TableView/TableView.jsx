@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./TableView.scss";
-import editSVG from "../../../../../../../assets/tableview/edit.svg";
+import React, { useEffect, useState } from 'react';
+import './TableView.scss';
+import editSVG from '../../../../../../../assets/tableview/edit.svg';
 import {
   numberToString,
   formatDateString,
   addSpaceDelimiter,
-} from "../../../../../../utils/functions.jsx";
-import { days } from "../../../../../../utils/dataObjects";
-import { Link } from "react-router-dom";
-import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+} from '../../../../../../utils/functions.jsx';
+import { days } from '../../../../../../utils/dataObjects';
+import { Link } from 'react-router-dom';
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({});
@@ -48,8 +48,8 @@ const TableView = (props) => {
     <div
       className={
         props.isOneColumn
-          ? "work-management-page__table-view work-management-page__table-view--one-col"
-          : "work-management-page__table-view work-management-page__table-view--two-col"
+          ? 'work-management-page__table-view work-management-page__table-view--one-col'
+          : 'work-management-page__table-view work-management-page__table-view--two-col'
       }
     >
       {props.isLoading && (
@@ -76,7 +76,7 @@ const TableView = (props) => {
             <>
               <div className="work-management-page__table-date">
                 {formatDateString(date[0]) +
-                  " - " +
+                  ' - ' +
                   days[new Date(date[0]).getDay()]}
               </div>
               {Object.values(date[1])
@@ -92,7 +92,7 @@ const TableView = (props) => {
                 .filter((item) =>
                   item.employee.lastName
                     .toLowerCase()
-                    .includes(props.searchQuery.toLowerCase())
+                    .includes(props.searchQuery.toLowerCase()),
                 )
                 .map((item) => {
                   if (
@@ -105,11 +105,11 @@ const TableView = (props) => {
                         // index={index++}
                         className={
                           (item.isOpen
-                            ? "work-management-page__row "
-                            : "work-management-page__row work-management-page__row--hidden ") +
+                            ? 'work-management-page__row '
+                            : 'work-management-page__row work-management-page__row--hidden ') +
                           (item.works.length === 0
-                            ? "work-management-page__row--reminder"
-                            : "")
+                            ? 'work-management-page__row--reminder'
+                            : '')
                         }
                         onClick={() => {
                           onClickHandle(item.employee, date[0], item.isOpen);
@@ -125,10 +125,10 @@ const TableView = (props) => {
                                     } else {
                                       return sum;
                                     }
-                                  }, 0) * 100
+                                  }, 0) * 100,
                                 ) /
                                   100 +
-                                " " +
+                                ' ' +
                                 numberToString(
                                   Math.floor(
                                     item.works.reduce((sum, cur) => {
@@ -137,28 +137,28 @@ const TableView = (props) => {
                                       } else {
                                         return sum;
                                       }
-                                    }, 0) * 100
+                                    }, 0) * 100,
                                   ) / 100,
-                                  ["ч", "ч", "ч"]
+                                  ['ч', 'ч', 'ч'],
                                 )
-                              : "Нет записи!"}
+                              : 'Нет записи!'}
                           </span>
                           <div className="header__wrapper header__wrapper--person">
                             <span className="header--position">
-                              {item.employee.position + " "}
+                              {item.employee.position + ' '}
                             </span>
                             <span className="header--name">
-                              {" " +
+                              {' ' +
                                 item.employee.lastName +
-                                " " +
+                                ' ' +
                                 item.employee.name +
-                                " " +
+                                ' ' +
                                 item.employee.middleName}
                             </span>
                           </div>
                           <div
                             className="header__wrapper"
-                            style={{ marginLeft: "auto" }}
+                            style={{ marginLeft: 'auto' }}
                           >
                             <span className="header--top-work">
                               {item.works.length > 0 ? (
@@ -185,7 +185,7 @@ const TableView = (props) => {
                                             return -1;
                                           }
                                           return 0;
-                                        })[0].hours * 100
+                                        })[0].hours * 100,
                                       ) / 100
                                     } ч`}
                                   </span>
@@ -202,14 +202,14 @@ const TableView = (props) => {
                                 to={`/work-management/record-time?employee=${item.employee.id}&date=${item.year},${item.month},${item.day}`}
                               >
                                 {workItem.workList.work +
-                                  " - " +
+                                  ' - ' +
                                   workItem.hours +
-                                  " " +
+                                  ' ' +
                                   numberToString(
                                     Number.parseInt(
-                                      Math.floor(workItem.hours * 100) / 100
+                                      Math.floor(workItem.hours * 100) / 100,
                                     ),
-                                    ["час", "часа", "часов"]
+                                    ['час', 'часа', 'часов'],
                                   )}
                                 <img
                                   className="main-window__img"
@@ -222,13 +222,13 @@ const TableView = (props) => {
                                   return (
                                     <div>
                                       {product.product.name +
-                                        " (" +
+                                        ' (' +
                                         addSpaceDelimiter(
                                           product.quantity !== null
                                             ? product.quantity
-                                            : 0
+                                            : 0,
                                         ) +
-                                        " шт.)"}
+                                        ' шт.)'}
                                     </div>
                                   );
                                 })}
@@ -236,13 +236,13 @@ const TableView = (props) => {
                                   return (
                                     <div>
                                       {draft.name +
-                                        " (" +
+                                        ' (' +
                                         addSpaceDelimiter(
                                           draft.quantity !== null
                                             ? draft.quantity
-                                            : 0
+                                            : 0,
                                         ) +
-                                        " шт.)"}
+                                        ' шт.)'}
                                     </div>
                                   );
                                 })}
@@ -260,7 +260,7 @@ const TableView = (props) => {
                     <span>
                       {
                         Object.values(date[1]).filter(
-                          (item) => item.works.length > 0
+                          (item) => item.works.length > 0,
                         ).length
                       }
                     </span>

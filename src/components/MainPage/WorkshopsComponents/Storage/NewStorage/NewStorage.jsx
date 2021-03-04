@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./NewStorage.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import { createStorage } from "../../../../../utils/RequestsAPI/Workshop/storage.js";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { workshops } from "../../workshopVariables.js";
-import useForm from "../../../../../utils/hooks/useForm";
-import { workshopStorageDefaultInputs } from "../../objects";
+import React, { useEffect, useState } from 'react';
+import './NewStorage.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import { createStorage } from '../../../../../utils/RequestsAPI/Workshop/storage.js';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { workshops } from '../../workshopVariables.js';
+import useForm from '../../../../../utils/hooks/useForm';
+import { workshopStorageDefaultInputs } from '../../objects';
 
 const NewPart = (props) => {
   const {
@@ -26,13 +26,13 @@ const NewPart = (props) => {
       .then(() => props.history.push(workshops[props.type].storageRedirectURL))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Добавление детали на склад";
+    document.title = 'Добавление детали на склад';
   }, []);
 
   return (
@@ -48,7 +48,7 @@ const NewPart = (props) => {
           error={formErrors.name}
           name="name"
           handleInputChange={({ target }) =>
-            handleInputChange("name", target.value)
+            handleInputChange('name', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -60,7 +60,7 @@ const NewPart = (props) => {
           name="number"
           type="number"
           handleInputChange={({ target }) =>
-            handleInputChange("number", target.value)
+            handleInputChange('number', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -71,7 +71,7 @@ const NewPart = (props) => {
           error={formErrors.quantity}
           name="quantity"
           handleInputChange={({ target }) =>
-            handleInputChange("quantity", target.value)
+            handleInputChange('quantity', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -82,7 +82,7 @@ const NewPart = (props) => {
           error={formErrors.comment}
           name="comment"
           handleInputChange={({ target }) =>
-            handleInputChange("comment", target.value)
+            handleInputChange('comment', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}

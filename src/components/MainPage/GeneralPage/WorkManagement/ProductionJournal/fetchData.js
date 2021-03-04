@@ -1,4 +1,4 @@
-import { getEmployees } from "../../../../../utils/RequestsAPI/Employees.jsx";
+import { getEmployees } from '../../../../../utils/RequestsAPI/Employees.jsx';
 
 export const loadEmployees = async (
   signal,
@@ -6,7 +6,7 @@ export const loadEmployees = async (
   setEmployees,
   setWorkTimeInputs,
   worktimeInputs,
-  workshops
+  workshops,
 ) => {
   setIsLoading(true);
   return await getEmployees(signal)
@@ -20,7 +20,7 @@ export const loadEmployees = async (
           res
             .filter(
               (item) =>
-                item.workshop === workshop[0] && item.relevance !== "Уволен"
+                item.workshop === workshop[0] && item.relevance !== 'Уволен',
             )
             .map((employee) => {
               // console.log(employee)
@@ -51,7 +51,7 @@ export const loadEmployees = async (
             ...newWorkshopEmployees,
             [workshop[1]]: filteredEmployees,
           });
-        })
+        }),
       ).then(() => {
         setWorkTimeInputs({
           ...worktimeInputs,

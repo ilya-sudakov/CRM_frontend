@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
-import "./Employees.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import SearchBar from "../../SearchBar/SearchBar.jsx";
-import TableView from "./TableView/TableView.jsx";
-import PrintIcon from "../../../../../assets/print.png";
-import { getEmployeesListPdfText } from "./functions.js";
+import React, { useState, useEffect } from 'react';
+import './Employees.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../../SearchBar/SearchBar.jsx';
+import TableView from './TableView/TableView.jsx';
+import PrintIcon from '../../../../../assets/print.png';
+import { getEmployeesListPdfText } from './functions.js';
 import {
   deleteEmployee,
   getEmployeesByWorkshop,
-} from "../../../../utils/RequestsAPI/Employees.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import ControlPanel from "../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import { sortByField } from "../../../../utils/sorting/sorting";
+} from '../../../../utils/RequestsAPI/Employees.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import ControlPanel from '../../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { sortByField } from '../../../../utils/sorting/sorting';
 
 const Employees = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [employees, setEmployees] = useState([]);
   const workshops = [
-    "ЦехЛЭМЗ",
-    "ЦехЛепсари",
-    "ЦехЛиговский",
-    "Офис",
-    "Уволенные",
+    'ЦехЛЭМЗ',
+    'ЦехЛепсари',
+    'ЦехЛиговский',
+    'Офис',
+    'Уволенные',
   ];
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    document.title = "Сотрудники";
+    document.title = 'Сотрудники';
     let abortController = new AbortController();
     loadEmployees(abortController.signal);
     return function cancel() {
@@ -61,8 +61,8 @@ const Employees = (props) => {
 
   const printEmployeesList = () => {
     getEmployeesListPdfText(
-      sortByField(employees, { fieldName: "lastName", direction: "asc" }),
-      workshops
+      sortByField(employees, { fieldName: 'lastName', direction: 'asc' }),
+      workshops,
     );
   };
 
@@ -95,8 +95,8 @@ const Employees = (props) => {
           itemsCount={`Всего: ${
             employees.filter((employee) => {
               return (
-                employee.relevance !== "Уволен" &&
-                employee.workshop !== "Уволенные"
+                employee.relevance !== 'Уволен' &&
+                employee.workshop !== 'Уволенные'
               );
             }).length
           } записей`}

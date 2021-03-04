@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import BoxIcon from "../../../../../assets/sidemenu/box.inline.svg";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg';
 import {
   addSpaceDelimiter,
   dateDiffInDays,
-} from "../../../../utils/functions.jsx";
+} from '../../../../utils/functions.jsx';
 
 const AverageProductQuantityProduced = ({ data, curDate }) => {
   const [stats, setStats] = useState({
-    category: "Сред. кол-во произведенной продукции в день",
+    category: 'Сред. кол-во произведенной продукции в день',
     percentage: 0,
     value: null,
-    linkTo: "/work-management",
+    linkTo: '/work-management',
     isLoaded: false,
     isLoading: false,
-    timePeriod: "От прошлой недели",
+    timePeriod: 'От прошлой недели',
     difference: 0,
     renderIcon: () => <BoxIcon className="panel__img panel__img--default" />,
   });
@@ -33,20 +33,20 @@ const AverageProductQuantityProduced = ({ data, curDate }) => {
     let curMonday = curDate;
     curMonday = new Date(
       curMonday.setDate(
-        curMonday.getDate() - ((curMonday.getDay() + 6) % 7) + 7
-      )
+        curMonday.getDate() - ((curMonday.getDay() + 6) % 7) + 7,
+      ),
     );
 
     data.map((workItem) => {
       let productCount = workItem.workControlProduct.reduce(
         (sum, cur) => sum + cur.quantity,
-        0
+        0,
       );
       //если неделя не текущая, до прибавляем к счетчику пред. недели
       if (
         dateDiffInDays(
           new Date(workItem.year, workItem.month - 1, workItem.day),
-          curMonday
+          curMonday,
         ) > 7
       ) {
         prevWeekQuantity += productCount;
@@ -59,15 +59,15 @@ const AverageProductQuantityProduced = ({ data, curDate }) => {
     curMonday = new Date(
       new Date().setDate(
         new Date().getDate() -
-          (new Date().getDay() > 0 ? new Date().getDay() - 1 : 6)
-      )
+          (new Date().getDay() > 0 ? new Date().getDay() - 1 : 6),
+      ),
     );
 
     //получаем средние значения
     prevWeekQuantity = Math.floor((prevWeekQuantity / 5) * 100) / 100;
     curWeekQuantity =
       Math.floor(
-        (curWeekQuantity / dateDiffInDays(curMonday, new Date())) * 100
+        (curWeekQuantity / dateDiffInDays(curMonday, new Date())) * 100,
       ) / 100;
 
     setStats((stats) => ({
@@ -81,7 +81,7 @@ const AverageProductQuantityProduced = ({ data, curDate }) => {
           ((curWeekQuantity - prevWeekQuantity) /
             (prevWeekQuantity === 0 ? 1 : prevWeekQuantity)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

@@ -1,28 +1,28 @@
-import "./InputProducts.scss";
-import SelectFromButton from "../SelectFromButton/SelectFromButton.jsx";
-import React, { useState, useEffect, useCallback } from "react";
-import "./Select.scss";
-import SearchBar from "../../../components/MainPage/SearchBar/SearchBar.jsx";
-import TableView from "../../../components/MainPage/Products/TableView/TableView.jsx";
-import FormWindow from "../../Form/FormWindow/FormWindow.jsx";
-import ImgLoader from "../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import ControlPanel from "../../../utils/MainWindow/ControlPanel/ControlPanel.jsx";
-import useSort from "../../hooks/useSort/useSort";
+import './InputProducts.scss';
+import SelectFromButton from '../SelectFromButton/SelectFromButton.jsx';
+import React, { useState, useEffect, useCallback } from 'react';
+import './Select.scss';
+import SearchBar from '../../../components/MainPage/SearchBar/SearchBar.jsx';
+import TableView from '../../../components/MainPage/Products/TableView/TableView.jsx';
+import FormWindow from '../../Form/FormWindow/FormWindow.jsx';
+import ImgLoader from '../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import useSort from '../../hooks/useSort/useSort';
 import {
   renderNewQuantity,
   renderPackaging,
   renderQuantity,
   renderSelectedItemName,
   renderSelectPackaging,
-} from "./functions.jsx";
-import useProductsList from "../../hooks/useProductsList/useProductsList";
+} from './functions.jsx';
+import useProductsList from '../../hooks/useProductsList/useProductsList';
 
 const InputProducts = (props) => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchQueryCategory, setSearchQueryCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQueryCategory, setSearchQueryCategory] = useState('');
   const [selected, setSelected] = useState([]);
   const { products, categories } = useProductsList(
-    !props.products || !props.categories
+    !props.products || !props.categories,
   );
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
@@ -33,20 +33,20 @@ const InputProducts = (props) => {
     {
       ignoreURL: true,
       sortOrder: {
-        curSort: "name",
-        name: "asc",
+        curSort: 'name',
+        name: 'asc',
       },
       sortOptions: [
-        { value: "name asc", text: "По алфавиту (А-Я)" },
-        { value: "name desc", text: "По алфавиту (Я-А)" },
-        { value: "weight desc", text: "По весу" },
+        { value: 'name asc', text: 'По алфавиту (А-Я)' },
+        { value: 'name desc', text: 'По алфавиту (Я-А)' },
+        { value: 'weight desc', text: 'По весу' },
       ],
     },
-    [props.products ?? products]
+    [props.products ?? products],
   );
 
   const search = () => {
-    let searchArr = searchQuery.split(" ");
+    let searchArr = searchQuery.split(' ');
     return (props.products ?? products).filter((item) => {
       let check = true;
       searchArr.map((searchWord) => {
@@ -79,16 +79,16 @@ const InputProducts = (props) => {
   };
 
   const clickOnOption = (event) => {
-    const value = event.currentTarget.getAttribute("name");
-    const id = event.currentTarget.getAttribute("id");
-    const productId = event.currentTarget.getAttribute("productId");
+    const value = event.currentTarget.getAttribute('name');
+    const id = event.currentTarget.getAttribute('id');
+    const productId = event.currentTarget.getAttribute('productId');
     const newData = {
       id: id,
       name: value,
       quantity: 0,
       quantityNew: 0,
-      packaging: "",
-      status: "production",
+      packaging: '',
+      status: 'production',
       productId: productId,
     };
     clickOnInput();
@@ -102,8 +102,8 @@ const InputProducts = (props) => {
       name: value,
       quantity: 0,
       quantityNew: 0,
-      packaging: "",
-      status: "production",
+      packaging: '',
+      status: 'production',
       productId: productId,
     };
     setSelected([...selected, newData]);
@@ -111,7 +111,7 @@ const InputProducts = (props) => {
   };
 
   const clickOnSelected = (event) => {
-    const id = event.target.getAttribute("id");
+    const id = event.target.getAttribute('id');
     let newSelected = selected;
     newSelected.splice(id, 1);
     setSelected([...newSelected]);
@@ -120,8 +120,8 @@ const InputProducts = (props) => {
 
   const handleParamChange = (event) => {
     const value = event.target.value;
-    const name = event.target.getAttribute("name");
-    const id = event.target.getAttribute(name + "_id");
+    const name = event.target.getAttribute('name');
+    const id = event.target.getAttribute(name + '_id');
     const productId = event.target.getAttribute(productId);
     let newSelected = selected;
     newSelected = newSelected.map((item, index) => {
@@ -156,7 +156,7 @@ const InputProducts = (props) => {
         }
       }
     },
-    [showOptions, showOverlay]
+    [showOptions, showOverlay],
   );
 
   const filterSearchQuery = (data) => {
@@ -175,9 +175,9 @@ const InputProducts = (props) => {
     if (props.defaultValue !== undefined) {
       setSelected([...props.defaultValue]);
     }
-    document.addEventListener("keydown", pressEscKey, false);
+    document.addEventListener('keydown', pressEscKey, false);
     return () => {
-      document.removeEventListener("keydown", pressEscKey, false);
+      document.removeEventListener('keydown', pressEscKey, false);
     };
   }, [props.defaultValue, props.categories, showOptions, showOverlay]);
 
@@ -199,7 +199,7 @@ const InputProducts = (props) => {
           index,
           item,
           defaultPropsForLayoutFunctions,
-          options
+          options,
         ),
     },
     quantity: {
@@ -220,7 +220,7 @@ const InputProducts = (props) => {
           index,
           item,
           defaultPropsForLayoutFunctions,
-          props.products ?? products
+          props.products ?? products,
         ),
     },
   };
@@ -229,7 +229,7 @@ const InputProducts = (props) => {
     <div className="input_products">
       <div className="input_products__input">
         <div className="input_products__input_name main-form__input_name--header">
-          {props.inputName + (props.required ? "*" : "")}
+          {props.inputName + (props.required ? '*' : '')}
           {!props.readOnly && (
             <SelectFromButton
               text="Выбрать продукцию"
@@ -241,8 +241,8 @@ const InputProducts = (props) => {
           <div
             className={
               showOverlay
-                ? "select__overlay"
-                : "select__overlay select__overlay--hidden"
+                ? 'select__overlay'
+                : 'select__overlay select__overlay--hidden'
             }
             onClick={clickOverlay}
           ></div>
@@ -254,8 +254,8 @@ const InputProducts = (props) => {
                   type="text"
                   className={
                     props.error === true
-                      ? "select__input select__input--error"
-                      : "select__input"
+                      ? 'select__input select__input--error'
+                      : 'select__input'
                   }
                   onChange={handleInputChange}
                   onClick={!props.readOnly ? clickOnInput : null}
@@ -314,8 +314,8 @@ const InputProducts = (props) => {
             <div
               className={
                 showOptions
-                  ? "select__options"
-                  : "select__options select__options--hidden"
+                  ? 'select__options'
+                  : 'select__options select__options--hidden'
               }
             >
               {search().map((item, index) => (
@@ -328,7 +328,7 @@ const InputProducts = (props) => {
                   onClick={clickOnOption}
                 >
                   <ImgLoader imgSrc={item.photo} imgClass="select__img" />
-                  <div>{"№" + item.id + ", " + item.name}</div>
+                  <div>{'№' + item.id + ', ' + item.name}</div>
                 </div>
               ))}
             </div>
@@ -345,8 +345,8 @@ const InputProducts = (props) => {
                   !props.readOnly &&
                   !props.workshop &&
                   props.customSelectedItem?.isMinimized !== true
-                    ? "select__selected_row"
-                    : "select__selected_row select__selected_row--minimized"
+                    ? 'select__selected_row'
+                    : 'select__selected_row select__selected_row--minimized'
                 }
               >
                 {props.customLayout ? (
@@ -355,7 +355,7 @@ const InputProducts = (props) => {
                       return customLayoutOptions[layoutOption[0]].render(
                         index,
                         item,
-                        layoutOption[1]
+                        layoutOption[1],
                       );
                     })}
                   </>
@@ -364,12 +364,12 @@ const InputProducts = (props) => {
                     {renderSelectedItemName(
                       index,
                       item,
-                      defaultPropsForLayoutFunctions
+                      defaultPropsForLayoutFunctions,
                     )}
                     {renderQuantity(
                       index,
                       item,
-                      defaultPropsForLayoutFunctions
+                      defaultPropsForLayoutFunctions,
                     )}
                     {renderPackaging(
                       index,
@@ -378,10 +378,10 @@ const InputProducts = (props) => {
                       props.noPackaging
                         ? {
                             readOnly: true,
-                            customName: `Фасовка${!props.readOnly ? "*" : ""}`,
-                            marginRight: "0px",
+                            customName: `Фасовка${!props.readOnly ? '*' : ''}`,
+                            marginRight: '0px',
                           }
-                        : undefined
+                        : undefined,
                     )}
                   </>
                 )}

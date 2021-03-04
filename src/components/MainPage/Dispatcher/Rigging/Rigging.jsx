@@ -1,15 +1,15 @@
-import React, { useEffect, useState, Suspense } from "react";
-import { RiggingWorkshop } from "../../lazyImports.jsx";
-import PrivateRoute from "../../../PrivateRoute/PrivateRoute.jsx";
-import { Route, Switch, Link } from "react-router-dom";
-import PlusImg from "../../../../../assets/sidemenu/plus.inline.svg";
-import "./Rigging.scss";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import PageNotFound from "../../PageNotFound/PageNotFound.jsx";
-import PageLoading from "../../PageLoading/PageLoading.jsx";
-import NewRig from "./RiggingComponents/Forms/NewRig/NewRig.jsx";
-import EditRig from "./RiggingComponents/Forms/EditRig/EditRig.jsx";
-import useTitleHeader from "../../../../utils/hooks/uiComponents/useTitleHeader.js";
+import React, { useEffect, useState, Suspense } from 'react';
+import { RiggingWorkshop } from '../../lazyImports.jsx';
+import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
+import { Route, Switch, Link } from 'react-router-dom';
+import PlusImg from '../../../../../assets/sidemenu/plus.inline.svg';
+import './Rigging.scss';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import PageNotFound from '../../PageNotFound/PageNotFound.jsx';
+import PageLoading from '../../PageLoading/PageLoading.jsx';
+import NewRig from './RiggingComponents/Forms/NewRig/NewRig.jsx';
+import EditRig from './RiggingComponents/Forms/EditRig/EditRig.jsx';
+import useTitleHeader from '../../../../utils/hooks/uiComponents/useTitleHeader.js';
 
 const Rigging = (props) => {
   const [cachedItems, setCachedItems] = useState({
@@ -39,14 +39,14 @@ const Rigging = (props) => {
   };
 
   const { titleHeader } = useTitleHeader(
-    "Оснастка",
+    'Оснастка',
     [
-      getMenuItem("stamp", "Штамп"),
-      getMenuItem("machine", "Станок"),
-      getMenuItem("press-form", "Пресс-форма"),
-      getMenuItem("parts", "Запчасти"),
+      getMenuItem('stamp', 'Штамп'),
+      getMenuItem('machine', 'Станок'),
+      getMenuItem('press-form', 'Пресс-форма'),
+      getMenuItem('parts', 'Запчасти'),
     ],
-    "/dispatcher/rigging/stamp"
+    '/dispatcher/rigging/stamp',
   );
 
   useEffect(() => {}, [cachedItems]);
@@ -66,19 +66,19 @@ const Rigging = (props) => {
           }))
         }
         allowedRoles={[
-          "ROLE_ADMIN",
-          "ROLE_DISPATCHER",
-          "ROLE_ENGINEER",
-          "ROLE_WORKSHOP",
+          'ROLE_ADMIN',
+          'ROLE_DISPATCHER',
+          'ROLE_ENGINEER',
+          'ROLE_WORKSHOP',
         ]}
       />
     );
   };
 
-  const stampPage = getRiggingPage("stamp", "stamp");
-  const machinePage = getRiggingPage("machine", "machine");
-  const pressFormPage = getRiggingPage("press-form", "pressForm");
-  const partsPage = getRiggingPage("parts", "parts");
+  const stampPage = getRiggingPage('stamp', 'stamp');
+  const machinePage = getRiggingPage('machine', 'machine');
+  const pressFormPage = getRiggingPage('press-form', 'pressForm');
+  const partsPage = getRiggingPage('parts', 'parts');
 
   return (
     <div className="rigging">
@@ -96,9 +96,9 @@ const Rigging = (props) => {
                 path="/dispatcher/rigging/stamp/new"
                 component={NewRig}
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
                 ]}
                 type="stamp"
               />
@@ -107,10 +107,10 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="stamp"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -119,9 +119,9 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="machine"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
                 ]}
               />
               <PrivateRoute
@@ -129,10 +129,10 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="machine"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -141,9 +141,9 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="pressForm"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
                 ]}
               />
               <PrivateRoute
@@ -151,10 +151,10 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="pressForm"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -163,10 +163,10 @@ const Rigging = (props) => {
                 component={NewRig}
                 type="parts"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_ENGINEER",
-                  "ROLE_WORKSHOP",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_ENGINEER',
+                  'ROLE_WORKSHOP',
                 ]}
               />
               <PrivateRoute
@@ -174,10 +174,10 @@ const Rigging = (props) => {
                 component={EditRig}
                 type="parts"
                 allowedRoles={[
-                  "ROLE_ADMIN",
-                  "ROLE_DISPATCHER",
-                  "ROLE_WORKSHOP",
-                  "ROLE_ENGINEER",
+                  'ROLE_ADMIN',
+                  'ROLE_DISPATCHER',
+                  'ROLE_WORKSHOP',
+                  'ROLE_ENGINEER',
                 ]}
               />
               <Route component={PageNotFound} />

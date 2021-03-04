@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./EditWork.scss";
-import "../../../../utils/Form/Form.scss";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
+import React, { useEffect, useState } from 'react';
+import './EditWork.scss';
+import '../../../../utils/Form/Form.scss';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
 import {
   getWorkById,
   editWork,
-} from "../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../utils/hooks/useForm";
-import { workItemDefaultInputs } from "../objects";
+} from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../utils/hooks/useForm';
+import { workItemDefaultInputs } from '../objects';
 
 const EditWork = (props) => {
   const {
@@ -29,20 +29,20 @@ const EditWork = (props) => {
     setIsLoading(true);
     console.log(formInputs);
     editWork(formInputs, workId)
-      .then(() => props.history.push("/work-list"))
+      .then(() => props.history.push('/work-list'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование работы";
-    const id = props.history.location.pathname.split("/work-list/edit/")[1];
+    document.title = 'Редактирование работы';
+    const id = props.history.location.pathname.split('/work-list/edit/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс работы!");
-      props.history.push("/work-list");
+      alert('Неправильный индекс работы!');
+      props.history.push('/work-list');
     } else {
       setWorkId(id);
       getWorkById(id)
@@ -50,13 +50,13 @@ const EditWork = (props) => {
         .then((oldWork) =>
           updateFormInputs({
             work: oldWork.work,
-            typeOfWork: oldWork.typeOfWork ?? "Продукция",
-          })
+            typeOfWork: oldWork.typeOfWork ?? 'Продукция',
+          }),
         )
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс работы!");
-          props.history.push("/work-list");
+          alert('Неправильный индекс работы!');
+          props.history.push('/work-list');
         });
     }
   }, []);
@@ -75,7 +75,7 @@ const EditWork = (props) => {
           defaultValue={formInputs.work}
           name="work"
           handleInputChange={({ target }) =>
-            handleInputChange("work", target.value)
+            handleInputChange('work', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -87,7 +87,7 @@ const EditWork = (props) => {
               name="typeOfWork"
               value={formInputs.typeOfWork}
               onChange={({ target }) =>
-                handleInputChange("typeOfWork", target.value)
+                handleInputChange('typeOfWork', target.value)
               }
             >
               <option>Продукция</option>
@@ -103,7 +103,7 @@ const EditWork = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/work-list")}
+            onClick={() => props.history.push('/work-list')}
             text="Вернуться назад"
           />
           <Button

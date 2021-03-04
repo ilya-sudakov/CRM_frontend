@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import MoneyIcon from "../../../../../assets/etc/bx-ruble.inline.svg";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
 import {
   addSpaceDelimiter,
   formatDateStringNoDate,
-} from "../../../../utils/functions.jsx";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+} from '../../../../utils/functions.jsx';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const AverageSumStatsPanel = ({
   requests,
@@ -15,10 +15,10 @@ const AverageSumStatsPanel = ({
   getPrevData,
 }) => {
   const [stats, setStats] = useState({
-    category: "Средняя сумма заказа",
+    category: 'Средняя сумма заказа',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
+    linkTo: '/requests',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -44,13 +44,13 @@ const AverageSumStatsPanel = ({
       const prevMonth = getPrevData(currDate.startDate);
       if (
         checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         prevMonthLength++;
         prevMonthAverage += Number.parseFloat(request.sum || 0);
         return false;
       }
-      if (request.status !== "Завершено") {
+      if (request.status !== 'Завершено') {
         return false;
       }
       return true;
@@ -60,7 +60,7 @@ const AverageSumStatsPanel = ({
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === "Завершено"
+        request.status === 'Завершено'
       ) {
         curMonthLength++;
         curMonthAverage += Number.parseFloat(request.sum || 0);
@@ -80,21 +80,19 @@ const AverageSumStatsPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
       isLoading: false,
-      value: `${addSpaceDelimiter(
-        Math.floor(curMonthAverage * 100) / 100
-      )} ₽`,
+      value: `${addSpaceDelimiter(Math.floor(curMonthAverage * 100) / 100)} ₽`,
       difference: curMonthAverage - prevMonthAverage,
       percentage:
         Math.floor(
           ((curMonthAverage - prevMonthAverage) /
             (prevMonthAverage === 0 ? 1 : prevMonthAverage)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

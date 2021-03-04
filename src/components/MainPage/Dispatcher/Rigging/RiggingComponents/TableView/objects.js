@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export const riggingListOptionsHeader = (
   <div className="main-window__list-item main-window__list-item--header">

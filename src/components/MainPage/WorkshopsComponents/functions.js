@@ -1,6 +1,6 @@
-import pdfMake from "pdfmake";
-import { formatDateString } from "../../../utils/functions.jsx";
-import { getRequestPdfText } from "../../../utils/pdfFunctions.js";
+import pdfMake from 'pdfmake';
+import { formatDateString } from '../../../utils/functions.jsx';
+import { getRequestPdfText } from '../../../utils/pdfFunctions.js';
 import {
   deleteProductsToRequest,
   getRequestById,
@@ -8,44 +8,44 @@ import {
   connectClientToRequest,
   addProductsToRequest,
   addRequest,
-} from "../../../utils/RequestsAPI/Requests.jsx";
-import { workshops } from "./workshopVariables.js";
-import { getProductsFromRequestsListPdfText } from "../../../utils/pdfFunctions.js";
-import { getCategories } from "../../../utils/RequestsAPI/Products/Categories.js";
+} from '../../../utils/RequestsAPI/Requests.jsx';
+import { workshops } from './workshopVariables.js';
+import { getProductsFromRequestsListPdfText } from '../../../utils/pdfFunctions.js';
+import { getCategories } from '../../../utils/RequestsAPI/Products/Categories.js';
 
 export const getPageByRequest = (item) => {
-  if (item.status === "Завершено") {
-    return "completed";
+  if (item.status === 'Завершено') {
+    return 'completed';
   }
-  if (item.status === "Отгружено" || item.status === "Частично отгружено") {
-    return "shipped";
+  if (item.status === 'Отгружено' || item.status === 'Частично отгружено') {
+    return 'shipped';
   }
   if (
-    item.status !== "Завершено" &&
-    item.status !== "Отгружено" &&
-    item.status !== "Частично отгружено"
+    item.status !== 'Завершено' &&
+    item.status !== 'Отгружено' &&
+    item.status !== 'Частично отгружено'
   ) {
-    return "open";
+    return 'open';
   }
-  return "open";
+  return 'open';
 };
 
 export const filterRequestsByPage = (data, page) => {
   return data.filter((item) => {
-    if (page === "Завершено" && item.status === "Завершено") {
+    if (page === 'Завершено' && item.status === 'Завершено') {
       return true;
     }
     if (
-      page === "Отгружено" &&
-      (item.status === "Отгружено" || item.status === "Частично отгружено")
+      page === 'Отгружено' &&
+      (item.status === 'Отгружено' || item.status === 'Частично отгружено')
     ) {
       return true;
     }
     if (
-      page === "Открытые" &&
-      item.status !== "Завершено" &&
-      item.status !== "Отгружено" &&
-      item.status !== "Частично отгружено"
+      page === 'Открытые' &&
+      item.status !== 'Завершено' &&
+      item.status !== 'Отгружено' &&
+      item.status !== 'Частично отгружено'
     ) {
       return true;
     }
@@ -83,11 +83,11 @@ export const filterRequestsBySearchQuery = (data, searchQuery) => {
       ? item.requestProducts[0].name.toLowerCase().includes(query) ||
         item.id.toString().includes(query) ||
         formatDateString(item.date).includes(query) ||
-        (item.codeWord || "").toLowerCase().includes(query) ||
+        (item.codeWord || '').toLowerCase().includes(query) ||
         item.status.toLowerCase().includes(query) ||
         item.responsible.toLowerCase().includes(query) ||
         formatDateString(item.shippingDate).includes(query)
-      : item.status.toLowerCase().includes(query)
+      : item.status.toLowerCase().includes(query),
   );
 };
 
@@ -97,7 +97,7 @@ export const printRequest = (request) => {
     request.requestProducts,
     request.client?.name ?? request.codeWord,
     workshops[request.factory].name,
-    request.id
+    request.id,
   );
 };
 
@@ -107,9 +107,9 @@ export const deleteItem = (id, loadRequests) => {
     .then((res) =>
       Promise.all(
         res.requestProducts.map((product) =>
-          deleteProductsToRequest(product.id)
-        )
-      )
+          deleteProductsToRequest(product.id),
+        ),
+      ),
     )
     .then(() => deleteRequest(id))
     .then(() => loadRequests())
@@ -121,7 +121,7 @@ export const deleteItem = (id, loadRequests) => {
 export const printRequestsList = (
   setIsLoading,
   productsQuantities,
-  fullName
+  fullName,
 ) => {
   let categories = {};
   setIsLoading(true);
@@ -185,8 +185,8 @@ const copySelectedRequest = (id, requests, setIsLoading, loadData) => {
             packaging: item.packaging,
             status: item.status,
             name: item.name,
-          })
-        )
+          }),
+        ),
       );
     })
     .then(() => connectClientToRequest(newId, requestToBeCopied.client?.id))
@@ -202,38 +202,38 @@ const copySelectedRequest = (id, requests, setIsLoading, loadData) => {
 
 export const getRequestsDefaultInputs = (username, type) => {
   return [
-    { name: "date", defaultValue: new Date(), isRequired: true, isValid: true },
+    { name: 'date', defaultValue: new Date(), isRequired: true, isValid: true },
     {
-      name: "responsible",
+      name: 'responsible',
       defaultValue: username,
       isRequired: true,
       isValid: true,
     },
     {
-      name: "status",
-      defaultValue: "Ожидание",
+      name: 'status',
+      defaultValue: 'Ожидание',
       isRequired: true,
       isValid: true,
     },
-    { name: "requestProducts", defaultValue: [], isRequired: true },
+    { name: 'requestProducts', defaultValue: [], isRequired: true },
     {
-      name: "shippingDate",
+      name: 'shippingDate',
       defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
       isRequired: true,
       isValid: true,
     },
-    { name: "comment", defaultValue: "" },
-    { name: "factory", defaultValue: type },
-    { name: "sum", defaultValue: 0 },
-    { name: "clientId", defaultValue: 0, isRequired: true },
+    { name: 'comment', defaultValue: '' },
+    { name: 'factory', defaultValue: type },
+    { name: 'sum', defaultValue: 0 },
+    { name: 'clientId', defaultValue: 0, isRequired: true },
   ];
 };
 
 export const getRequestsEditingDefaultInputs = (username, type) => {
   let defaultInputs = getRequestsDefaultInputs(username, type);
   const newInputs = [
-    { name: "client", defaultValue: null, isRequired: true, isValid: true },
-    { name: "oldProducts", defaultValue: [], isRequired: true, isValid: true },
+    { name: 'client', defaultValue: null, isRequired: true, isValid: true },
+    { name: 'oldProducts', defaultValue: [], isRequired: true, isValid: true },
   ];
   defaultInputs = defaultInputs.map((input) => ({ ...input, isValid: true }));
   defaultInputs = [...defaultInputs, ...newInputs];
@@ -247,25 +247,25 @@ export const getRequestRedirectUrl = (history, splitPoint, type, inputs) => {
 
 export const getWorkshopOrdersDefaultInputs = (factory) => {
   return [
-    { name: "name", defaultValue: "", isRequired: true },
-    { name: "status", defaultValue: "ordered" },
-    { name: "date", defaultValue: new Date(), isRequired: true, isValid: true },
+    { name: 'name', defaultValue: '', isRequired: true },
+    { name: 'status', defaultValue: 'ordered' },
+    { name: 'date', defaultValue: new Date(), isRequired: true, isValid: true },
     {
-      name: "deliverBy",
+      name: 'deliverBy',
       defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
       isRequired: true,
       isValid: true,
     },
-    { name: "assembly", defaultValue: "ordered" },
+    { name: 'assembly', defaultValue: 'ordered' },
     {
-      name: "products",
+      name: 'products',
       defaultValue: [
         {
-          name: "",
-          quantity: "",
+          name: '',
+          quantity: '',
         },
       ],
     },
-    { name: "factoryName", defaultValue: factory },
+    { name: 'factoryName', defaultValue: factory },
   ];
 };

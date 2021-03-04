@@ -1,4 +1,4 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from 'react-router-dom';
 
 const useQuery = () => {
   const unparsedQuery = useLocation().search;

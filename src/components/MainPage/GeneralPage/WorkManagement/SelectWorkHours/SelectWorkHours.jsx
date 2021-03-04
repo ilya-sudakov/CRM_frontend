@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import "./SelectWorkHours.scss";
-import { formatDateString } from "../../../../../utils/functions.jsx";
+import React, { useEffect, useState } from 'react';
+import './SelectWorkHours.scss';
+import { formatDateString } from '../../../../../utils/functions.jsx';
 
 const SelectWorkHours = (props) => {
   useEffect(() => {}, [props.workArray]);
@@ -10,7 +10,7 @@ const SelectWorkHours = (props) => {
     if (event.target.value > 12) {
       value = 12;
     } else {
-      if (event.target.value === "") {
+      if (event.target.value === '') {
         value = 0;
       } else {
         value = Number.parseFloat(event.target.value);
@@ -42,12 +42,12 @@ const SelectWorkHours = (props) => {
             {formatDateString(props.date)}
           </div>
           <div className="select-work-hours__info select-work-hours__info--inverted">
-            Всего часов:{" "}
+            Всего часов:{' '}
             {Math.floor(
               props.workArray.reduce(
                 (sum, cur) => sum + Number.parseFloat(cur.hours),
-                0
-              ) * 10
+                0,
+              ) * 10,
             ) / 10}
           </div>
         </div>

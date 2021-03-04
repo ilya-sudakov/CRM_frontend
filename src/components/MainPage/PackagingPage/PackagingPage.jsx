@@ -1,66 +1,66 @@
-import React, { useState, useEffect } from 'react'
-import './PackagingPage.scss'
-import '../../../utils/MainWindow/MainWindow.scss'
-import SearchBar from '../SearchBar/SearchBar.jsx'
-import editSVG from '../../../../assets/tableview/edit.svg'
-import deleteSVG from '../../../../assets/tableview/delete.svg'
-import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx'
+import React, { useState, useEffect } from 'react';
+import './PackagingPage.scss';
+import '../../../utils/MainWindow/MainWindow.scss';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import editSVG from '../../../../assets/tableview/edit.svg';
+import deleteSVG from '../../../../assets/tableview/delete.svg';
+import TableLoading from '../../../utils/TableView/TableLoading/TableLoading.jsx';
 import {
   getPackaging,
   deletePackaging,
-} from '../../../utils/RequestsAPI/Products/packaging.js'
-import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx'
-import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx'
+} from '../../../utils/RequestsAPI/Products/packaging.js';
+import FloatingPlus from '../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import ControlPanel from '../../../utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const PackagingPage = (props) => {
-  const [packages, setPackages] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [packages, setPackages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [sortOrder, setSortOrder] = useState({
     curSort: 'name',
     name: 'asc',
     nextDateContact: 'asc',
-  })
+  });
 
   const changeSortOrder = (event) => {
-    const name = event.target.value.split(' ')[0]
-    const order = event.target.value.split(' ')[1]
+    const name = event.target.value.split(' ')[0];
+    const order = event.target.value.split(' ')[1];
     setSortOrder({
       curSort: name,
       [name]: order,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    setIsLoading(true)
-    const abortController = new AbortController()
-    loadData(abortController.signal)
-    setIsLoading(false)
+    setIsLoading(true);
+    const abortController = new AbortController();
+    loadData(abortController.signal);
+    setIsLoading(false);
     return function cancel() {
-      abortController.abort()
-    }
-  }, [])
+      abortController.abort();
+    };
+  }, []);
 
   const loadData = (signal) => {
     getPackaging(signal)
       .then((res) => res.json())
       .then((res) => {
-        setPackages(res)
-      })
-  }
+        setPackages(res);
+      });
+  };
 
   const deleteItem = (index) => {
-    const id = packages[index].id
+    const id = packages[index].id;
     deletePackaging(id)
       .then(() => {
-        loadData()
+        loadData();
       })
       .catch((error) => {
-        console.log(error)
-        alert('Ошибка при удалении')
-      })
-  }
+        console.log(error);
+        alert('Ошибка при удалении');
+      });
+  };
 
   return (
     <div className="packaging-page">
@@ -109,12 +109,12 @@ const PackagingPage = (props) => {
             )
             .sort((a, b) => {
               if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1
+                return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
               }
               if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1
+                return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
               }
-              return 0
+              return 0;
             })
             .map((packageItem, packageIndex) => {
               return (
@@ -140,7 +140,7 @@ const PackagingPage = (props) => {
                       className="main-window__action"
                       title="Редактирование упаковки"
                       onClick={() => {
-                        props.history.push('/packaging/edit/' + packageItem.id)
+                        props.history.push('/packaging/edit/' + packageItem.id);
                       }}
                     >
                       <img className="main-window__img" src={editSVG} />
@@ -150,7 +150,7 @@ const PackagingPage = (props) => {
                         className="main-window__action"
                         title="Удаление упаковки"
                         onClick={() => {
-                          deleteItem(packageIndex)
+                          deleteItem(packageIndex);
                         }}
                       >
                         <img className="main-window__img" src={deleteSVG} />
@@ -158,12 +158,12 @@ const PackagingPage = (props) => {
                     )}
                   </div>
                 </div>
-              )
+              );
             })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PackagingPage
+export default PackagingPage;

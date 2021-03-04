@@ -1,13 +1,13 @@
 import {
   formatDateStringNoYear,
   getEmployeeNameText,
-} from "../../../../../utils/functions.jsx";
+} from '../../../../../utils/functions.jsx';
 import {
   createPDF,
   defaultStylesPDF,
-} from "../../../../../utils/pdfFunctions.js";
-import { sortByField } from "../../../../../utils/sorting/sorting.js";
-import { defaultJournalWorkshops } from "./objects.js";
+} from '../../../../../utils/pdfFunctions.js';
+import { sortByField } from '../../../../../utils/sorting/sorting.js';
+import { defaultJournalWorkshops } from './objects.js';
 
 export const updateData = (worksList, selectedWork, newData) => {
   const temp = worksList;
@@ -18,7 +18,7 @@ export const updateData = (worksList, selectedWork, newData) => {
 const getProductListText = (products) => {
   return products
     .map((product) => `${product.name} - ${product.quantity} шт\n`)
-    .join("");
+    .join('');
 };
 
 const getDaysWorkText = (workItem) => {
@@ -27,12 +27,12 @@ const getDaysWorkText = (workItem) => {
     const draftText = getProductListText(work.draft);
     return [
       `${work.workName} - ${work.hours} ч\n`,
-      { text: productText, fontSize: 10, color: "#666" },
-      { text: draftText, fontSize: 10, color: "#666" },
+      { text: productText, fontSize: 10, color: '#666' },
+      { text: draftText, fontSize: 10, color: '#666' },
       work.comment && {
         text: `Комментарий: ${work.comment}`,
         fontSize: 10,
-        color: "#999",
+        color: '#999',
         italics: true,
       },
     ];
@@ -45,13 +45,13 @@ const sortEmployees = (employees, workshop) => {
     employees.filter(
       (employee) =>
         employee.workshop === workshop.name &&
-        employee?.relevance !== "Уволен" &&
-        employee?.workshop !== "Уволенные"
+        employee?.relevance !== 'Уволен' &&
+        employee?.workshop !== 'Уволенные',
     ),
     {
-      fieldName: "lastName",
-      direction: "asc",
-    }
+      fieldName: 'lastName',
+      direction: 'asc',
+    },
   );
   return filteredEmployees;
 };
@@ -61,42 +61,42 @@ const getWorkshopList = (
   workshop,
   curDate,
   todaysWork,
-  yesterdaysWork
+  yesterdaysWork,
 ) => {
   const prevDay = new Date(new Date(curDate).setDate(curDate.getDate() - 1));
   const filteredEmployees = sortEmployees(employees, workshop);
   if (filteredEmployees.length === 0) return null;
   const listItems = filteredEmployees.map((employee) => [
-    { text: getEmployeeNameText(employee), style: "regularText", fontSize: 11 },
+    { text: getEmployeeNameText(employee), style: 'regularText', fontSize: 11 },
     {
       stack: getDaysWorkText(yesterdaysWork[workshop.engName][employee.id]),
-      style: "regularText",
+      style: 'regularText',
       fontSize: 11,
     },
     {
       stack: getDaysWorkText(todaysWork[workshop.engName][employee.id]),
-      style: "regularText",
+      style: 'regularText',
       fontSize: 11,
     },
   ]);
   const list = [
     {
       text: `${workshop.name}\n`,
-      alignment: "left",
-      style: "subheader",
+      alignment: 'left',
+      style: 'subheader',
       margin: [0, 15, 0, 5],
     },
     {
       table: {
-        widths: [150, "*", "*"],
+        widths: [150, '*', '*'],
         body: [
           [
-            { text: "ФИО сотрудника", style: "tableHeader" },
+            { text: 'ФИО сотрудника', style: 'tableHeader' },
             {
               text: formatDateStringNoYear(prevDay),
-              style: "tableHeader",
+              style: 'tableHeader',
             },
-            { text: formatDateStringNoYear(curDate), style: "tableHeader" },
+            { text: formatDateStringNoYear(curDate), style: 'tableHeader' },
           ],
           ...listItems,
         ],
@@ -110,23 +110,23 @@ export const createWorkListPDF = (
   employees,
   todaysWork,
   yesterdaysWork,
-  curDate
+  curDate,
 ) => {
   const list = [];
   Object.values(defaultJournalWorkshops).map((workshop) => {
     list.push(
-      getWorkshopList(employees, workshop, curDate, todaysWork, yesterdaysWork)
+      getWorkshopList(employees, workshop, curDate, todaysWork, yesterdaysWork),
     );
   });
   const data = {
     info: {
-      title: "Дневник производства",
+      title: 'Дневник производства',
     },
     content: [
       {
-        text: "Дневник производства\n",
-        alignment: "center",
-        style: "title",
+        text: 'Дневник производства\n',
+        alignment: 'center',
+        style: 'title',
         margin: [0, 0, 0, 10],
       },
       ...list,

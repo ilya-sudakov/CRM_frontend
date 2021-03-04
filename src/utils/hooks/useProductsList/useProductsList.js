@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 import {
   getProductsByCategory,
   getProductsByLocation,
   getProductById,
-} from "../../RequestsAPI/Products.js";
-import { getCategoriesNames } from "../../RequestsAPI/Products/Categories.js";
-import UserContext from "../../../App.js";
+} from '../../RequestsAPI/Products.js';
+import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js';
+import UserContext from '../../../App.js';
 
 const useProductsList = (shouldExecute = true) => {
   const [products, setProducts] = useState([]);
@@ -24,10 +24,10 @@ const useProductsList = (shouldExecute = true) => {
 
         if (
           userContext.userHasAccess([
-            "ROLE_ADMIN",
-            "ROLE_DISPATCHER",
-            "ROLE_ENGINEER",
-            "ROLE_MANAGER",
+            'ROLE_ADMIN',
+            'ROLE_DISPATCHER',
+            'ROLE_ENGINEER',
+            'ROLE_MANAGER',
             // 'ROLE_WORKSHOP', //Временно цеха видят всю продукцию
           ])
         ) {
@@ -43,16 +43,16 @@ const useProductsList = (shouldExecute = true) => {
                   setProducts([...productsArr]);
                   return;
                 });
-            })
+            }),
           );
-        } else if (userContext.userHasAccess(["ROLE_WORKSHOP"])) {
-          const usersWorkshop = userContext.userHasAccess(["ROLE_LEMZ"])
-            ? "ЦехЛЭМЗ"
-            : userContext.userHasAccess(["ROLE_LEPSARI"])
-            ? "ЦехЛепсари"
-            : userContext.userHasAccess(["ROLE_LIGOSVKIY"])
-            ? "ЦехЛиговский"
-            : "ЦехЛЭМЗ";
+        } else if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
+          const usersWorkshop = userContext.userHasAccess(['ROLE_LEMZ'])
+            ? 'ЦехЛЭМЗ'
+            : userContext.userHasAccess(['ROLE_LEPSARI'])
+            ? 'ЦехЛепсари'
+            : userContext.userHasAccess(['ROLE_LIGOSVKIY'])
+            ? 'ЦехЛиговский'
+            : 'ЦехЛЭМЗ';
 
           await getProductsByLocation({
             productionLocation: usersWorkshop,
@@ -77,9 +77,9 @@ const useProductsList = (shouldExecute = true) => {
                 // console.log(res);
                 productsArr.splice(index, 1, res);
                 setProducts([...productsArr]);
-              })
-          )
-        )
+              }),
+          ),
+        ),
       )
       .then(() => {
         setIsLoadingProducts(false);

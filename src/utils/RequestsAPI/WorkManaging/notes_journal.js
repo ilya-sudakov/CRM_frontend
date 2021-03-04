@@ -1,5 +1,5 @@
-import { getAuthHeaders } from "../../utilsAPI.jsx";
-import axios from "axios";
+import { getAuthHeaders } from '../../utilsAPI.jsx';
+import axios from 'axios';
 
 export function getNotesJournalList(date = new Date()) {
   const headers = getAuthHeaders();
@@ -8,7 +8,7 @@ export function getNotesJournalList(date = new Date()) {
     {
       date: Math.floor(date.getTime() / 1000),
     },
-    headers
+    headers,
   );
 }
 
@@ -17,7 +17,7 @@ export function addJournalNote(item) {
   return axios.post(
     `${process.env.API_BASE_URL}/api/v1/journal/`,
     item,
-    headers
+    headers,
   );
 }
 
@@ -26,7 +26,7 @@ export function editJournalNote(item, id) {
   return axios.put(
     `${process.env.API_BASE_URL}/api/v1/journal/${id}`,
     item,
-    headers
+    headers,
   );
 }
 
@@ -34,6 +34,6 @@ export function deleteJournalNote(id) {
   const headers = getAuthHeaders();
   return axios.delete(
     `${process.env.API_BASE_URL}/api/v1/journal/${id}`,
-    headers
+    headers,
   );
 }

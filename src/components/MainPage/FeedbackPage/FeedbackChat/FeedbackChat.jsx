@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import './FeedbackChat.scss'
-import sendSVG from '../../../../../assets/chat/send.svg'
-import arrowUpSVG from '../../../../../assets/chat/unread_messages__arrow-up.svg'
-import '../../../../utils/Form/Form.scss'
+import React, { useEffect, useState } from 'react';
+import './FeedbackChat.scss';
+import sendSVG from '../../../../../assets/chat/send.svg';
+import arrowUpSVG from '../../../../../assets/chat/unread_messages__arrow-up.svg';
+import '../../../../utils/Form/Form.scss';
 import {
   formatDateString,
   formatDateStringWithTime,
   formatDateStringToTime,
-} from '../../../../utils/functions.jsx'
+} from '../../../../utils/functions.jsx';
 
 const FeedbackChat = (props) => {
-  const [newMessage, setNewMessage] = useState('')
+  const [newMessage, setNewMessage] = useState('');
   // const [newMessagesAmount, setNewMessagesAmount] = useState(0)
-  const [showNewMessages, setShowNewMessages] = useState(false)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [showNewMessages, setShowNewMessages] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    let list = document.getElementsByClassName('feedback-chat__list')[0]
-    list.scrollTop = list.scrollHeight
+    let list = document.getElementsByClassName('feedback-chat__list')[0];
+    list.scrollTop = list.scrollHeight;
     if (!isLoaded) {
       // console.log(props.isRead)
       if (props.isRead === false) {
-        setShowNewMessages(true)
-        setIsLoaded(true)
+        setShowNewMessages(true);
+        setIsLoaded(true);
       }
     }
     //Отмечаем все непрочитанные сообщения - прочитанными
@@ -32,16 +32,16 @@ const FeedbackChat = (props) => {
           props.userData.username
         : false) &&
       showNewMessages === true &&
-      isLoaded 
+      isLoaded
     ) {
       // console.log(123);
-      props.handleReadMessages()
-      console.log(props.messages[props.messages.length - 1]?.author)
+      props.handleReadMessages();
+      console.log(props.messages[props.messages.length - 1]?.author);
       setTimeout(() => {
-        setShowNewMessages(false)
-      }, 5000)
+        setShowNewMessages(false);
+      }, 5000);
     }
-  }, [props.messages, props.isRead, isLoaded])
+  }, [props.messages, props.isRead, isLoaded]);
 
   return (
     <div className="feedback-chat">
@@ -52,12 +52,12 @@ const FeedbackChat = (props) => {
         {props.messages
           .sort((a, b) => {
             if (new Date(a.date) < new Date(b.date)) {
-              return -1
+              return -1;
             }
             if (new Date(a.date) > new Date(b.date)) {
-              return 1
+              return 1;
             }
-            return 0
+            return 0;
           })
           .map((message, index) => {
             //  if (index === props.messages.length - 5) {
@@ -152,7 +152,7 @@ const FeedbackChat = (props) => {
                 )}
                 <div className="feedback-chat__text">{message.text}</div>
               </div>
-            )
+            );
           })}
         {props.messages[props.messages.length - 1]?.author !==
           props.userData.username &&
@@ -174,18 +174,18 @@ const FeedbackChat = (props) => {
           type="text"
           placeholder="Напишите что-нибудь..."
           onChange={(event) => {
-            const value = event.target.value
-            setNewMessage(value)
+            const value = event.target.value;
+            setNewMessage(value);
           }}
           value={newMessage}
         />
         <button
           className="feedback-chat__button"
           onClick={(event) => {
-            event.preventDefault()
+            event.preventDefault();
             // console.log(newMessage);
-            props.handleSubmit(newMessage)
-            setNewMessage('')
+            props.handleSubmit(newMessage);
+            setNewMessage('');
           }}
         >
           <span>Отправить</span>
@@ -193,7 +193,7 @@ const FeedbackChat = (props) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FeedbackChat
+export default FeedbackChat;

@@ -1,5 +1,5 @@
-import React from "react";
-import "./PageLoading.scss";
+import React from 'react';
+import './PageLoading.scss';
 
 const PageLoading = () => {
   return (

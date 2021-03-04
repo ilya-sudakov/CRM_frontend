@@ -1,19 +1,19 @@
-import React from "react";
-import "./InputUser.scss";
-import SelectUser from "../../../components/MainPage/SelectUser/SelectUser.jsx";
+import React from 'react';
+import './InputUser.scss';
+import SelectUser from '../../../components/MainPage/SelectUser/SelectUser.jsx';
 
 const InputUser = (props) => {
   return (
     <div className="input_user">
       <div className="input_user__input">
         <div className="input_user__input_name">
-          {props.inputName + (props.required ? "*" : "")}
+          {props.inputName + (props.required ? '*' : '')}
         </div>
         <div
           className={
             props.error === true
-              ? "input_user__input_field input_user__input_field--error"
-              : "input_user__input_field"
+              ? 'input_user__input_field input_user__input_field--error'
+              : 'input_user__input_field'
           }
         >
           <SelectUser

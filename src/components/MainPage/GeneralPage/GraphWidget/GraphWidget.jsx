@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import { formatDateStringNoYear } from "../../../../utils/functions.jsx";
-import TableLoading from "../../../../utils/TableView/TableLoading/TableLoading.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import { getRecordedWorkByDateRange } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import { createGraph, loadCanvas } from "../../../../utils/graphs.js";
-import UserContext from "../../../../App.js";
-import "./GraphWidget.scss";
+import React, { useContext, useEffect, useState } from 'react';
+import { formatDateStringNoYear } from '../../../../utils/functions.jsx';
+import TableLoading from '../../../../utils/TableView/TableLoading/TableLoading.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
+import UserContext from '../../../../App.js';
+import './GraphWidget.scss';
 
 import {
   getDateFromWeekdayIndex,
   getWeekdaysListWithOffset,
-} from "./functions.js";
-import { graphOptions, weekdays, workshopsDefaultValue } from "./objects.js";
-import Widget from "../Widget/Widget.jsx";
+} from './functions.js';
+import { graphOptions, weekdays, workshopsDefaultValue } from './objects.js';
+import Widget from '../Widget/Widget.jsx';
 
 const GraphWidget = () => {
   const [weekOffset, setWeekOffset] = useState(0);
@@ -43,7 +43,7 @@ const GraphWidget = () => {
       week[week.length - 1].getDate(),
       week[week.length - 1].getMonth() + 1,
       week[week.length - 1].getFullYear(),
-      abortController.signal
+      abortController.signal,
     )
       .then((res) => res.json())
       .then((res) => {
@@ -61,7 +61,7 @@ const GraphWidget = () => {
                 ) {
                   return Math.ceil((sum + cur.hours) * 10) / 10;
                 } else return sum;
-              }, 0)
+              }, 0),
             );
             return temp.splice(index, 1, {
               ...workshop,
@@ -70,17 +70,17 @@ const GraphWidget = () => {
           });
         });
         console.log(workshops);
-        if (userContext.userHasAccess(["ROLE_ADMIN"])) {
+        if (userContext.userHasAccess(['ROLE_ADMIN'])) {
           !canvasLoaded &&
-            loadCanvas("graph-widget__chart-wrapper", "graph-widget__chart");
+            loadCanvas('graph-widget__chart-wrapper', 'graph-widget__chart');
           setCanvasLoaded(true);
           const options = {
             type:
               (window.innerWidth ||
                 document.documentElement.clientWidth ||
                 document.body.clientWidth) > 500
-                ? "bar"
-                : "horizontalBar",
+                ? 'bar'
+                : 'horizontalBar',
             data: {
               labels: [
                 ...week.map((day, index) => {
@@ -111,7 +111,7 @@ const GraphWidget = () => {
           <div className="graph-widget__title">
             <span className="graph-widget__date">
               {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
-                " - " +
+                ' - ' +
                 formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
             </span>
             Сводка за неделю
@@ -137,7 +137,7 @@ const GraphWidget = () => {
           <div className="main-window__mobile-text">
             <span className="graph-widget__date">
               {formatDateStringNoYear(getDateFromWeekdayIndex(1, weekOffset)) +
-                " - " +
+                ' - ' +
                 formatDateStringNoYear(getDateFromWeekdayIndex(7, weekOffset))}
             </span>
             Сводка за неделю

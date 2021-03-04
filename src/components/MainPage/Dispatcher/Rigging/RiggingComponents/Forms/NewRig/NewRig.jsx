@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import "./NewRig.scss";
-import "../../../../../../../utils/Form/Form.scss";
-import SelectParts from "../../../SelectParts/SelectParts.jsx";
+import React, { useState, useEffect } from 'react';
+import './NewRig.scss';
+import '../../../../../../../utils/Form/Form.scss';
+import SelectParts from '../../../SelectParts/SelectParts.jsx';
 
-import InputText from "../../../../../../../utils/Form/InputText/InputText.jsx";
-import ErrorMessage from "../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import Button from "../../../../../../../utils/Form/Button/Button.jsx";
+import InputText from '../../../../../../../utils/Form/InputText/InputText.jsx';
+import ErrorMessage from '../../../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from '../../../../../../../utils/Form/Button/Button.jsx';
 import {
   addStamp,
   addPartsToStamp,
-} from "../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import { rigTypes } from "../../rigsVariables.js";
+} from '../../../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { rigTypes } from '../../rigsVariables.js';
 
 const NewRig = (props) => {
   const [rigInputs, setRigInputs] = useState({
-    name: "",
-    number: "",
-    comment: "",
+    name: '',
+    number: '',
+    comment: '',
     parts: [],
     lastEdited: new Date(),
-    color: "production",
+    color: 'production',
     status: props.type,
   });
   const [riggingErrors, setRiggingErrors] = useState({
@@ -37,7 +37,7 @@ const NewRig = (props) => {
 
   const validateField = (fieldName, value) => {
     switch (fieldName) {
-      case "parts":
+      case 'parts':
         setValidInputs({
           ...validInputs,
           parts: value.length > 0,
@@ -47,7 +47,7 @@ const NewRig = (props) => {
         if (validInputs[fieldName] !== undefined) {
           setValidInputs({
             ...validInputs,
-            [fieldName]: value !== "",
+            [fieldName]: value !== '',
           });
         }
         break;
@@ -96,12 +96,12 @@ const NewRig = (props) => {
             return addPartsToStamp(newPart);
           });
           Promise.all(parts).then(() =>
-            props.history.push(rigTypes[props.type].redirectURL)
+            props.history.push(rigTypes[props.type].redirectURL),
           );
         })
         .catch((error) => {
           setIsLoading(false);
-          alert("Ошибка при добавлении записи");
+          alert('Ошибка при добавлении записи');
           console.log(error);
         });
   };
@@ -120,7 +120,7 @@ const NewRig = (props) => {
   };
 
   const handlePartsChange = (newParts) => {
-    validateField("parts", newParts);
+    validateField('parts', newParts);
     setRigInputs({
       ...rigInputs,
       parts: newParts,

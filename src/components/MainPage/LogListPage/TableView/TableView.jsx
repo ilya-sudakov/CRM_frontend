@@ -1,12 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   formatDateStringNoYear,
   formatDateStringToTime,
-} from "../../../../utils/functions.jsx";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import "./TableView.scss";
-import { logItemsRedirectLinks } from "../objects.js";
+} from '../../../../utils/functions.jsx';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import './TableView.scss';
+import { logItemsRedirectLinks } from '../objects.js';
 
 const TableView = ({ data = [], isLoading = false }) => {
   return (
@@ -26,13 +26,13 @@ const TableView = ({ data = [], isLoading = false }) => {
           />
         ) : (
           data.map((item) => {
-            const itemId = item.description.split("№")[1];
+            const itemId = item.description.split('№')[1];
             return (
               <div key={item.id} className="main-window__list-item">
                 <span>
                   <div className="main-window__mobile-text">Время</div>
                   {`${formatDateStringNoYear(
-                    item.date
+                    item.date,
                   )} ${formatDateStringToTime(item.date)} `}
                 </span>
                 <span>

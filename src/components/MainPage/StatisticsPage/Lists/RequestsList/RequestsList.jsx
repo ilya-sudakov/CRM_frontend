@@ -1,23 +1,23 @@
-import React from "react";
-import usePagination from "../../../../../utils/hooks/usePagination/usePagination.js";
-import { sortRequests } from "../../../WorkshopsComponents/TableView/functions.js";
-import TableView from "../../../WorkshopsComponents/TableView/TableView.jsx";
-import "./RequestsList.scss";
+import React from 'react';
+import usePagination from '../../../../../utils/hooks/usePagination/usePagination.js';
+import { sortRequests } from '../../../WorkshopsComponents/TableView/functions.js';
+import TableView from '../../../WorkshopsComponents/TableView/TableView.jsx';
+import './RequestsList.scss';
 
 const RequestsList = ({
   data = [],
-  sortBy = { curSort: "id", id: "asc" },
-  title = "",
+  sortBy = { curSort: 'id', id: 'asc' },
+  title = '',
   loadData,
 }) => {
   const pages = usePagination(
     () => sortRequests(data, sortBy),
     [data],
-    "static",
+    'static',
     {
       size: 10,
       ignoreURL: true,
-    }
+    },
   );
   return (
     <div className="requests-list">

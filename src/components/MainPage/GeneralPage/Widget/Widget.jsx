@@ -1,21 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./Widget.scss";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './Widget.scss';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import { useHistory } from 'react-router-dom';
 
 const Widget = ({
-  title = "",
-  className = "",
+  title = '',
+  className = '',
   content = null,
   linkTo,
-  subTitle = "",
+  subTitle = '',
   customHeader = null,
 }) => {
   let history = useHistory();
 
   return (
-    <div className={`widget ${className ?? ""}`}>
+    <div className={`widget ${className ?? ''}`}>
       {customHeader ?? (
         <div className="widget__title">
           <div className="widget__sub-title">{subTitle}</div>

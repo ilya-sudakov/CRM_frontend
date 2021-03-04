@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import "./EditTask.scss";
-import "../../../../../utils/Form/Form.scss";
+import React, { useEffect, useState } from 'react';
+import './EditTask.scss';
+import '../../../../../utils/Form/Form.scss';
 import {
   getMainTaskById,
   editMainTask,
-} from "../../../../../utils/RequestsAPI/MainTasks.js";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { getTasksDefaultInputs } from "../functions";
-import useForm from "../../../../../utils/hooks/useForm";
+} from '../../../../../utils/RequestsAPI/MainTasks.js';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { getTasksDefaultInputs } from '../functions';
+import useForm from '../../../../../utils/hooks/useForm';
 
 const EditTask = (props) => {
   const [taskId, setTaskId] = useState(1);
@@ -32,19 +32,19 @@ const EditTask = (props) => {
       .then(() => props.history.push(`/dispatcher/general-tasks#${taskId}`))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование основной задачи";
+    document.title = 'Редактирование основной задачи';
     const id = props.history.location.pathname.split(
-      "/dispatcher/general-tasks/edit/"
+      '/dispatcher/general-tasks/edit/',
     )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс задачи!");
-      props.history.push("/dispatcher/general-tasks");
+      alert('Неправильный индекс задачи!');
+      props.history.push('/dispatcher/general-tasks');
     } else {
       setTaskId(id);
       getMainTaskById(id)
@@ -61,8 +61,8 @@ const EditTask = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс задачи!");
-          props.history.push("/dispatcher/general-tasks");
+          alert('Неправильный индекс задачи!');
+          props.history.push('/dispatcher/general-tasks');
         });
     }
   }, []);
@@ -81,9 +81,9 @@ const EditTask = (props) => {
           name="dateCreated"
           selected={Date.parse(formInputs.dateCreated)}
           errorsArr={formErrors}
-          readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
           setErrorsArr={setFormErrors}
-          handleDateChange={(date) => handleInputChange("dateCreated", date)}
+          handleDateChange={(date) => handleInputChange('dateCreated', date)}
         />
         <div className="main-form__fieldset">
           <div className="main-form__group-name">Сведения</div>
@@ -94,9 +94,9 @@ const EditTask = (props) => {
             error={formErrors.description}
             name="description"
             handleInputChange={({ target }) =>
-              handleInputChange("description", target.value)
+              handleInputChange('description', target.value)
             }
-            readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
             defaultValue={formInputs.description}
@@ -107,9 +107,9 @@ const EditTask = (props) => {
             required
             error={formErrors.responsible}
             defaultValue={formInputs.responsible}
-            readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
             name="responsible"
-            handleUserChange={(user) => handleInputChange("responsible", user)}
+            handleUserChange={(user) => handleInputChange('responsible', user)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
             searchPlaceholder="Введите имя пользователя для поиска..."
@@ -121,17 +121,17 @@ const EditTask = (props) => {
           error={formErrors.dateControl}
           name="dateControl"
           selected={Date.parse(formInputs.dateControl)}
-          readOnly={!props.userHasAccess(["ROLE_ADMIN"])}
+          readOnly={!props.userHasAccess(['ROLE_ADMIN'])}
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
-          handleDateChange={(date) => handleInputChange("dateControl", date)}
+          handleDateChange={(date) => handleInputChange('dateControl', date)}
         />
         <InputText
           inputName="Состояние"
           name="status"
           type="textarea"
           handleInputChange={({ target }) =>
-            handleInputChange("status", target.value)
+            handleInputChange('status', target.value)
           }
           defaultValue={formInputs.status}
         />
@@ -141,7 +141,7 @@ const EditTask = (props) => {
             <select
               name="condition"
               onChange={({ target }) =>
-                handleInputChange("condition", target.value)
+                handleInputChange('condition', target.value)
               }
               value={formInputs.condition}
             >

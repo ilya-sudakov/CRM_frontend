@@ -1,24 +1,24 @@
-import React, { useEffect, useCallback } from "react";
-import Button from "../Button/Button.jsx";
-import PropTypes from "prop-types";
-import "./MessageForUser.scss";
+import React, { useEffect, useCallback } from 'react';
+import Button from '../Button/Button.jsx';
+import PropTypes from 'prop-types';
+import './MessageForUser.scss';
 
 const MessageForUser = ({
   showMessage = false,
   setShowMessage,
-  message = "",
+  message = '',
   onClick,
-  title = "Сообщение",
-  buttonText = "ОК",
+  title = 'Сообщение',
+  buttonText = 'ОК',
 }) => {
   const clickOnMessageWindow = (event) => {
     event.preventDefault();
     const classList = event.target.classList;
     if (
-      !(classList[0] === "window-message") &&
-      !classList.contains("window-message__exit") &&
-      !classList.contains("window-message__bar") &&
-      !classList.contains("main-window__button")
+      !(classList[0] === 'window-message') &&
+      !classList.contains('window-message__exit') &&
+      !classList.contains('window-message__bar') &&
+      !classList.contains('main-window__button')
     ) {
       return setShowMessage(true);
     }
@@ -27,31 +27,31 @@ const MessageForUser = ({
   };
 
   const handleCloseWindow = useCallback((event) => {
-    if (event.key === "Enter" || event.key === "Escape") {
+    if (event.key === 'Enter' || event.key === 'Escape') {
       event.preventDefault();
       setShowMessage(false);
     }
   }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleCloseWindow, false);
+    document.addEventListener('keydown', handleCloseWindow, false);
     return () => {
-      document.removeEventListener("keydown", handleCloseWindow, false);
+      document.removeEventListener('keydown', handleCloseWindow, false);
     };
   }, []);
 
   return (
     <div
       className={
-        showMessage ? "window-message" : "window-message window-message--hidden"
+        showMessage ? 'window-message' : 'window-message window-message--hidden'
       }
       onClick={clickOnMessageWindow}
     >
       <div
         className={
           showMessage
-            ? "window-message__content"
-            : "window-message__content window-message__content--hidden"
+            ? 'window-message__content'
+            : 'window-message__content window-message__content--hidden'
         }
       >
         <div className="window-message__header">

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import FormWindow from "../../../../utils/Form/FormWindow/FormWindow.jsx";
+import React, { useEffect, useState } from 'react';
+import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 
 const GraphPanel = ({
   isLoaded,
@@ -17,11 +17,11 @@ const GraphPanel = ({
   return (
     <div
       className={`panel panel--chart ${
-        isLoaded && !isLoading ? "" : "panel--placeholder"
+        isLoaded && !isLoading ? '' : 'panel--placeholder'
       }`}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>
-        <span>{category || "Категория"}</span>
+        <span>{category || 'Категория'}</span>
         {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
       </div>
       {windowContent ? (
@@ -36,7 +36,7 @@ const GraphPanel = ({
         className={`panel__chart-wrapper panel__chart-wrapper--${chartName}`}
       ></div>
       <div className={`panel__difference`}>
-        <div className="panel__time-period">{isLoaded ? timePeriod : ""}</div>
+        <div className="panel__time-period">{isLoaded ? timePeriod : ''}</div>
       </div>
     </div>
   );

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "./NewPackaging.scss";
-import "../../../../utils/Form/Form.scss";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import { addPackaging } from "../../../../utils/RequestsAPI/Products/packaging.js";
-import useForm from "../../../../utils/hooks/useForm";
-import { packagingDefaultInputs } from "../objects";
+import React, { useState, useEffect } from 'react';
+import './NewPackaging.scss';
+import '../../../../utils/Form/Form.scss';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import { addPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';
+import useForm from '../../../../utils/hooks/useForm';
+import { packagingDefaultInputs } from '../objects';
 
 const NewPackaging = (props) => {
   const {
@@ -24,15 +24,15 @@ const NewPackaging = (props) => {
     console.log(formInputs);
     addPackaging(formInputs)
       .then(() => {})
-      .then(() => props.history.push("/packaging"))
+      .then(() => props.history.push('/packaging'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
       });
   };
 
   useEffect(() => {
-    document.title = "Создание упаковки";
+    document.title = 'Создание упаковки';
   }, []);
 
   return (
@@ -49,7 +49,7 @@ const NewPackaging = (props) => {
             error={formErrors.name}
             name="name"
             handleInputChange={({ target }) =>
-              handleInputChange("name", target.value)
+              handleInputChange('name', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -61,7 +61,7 @@ const NewPackaging = (props) => {
             error={formErrors.quantity}
             name="quantity"
             handleInputChange={({ target }) =>
-              handleInputChange("quantity", target.value)
+              handleInputChange('quantity', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -72,7 +72,7 @@ const NewPackaging = (props) => {
             error={formErrors.size}
             name="size"
             handleInputChange={({ target }) =>
-              handleInputChange("size", target.value)
+              handleInputChange('size', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -81,7 +81,7 @@ const NewPackaging = (props) => {
             inputName="Комментарий"
             name="comment"
             handleInputChange={({ target }) =>
-              handleInputChange("comment", target.value)
+              handleInputChange('comment', target.value)
             }
           />
           <div className="main-form__input_hint">
@@ -91,7 +91,7 @@ const NewPackaging = (props) => {
             <Button
               className="main-form__submit main-form__submit--inverted"
               inverted
-              onClick={() => props.history.push("/packaging")}
+              onClick={() => props.history.push('/packaging')}
               text="Вернуться назад"
             />
             <Button

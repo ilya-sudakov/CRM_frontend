@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { getStamp } from "../RequestsAPI/Rigging/Stamp.jsx";
-import { sortByField } from "../sorting/sorting.js";
+import { useEffect, useState } from 'react';
+import { getStamp } from '../RequestsAPI/Rigging/Stamp.jsx';
+import { sortByField } from '../sorting/sorting.js';
 
 const useDraftsList = () => {
   const [drafts, setDrafts] = useState([]);
@@ -19,14 +19,14 @@ const useDraftsList = () => {
               ...stamp,
               value: stamp.id,
               label: `${stamp.number}, ${stamp.name}`,
-              type: "Stamp",
+              type: 'Stamp',
             });
           });
         });
         return setDrafts([
           ...sortByField(newDrafts, {
-            fieldName: "name",
-            direction: "asc",
+            fieldName: 'name',
+            direction: 'asc',
           }),
         ]);
       })

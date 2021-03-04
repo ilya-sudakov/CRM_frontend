@@ -1,8 +1,8 @@
-import React from "react";
-import SelectPriceItem from "../../SelectPriceItem/SelectPriceItem.jsx";
-import CheckBox from "../../../../../utils/Form/CheckBox/CheckBox.jsx";
-import { sortByField } from "../../../../../utils/sorting/sorting";
-import ChevronSVG from "../../../../../../assets/tableview/chevron-down.inline.svg";
+import React from 'react';
+import SelectPriceItem from '../../SelectPriceItem/SelectPriceItem.jsx';
+import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
+import { sortByField } from '../../../../../utils/sorting/sorting';
+import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
 
 const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
   const handleActivateGroup = (value) => {
@@ -45,7 +45,7 @@ const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
         <ChevronSVG
           className={`main-window__img`}
           style={{ transform: `rotate(${item.isMinimized ? 0 : 180}deg)` }}
-          title={`${item.isMinimized ? "Раскрыть" : "Скрыть"} всю группу ${
+          title={`${item.isMinimized ? 'Раскрыть' : 'Скрыть'} всю группу ${
             item.name
           }`}
           onClick={handleMinimizeGroup}
@@ -54,8 +54,8 @@ const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
       <div
         className={
           item.isMinimized
-            ? " main-form__item main-form__item--hidden"
-            : "main-form__item"
+            ? ' main-form__item main-form__item--hidden'
+            : 'main-form__item'
         }
       >
         <div className="main-form__input_field">
@@ -78,8 +78,8 @@ const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
             handleImgChange={handleValuesChange}
             uniqueId={index}
             defaultValue={sortByField(item.products, {
-              fieldName: "number",
-              direction: "asc",
+              fieldName: 'number',
+              direction: 'asc',
             })}
           />
         </div>

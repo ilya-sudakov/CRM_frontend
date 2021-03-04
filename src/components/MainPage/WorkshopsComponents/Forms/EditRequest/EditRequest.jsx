@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import "./EditRequest.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputUser from "../../../../../utils/Form/InputUser/InputUser.jsx";
-import InputProducts from "../../../../../utils/Form/InputProducts/InputProducts.jsx";
-import ErrorMessage from "../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import UserContext from "../../../../../App.js";
+import React, { useEffect, useState, useContext } from 'react';
+import './EditRequest.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
+import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
+import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import UserContext from '../../../../../App.js';
 import {
   editRequest,
   editProductsToRequest,
@@ -15,22 +15,22 @@ import {
   deleteProductsToRequest,
   getRequestById,
   connectClientToRequest,
-} from "../../../../../utils/RequestsAPI/Requests.jsx";
-import { requestStatuses, workshops } from "../../workshopVariables.js";
-import SelectClient from "../../../Clients/SelectClients/SelectClients.jsx";
+} from '../../../../../utils/RequestsAPI/Requests.jsx';
+import { requestStatuses, workshops } from '../../workshopVariables.js';
+import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 import {
   getPageByRequest,
   getRequestRedirectUrl,
   getRequestsEditingDefaultInputs,
-} from "../../functions.js";
-import useForm from "../../../../../utils/hooks/useForm";
+} from '../../functions.js';
+import useForm from '../../../../../utils/hooks/useForm';
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1);
   const userContext = useContext(UserContext);
   const requestsDefaultInputs = getRequestsEditingDefaultInputs(
     userContext.userData.username,
-    props.type
+    props.type,
   );
   const {
     handleInputChange,
@@ -69,7 +69,7 @@ const EditRequest = (props) => {
                   packaging: selected.packaging,
                   name: selected.name,
                 },
-                selected.id
+                selected.id,
               )
             : addProductsToRequest({
                 requestId: requestId,
@@ -101,8 +101,8 @@ const EditRequest = (props) => {
       })
       .then(() =>
         props.history.push(
-          getRequestRedirectUrl(props.history, "edit/", props.type, formInputs)
-        )
+          getRequestRedirectUrl(props.history, 'edit/', props.type, formInputs),
+        ),
       )
       .catch((error) => {
         setIsLoading(false);
@@ -111,10 +111,10 @@ const EditRequest = (props) => {
   };
 
   useEffect(() => {
-    document.title = "Редактирование заявки";
-    const id = props.history.location.pathname.split("edit/")[1];
+    document.title = 'Редактирование заявки';
+    const id = props.history.location.pathname.split('edit/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
+      alert('Неправильный индекс заявки!');
       props.history.push(workshops[props.type].redirectURL);
     } else {
       setRequestId(id);
@@ -141,7 +141,7 @@ const EditRequest = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс заявки!");
+          alert('Неправильный индекс заявки!');
           props.history.push(workshops[props.type].redirectURL);
         });
     }
@@ -159,9 +159,9 @@ const EditRequest = (props) => {
           {errorWindow}
           <div className="main-form__row">
             {userContext.userHasAccess([
-              "ROLE_ADMIN",
-              "ROLE_MANAGER",
-              "ROLE_WORKSHOP",
+              'ROLE_ADMIN',
+              'ROLE_MANAGER',
+              'ROLE_WORKSHOP',
             ]) && (
               <InputDate
                 inputName="Дата заявки"
@@ -169,10 +169,10 @@ const EditRequest = (props) => {
                 error={formErrors.date}
                 name="date"
                 selected={Date.parse(formInputs.date)}
-                handleDateChange={(value) => handleInputChange("date", value)}
+                handleDateChange={(value) => handleInputChange('date', value)}
                 errorsArr={formErrors}
                 setErrorsArr={setFormErrors}
-                readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
+                readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
               />
             )}
             <InputDate
@@ -180,16 +180,16 @@ const EditRequest = (props) => {
               name="shippingDate"
               selected={Date.parse(formInputs.shippingDate)}
               handleDateChange={(value) =>
-                handleInputChange("shippingDate", value)
+                handleInputChange('shippingDate', value)
               }
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
             />
           </div>
           {userContext.userHasAccess([
-            "ROLE_ADMIN",
-            "ROLE_MANAGER",
-            "ROLE_WORKSHOP",
+            'ROLE_ADMIN',
+            'ROLE_MANAGER',
+            'ROLE_WORKSHOP',
           ]) && (
             <InputProducts
               inputName="Продукция"
@@ -197,20 +197,20 @@ const EditRequest = (props) => {
               required
               options
               onChange={(products) =>
-                handleInputChange("requestProducts", products)
+                handleInputChange('requestProducts', products)
               }
               searchPlaceholder="Введите название продукта для поиска..."
               defaultValue={formInputs.requestProducts}
               error={formErrors.requestProducts}
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
-              workshop={userContext.userHasAccess(["ROLE_WORKSHOP"])}
+              workshop={userContext.userHasAccess(['ROLE_WORKSHOP'])}
             />
           )}
           {userContext.userHasAccess([
-            "ROLE_ADMIN",
-            "ROLE_MANAGER",
-            "ROLE_WORKSHOP",
+            'ROLE_ADMIN',
+            'ROLE_MANAGER',
+            'ROLE_WORKSHOP',
           ]) && (
             <InputUser
               inputName="Ответственный"
@@ -220,12 +220,12 @@ const EditRequest = (props) => {
               defaultValue={formInputs.responsible}
               name="responsible"
               handleUserChange={(user) =>
-                handleInputChange("responsible", user)
+                handleInputChange('responsible', user)
               }
               searchPlaceholder="Введите имя пользователя для поиска..."
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
-              readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
+              readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
             />
           )}
           <div className="main-form__item">
@@ -234,7 +234,7 @@ const EditRequest = (props) => {
               <select
                 name="status"
                 onChange={({ target }) =>
-                  handleInputChange("status", target.value)
+                  handleInputChange('status', target.value)
                 }
                 value={formInputs.status}
               >
@@ -265,17 +265,17 @@ const EditRequest = (props) => {
             name="comment"
             defaultValue={formInputs.comment}
             handleInputChange={({ target }) =>
-              handleInputChange("comment", target.value)
+              handleInputChange('comment', target.value)
             }
           />
-          {userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) ? (
+          {userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) ? (
             <InputText
               inputName="Сумма"
               name="sum"
               type="number"
               defaultValue={formInputs.sum}
               handleInputChange={({ target }) =>
-                handleInputChange("sum", target.value)
+                handleInputChange('sum', target.value)
               }
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
@@ -288,8 +288,8 @@ const EditRequest = (props) => {
               formInputs.clientId === 0 ? false : formInputs.client?.name
             }
             required
-            readOnly={userContext.userHasAccess(["ROLE_WORKSHOP"])}
-            onChange={(value) => handleInputChange("clientId", value)}
+            readOnly={userContext.userHasAccess(['ROLE_WORKSHOP'])}
+            onChange={(value) => handleInputChange('clientId', value)}
             error={formErrors.clientId}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -306,10 +306,10 @@ const EditRequest = (props) => {
                 props.history.push(
                   getRequestRedirectUrl(
                     props.history,
-                    "edit/",
+                    'edit/',
                     props.type,
-                    formInputs
-                  )
+                    formInputs,
+                  ),
                 )
               }
             />

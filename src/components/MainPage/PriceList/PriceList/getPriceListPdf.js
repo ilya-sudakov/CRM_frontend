@@ -1,42 +1,42 @@
-import contactsImg from "../../../../../assets/priceList/contacts.png";
-import testImg from "../../../../../assets/priceList/no_img.png";
-import listImg from "../../../../../assets/priceList/list.png";
-import companyLogoNoSlogan from "../../../../../assets/priceList/osfix_logo__no_slogan.png";
-import linkButtonImg from "../../../../../assets/priceList/linkButton.png";
-import saleImg from "../../../../../assets/priceList/onSale.png";
-import proprietaryItemImg from "../../../../../assets/priceList/rospatent.png";
-import { getDataUri } from "../../../../utils/functions.jsx";
-import { pdfHeaderCompanyContacts } from "./objects.js";
-import { createPDF } from "../../../../utils/pdfFunctions.js";
-import { sortByField } from "../../../../utils/sorting/sorting";
-import { getPriceListColumnValue } from "./functions.js";
+import contactsImg from '../../../../../assets/priceList/contacts.png';
+import testImg from '../../../../../assets/priceList/no_img.png';
+import listImg from '../../../../../assets/priceList/list.png';
+import companyLogoNoSlogan from '../../../../../assets/priceList/osfix_logo__no_slogan.png';
+import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
+import saleImg from '../../../../../assets/priceList/onSale.png';
+import proprietaryItemImg from '../../../../../assets/priceList/rospatent.png';
+import { getDataUri } from '../../../../utils/functions.jsx';
+import { pdfHeaderCompanyContacts } from './objects.js';
+import { createPDF } from '../../../../utils/pdfFunctions.js';
+import { sortByField } from '../../../../utils/sorting/sorting';
+import { getPriceListColumnValue } from './functions.js';
 
 const loadGroupImage = async (img) => {
-  if (img !== null && img !== "") {
-    return await getDataUri(img, "jpeg", 0.3);
+  if (img !== null && img !== '') {
+    return await getDataUri(img, 'jpeg', 0.3);
   }
   return null;
 };
 
 const sortProductsByNumber = (data) => {
-  return sortByField(data, { fieldName: "number", direction: "asc" });
+  return sortByField(data, { fieldName: 'number', direction: 'asc' });
 };
 
 const getLine = (margins) => {
   return {
     canvas: [
       {
-        type: "line",
+        type: 'line',
         x1: 0,
         y1: 0,
         x2: 515,
         y2: 0,
         lineWidth: 2,
-        lineColor: "#e30434",
+        lineColor: '#e30434',
       },
     ],
-    alignment: "justify",
-    width: "*",
+    alignment: 'justify',
+    width: '*',
     margin: [margins.l, margins.t, margins.r, margins.b],
   };
 };
@@ -45,7 +45,7 @@ const priceStyles = {
   header: {
     fontSize: 20,
     bold: true,
-    alignment: "center",
+    alignment: 'center',
     margin: [0, 5, 0, 5],
   },
   title: {
@@ -56,8 +56,8 @@ const priceStyles = {
     fontSize: 12,
     bold: true,
     margin: [0, 0, 0, 5],
-    color: "white",
-    background: "#e30434",
+    color: 'white',
+    background: '#e30434',
   },
   regularText: {
     fontSize: 10,
@@ -66,7 +66,7 @@ const priceStyles = {
   tableHeader: {
     fontSize: 12,
     bold: true,
-    alignment: "center",
+    alignment: 'center',
   },
 };
 
@@ -83,22 +83,22 @@ const getPriceFooterItem = (title, value) => {
 const getPriceFooterList = (companyContacts) => {
   return {
     text: [
-      ...getPriceFooterItem("ИНН", companyContacts?.inn ?? "7842143789"),
-      ...getPriceFooterItem("КПП", companyContacts?.kpp ?? "784201001"),
-      ...getPriceFooterItem("ОГРН", companyContacts?.ogrn ?? "1177847364584"),
-      ...getPriceFooterItem("ОКПО", companyContacts?.okpo ?? "20161337"),
+      ...getPriceFooterItem('ИНН', companyContacts?.inn ?? '7842143789'),
+      ...getPriceFooterItem('КПП', companyContacts?.kpp ?? '784201001'),
+      ...getPriceFooterItem('ОГРН', companyContacts?.ogrn ?? '1177847364584'),
+      ...getPriceFooterItem('ОКПО', companyContacts?.okpo ?? '20161337'),
       ...getPriceFooterItem(
-        "Банк",
-        companyContacts?.bank ?? "Филиал №7806 ВТБ (ПАО)"
+        'Банк',
+        companyContacts?.bank ?? 'Филиал №7806 ВТБ (ПАО)',
       ),
       ...getPriceFooterItem(
-        "Расчетный счет №",
-        companyContacts?.checkingAccount ?? "40702810717060000232"
+        'Расчетный счет №',
+        companyContacts?.checkingAccount ?? '40702810717060000232',
       ),
-      ...getPriceFooterItem("БИК", companyContacts?.bik ?? "044525411"),
+      ...getPriceFooterItem('БИК', companyContacts?.bik ?? '044525411'),
     ],
-    alignment: "left",
-    width: "*",
+    alignment: 'left',
+    width: '*',
     margin: [40, 0, 40, 10],
   };
 };
@@ -108,18 +108,18 @@ const getPriceFooter = (
   pageCount,
   active,
   companyContacts,
-  isMini
+  isMini,
 ) => {
   if (currentPage === 1 && active && !isMini)
     return {
-      text: " ",
+      text: ' ',
     };
   if (currentPage !== pageCount && !isMini) {
     return {
-      text: "Страница " + currentPage.toString(),
-      alignment: "center",
+      text: 'Страница ' + currentPage.toString(),
+      alignment: 'center',
       fontSize: 11,
-      color: "#999999",
+      color: '#999999',
       margin: [0, 20, 0, 0],
     };
   }
@@ -130,7 +130,7 @@ const getPriceFooter = (
 };
 
 const emptyTextObject = {
-  text: "",
+  text: '',
 };
 
 const getPriceHeaderItem = (name, link, options = {}) => {
@@ -154,15 +154,15 @@ const getPriceHeaderList = (companyContacts) => {
   return {
     text: [
       getPriceHeaderItem(name, site, { margin: [0, 0, 0, 0], bold: true }),
-      getPriceHeaderItem(legalAddress, "https://yandex.ru/maps/-/CKUrY0Ih", {
+      getPriceHeaderItem(legalAddress, 'https://yandex.ru/maps/-/CKUrY0Ih', {
         lineHeight: 1.1,
       }),
       getPriceHeaderItem(site, site, { lineHeight: 1.1 }),
       getPriceHeaderItem(email, null, { lineHeight: 1.1 }),
-      getPriceHeaderItem(phone, "tel:+78124491009", { lineHeight: 1.1 }),
+      getPriceHeaderItem(phone, 'tel:+78124491009', { lineHeight: 1.1 }),
     ],
     margin: [5, 0, 0, 0],
-    alignment: "left",
+    alignment: 'left',
   };
 };
 
@@ -170,10 +170,10 @@ const getPriceHeaderLogo = (logo) => {
   return logo
     ? {
         image: logo,
-        link: "https://www.osfix.ru",
+        link: 'https://www.osfix.ru',
         fit: [100, 100],
         margin: [0, 13, 0, 0],
-        alignment: "right",
+        alignment: 'right',
       }
     : emptyTextObject;
 };
@@ -183,19 +183,19 @@ const getPriceHeader = (
   active,
   contactsImgData,
   companyContacts = {},
-  isMini
+  isMini,
 ) => {
   if (currentPage === 1 && active && !isMini) return [emptyTextObject];
   return [
     {
-      alignment: "justify",
-      width: "*",
+      alignment: 'justify',
+      width: '*',
       margin: [40, 40, 40, 0],
       columns: [
         {
           image: contactsImgData,
           width: 10,
-          alignment: "left",
+          alignment: 'left',
         },
         getPriceHeaderList(companyContacts),
         getPriceHeaderLogo(companyContacts?.logo),
@@ -214,10 +214,10 @@ const getAllLocationTypes = (locationTypes, location, locations) => {
           columns: [
             {
               text: location,
-              style: "regularText",
+              style: 'regularText',
               fontSize: 8,
-              color: "#e30434",
-              alignment: "right",
+              color: '#e30434',
+              alignment: 'right',
               margin: [0, 5, 1, 0],
             },
             {
@@ -227,7 +227,7 @@ const getAllLocationTypes = (locationTypes, location, locations) => {
           ],
         });
       }
-    })
+    }),
   );
 };
 
@@ -235,20 +235,20 @@ const getGroupOfProductsName = ({ id, name, linkAddress }) => {
   return {
     text: [
       {
-        text: " ",
-        style: "subheader",
+        text: ' ',
+        style: 'subheader',
       },
       {
         text: name.toUpperCase(),
-        style: "subheader",
+        style: 'subheader',
         fontSize: 12,
         groupId: id,
         link: linkAddress,
         bold: true,
       },
       {
-        text: " ",
-        style: "subheader",
+        text: ' ',
+        style: 'subheader',
       },
     ],
     width: 110,
@@ -260,14 +260,14 @@ const getGroupOfProductsDescription = ({ description }) => {
     text: [
       {
         text: description,
-        style: "regularText",
-        color: "#666666",
+        style: 'regularText',
+        color: '#666666',
         fontSize: 8,
         bold: true,
       },
     ],
     margin: [10, 1, 0, 0],
-    width: "*",
+    width: '*',
   };
 };
 
@@ -279,7 +279,7 @@ const sortLocations = (locations) => {
       undefined,
       {
         numeric: true,
-      }
+      },
     );
     if (element < 0) return -1;
     if (element > 0) return 1;
@@ -297,7 +297,7 @@ const getGroupOfProductsLocations = (locations) => {
         width: 100,
       },
     ],
-    alignment: "right",
+    alignment: 'right',
     width: 100,
   };
 };
@@ -307,13 +307,13 @@ const getGroupOfProductsTopImages = (
   groupImg2Data,
   groupImg3Data,
   groupImg4Data,
-  testImgData
+  testImgData,
 ) => {
   const getProductTopImage = (img, marginLeft = 0) => ({
     image: img ?? testImgData,
     fit: [120, 100],
     margin: [marginLeft, 0, 0, 5],
-    alignment: "left",
+    alignment: 'left',
   });
   return {
     columns: [
@@ -333,13 +333,13 @@ const getProductsTableHeaderItem = (text, marginTop = 1.5) => {
 };
 
 const getProductsTableHeaderFakeRow = (priceHeader, optionalCols) => {
-  const emptyRow = { text: "", border: [false, false, false, false] };
+  const emptyRow = { text: '', border: [false, false, false, false] };
   return [
     emptyRow,
     emptyRow,
     emptyRow,
     {
-      text: priceHeader ? `${priceHeader}, ₽` : "Цена за штуку, ₽",
+      text: priceHeader ? `${priceHeader}, ₽` : 'Цена за штуку, ₽',
       colSpan: 3 + optionalCols.length,
       italics: true,
     },
@@ -354,16 +354,16 @@ const getProductsTableHeader = (groupOfProducts, optionalCols) => {
   return [
     getProductsTableHeaderFakeRow(groupOfProducts.priceHeader, optionalCols),
     [
-      getProductsTableHeaderItem("Артикул", 5),
-      getProductsTableHeaderItem("Название", 5),
-      getProductsTableHeaderItem("Ед. изм.", 5),
-      getProductsTableHeaderItem(retailName ?? "Розница"),
-      getProductsTableHeaderItem(firstPriceName ?? "до 1500 шт."),
-      getProductsTableHeaderItem(secondPriceName ?? "до 5000 шт."),
+      getProductsTableHeaderItem('Артикул', 5),
+      getProductsTableHeaderItem('Название', 5),
+      getProductsTableHeaderItem('Ед. изм.', 5),
+      getProductsTableHeaderItem(retailName ?? 'Розница'),
+      getProductsTableHeaderItem(firstPriceName ?? 'до 1500 шт.'),
+      getProductsTableHeaderItem(secondPriceName ?? 'до 5000 шт.'),
       ...optionalCols.map((column) =>
         getProductsTableHeaderItem(
-          getPriceListColumnValue(column, groupOfProducts)
-        )
+          getPriceListColumnValue(column, groupOfProducts),
+        ),
       ),
     ],
   ];
@@ -378,7 +378,7 @@ const getDisclaimerText = (disclaimer) => {
           {
             border: [true, false, false, false],
             fontSize: 12,
-            borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+            borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
             text: [
               {
                 text: disclaimer,
@@ -394,11 +394,11 @@ const getDisclaimerText = (disclaimer) => {
 
 const getTitlePageReceiver = ({ to, date }) => {
   return {
-    alignment: "right",
+    alignment: 'right',
     stack: [
       {
         columns: [
-          { width: "*", text: "" },
+          { width: '*', text: '' },
           {
             width: 180,
             table: {
@@ -407,25 +407,25 @@ const getTitlePageReceiver = ({ to, date }) => {
                   {
                     border: [true, true, true, false],
                     fontSize: 13,
-                    borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
                     text: to,
-                    alignment: "left",
+                    alignment: 'left',
                     margin: [2.5, 2.5, 10, 2.5],
                   },
                 ],
                 [
                   {
                     text: date,
-                    alignment: "right",
+                    alignment: 'right',
                     fontSize: 11,
-                    color: "#666666",
+                    color: '#666666',
                     border: [true, false, true, true],
-                    borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+                    borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
                   },
                 ],
               ],
             },
-            alignment: "right",
+            alignment: 'right',
           },
         ],
         margin: [0, 0, 0, 5],
@@ -439,7 +439,7 @@ const getTitlePageListItem = (listImgData, item) => {
   return [
     {
       margin: [0, 10, 0, 0],
-      alignment: "left",
+      alignment: 'left',
       columns: [
         {
           image: listImgData,
@@ -451,8 +451,8 @@ const getTitlePageListItem = (listImgData, item) => {
           text: item,
           margin: [5, 0, 0, 0],
           fontSize: 16,
-          alignment: "center",
-          width: "auto",
+          alignment: 'center',
+          width: 'auto',
         },
       ],
     },
@@ -465,14 +465,14 @@ const getTitlePageLogo = async ({ slogan }) => {
     stack: [
       {
         image: companyLogoNoSloganData,
-        link: "https://www.osfix.ru",
+        link: 'https://www.osfix.ru',
         fit: [200, 200],
         margin: [0, 0, 0, 0],
-        alignment: "center",
+        alignment: 'center',
       },
       {
         text: slogan,
-        alignment: "center",
+        alignment: 'center',
         margin: [0, 5, 0, 15],
         fontSize: 18,
       },
@@ -480,7 +480,7 @@ const getTitlePageLogo = async ({ slogan }) => {
   };
 };
 
-const getTitlePageImageObject = (img, testImgData, alignment = "right") => {
+const getTitlePageImageObject = (img, testImgData, alignment = 'right') => {
   return {
     image: img ?? testImgData,
     fit: [150, 130],
@@ -497,10 +497,10 @@ const getTitlePageImagesList = async ({ img1, img2, img3 }) => {
   return {
     columns: [
       getTitlePageImageObject(titlePageImg1Data, testImgData),
-      getTitlePageImageObject(titlePageImg2Data, testImgData, "center"),
-      getTitlePageImageObject(titlePageImg3Data, testImgData, "left"),
+      getTitlePageImageObject(titlePageImg2Data, testImgData, 'center'),
+      getTitlePageImageObject(titlePageImg3Data, testImgData, 'left'),
     ],
-    alignment: "center",
+    alignment: 'center',
     width: 125,
     margin: [0, 0, 0, 30],
   };
@@ -518,12 +518,12 @@ const getTitlePage = async (titlePage) => {
       {
         stack: [
           ...titlePage.list.map((item) =>
-            getTitlePageListItem(listImgData, item)
+            getTitlePageListItem(listImgData, item),
           ),
         ],
       },
     ],
-    pageBreak: "after",
+    pageBreak: 'after',
     margin: [0, -50, 0, 0],
   };
 };
@@ -534,7 +534,7 @@ const sortFinalList = (data) => {
     const element = a.stack[0].stack[1].text.localeCompare(
       b.stack[0].stack[1].text,
       undefined,
-      { numeric: true }
+      { numeric: true },
     );
     if (element < 0) return -1;
     if (element > 0) return 1;
@@ -547,29 +547,29 @@ const getCustomColumnText = (field, onSale, marginTop = 5) => {
     text: field,
     margin: [0, marginTop, 0, 0],
     bold: onSale,
-    color: onSale ? "#111111" : "#666666",
+    color: onSale ? '#111111' : '#666666',
   };
 };
 
 const getPriceColumnText = (price, onSale, isOptionsColsLengthMoreThanOne) => {
-  const isNumber = price !== "" && !Number.isNaN(price) && price !== 0;
+  const isNumber = price !== '' && !Number.isNaN(price) && price !== 0;
   return getCustomColumnText(
-    isNumber ? price : " ",
+    isNumber ? price : ' ',
     onSale,
-    isOptionsColsLengthMoreThanOne ? 4.5 : 0
+    isOptionsColsLengthMoreThanOne ? 4.5 : 0,
   );
 };
 
 const getProductsTablePriceColumns = (
   product,
-  isOptionsColsLengthMoreThanOne
+  isOptionsColsLengthMoreThanOne,
 ) => {
-  return ["retailPrice", "lessThan1500Price", "lessThan5000Price"].map((item) =>
+  return ['retailPrice', 'lessThan1500Price', 'lessThan5000Price'].map((item) =>
     getPriceColumnText(
       product[item],
       product.onSale,
-      isOptionsColsLengthMoreThanOne
-    )
+      isOptionsColsLengthMoreThanOne,
+    ),
   );
 };
 
@@ -579,13 +579,13 @@ const getProductsTableListItem = (product, optionalCols, saleImgData) => {
     getCustomColumnText(
       product.number,
       product.onSale,
-      isOptionsColsLengthMoreThanOne ? 5 : 0
+      isOptionsColsLengthMoreThanOne ? 5 : 0,
     ),
     getProductsTableOnSaleText(product, saleImgData),
     getCustomColumnText(
       product.units,
       product.onSale,
-      isOptionsColsLengthMoreThanOne ? 1 : 0
+      isOptionsColsLengthMoreThanOne ? 1 : 0,
     ),
     ...getProductsTablePriceColumns(product, isOptionsColsLengthMoreThanOne),
     ...optionalCols.map((column) =>
@@ -593,9 +593,9 @@ const getProductsTableListItem = (product, optionalCols, saleImgData) => {
         ? getPriceColumnText(
             product[column.property],
             product.onSale,
-            isOptionsColsLengthMoreThanOne
+            isOptionsColsLengthMoreThanOne,
           )
-        : getPriceColumnText(0, product.onSale, isOptionsColsLengthMoreThanOne)
+        : getPriceColumnText(0, product.onSale, isOptionsColsLengthMoreThanOne),
     ),
   ];
 };
@@ -603,7 +603,7 @@ const getProductsTableListItem = (product, optionalCols, saleImgData) => {
 const getProductsTableOnSaleText = (
   product,
   saleImgData,
-  isOptionsColsLengthMoreThanOne
+  isOptionsColsLengthMoreThanOne,
 ) => {
   return product.onSale
     ? {
@@ -615,16 +615,16 @@ const getProductsTableOnSaleText = (
           {
             text: product.name,
             margin: [5, isOptionsColsLengthMoreThanOne ? 2 : 1.5, 0, 0],
-            alignment: "left",
+            alignment: 'left',
             bold: product.onSale,
-            color: "#111111",
+            color: '#111111',
           },
         ],
       }
     : {
         text: product.name,
         margin: [0, isOptionsColsLengthMoreThanOne ? 1 : 0, 0, 0],
-        alignment: "left",
+        alignment: 'left',
       };
 };
 
@@ -636,23 +636,23 @@ const productsTableListLayout = {
     return 1;
   },
   hLineColor: function () {
-    return "#444444";
+    return '#444444';
   },
   vLineColor: function () {
-    return "#444444";
+    return '#444444';
   },
 };
 
 const getProductsTableListWidths = (optionalCols) => {
   return [
     40,
-    "*",
-    "*",
+    '*',
+    '*',
     35,
     35,
     35,
     ...optionalCols.map((item, index) =>
-      index < optionalCols.length - 1 ? 35 : 35
+      index < optionalCols.length - 1 ? 35 : 35,
     ),
   ];
 };
@@ -668,15 +668,15 @@ const getProductsTableList = async (groupOfProducts, optionalCols) => {
           body: [
             ...getProductsTableHeader(groupOfProducts, optionalCols),
             ...sortProductsByNumber(groupOfProducts.products).map((product) =>
-              getProductsTableListItem(product, optionalCols, saleImgData)
+              getProductsTableListItem(product, optionalCols, saleImgData),
             ),
           ],
         },
         layout: productsTableListLayout,
-        alignment: "center",
-        width: "*",
+        alignment: 'center',
+        width: '*',
         fontSize: 8,
-        color: "#555555",
+        color: '#555555',
         margin: [0, 0, 0, 5],
       },
     ],
@@ -690,8 +690,8 @@ const getProductsInfoText = (infoText) => {
         [
           {
             border: [true, false, false, false],
-            style: "regularText",
-            borderColor: ["#e30434", "#e30434", "#e30434", "#e30434"],
+            style: 'regularText',
+            borderColor: ['#e30434', '#e30434', '#e30434', '#e30434'],
             text: infoText,
 
             margin: [0, 0, 10, 0],
@@ -711,18 +711,18 @@ const getProprietaryItem = async (text) => {
             image: proprietaryItemImgData,
             width: 65,
             margin: [0, 10, 9, 0],
-            alignment: "right",
+            alignment: 'right',
           },
           {
             text: text,
             margin: [0, 5, 0, 0],
-            alignment: "center",
+            alignment: 'center',
             fontSize: 10,
           },
         ],
       }
     : {
-        text: "  ",
+        text: '  ',
       };
 };
 
@@ -747,15 +747,15 @@ const getLinkButton = (linkButtonData, linkAddress) => {
     image: linkButtonData,
     link: linkAddress,
     width: 100,
-    alignment: "right",
+    alignment: 'right',
   };
 };
 
 const priceListCategoryNameStyles = {
-  style: "header",
+  style: 'header',
   fontSize: 16,
-  color: "#ffffff",
-  alignment: "center",
+  color: '#ffffff',
+  alignment: 'center',
   relativePosition: { x: 0, y: -38 },
 };
 
@@ -772,7 +772,7 @@ const makeListUnbreakable = (sortedArr, tempImg, category) => {
               image: tempImg,
               width: 510,
               height: 50,
-              alignment: "center",
+              alignment: 'center',
             },
             {
               text: category.toUpperCase(),
@@ -788,7 +788,7 @@ const makeListUnbreakable = (sortedArr, tempImg, category) => {
 
 const getProductsHeader = (groupOfProducts, locations) => {
   return {
-    width: "*",
+    width: '*',
     headlineLevel: 1,
     columns: [
       getGroupOfProductsName(groupOfProducts),
@@ -802,12 +802,12 @@ const getProductsHeader = (groupOfProducts, locations) => {
 const getProductsFooter = (
   groupOfProducts,
   linkButtonData,
-  proprietaryItems = {}
+  proprietaryItems = {},
 ) => {
   return {
     unbreakable: true,
-    alignment: "justify",
-    width: "*",
+    alignment: 'justify',
+    width: '*',
     margin: [0, 0, 0, 10],
     columns: [
       getProductsInfoText(groupOfProducts.infoText),
@@ -838,7 +838,7 @@ const getFullGroup = async (
   locations,
   testImgData,
   optionalCols,
-  isMini
+  isMini,
 ) => {
   let linkButtonData = await getDataUri(linkButtonImg);
   const groupImg1Data = await loadGroupImage(groupOfProducts.groupImg1);
@@ -847,14 +847,14 @@ const getFullGroup = async (
   const groupImg4Data = await loadGroupImage(groupOfProducts.groupImg4);
   const groupImgFooterData = await loadGroupImage(groupOfProducts.footerImg);
   const proprietaryItem1 = await getProprietaryItem(
-    groupOfProducts.proprietaryItemText1
+    groupOfProducts.proprietaryItemText1,
   );
   const proprietaryItem2 = await getProprietaryItem(
-    groupOfProducts.proprietaryItemText2
+    groupOfProducts.proprietaryItemText2,
   );
   const productsTableList = await getProductsTableList(
     groupOfProducts,
-    optionalCols
+    optionalCols,
   );
   return {
     unbreakable: groupOfProducts.products.length <= 20 ? true : false,
@@ -866,7 +866,7 @@ const getFullGroup = async (
             groupImg2Data,
             groupImg3Data,
             groupImg4Data,
-            testImgData
+            testImgData,
           )
         : emptyTextObject,
       productsTableList,
@@ -898,23 +898,23 @@ export async function getPriceListPdf(categories, priceList, options) {
       priceList.map(async (groupOfProducts) => {
         let locations = [];
         if (category.name !== groupOfProducts.category) return;
-        const locationTypesArray = groupOfProducts.locationType.split("/");
+        const locationTypesArray = groupOfProducts.locationType.split('/');
         //getting location types
         return Promise.all(
           locationTypesArray.map((location) =>
-            getAllLocationTypes(locationTypes, location, locations)
-          )
+            getAllLocationTypes(locationTypes, location, locations),
+          ),
         ).then(async () => {
           const temp = await getFullGroup(
             groupOfProducts,
             locations,
             testImgData,
             optionalCols,
-            isMini
+            isMini,
           );
           fullGroup.push(temp);
         });
-      })
+      }),
     ).then(async () => {
       const tempImg = await getDataUri(category.img);
       if (fullGroup.length === 0 || !category.active)
@@ -927,7 +927,7 @@ export async function getPriceListPdf(categories, priceList, options) {
         });
       }
       return finalList.push(
-        makeListUnbreakable(sortedArr, tempImg, category.name)
+        makeListUnbreakable(sortedArr, tempImg, category.name),
       );
     });
   });
@@ -937,7 +937,7 @@ export async function getPriceListPdf(categories, priceList, options) {
     const titlePageObject = await getTitlePage(titlePage);
     const dd = {
       info: {
-        title: "Прайс-лист",
+        title: 'Прайс-лист',
       },
       header: (currentPage) =>
         getPriceHeader(
@@ -945,7 +945,7 @@ export async function getPriceListPdf(categories, priceList, options) {
           titlePage.active,
           contactsImgData,
           companyContacts,
-          isMini
+          isMini,
         ),
       pageMargins: [40, 125, 40, 70],
       footer: (currentPage, pageCount) =>
@@ -954,7 +954,7 @@ export async function getPriceListPdf(categories, priceList, options) {
           pageCount,
           titlePage.active,
           companyContacts,
-          isMini
+          isMini,
         ),
       content: [
         titlePage.active && !isMini ? titlePageObject : emptyTextObject,

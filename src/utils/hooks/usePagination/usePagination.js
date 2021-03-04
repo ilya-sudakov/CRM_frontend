@@ -1,32 +1,32 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import Pagination from "../../MainWindow/Pagination/Pagination.jsx";
-import useQuery from "../useQuery.js";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import Pagination from '../../MainWindow/Pagination/Pagination.jsx';
+import useQuery from '../useQuery.js';
 
 const usePagination = (
   loadFunction,
   changableParams = [],
-  type = "static",
+  type = 'static',
   //default values
   props = {
     ignoreURL: false,
-  }
+  },
 ) => {
   const { query } = useQuery();
   const [curPage, setCurPage] = useState(
-    Number.parseInt(query.get("page") ?? 1)
+    Number.parseInt(query.get('page') ?? 1),
   );
   const [itemsPerPage, setItemsPerPage] = useState(
-    Number.parseInt(query.get("size") ?? props.size ?? 20)
+    Number.parseInt(query.get('size') ?? props.size ?? 20),
   );
   const [itemsCount, setItemsCount] = useState(0);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [sortOrder, setSortOrder] = useState(
     props.sortOrder ?? {
-      curSort: "date",
-      date: "desc",
-    }
+      curSort: 'date',
+      date: 'desc',
+    },
   );
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const usePagination = (
         setCurPage(1);
       } else
         setCurPage(
-          Number.parseInt(props.ignoreURL ? curPage : query.get("page") ?? 1)
+          Number.parseInt(props.ignoreURL ? curPage : query.get('page') ?? 1),
         );
       const firstIndex = (curPage - 1) * itemsPerPage + 1;
       const lastIndex = curPage * itemsPerPage;
@@ -62,10 +62,10 @@ const usePagination = (
 
     if (!loadFunction || loadFunction === null) return;
     switch (type) {
-      case "dynamic":
+      case 'dynamic':
         fetchData();
         break;
-      case "static":
+      case 'static':
         filterStaticData();
         break;
       default:

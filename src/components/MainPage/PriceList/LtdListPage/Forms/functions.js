@@ -1,15 +1,15 @@
-import React from "react";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
+import React from 'react';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import {
   getBIKByINN,
   getInfoByINN,
-} from "../../../../../utils/RequestsAPI/Clients.jsx";
+} from '../../../../../utils/RequestsAPI/Clients.jsx';
 
 export const fetchINNData = (inputs, setIsLoading, setFormInputs) => {
   setIsLoading(true);
   let formData = {};
   //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
-  getInfoByINN({ query: inputs.inn, branch_type: "MAIN" })
+  getInfoByINN({ query: inputs.inn, branch_type: 'MAIN' })
     .then((res) => res.json())
     .then((res) => {
       if (res.suggestions.length > 0) {
@@ -40,12 +40,12 @@ export const fetchINNData = (inputs, setIsLoading, setFormInputs) => {
             setFormInputs({
               ...formData,
               bik:
-                res.suggestions.length > 0 ? res.suggestions[0].data.bic : "",
+                res.suggestions.length > 0 ? res.suggestions[0].data.bic : '',
             });
             setIsLoading(false);
           });
       } else {
-        alert("Не найдено данных с данным ИНН");
+        alert('Не найдено данных с данным ИНН');
         setIsLoading(false);
       }
     });
@@ -69,6 +69,6 @@ export const ltdFormCreateInput = (options, errors, inputs) => {
 
 export const getInputsListFromArray = (array, errors, inputs) => {
   return array.map((input) =>
-    input.custom ? input.custom : ltdFormCreateInput(input, errors, inputs)
+    input.custom ? input.custom : ltdFormCreateInput(input, errors, inputs),
   );
 };

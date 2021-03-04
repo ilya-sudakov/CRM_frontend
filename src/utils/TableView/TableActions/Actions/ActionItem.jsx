@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const defaultItem = {
   isRendered: false,
@@ -15,8 +15,8 @@ const ActionItem = ({ item = defaultItem }) => {
         className="main-window__action"
         to={item.link}
         title={item.title}
-        target={item.openInNewTab ? "_blank" : ""}
-        rel={item.openInNewTab ? "noopener noreferrer" : ""}
+        target={item.openInNewTab ? '_blank' : ''}
+        rel={item.openInNewTab ? 'noopener noreferrer' : ''}
       >
         {item.text}
         <img className="main-window__img" src={item.imgSrc} />

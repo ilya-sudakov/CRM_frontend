@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { withRouter } from "react-router-dom";
-import editSVG from "../../../../../assets/tableview/edit.svg";
-import printSVG from "../../../../../assets/tableview/print.svg";
-import copySVG from "../../../../../assets/tableview/copy.svg";
-import transferSVG from "../../../../../assets/tableview/transfer.svg";
-import TruckSVG from "../../../../../assets/sidemenu/truck.inline.svg";
-import "./TableView.scss";
-import PropTypes from "prop-types";
-import UserContext from "../../../../App.js";
+import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
+import editSVG from '../../../../../assets/tableview/edit.svg';
+import printSVG from '../../../../../assets/tableview/print.svg';
+import copySVG from '../../../../../assets/tableview/copy.svg';
+import transferSVG from '../../../../../assets/tableview/transfer.svg';
+import TruckSVG from '../../../../../assets/sidemenu/truck.inline.svg';
+import './TableView.scss';
+import PropTypes from 'prop-types';
+import UserContext from '../../../../App.js';
 
 import {
   editRequestStatus,
   editProductStatusToRequest,
   editRequest,
-} from "../../../../utils/RequestsAPI/Requests.jsx";
+} from '../../../../utils/RequestsAPI/Requests.jsx';
 
 import {
   createLabelForProduct,
   scrollToElement,
-} from "../../../../utils/functions.jsx";
-import LabelPrint from "../LabelPrint/LabelPrint.jsx";
-import PlaceholderLoading from "../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import { getPageByRequest, printRequest } from "../functions.js";
-import { defaultPrintObject } from "../objects.js";
+} from '../../../../utils/functions.jsx';
+import LabelPrint from '../LabelPrint/LabelPrint.jsx';
+import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { getPageByRequest, printRequest } from '../functions.js';
+import { defaultPrintObject } from '../objects.js';
 import {
   renderIdColumn,
   renderDateCreatedColumn,
@@ -36,16 +36,16 @@ import {
   renderProductsMinimizedColumn,
   renderProductsSubItem,
   renderListHeader,
-} from "./renderItems.jsx";
-import TableActions from "../../../../utils/TableView/TableActions/TableActions.jsx";
-import DeleteItemAction from "../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx";
-import MessageForUser from "../../../../utils/Form/MessageForUser/MessageForUser.jsx";
+} from './renderItems.jsx';
+import TableActions from '../../../../utils/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from '../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import MessageForUser from '../../../../utils/Form/MessageForUser/MessageForUser.jsx';
 import {
   getRequestItemClassName,
   handleMinimizeRequestItem,
   printRequestsByDates,
   sortRequests,
-} from "./functions.js";
+} from './functions.js';
 
 const TableView = ({
   workshopName,
@@ -59,12 +59,12 @@ const TableView = ({
   isMinimized = false,
   printConfig = {
     ...defaultPrintObject,
-    price: { visible: workshopName === "requests" },
+    price: { visible: workshopName === 'requests' },
   },
   history,
   sortOrder = {
-    curSort: "id",
-    id: "desc",
+    curSort: 'id',
+    id: 'desc',
   },
 }) => {
   const [showError, setShowError] = useState(false);
@@ -72,8 +72,8 @@ const TableView = ({
   const [newSum, setNewSum] = useState(0);
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({
-    name: "",
-    link: "",
+    name: '',
+    link: '',
   });
   const [labelIsHidden, setLabelIsHidden] = useState(true);
   const [requests, setRequests] = useState([]);
@@ -85,7 +85,7 @@ const TableView = ({
     const sum = Number.parseFloat(request.sum);
 
     //проверяем, указана ли положительная сумма
-    if (status === "Завершено") {
+    if (status === 'Завершено') {
       if (
         sum !== 0 &&
         sum !== null &&
@@ -95,7 +95,7 @@ const TableView = ({
         return changeStatus(status, id);
       } else {
         const selectedItem = requests.find(
-          (item) => item.id === Number.parseInt(id)
+          (item) => item.id === Number.parseInt(id),
         );
         setErrorRequest({ ...selectedItem, newStatus: status });
         setShowError(true);
@@ -104,9 +104,9 @@ const TableView = ({
     }
 
     //Если статус-отгружено, тогда ставим дату отгрузки - сегодняшнее число
-    if (status === "Отгружено") {
+    if (status === 'Отгружено') {
       const selectedItem = requests.find(
-        (item) => item.id === Number.parseInt(id)
+        (item) => item.id === Number.parseInt(id),
       );
       if (selectedItem) {
         return editRequest(
@@ -119,7 +119,7 @@ const TableView = ({
             status: status,
             shippingDate: new Date(),
           },
-          id
+          id,
         )
           .then(() => changeStatus(status, id))
           .catch((error) => {
@@ -137,19 +137,19 @@ const TableView = ({
       {
         status: status,
       },
-      id
+      id,
     )
       .then(async () => {
         await loadData();
         const request = requests.find(
-          (item) => item.id === Number.parseInt(id)
+          (item) => item.id === Number.parseInt(id),
         );
         history.push(
-          workshopName === "requests"
+          workshopName === 'requests'
             ? `/requests/${getPageByRequest({ status: status })}#${request.id}`
             : `/${workshopName}/workshop-${workshopName}/${getPageByRequest({
                 status: status,
-              })}#${request.id}`
+              })}#${request.id}`,
         );
         return window.location.reload(); //костыль чтобы загрузить правильную вкладку
       })
@@ -163,7 +163,7 @@ const TableView = ({
       {
         status: status,
       },
-      productId
+      productId,
     )
       .then(() => loadData())
       .catch((error) => {
@@ -182,7 +182,7 @@ const TableView = ({
 
   const prevRef = useCallback(
     (node) => {
-      const id = Number.parseInt(history.location.hash.split("#")[1]);
+      const id = Number.parseInt(history.location.hash.split('#')[1]);
       if (
         !data ||
         scrolledToPrev ||
@@ -191,11 +191,11 @@ const TableView = ({
         return;
       if (node !== null && data) {
         console.log(node);
-        scrollToElement(node, workshopName === "requests" ? -200 : -1000);
+        scrollToElement(node, workshopName === 'requests' ? -200 : -1000);
         setScrolledToPrev(true);
       }
     },
-    [data]
+    [data],
   );
 
   const handleSumEdit = () => {
@@ -210,7 +210,7 @@ const TableView = ({
         status: selectedItem.status,
         shippingDate: selectedItem.shippingDate,
       },
-      selectedItem.id
+      selectedItem.id,
     )
       .then(() => changeStatus(selectedItem.newStatus, selectedItem.id))
       .catch((error) => {
@@ -221,23 +221,23 @@ const TableView = ({
   const getActionsList = (request) => {
     return [
       {
-        title: "Печать заявки",
+        title: 'Печать заявки',
         onClick: () => printRequest(request),
         imgSrc: printSVG,
         isRendered:
-          (printRequest ? printRequest : false) && workshopName !== "requests",
+          (printRequest ? printRequest : false) && workshopName !== 'requests',
       },
       {
-        title: "Редактирование заявки",
+        title: 'Редактирование заявки',
         link:
-          workshopName === "requests"
+          workshopName === 'requests'
             ? `/requests/edit/${request.id}`
             : `/${workshopName}/workshop-${workshopName}/edit/${request.id}`,
         imgSrc: editSVG,
         isRendered: userContext.userHasAccess([
-          "ROLE_ADMIN",
-          "ROLE_MANAGER",
-          "ROLE_WORKSHOP",
+          'ROLE_ADMIN',
+          'ROLE_MANAGER',
+          'ROLE_WORKSHOP',
         ]),
       },
       {
@@ -248,33 +248,33 @@ const TableView = ({
           />
         ),
         isRendered:
-          (workshopName === "requests"
+          (workshopName === 'requests'
             ? deleteItem
               ? deleteItem
               : false
-            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
+            : false) && userContext.userHasAccess(['ROLE_ADMIN']),
       },
       {
-        title: "Перенос заявки",
+        title: 'Перенос заявки',
         onClick: () => handleRequestTransfer(request),
         imgSrc: transferSVG,
         isRendered:
-          (workshopName === "requests"
+          (workshopName === 'requests'
             ? transferRequest
               ? transferRequest
               : false
-            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
+            : false) && userContext.userHasAccess(['ROLE_ADMIN']),
       },
       {
-        title: "Копирование заявки",
+        title: 'Копирование заявки',
         onClick: () => copyRequest(request.id),
         imgSrc: copySVG,
         isRendered:
-          (workshopName === "requests"
+          (workshopName === 'requests'
             ? copyRequest
               ? copyRequest
               : false
-            : false) && userContext.userHasAccess(["ROLE_ADMIN"]),
+            : false) && userContext.userHasAccess(['ROLE_ADMIN']),
       },
     ];
   };
@@ -304,37 +304,37 @@ const TableView = ({
                 requests,
                 setRequests,
                 request,
-                isMinimized
+                isMinimized,
               )
             }
             ref={
-              Number.parseInt(history.location.hash.split("#")[1]) ===
+              Number.parseInt(history.location.hash.split('#')[1]) ===
               request.id
                 ? prevRef
                 : null
             }
             style={{
               paddingTop: isMinimized
-                ? workshopName === "requests"
-                  ? "5px"
-                  : "15px"
-                : "35px",
+                ? workshopName === 'requests'
+                  ? '5px'
+                  : '15px'
+                : '35px',
               paddingBottom:
-                userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
-                workshopName === "requests" &&
+                userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&
+                workshopName === 'requests' &&
                 !isMinimized
-                  ? "35px"
-                  : userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
-                    workshopName === "requests" &&
+                  ? '35px'
+                  : userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&
+                    workshopName === 'requests' &&
                     isMinimized
-                  ? "10px"
-                  : "5px",
+                  ? '10px'
+                  : '5px',
             }}
           >
-            {displayColumns["id"].visible &&
+            {displayColumns['id'].visible &&
               renderIdColumn(request, workshopName)}
-            {displayColumns["date"].visible && renderDateCreatedColumn(request)}
-            {displayColumns["products"].visible &&
+            {displayColumns['date'].visible && renderDateCreatedColumn(request)}
+            {displayColumns['products'].visible &&
               (isMinimized
                 ? renderProductsMinimizedColumn(request)
                 : renderProductsColumn(
@@ -342,22 +342,22 @@ const TableView = ({
                     createLabelForProduct,
                     handleProductStatusChange,
                     setSelectedProduct,
-                    setLabelIsHidden
+                    setLabelIsHidden,
                   ))}
-            {displayColumns["client"].visible && renderClientColumn(request)}
-            {displayColumns["responsible"].visible &&
+            {displayColumns['client'].visible && renderClientColumn(request)}
+            {displayColumns['responsible'].visible &&
               renderResponsibleColumn(request)}
-            {displayColumns["status"].visible &&
+            {displayColumns['status'].visible &&
               renderRequestStatusColumn(
                 request,
                 userContext.userHasAccess,
-                handleStatusChange
+                handleStatusChange,
               )}
-            {displayColumns["date-shipping"].visible &&
+            {displayColumns['date-shipping'].visible &&
               renderDateShippedColumn(request)}
-            {displayColumns["comment"].visible && renderCommentColumn(request)}
-            {displayColumns["price"].visible &&
-              userContext.userHasAccess(["ROLE_ADMIN", "ROLE_MANAGER"]) &&
+            {displayColumns['comment'].visible && renderCommentColumn(request)}
+            {displayColumns['price'].visible &&
+              userContext.userHasAccess(['ROLE_ADMIN', 'ROLE_MANAGER']) &&
               renderPriceColumn(request)}
             <TableActions actionsList={actionsList} />
           </div>
@@ -380,7 +380,7 @@ const TableView = ({
           buttonText="Сохранить"
           message={
             <div className="main-window__input-field">
-              <div style={{ marginBottom: "5px" }}>Введите сумму заказа</div>
+              <div style={{ marginBottom: '5px' }}>Введите сумму заказа</div>
               <input
                 type="number"
                 onChange={({ target }) => setNewSum(target.value)}
@@ -397,14 +397,14 @@ const TableView = ({
               minHeight="3rem"
               items={15}
             />
-          ) : sortOrder.curSort === "date" ||
-            sortOrder.curSort === "shippingDate" ? (
+          ) : sortOrder.curSort === 'date' ||
+            sortOrder.curSort === 'shippingDate' ? (
             printRequestsByDates(
               dates,
               requests,
               printConfig,
               sortOrder,
-              printRequests
+              printRequests,
             )
           ) : (
             printRequests(sortRequests(requests, sortOrder), printConfig)

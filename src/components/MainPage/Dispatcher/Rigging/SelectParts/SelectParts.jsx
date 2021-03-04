@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import "./SelectParts.scss";
+import React, { useState, useEffect } from 'react';
+import './SelectParts.scss';
 import {
   workshopsLocations,
   checkRiggingTypesInputs,
-} from "../RiggingComponents/rigsVariables";
-import NestedFormItem from "../../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
-import { scrollToElement } from "../../../../../utils/functions.jsx";
-import AddToButton from "../../../../../utils/Form/AddToButton/AddToButton.jsx";
+} from '../RiggingComponents/rigsVariables';
+import NestedFormItem from '../../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import { scrollToElement } from '../../../../../utils/functions.jsx';
+import AddToButton from '../../../../../utils/Form/AddToButton/AddToButton.jsx';
 
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([]);
@@ -30,18 +30,18 @@ const SelectParts = (props) => {
 
   const handleNewPart = () => {
     const newPart = {
-      number: "",
-      name: "",
-      amount: "",
-      location: "lemz",
-      comment: "",
-      cuttingDimensions: "",
-      milling: "",
-      harding: "",
-      grinding: "",
-      erosion: "",
-      controll: "",
-      color: "production",
+      number: '',
+      name: '',
+      amount: '',
+      location: 'lemz',
+      comment: '',
+      cuttingDimensions: '',
+      milling: '',
+      harding: '',
+      grinding: '',
+      erosion: '',
+      controll: '',
+      color: 'production',
       isMinimized: true,
     };
     setSelected([...selected, newPart]);
@@ -105,41 +105,41 @@ const SelectParts = (props) => {
                 handleDeleteItem={deletePart}
                 headerItems={[
                   {
-                    text: "Название",
+                    text: 'Название',
                     value: item.name,
-                    placeholder: "Введите название...",
+                    placeholder: 'Введите название...',
                   },
                   {
-                    text: "Артикул",
+                    text: 'Артикул',
                     value: item.number,
-                    placeholder: "Введите артикул...",
+                    placeholder: 'Введите артикул...',
                   },
                   {
-                    text: "Комментарий",
+                    text: 'Комментарий',
                     value: item.comment,
-                    placeholder: "Введите комментарий...",
+                    placeholder: 'Введите комментарий...',
                   },
                 ]}
                 formInputs={[
                   {
-                    name: "Название",
-                    element: getInputElement("name", item),
+                    name: 'Название',
+                    element: getInputElement('name', item),
                   },
                   {
-                    name: "Артикул",
-                    element: getInputElement("number", item),
+                    name: 'Артикул',
+                    element: getInputElement('number', item),
                   },
                   {
-                    name: "Кол-во",
-                    element: getInputElement("amount", item),
+                    name: 'Кол-во',
+                    element: getInputElement('amount', item),
                   },
                   {
-                    name: "Местоположение",
+                    name: 'Местоположение',
                     element: (
                       <select
                         name="location"
                         onChange={({ target }) =>
-                          handleInputChange(item, "location", target.value)
+                          handleInputChange(item, 'location', target.value)
                         }
                         value={item.location}
                         disabled={props.readOnly}
@@ -153,61 +153,61 @@ const SelectParts = (props) => {
                     ),
                   },
                   {
-                    name: "Комментарий",
-                    element: getInputElement("comment", item),
+                    name: 'Комментарий',
+                    element: getInputElement('comment', item),
                   },
                   {
-                    name: "Распил/Габариты",
+                    name: 'Распил/Габариты',
                     element: getInputElement(
-                      "cuttingDimensions",
+                      'cuttingDimensions',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "cuttingDimensions")
+                        !checkRiggingTypesInputs(item, 'cuttingDimensions'),
                     ),
                   },
                   {
-                    name: "Фрезеровка/Точение",
+                    name: 'Фрезеровка/Точение',
                     element: getInputElement(
-                      "milling",
+                      'milling',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "milling")
+                        !checkRiggingTypesInputs(item, 'milling'),
                     ),
                   },
                   {
-                    name: "Закалка",
+                    name: 'Закалка',
                     element: getInputElement(
-                      "harding",
+                      'harding',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "harding")
+                        !checkRiggingTypesInputs(item, 'harding'),
                     ),
                   },
                   {
-                    name: "Шлифовка",
+                    name: 'Шлифовка',
                     element: getInputElement(
-                      "grinding",
+                      'grinding',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "grinding")
+                        !checkRiggingTypesInputs(item, 'grinding'),
                     ),
                   },
                   {
-                    name: "Эрозия",
+                    name: 'Эрозия',
                     element: getInputElement(
-                      "erosion",
+                      'erosion',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "erosion")
+                        !checkRiggingTypesInputs(item, 'erosion'),
                     ),
                   },
                   {
-                    name: "Проверка",
+                    name: 'Проверка',
                     element: getInputElement(
-                      "controll",
+                      'controll',
                       item,
                       !props.readOnly &&
-                        !checkRiggingTypesInputs(item, "controll")
+                        !checkRiggingTypesInputs(item, 'controll'),
                     ),
                   },
                 ]}

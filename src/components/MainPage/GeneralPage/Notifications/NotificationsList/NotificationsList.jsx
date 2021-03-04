@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
-import CakeIcon from "../../../../../../assets/notifications/birthday-cake.inline.svg";
-import DocumentsIcon from "../../../../../../assets/statistics/document-report.inline.svg";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import CakeIcon from '../../../../../../assets/notifications/birthday-cake.inline.svg';
+import DocumentsIcon from '../../../../../../assets/statistics/document-report.inline.svg';
 
 const NotificationsList = ({ notifications, isLoading }) => {
   return (
@@ -31,14 +31,14 @@ const ListItem = ({ item }) => {
   return (
     <div
       className={`notifications__list-item ${
-        item.read ? "" : "notifications__list-item--unread"
+        item.read ? '' : 'notifications__list-item--unread'
       }`}
     >
       <div className="notifications__list-wrapper">
         <Link to={item.link}>{item.name}</Link>
         <div>{item.description}</div>
       </div>
-      {item.type === "ДР" ? (
+      {item.type === 'ДР' ? (
         <CakeIcon className="main-window__img" />
       ) : (
         <DocumentsIcon className="main-window__img" />

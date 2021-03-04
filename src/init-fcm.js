@@ -1,8 +1,8 @@
 // !FIREBASE
-import * as firebase from 'firebase/app'
-import 'firebase/messaging'
+import * as firebase from 'firebase/app';
+import 'firebase/messaging';
 
-let messaging = null
+let messaging = null;
 if (firebase.messaging.isSupported()) {
   const initializedFirebaseApp = firebase.initializeApp({
     apiKey: process.env.FIREBASE_API_KEY,
@@ -14,11 +14,11 @@ if (firebase.messaging.isSupported()) {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-  })
-  messaging = initializedFirebaseApp.messaging()
+  });
+  messaging = initializedFirebaseApp.messaging();
   messaging.usePublicVapidKey(
     process.env.FIREBASE_MESSAGING_WEB_PUSH_CERTIFICATE,
-  )
+  );
 }
 
-export { messaging }
+export { messaging };

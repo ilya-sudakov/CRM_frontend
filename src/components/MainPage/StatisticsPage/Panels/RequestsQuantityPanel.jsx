@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import SmallPanel from "./SmallPanel.jsx";
-import PlaylistIcon from "../../../../../assets/sidemenu/play_list.inline.svg";
-import { checkIfDateIsInRange } from "../functions.js";
-import RequestsList from "../Lists/RequestsList/RequestsList.jsx";
+import React, { useState, useEffect } from 'react';
+import SmallPanel from './SmallPanel.jsx';
+import PlaylistIcon from '../../../../../assets/sidemenu/play_list.inline.svg';
+import { checkIfDateIsInRange } from '../functions.js';
+import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const RequestsQuantityPanel = ({
   requests,
@@ -11,10 +11,10 @@ const RequestsQuantityPanel = ({
   getPrevData,
 }) => {
   const [stats, setStats] = useState({
-    category: "Заявки",
+    category: 'Заявки',
     percentage: 0,
     value: null,
-    linkTo: "/requests",
+    linkTo: '/requests',
     isLoaded: false,
     isLoading: false,
     timePeriod: timeText,
@@ -61,7 +61,7 @@ const RequestsQuantityPanel = ({
         <RequestsList
           title="Заявки за выбранный период"
           data={filteredRequests}
-          sortBy={{ curSort: "sum", sum: "desc" }}
+          sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
       isLoaded: true,
@@ -73,7 +73,7 @@ const RequestsQuantityPanel = ({
           ((curMonthQuantity - prevMonthQuantity) /
             (prevMonthQuantity === 0 ? 1 : prevMonthQuantity)) *
             100 *
-            100
+            100,
         ) / 100,
     }));
   };

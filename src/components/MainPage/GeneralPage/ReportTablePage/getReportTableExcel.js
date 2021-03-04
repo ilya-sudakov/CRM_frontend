@@ -1,10 +1,10 @@
-import Excel from "exceljs";
-import { getEmployeesByWorkshop } from "../../../../utils/RequestsAPI/Employees.jsx";
-import { getWorkReportByEmployee } from "../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx";
-import { getEmployeeNameText } from "../../../../utils/functions.jsx";
-import { months } from "../../../../utils/dataObjects.js";
-import { saveExcelFile } from "../../../../utils/xlsxFunctions.js";
-import { sortEmployees } from "./functions.js";
+import Excel from 'exceljs';
+import { getEmployeesByWorkshop } from '../../../../utils/RequestsAPI/Employees.jsx';
+import { getWorkReportByEmployee } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getEmployeeNameText } from '../../../../utils/functions.jsx';
+import { months } from '../../../../utils/dataObjects.js';
+import { saveExcelFile } from '../../../../utils/xlsxFunctions.js';
+import { sortEmployees } from './functions.js';
 
 const getReportTableColumnXLSX = (name, width = 5) => {
   return {
@@ -12,14 +12,14 @@ const getReportTableColumnXLSX = (name, width = 5) => {
     width: width,
     style: {
       font: { size: 12 },
-      alignment: { vertical: "middle" },
+      alignment: { vertical: 'middle' },
     },
   };
 };
-const thinBorder = { style: "thin", color: { argb: "00000000" } };
+const thinBorder = { style: 'thin', color: { argb: '00000000' } };
 
 const reportTableDefaultColumnds = [
-  getReportTableColumnXLSX("name", 45),
+  getReportTableColumnXLSX('name', 45),
   ...Array(16).fill(getReportTableColumnXLSX(undefined)),
   getReportTableColumnXLSX(undefined, 10),
 ];
@@ -32,7 +32,7 @@ const defaultBorder = {
 };
 
 const getDatesForReportTable = (curDate) => {
-  const dates = [[""], [""]];
+  const dates = [[''], ['']];
   const lastDate =
     new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getDate() + 1;
   for (let i = 1; i < lastDate; i++)
@@ -41,23 +41,23 @@ const getDatesForReportTable = (curDate) => {
   return dates;
 };
 
-const getDateTitle = (workSheet, curDate, type = "first") => {
+const getDateTitle = (workSheet, curDate, type = 'first') => {
   const dateTitleRow = workSheet.addRow([
-    `${type === "first" ? "1/2" : "2/2"} ${
+    `${type === 'first' ? '1/2' : '2/2'} ${
       months[curDate.getMonth()]
     }.${curDate.getFullYear()}`,
   ]);
   workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
   workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
   dateTitleRow.font = { bold: true, size: 18 };
-  dateTitleRow.alignment = { vertical: "middle", horizontal: "center" };
+  dateTitleRow.alignment = { vertical: 'middle', horizontal: 'center' };
   dateTitleRow.height = 50;
 };
 
 const fillBorderInBetween = (workSheet, i) => {
   if (i >= 2 && i <= 17) {
     workSheet.getCell(workSheet.rowCount, i).border = {
-      right: { style: "hair", color: { argb: "00000000" } },
+      right: { style: 'hair', color: { argb: '00000000' } },
       bottom: thinBorder,
     };
   }
@@ -65,7 +65,7 @@ const fillBorderInBetween = (workSheet, i) => {
 
 const getDatesHeaderList = (workSheet, dates) => {
   const array = getRemainingDaysSpaces(dates);
-  workSheet.addRow([...dates, ...array, "Сумма"]);
+  workSheet.addRow([...dates, ...array, 'Сумма']);
   for (let i = 1; i <= 18; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = defaultBorder;
     fillBorderInBetween(workSheet, i);
@@ -76,11 +76,11 @@ const filterWorksList = (employeesWorksList, workshop) => {
   return employeesWorksList.filter(
     (employee) =>
       employee.employee.workshop === workshop &&
-      (employee.employee.relevance !== "Уволен" ||
+      (employee.employee.relevance !== 'Уволен' ||
         employee.days.reduce((prev, cur) => {
           if (cur.hours !== null || cur.day !== null) return prev + 1;
           return prev;
-        }, 0) > 0)
+        }, 0) > 0),
   );
 };
 
@@ -89,15 +89,15 @@ const getWorkshopNameRow = (workSheet, workshop) => {
   workSheet.getCell(workSheet.rowCount, 1).border = defaultBorder;
   workSheet.mergeCells(workSheet.rowCount, 1, workSheet.rowCount, 18);
   titleRow.font = { size: 14, bold: true };
-  titleRow.alignment = { vertical: "middle", horizontal: "center" };
+  titleRow.alignment = { vertical: 'middle', horizontal: 'center' };
   titleRow.height = 30;
 };
 
 const getRemainingDaysSpaces = (dates) => {
   if (dates.length > 16) return [];
-  let array = [""];
+  let array = [''];
   if (15 - (dates.length - 1) > 0) {
-    array = Array(15 - (dates.length - 2)).fill("");
+    array = Array(15 - (dates.length - 2)).fill('');
   }
   return array;
 };
@@ -113,9 +113,9 @@ const getEmployeeWorkRow = (workSheet, item, index, dates) => {
         sum += check;
       }
     });
-    if (date === "") return;
+    if (date === '') return;
     if (check === null) {
-      return employeeInfo[0].push("");
+      return employeeInfo[0].push('');
     }
     return employeeInfo[0].push(check);
   });
@@ -127,10 +127,10 @@ const getEmployeeWorkRow = (workSheet, item, index, dates) => {
 const getEmployeeWorkRowBorders = (workSheet, index) => {
   for (let i = 1; i <= 18; i++) {
     workSheet.getCell(workSheet.rowCount, i).fill = {
-      type: "pattern",
-      pattern: "solid",
+      type: 'pattern',
+      pattern: 'solid',
       fgColor: {
-        argb: index % 2 === 0 ? "FFFEFF99" : "FFFFFFFF",
+        argb: index % 2 === 0 ? 'FFFEFF99' : 'FFFFFFFF',
       },
     };
   }
@@ -139,7 +139,7 @@ const getEmployeeWorkRowBorders = (workSheet, index) => {
   };
   for (let i = 2; i <= 17; i++) {
     workSheet.getCell(workSheet.rowCount, i).border = {
-      right: { style: "hair", color: { argb: "00000000" } },
+      right: { style: 'hair', color: { argb: '00000000' } },
     };
   }
   return (workSheet.getCell(workSheet.rowCount, 18).border = defaultBorder);
@@ -168,10 +168,10 @@ const getHalfMonthList = (
   employeesWorksList,
   workSheet,
   curDate,
-  type = "first"
+  type = 'first',
 ) => {
   const dates = getDatesForReportTable(curDate);
-  const arrayIndex = type === "first" ? 0 : 1;
+  const arrayIndex = type === 'first' ? 0 : 1;
   getDateTitle(workSheet, curDate, type); // adding date header
   getDatesHeaderList(workSheet, dates[arrayIndex]); // adding dates
   filteredWorkshops.map((workshop) => {
@@ -180,11 +180,11 @@ const getHalfMonthList = (
       getWorkshopNameRow(workSheet, workshop);
     }
     return sortEmployees(filteredWorksList).map((item, index) =>
-      getEmployeeWorkRow(workSheet, item, index, dates[arrayIndex])
+      getEmployeeWorkRow(workSheet, item, index, dates[arrayIndex]),
     );
   });
   createBorders(workSheet);
-  const temp = workSheet.addRow([""]);
+  const temp = workSheet.addRow(['']);
   temp.height = 50;
 };
 
@@ -197,34 +197,34 @@ const loadEmployeeWorkData = async (filteredWorkshops, curDate) => {
         workshop: workshop,
       })
         .then((res) => res.json())
-        .then((employees) => employeesList.push(...employees))
-    )
+        .then((employees) => employeesList.push(...employees)),
+    ),
   ).then(() =>
     Promise.all(
       employeesList.map((item) =>
         getWorkReportByEmployee(
           item.id,
           curDate.getMonth() + 1,
-          curDate.getFullYear()
+          curDate.getFullYear(),
         )
           .then((res) => res.json())
-          .then((res) => employeesWorksList.push(res))
-      )
-    )
+          .then((res) => employeesWorksList.push(res)),
+      ),
+    ),
   );
   return { employeesWorksList };
 };
 
 export async function getReportTableExcel(
   curDate = new Date(),
-  filteredWorkshops = []
+  filteredWorkshops = [],
 ) {
   let workBook = new Excel.Workbook();
   const workSheet = workBook.addWorksheet(months[curDate.getMonth()]);
   workSheet.columns = reportTableDefaultColumnds;
   const { employeesWorksList } = await loadEmployeeWorkData(
     filteredWorkshops,
-    curDate
+    curDate,
   );
   const defaultParams = [
     filteredWorkshops,
@@ -232,10 +232,10 @@ export async function getReportTableExcel(
     workSheet,
     curDate,
   ];
-  getHalfMonthList(...defaultParams, "first");
-  getHalfMonthList(...defaultParams, "second");
+  getHalfMonthList(...defaultParams, 'first');
+  getHalfMonthList(...defaultParams, 'second');
   saveExcelFile(
     workBook,
-    `Табель-${months[curDate.getMonth()]}_${curDate.getFullYear()}`
+    `Табель-${months[curDate.getMonth()]}_${curDate.getFullYear()}`,
   );
 }

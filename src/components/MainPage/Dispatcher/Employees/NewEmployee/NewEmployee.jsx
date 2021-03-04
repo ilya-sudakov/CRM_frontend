@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "./NewEmployee.scss";
-import "../../../../../utils/Form/Form.scss";
-import { addEmployee } from "../../../../../utils/RequestsAPI/Employees.jsx";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import FileUploader from "../../../../../utils/Form/FileUploader/FileUploader.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import useForm from "../../../../../utils/hooks/useForm";
-import { employeesDefaultInputs } from "../objects.js";
+import React, { useEffect, useState } from 'react';
+import './NewEmployee.scss';
+import '../../../../../utils/Form/Form.scss';
+import { addEmployee } from '../../../../../utils/RequestsAPI/Employees.jsx';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import FileUploader from '../../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import useForm from '../../../../../utils/hooks/useForm';
+import { employeesDefaultInputs } from '../objects.js';
 
 const NewEmployee = (props) => {
   const {
@@ -34,19 +34,19 @@ const NewEmployee = (props) => {
         formInputs.registrationExpirationDate === null
           ? null
           : Number.parseInt(
-              formInputs.registrationExpirationDate.getTime() / 1000
+              formInputs.registrationExpirationDate.getTime() / 1000,
             ),
     })
-      .then(() => props.history.push("/dispatcher/employees"))
+      .then(() => props.history.push('/dispatcher/employees'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
         console.log(error);
       });
   };
 
   useEffect(() => {
-    document.title = "Добавление сотрудника";
+    document.title = 'Добавление сотрудника';
   }, []);
 
   return (
@@ -64,7 +64,7 @@ const NewEmployee = (props) => {
               required
               name="name"
               handleInputChange={({ target }) =>
-                handleInputChange("name", target.value)
+                handleInputChange('name', target.value)
               }
               error={formErrors.name}
               errorsArr={formErrors}
@@ -76,7 +76,7 @@ const NewEmployee = (props) => {
               error={formErrors.lastName}
               name="lastName"
               handleInputChange={({ target }) =>
-                handleInputChange("lastName", target.value)
+                handleInputChange('lastName', target.value)
               }
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
@@ -88,7 +88,7 @@ const NewEmployee = (props) => {
             error={formErrors.middleName}
             name="middleName"
             handleInputChange={({ target }) =>
-              handleInputChange("middleName", target.value)
+              handleInputChange('middleName', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -101,7 +101,7 @@ const NewEmployee = (props) => {
             error={formErrors.dateOfBirth}
             name="dateOfBirth"
             selected={formInputs.dateOfBirth}
-            handleDateChange={(date) => handleInputChange("dateOfBirth", date)}
+            handleDateChange={(date) => handleInputChange('dateOfBirth', date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -111,7 +111,7 @@ const NewEmployee = (props) => {
             error={formErrors.citizenship}
             name="citizenship"
             handleInputChange={({ target }) =>
-              handleInputChange("citizenship", target.value)
+              handleInputChange('citizenship', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -126,7 +126,7 @@ const NewEmployee = (props) => {
                 <select
                   name="workshop"
                   onChange={({ target }) =>
-                    handleInputChange("workshop", target.value)
+                    handleInputChange('workshop', target.value)
                   }
                   defaultValue={formInputs.workshop}
                 >
@@ -143,7 +143,7 @@ const NewEmployee = (props) => {
               error={formErrors.position}
               name="position"
               handleInputChange={({ target }) =>
-                handleInputChange("position", target.value)
+                handleInputChange('position', target.value)
               }
               errorsArr={formErrors}
               setErrorsArr={setFormErrors}
@@ -153,7 +153,7 @@ const NewEmployee = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Паспорт</div>
           <FileUploader
-            onChange={(result) => handleInputChange("passportScan1", result)}
+            onChange={(result) => handleInputChange('passportScan1', result)}
             previewImage={formInputs.passportScan1}
           />
         </div>
@@ -161,7 +161,7 @@ const NewEmployee = (props) => {
           inputName="Комментарий"
           name="comment"
           handleInputChange={({ target }) =>
-            handleInputChange("comment", target.value)
+            handleInputChange('comment', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -171,7 +171,7 @@ const NewEmployee = (props) => {
           name="patentExpirationDate"
           selected={formInputs.patentExpirationDate}
           handleDateChange={(date) =>
-            handleInputChange("patentExpirationDate", date)
+            handleInputChange('patentExpirationDate', date)
           }
         />
         <InputDate
@@ -179,7 +179,7 @@ const NewEmployee = (props) => {
           name="registrationExpirationDate"
           selected={formInputs.registrationExpirationDate}
           handleDateChange={(date) =>
-            handleInputChange("registrationExpirationDate", date)
+            handleInputChange('registrationExpirationDate', date)
           }
         />
         <div className="main-form__item">
@@ -188,7 +188,7 @@ const NewEmployee = (props) => {
             <select
               name="relevance"
               onChange={({ target }) =>
-                handleInputChange("relevance", target.value)
+                handleInputChange('relevance', target.value)
               }
               defaultValue={formInputs.relevance}
             >
@@ -204,7 +204,7 @@ const NewEmployee = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/dispatcher/employees")}
+            onClick={() => props.history.push('/dispatcher/employees')}
             text="Вернуться назад"
           />
           <Button

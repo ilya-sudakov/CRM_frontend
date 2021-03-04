@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import RequestsQuantityPanel from "../Panels/RequestsQuantityPanel.jsx";
-import AverageSumStatsPanel from "../Panels/AverageSumStatsPanel.jsx";
-import NewClientsStatsPanel from "../Panels/NewClientsStatsPanel.jsx";
-import NewOldClientsStatsPanel from "../Panels/NewOldClientsStatsPanel.jsx";
-import ManagerEfficiencyGraphPanel from "../Graphs/ManagerEfficiencyGraphPanel.jsx";
-import ManagerMoneyGraphPanel from "../Graphs/ManagerMoneyGraphPanel.jsx";
-import RequestsAverageTimeCompletion from "../Panels/RequestsAverageTimeCompletionPanel.jsx";
-import ProductQuantityInRequest from "../Panels/ProductQuantityInRequest.jsx";
-import ClientTypeDistributionInRequests from "../Graphs/ClientTypeDistributionInRequests.jsx";
-import OnTimeRequestsDistribution from "../Panels/OnTimeRequestsDistribution.jsx";
-import IncomeStatsBigPanel from "../BigPanels/IncomeStatsBigPanel.jsx";
-import { getRequests } from "../../../../utils/RequestsAPI/Requests.jsx";
+import React, { useEffect, useState } from 'react';
+import RequestsQuantityPanel from '../Panels/RequestsQuantityPanel.jsx';
+import AverageSumStatsPanel from '../Panels/AverageSumStatsPanel.jsx';
+import NewClientsStatsPanel from '../Panels/NewClientsStatsPanel.jsx';
+import NewOldClientsStatsPanel from '../Panels/NewOldClientsStatsPanel.jsx';
+import ManagerEfficiencyGraphPanel from '../Graphs/ManagerEfficiencyGraphPanel.jsx';
+import ManagerMoneyGraphPanel from '../Graphs/ManagerMoneyGraphPanel.jsx';
+import RequestsAverageTimeCompletion from '../Panels/RequestsAverageTimeCompletionPanel.jsx';
+import ProductQuantityInRequest from '../Panels/ProductQuantityInRequest.jsx';
+import ClientTypeDistributionInRequests from '../Graphs/ClientTypeDistributionInRequests.jsx';
+import OnTimeRequestsDistribution from '../Panels/OnTimeRequestsDistribution.jsx';
+import IncomeStatsBigPanel from '../BigPanels/IncomeStatsBigPanel.jsx';
+import { getRequests } from '../../../../utils/RequestsAPI/Requests.jsx';
 
 const RequestsPage = ({ currDate, timePeriod }) => {
   const [requests, setRequests] = useState([]);
@@ -46,7 +46,7 @@ const RequestsPage = ({ currDate, timePeriod }) => {
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        <div className="statistics__column" style={{ maxWidth: "700px" }}>
+        <div className="statistics__column" style={{ maxWidth: '700px' }}>
           <IncomeStatsBigPanel
             currDate={currDate}
             requests={requests}

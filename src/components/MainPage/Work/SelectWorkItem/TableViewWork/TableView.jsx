@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import sortIcon from "../../../../../../assets/tableview/sort_icon.png";
-import okSVG from "../../../../../../assets/tableview/ok.svg";
-import "./TableView.scss";
-import "../../../../../utils/MainWindow/MainWindow.scss";
-import PlaceholderLoading from "../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React, { useState, useEffect } from 'react';
+import sortIcon from '../../../../../../assets/tableview/sort_icon.png';
+import okSVG from '../../../../../../assets/tableview/ok.svg';
+import './TableView.scss';
+import '../../../../../utils/MainWindow/MainWindow.scss';
+import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [sortOrder, setSortOrder] = useState({
-    curSort: "work",
-    id: "desc",
+    curSort: 'work',
+    id: 'desc',
   });
 
   const changeSortOrder = (event) => {
-    const name = event.target.getAttribute("name");
+    const name = event.target.getAttribute('name');
     setSortOrder({
       curSort: name,
-      [name]: sortOrder[name] === "desc" ? "asc" : "desc",
+      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
     });
   };
 
@@ -24,17 +24,17 @@ const TableView = (props) => {
     return data.filter(
       (item) =>
         item.work.toLowerCase().includes(query) ||
-        item.id.toString().includes(query)
+        item.id.toString().includes(query),
     );
   };
 
   const sortProducts = (data) => {
     return searchQuery(data).sort((a, b) => {
       if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
+        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
       }
       if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
+        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
       }
       return 0;
     });

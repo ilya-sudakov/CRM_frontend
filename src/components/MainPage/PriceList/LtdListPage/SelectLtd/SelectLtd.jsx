@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import FormWindow from "../../../../../utils/Form/FormWindow/FormWindow.jsx";
-import SelectFromButton from "../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx";
-import TableView from "../TableView/TableView.jsx";
-import UserContext from "../../../../../App.js";
-import "./SelectLtd.scss";
-import { getLTDList } from "../../../../../utils/RequestsAPI/PriceList/lts_list.js";
+import React, { useContext, useEffect, useState } from 'react';
+import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
+import SelectFromButton from '../../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
+import TableView from '../TableView/TableView.jsx';
+import UserContext from '../../../../../App.js';
+import './SelectLtd.scss';
+import { getLTDList } from '../../../../../utils/RequestsAPI/PriceList/lts_list.js';
 
 const SelectLtd = ({ data, onChange }) => {
   const [selectedLtd, setSelectedLtd] = useState(null);

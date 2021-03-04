@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "../../../../utils/MainWindow/MainWindow.scss";
-import "../../../../utils/Form/Form.scss";
-import okSVG from "../../../../../assets/tableview/calendar_check.svg";
-import cancelSVG from "../../../../../assets/tableview/cancel.svg";
-import "./SelectWorkHistory.scss";
-import InputDate from "../../../../utils/Form/InputDate/InputDate.jsx";
-import { formatDateStringWithTime } from "../../../../utils/functions.jsx";
-import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import NestedFormItem from "../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx";
-import { sortByField } from "../../../../utils/sorting/sorting";
+import React, { useState, useEffect } from 'react';
+import '../../../../utils/MainWindow/MainWindow.scss';
+import '../../../../utils/Form/Form.scss';
+import okSVG from '../../../../../assets/tableview/calendar_check.svg';
+import cancelSVG from '../../../../../assets/tableview/cancel.svg';
+import './SelectWorkHistory.scss';
+import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
+import { formatDateStringWithTime } from '../../../../utils/functions.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import NestedFormItem from '../../../../utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import { sortByField } from '../../../../utils/sorting/sorting';
 
 const SelectWorkHistory = (props) => {
   const [items, setItems] = useState([]);
@@ -18,18 +18,18 @@ const SelectWorkHistory = (props) => {
   const [creatingItem, setCreatingItem] = useState(false);
   const defaultItem = {
     date: new Date(),
-    action: "",
-    result: "",
-    comment: "",
+    action: '',
+    result: '',
+    comment: '',
   };
   const [newItem, setNewItem] = useState(defaultItem);
   const [hints, setHints] = useState([
-    "Предложение сотрудничества",
-    "Отсылка материалов",
-    "Обсуждение условий",
-    "Техническая консультация",
-    "Текущая работа",
-    "Заявка",
+    'Предложение сотрудничества',
+    'Отсылка материалов',
+    'Обсуждение условий',
+    'Техническая консультация',
+    'Текущая работа',
+    'Заявка',
   ]);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const SelectWorkHistory = (props) => {
                 ),
               },
               {
-                name: "Действие",
+                name: 'Действие',
                 element: (
                   <span
                     className="main-form__input_field"
@@ -106,15 +106,15 @@ const SelectWorkHistory = (props) => {
                       value={newItem.action}
                       autoComplete="off"
                       onChange={({ target }) =>
-                        handleInputChange("action", target.value)
+                        handleInputChange('action', target.value)
                       }
                     />
                     {filterHints(hints, newItem.action)?.length > 0 && (
                       <div
                         className={
                           showHints
-                            ? "select-work-history__hints-wrapper"
-                            : "select-work-history__hints-wrapper select-work-history__hints-wrapper--hidden"
+                            ? 'select-work-history__hints-wrapper'
+                            : 'select-work-history__hints-wrapper select-work-history__hints-wrapper--hidden'
                         }
                       >
                         {filterHints(hints, newItem.action).map((hint) => (
@@ -138,7 +138,7 @@ const SelectWorkHistory = (props) => {
                 ),
               },
               {
-                name: "Результат",
+                name: 'Результат',
                 element: (
                   <input
                     type="text"
@@ -146,13 +146,13 @@ const SelectWorkHistory = (props) => {
                     value={newItem.result}
                     autoComplete="off"
                     onChange={({ target }) =>
-                      handleInputChange("result", target.value)
+                      handleInputChange('result', target.value)
                     }
                   />
                 ),
               },
               {
-                name: "Комментарий",
+                name: 'Комментарий',
                 element: (
                   <textarea
                     type="text"
@@ -160,7 +160,7 @@ const SelectWorkHistory = (props) => {
                     value={newItem.comment}
                     autoComplete="off"
                     onChange={({ target }) =>
-                      handleInputChange("comment", target.value)
+                      handleInputChange('comment', target.value)
                     }
                   />
                 ),
@@ -192,7 +192,7 @@ const SelectWorkHistory = (props) => {
             }
           />
         ) : null}
-        {sortByField(items, { fieldName: "date", direction: "desc" }).map(
+        {sortByField(items, { fieldName: 'date', direction: 'desc' }).map(
           (item, index) => (
             <NestedFormItem
               index={index}
@@ -201,27 +201,27 @@ const SelectWorkHistory = (props) => {
               deleteItem={() => deleteItem(index)}
               headerItems={[
                 {
-                  text: "Дата",
+                  text: 'Дата',
                   value: formatDateStringWithTime(item.date),
-                  style: { flex: "0 1 30%", maxWidth: "130px" },
-                  placeholder: "Не выбрана дата...",
+                  style: { flex: '0 1 30%', maxWidth: '130px' },
+                  placeholder: 'Не выбрана дата...',
                 },
                 {
-                  text: "Действие",
+                  text: 'Действие',
                   value: item.action,
-                  style: { flex: "0 1 30%" },
-                  placeholder: "Не указано действие...",
+                  style: { flex: '0 1 30%' },
+                  placeholder: 'Не указано действие...',
                 },
                 {
-                  text: "Результат",
+                  text: 'Результат',
                   value: item.result,
-                  style: { flex: "0 1 50%" },
-                  placeholder: "Не указано действие...",
+                  style: { flex: '0 1 50%' },
+                  placeholder: 'Не указано действие...',
                 },
               ]}
               formInputs={[
                 {
-                  name: "Дата",
+                  name: 'Дата',
                   element: (
                     <input
                       type="text"
@@ -231,22 +231,22 @@ const SelectWorkHistory = (props) => {
                   ),
                 },
                 {
-                  name: "Действие",
+                  name: 'Действие',
                   element: <input type="text" value={item.action} readOnly />,
                 },
                 {
-                  name: "Результат",
+                  name: 'Результат',
                   element: <input type="text" value={item.result} readOnly />,
                 },
                 {
-                  name: "Комментарий",
+                  name: 'Комментарий',
                   element: (
                     <textarea type="text" value={item.comment} readOnly />
                   ),
                 },
               ]}
             />
-          )
+          ),
         )}
       </div>
     </div>

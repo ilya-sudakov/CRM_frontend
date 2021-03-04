@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./EditWorkshopOrder.scss";
-import "../../../../../utils/Form/Form.scss";
-import InputText from "../../../../../utils/Form/InputText/InputText.jsx";
-import InputDate from "../../../../../utils/Form/InputDate/InputDate.jsx";
-import SelectItems from "../../../../../utils/Form/SelectItems/SelectItems.jsx";
+import React, { useState, useEffect, useContext } from 'react';
+import './EditWorkshopOrder.scss';
+import '../../../../../utils/Form/Form.scss';
+import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
+import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
+import SelectItems from '../../../../../utils/Form/SelectItems/SelectItems.jsx';
 import {
   getOrderById,
   editOrder,
   editProductInOrder,
   addProductToOrder,
   deleteProductFromOrder,
-} from "../../../../../utils/RequestsAPI/Workshop/Orders.jsx";
-import Button from "../../../../../utils/Form/Button/Button.jsx";
-import { workshops } from "../../workshopVariables";
-import UserContext from "../../../../../App.js";
-import { getWorkshopOrdersDefaultInputs } from "../../functions";
-import useForm from "../../../../../utils/hooks/useForm";
+} from '../../../../../utils/RequestsAPI/Workshop/Orders.jsx';
+import Button from '../../../../../utils/Form/Button/Button.jsx';
+import { workshops } from '../../workshopVariables';
+import UserContext from '../../../../../App.js';
+import { getWorkshopOrdersDefaultInputs } from '../../functions';
+import useForm from '../../../../../utils/hooks/useForm';
 
 const EditWorkshopOrder = (props) => {
   const {
@@ -28,7 +28,7 @@ const EditWorkshopOrder = (props) => {
     errorWindow,
   } = useForm([
     ...getWorkshopOrdersDefaultInputs(workshops[props.type].fullName),
-    { name: "oldProducts", defaultValue: [] },
+    { name: 'oldProducts', defaultValue: [] },
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [id, setId] = useState(0);
@@ -43,7 +43,7 @@ const EditWorkshopOrder = (props) => {
         date: new Date(formInputs.date).getTime() / 1000,
         deliverBy: new Date(formInputs.deliverBy).getTime() / 1000,
       },
-      id
+      id,
     ).then(() => {
       //PUT if edited, POST if product is new
       Promise.all(
@@ -61,13 +61,13 @@ const EditWorkshopOrder = (props) => {
                   ...selected,
                   equipmentId: id,
                 },
-                selected.id
+                selected.id,
               )
             : addProductToOrder({
                 equipmentId: id,
                 ...selected,
               });
-        })
+        }),
       ).then(() => {
         //DELETE products removed by user
         Promise.all(
@@ -80,22 +80,22 @@ const EditWorkshopOrder = (props) => {
               }
             });
             return deleted && deleteProductFromOrder(item.id);
-          })
+          }),
         ).then(() => {
           setIsLoading(false);
-          props.history.push("/lemz/workshop-orders");
+          props.history.push('/lemz/workshop-orders');
         });
       });
     });
   };
 
   useEffect(() => {
-    document.title = "Редактирование заказа";
+    document.title = 'Редактирование заказа';
     const id = props.history.location.pathname.split(
-      `${workshops[props.type].ordersRedirectURL}/edit/`
+      `${workshops[props.type].ordersRedirectURL}/edit/`,
     )[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заказа!");
+      alert('Неправильный индекс заказа!');
       props.history.push(workshops[props.type].ordersRedirectURL);
     } else {
       setId(id);
@@ -125,10 +125,10 @@ const EditWorkshopOrder = (props) => {
             error={formErrors.date}
             name="date"
             selected={Date.parse(formInputs.date)}
-            handleDateChange={(date) => handleInputChange("date", date)}
+            handleDateChange={(date) => handleInputChange('date', date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
-            readOnly={!userContext.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!userContext.userHasAccess(['ROLE_ADMIN'])}
           />
           <InputText
             inputName="Наименование"
@@ -137,20 +137,20 @@ const EditWorkshopOrder = (props) => {
             defaultValue={formInputs.name}
             name="name"
             handleInputChange={({ target }) =>
-              handleInputChange("name", target.value)
+              handleInputChange('name', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
-            readOnly={!userContext.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!userContext.userHasAccess(['ROLE_ADMIN'])}
           />
           <InputText
             inputName="Комплектация"
             name="assembly"
             handleInputChange={({ target }) =>
-              handleInputChange("assembly", target.value)
+              handleInputChange('assembly', target.value)
             }
             handleInputChange={handleInputChange}
-            readOnly={!userContext.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!userContext.userHasAccess(['ROLE_ADMIN'])}
           />
           <InputDate
             inputName="Дата поставки"
@@ -158,7 +158,7 @@ const EditWorkshopOrder = (props) => {
             error={formErrors.deliverBy}
             name="deliverBy"
             selected={Date.parse(formInputs.deliverBy)}
-            handleDateChange={(date) => handleInputChange("deliverBy", date)}
+            handleDateChange={(date) => handleInputChange('deliverBy', date)}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -166,9 +166,9 @@ const EditWorkshopOrder = (props) => {
             inputName="Продукция"
             userHasAccess={props.userHasAccess}
             defaultValue={formInputs.products}
-            readOnly={!userContext.userHasAccess(["ROLE_ADMIN"])}
+            readOnly={!userContext.userHasAccess(['ROLE_ADMIN'])}
             required
-            onChange={(value) => handleInputChange("products", value)}
+            onChange={(value) => handleInputChange('products', value)}
             error={formErrors.products}
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -179,7 +179,7 @@ const EditWorkshopOrder = (props) => {
               <select
                 name="status"
                 onChange={({ target }) =>
-                  handleInputChange("status", target.value)
+                  handleInputChange('status', target.value)
                 }
                 value={formInputs.status}
               >

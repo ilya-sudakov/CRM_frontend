@@ -1,6 +1,6 @@
-import React from 'react'
-import noPhotoIMG from '../../../../assets/priceList/no_img.png'
-import './ImgLoader.scss'
+import React from 'react';
+import noPhotoIMG from '../../../../assets/priceList/no_img.png';
+import './ImgLoader.scss';
 
 const ImgLoader = (props) => {
   return (
@@ -20,7 +20,7 @@ const ImgLoader = (props) => {
         <div className={`img-loader__img--placeholder ${props.imgClass}`}></div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ImgLoader
+export default ImgLoader;

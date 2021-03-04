@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./RiggingList.scss";
+import React, { useState, useEffect } from 'react';
+import './RiggingList.scss';
 
-import TableView from "./TableView/TableView.jsx";
-import { getStamp } from "../../../../../utils/RequestsAPI/Rigging/Stamp.jsx";
-import { checkRiggingTypesInputs } from "../RiggingComponents/rigsVariables";
+import TableView from './TableView/TableView.jsx';
+import { getStamp } from '../../../../../utils/RequestsAPI/Rigging/Stamp.jsx';
+import { checkRiggingTypesInputs } from '../RiggingComponents/rigsVariables';
 
 const RiggingList = () => {
   const [drafts, setDrafts] = useState([]);
@@ -12,34 +12,34 @@ const RiggingList = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [statuses, setStatuses] = useState({
     cuttingDimensions: {
-      name: "Распил/Габариты",
-      visibility: ["ROLE_ADMIN"],
+      name: 'Распил/Габариты',
+      visibility: ['ROLE_ADMIN'],
       active: true,
       previous: null,
     },
     milling: {
-      name: "Фрезеровка/Точение",
-      visibility: ["ROLE_ADMIN"],
+      name: 'Фрезеровка/Точение',
+      visibility: ['ROLE_ADMIN'],
       active: false,
-      previous: "cuttingDimensions",
+      previous: 'cuttingDimensions',
     },
     harding: {
-      name: "Закалка",
-      visibility: ["ROLE_ADMIN"],
+      name: 'Закалка',
+      visibility: ['ROLE_ADMIN'],
       active: false,
-      previous: "milling",
+      previous: 'milling',
     },
     grinding: {
-      name: "Шлифовка",
-      visibility: ["ROLE_ADMIN"],
+      name: 'Шлифовка',
+      visibility: ['ROLE_ADMIN'],
       active: false,
-      previous: "harding",
+      previous: 'harding',
     },
     erosion: {
-      name: "Эрозия",
-      visibility: ["ROLE_ADMIN"],
+      name: 'Эрозия',
+      visibility: ['ROLE_ADMIN'],
       active: false,
-      previous: "grinding",
+      previous: 'grinding',
     },
   });
 
@@ -52,11 +52,11 @@ const RiggingList = () => {
         // console.log(response);
         response.map((item) => {
           return item.stampParts
-            .filter((stamp) => stamp.color !== "completed") //Не показываем завершенные детали
+            .filter((stamp) => stamp.color !== 'completed') //Не показываем завершенные детали
             .map((stamp) => {
               newDrafts.push({
                 ...stamp,
-                type: "Stamp",
+                type: 'Stamp',
                 itemId: item.id,
                 status: item.status,
               });
@@ -74,7 +74,7 @@ const RiggingList = () => {
   }
 
   useEffect(() => {
-    document.title = "Очередь инструментального производства";
+    document.title = 'Очередь инструментального производства';
     if (dataLoaded) {
       //Временное решение пока нет бэка
       let temp = [];
@@ -83,13 +83,13 @@ const RiggingList = () => {
           ...drafts.filter((draft) => {
             if (
               status[1].active &&
-              (draft[status[0]] === "" || draft[status[0]] === null) &&
+              (draft[status[0]] === '' || draft[status[0]] === null) &&
               checkRiggingTypesInputs(draft, status[0])
             ) {
               return true;
             }
             return false;
-          })
+          }),
         );
       });
       console.log(temp);
@@ -114,7 +114,7 @@ const RiggingList = () => {
             {Object.entries(statuses).map((status) => (
               <div
                 className={`main-window__button ${
-                  !status[1].active ? "main-window__button--inverted" : ""
+                  !status[1].active ? 'main-window__button--inverted' : ''
                 } main-window__list-item--${status[0]}`}
                 onClick={() => {
                   let temp = statuses;

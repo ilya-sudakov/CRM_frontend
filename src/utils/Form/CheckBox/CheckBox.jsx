@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./CheckBox.scss";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './CheckBox.scss';
 
 const CheckBox = ({
-  name = "",
-  text = "",
+  name = '',
+  text = '',
   id,
   value,
   disabled = false,
@@ -17,7 +17,7 @@ const CheckBox = ({
     const id = target.id;
     onChange(value, name, id);
   };
-  
+
   return (
     <div className="checkbox">
       <label className="checkbox__container">

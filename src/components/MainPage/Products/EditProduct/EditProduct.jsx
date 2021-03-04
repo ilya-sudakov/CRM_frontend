@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import "./EditProduct.scss";
-import "../../../../utils/Form/Form.scss";
+import React, { useEffect, useState } from 'react';
+import './EditProduct.scss';
+import '../../../../utils/Form/Form.scss';
 import {
   getProductById,
   editProduct,
-} from "../../../../utils/RequestsAPI/Products.js";
-import InputText from "../../../../utils/Form/InputText/InputText.jsx";
-import SelectCategory from "../SelectCategory/SelectCategory.jsx";
-import { imgToBlobDownload, getDataUri } from "../../../../utils/functions.jsx";
-import ImgLoader from "../../../../utils/TableView/ImgLoader/ImgLoader.jsx";
-import FileUploader from "../../../../utils/Form/FileUploader/FileUploader.jsx";
-import Button from "../../../../utils/Form/Button/Button.jsx";
-import SelectPackaging from "../../PackagingPage/SelectPackaging/SelectPackaging.jsx";
+} from '../../../../utils/RequestsAPI/Products.js';
+import InputText from '../../../../utils/Form/InputText/InputText.jsx';
+import SelectCategory from '../SelectCategory/SelectCategory.jsx';
+import { imgToBlobDownload, getDataUri } from '../../../../utils/functions.jsx';
+import ImgLoader from '../../../../utils/TableView/ImgLoader/ImgLoader.jsx';
+import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
+import Button from '../../../../utils/Form/Button/Button.jsx';
+import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 import {
   deletePackagingFromProduct,
   addPackagingToProduct,
-} from "../../../../utils/RequestsAPI/Products/packaging.js";
-import useForm from "../../../../utils/hooks/useForm";
-import { productsDefaultInputs } from "../objects";
+} from '../../../../utils/RequestsAPI/Products/packaging.js';
+import useForm from '../../../../utils/hooks/useForm';
+import { productsDefaultInputs } from '../objects';
 
 const EditProduct = (props) => {
   const {
@@ -35,7 +35,7 @@ const EditProduct = (props) => {
     console.log(formInputs);
     if (!formIsValid()) return;
     setIsLoading(true);
-    const id = props.history.location.pathname.split("/products/edit/")[1];
+    const id = props.history.location.pathname.split('/products/edit/')[1];
     editProduct(formInputs, id)
       .then(() => deletePackagingFromProduct(id))
       .then(() =>
@@ -43,22 +43,22 @@ const EditProduct = (props) => {
           {
             packings: [...formInputs.packages.map((item) => item.id)],
           },
-          id
-        )
+          id,
+        ),
       )
-      .then(() => props.history.push("/products"))
+      .then(() => props.history.push('/products'))
       .catch((error) => {
         setIsLoading(false);
-        alert("Ошибка при добавлении записи");
+        alert('Ошибка при добавлении записи');
       });
   };
 
   useEffect(() => {
-    document.title = "Редактирование продукта";
-    const id = props.history.location.pathname.split("/products/edit/")[1];
+    document.title = 'Редактирование продукта';
+    const id = props.history.location.pathname.split('/products/edit/')[1];
     if (isNaN(Number.parseInt(id))) {
-      alert("Неправильный индекс заявки!");
-      props.history.push("/products");
+      alert('Неправильный индекс заявки!');
+      props.history.push('/products');
     } else {
       getProductById(id)
         .then((res) => res.json())
@@ -78,8 +78,8 @@ const EditProduct = (props) => {
         })
         .catch((error) => {
           console.log(error);
-          alert("Неправильный индекс заявки!");
-          props.history.push("/products");
+          alert('Неправильный индекс заявки!');
+          props.history.push('/products');
         });
     }
   }, []);
@@ -95,11 +95,11 @@ const EditProduct = (props) => {
           <div className="main-form__input_name">Фотография</div>
           <div className="main-form__product_img">
             <ImgLoader imgClass="" imgSrc={formInputs.photo} noPhotoTemplate />
-            {formInputs.photo !== "" && (
+            {formInputs.photo !== '' && (
               <div
                 className="main-form__submit"
                 onClick={() =>
-                  imgToBlobDownload(formInputs.photo, formInputs.name + ".jpeg")
+                  imgToBlobDownload(formInputs.photo, formInputs.name + '.jpeg')
                 }
               >
                 Скачать картинку
@@ -114,7 +114,7 @@ const EditProduct = (props) => {
           name="name"
           defaultValue={formInputs.name}
           handleInputChange={({ target }) =>
-            handleInputChange("name", target.value)
+            handleInputChange('name', target.value)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -126,7 +126,7 @@ const EditProduct = (props) => {
           defaultValue={formInputs.category}
           name="category"
           handleCategoryChange={(category) =>
-            handleInputChange("category", category)
+            handleInputChange('category', category)
           }
           errorsArr={formErrors}
           setErrorsArr={setFormErrors}
@@ -143,7 +143,7 @@ const EditProduct = (props) => {
             name="weight"
             type="number"
             handleInputChange={({ target }) =>
-              handleInputChange("weight", target.value)
+              handleInputChange('weight', target.value)
             }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
@@ -154,7 +154,7 @@ const EditProduct = (props) => {
             name="vendor"
             type="text"
             handleInputChange={({ target }) =>
-              handleInputChange("vendor", target.value)
+              handleInputChange('vendor', target.value)
             }
           />
           <InputText
@@ -163,7 +163,7 @@ const EditProduct = (props) => {
             defaultValue={formInputs.description}
             name="description"
             handleInputChange={({ target }) =>
-              handleInputChange("description", target.value)
+              handleInputChange('description', target.value)
             }
           />
           <InputText
@@ -172,12 +172,12 @@ const EditProduct = (props) => {
             defaultValue={formInputs.barcode}
             name="barcode"
             handleInputChange={({ target }) =>
-              handleInputChange("barcode", target.value)
+              handleInputChange('barcode', target.value)
             }
           />
           <SelectPackaging
             required
-            onChange={(packages) => handleInputChange("packages", packages)}
+            onChange={(packages) => handleInputChange('packages', packages)}
             defaultValue={formInputs.packages}
             errorName="packages"
             errorsArr={formErrors}
@@ -190,7 +190,7 @@ const EditProduct = (props) => {
           name="comment"
           defaultValue={formInputs.comment}
           handleInputChange={({ target }) =>
-            handleInputChange("comment", target.value)
+            handleInputChange('comment', target.value)
           }
         />
         <div className="main-form__item">
@@ -199,7 +199,7 @@ const EditProduct = (props) => {
             <select
               name="productionLocation"
               onChange={({ target }) =>
-                handleInputChange("productionLocation", target.value)
+                handleInputChange('productionLocation', target.value)
               }
               value={formInputs.productionLocation}
             >
@@ -214,8 +214,8 @@ const EditProduct = (props) => {
           <FileUploader
             onChange={async (result) => {
               const downgraded =
-                result !== "" ? await getDataUri(result, "jpeg", 0.3) : "";
-              handleInputChange("photo", downgraded);
+                result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+              handleInputChange('photo', downgraded);
             }}
             previewImage={formInputs.photo}
             error={formErrors.photo}
@@ -229,7 +229,7 @@ const EditProduct = (props) => {
           <Button
             className="main-form__submit main-form__submit--inverted"
             inverted
-            onClick={() => props.history.push("/products")}
+            onClick={() => props.history.push('/products')}
             text="Вернуться назад"
           />
           <Button

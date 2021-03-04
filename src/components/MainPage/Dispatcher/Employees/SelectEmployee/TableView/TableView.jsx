@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./TableView.scss";
-import "../../../../../../utils/MainWindow/MainWindow.scss";
-import { formatDateString } from "../../../../../../utils/functions.jsx";
-import okSVG from "../../../../../../../assets/tableview/ok.svg";
-import PlaceholderLoading from "../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx";
+import React, { useState, useEffect } from 'react';
+import './TableView.scss';
+import '../../../../../../utils/MainWindow/MainWindow.scss';
+import { formatDateString } from '../../../../../../utils/functions.jsx';
+import okSVG from '../../../../../../../assets/tableview/ok.svg';
+import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   useEffect(() => {
@@ -30,19 +30,19 @@ const TableView = (props) => {
           ) : (
             props.data.map(
               (employee, employee_id) =>
-                employee.relevance !== "Уволен" && (
+                employee.relevance !== 'Уволен' && (
                   <div
                     className="main-window__list-item"
                     key={employee_id}
                     onClick={() => {
                       props.selectEmployee(
                         employee?.lastName +
-                          " " +
+                          ' ' +
                           employee?.name +
-                          " " +
+                          ' ' +
                           employee?.middleName,
                         employee?.id,
-                        employee
+                        employee,
                       );
                       props.setCloseWindow(!props.closeWindow);
                     }}
@@ -50,9 +50,9 @@ const TableView = (props) => {
                     <span>
                       <div className="main-window__mobile-text">ФИО:</div>
                       {employee?.lastName +
-                        " " +
+                        ' ' +
                         employee?.name +
-                        " " +
+                        ' ' +
                         employee?.middleName}
                     </span>
                     <span>
@@ -60,7 +60,7 @@ const TableView = (props) => {
                         Дата рождения:
                       </div>
                       {formatDateString(
-                        employee?.dateOfBirth ?? employee?.yearOfBirth
+                        employee?.dateOfBirth ?? employee?.yearOfBirth,
                       )}
                     </span>
                     <span>
@@ -80,12 +80,12 @@ const TableView = (props) => {
                         onClick={() => {
                           props.selectEmployee(
                             employee?.lastName +
-                              " " +
+                              ' ' +
                               employee?.name +
-                              " " +
+                              ' ' +
                               employee?.middleName,
                             employee?.id,
-                            employee
+                            employee,
                           );
                           props.setCloseWindow(!props.closeWindow);
                         }}
@@ -94,7 +94,7 @@ const TableView = (props) => {
                       </div>
                     </div>
                   </div>
-                )
+                ),
             )
           )}
         </div>

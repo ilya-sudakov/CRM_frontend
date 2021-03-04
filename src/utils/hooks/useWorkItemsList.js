@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getWork } from "../RequestsAPI/WorkManaging/WorkList.jsx";
+import { useEffect, useState } from 'react';
+import { getWork } from '../RequestsAPI/WorkManaging/WorkList.jsx';
 
 const useWorkItemsList = () => {
   const [works, setWorks] = useState([]);
@@ -29,7 +29,7 @@ const useWorkItemsList = () => {
                 label: work.work,
                 typeOfWork: work.typeOfWork,
               };
-            })
+            }),
         );
       })
       .catch((error) => {
