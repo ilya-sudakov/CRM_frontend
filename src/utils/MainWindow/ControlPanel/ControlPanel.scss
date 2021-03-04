@@ -131,6 +131,13 @@
                         max-width: 240px;
                     }
                 }
+                width: calc(100% + 30px);
+                padding: 0 15px;
+                box-sizing: border-box;
+                flex-wrap: nowrap;
+                margin-left: -15px;
+                overflow: auto;
+                white-space: nowrap;
             }
         }
     }
