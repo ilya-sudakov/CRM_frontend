@@ -64,7 +64,7 @@ module.exports = {
       template: './src/templates/index.html',
       filename: 'index.html',
       favicon: './assets/favicon.ico',
-      manifest: '/assets/manifest.json',
+      manifest: './src/static/built/manifest.json',
     }),
     new Dotenv({
       path: './.env',
