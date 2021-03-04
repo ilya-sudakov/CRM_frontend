@@ -7,7 +7,7 @@
     "test": "jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
     "dev": "webpack --mode development",
-    "webpack:prod": "node --max_old_space_size=4096 node_modules/ webpack/.bin/webpack --mode production",
+    "webpack:prod": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js --mode production",
     "deploy:local": "rsync -av --progress ./src/static/built/ /root/crm.osfix.ru",
     "deploy:remote": "rsync -avzhe ssh --progress ./src/static/built/* root@194.58.104.192:/root/crm.osfix.ru",
     "build-prod": "npm run webpack:prod && npm run deploy:local",
