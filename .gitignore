@@ -10,13 +10,13 @@ package-lock.json
 /node_modules
 /src/main/resources/static/built/*
 /src/static/built/*
-!/src/static/built/.gitkeep
-!/src/static/built/manifest.json
+
 !/src/static/built/firebase-messaging-sw.js
 !/src/static/built/assets/
 /src/static/built/assets/*
 !/src/static/built/assets/app_icon__128.png
 !/src/static/built/assets/app_icon__144.png
+!/src/static/built/assets/manifest.json
 
 ### STS ###
 .apt_generated
