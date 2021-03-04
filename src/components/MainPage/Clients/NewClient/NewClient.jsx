@@ -16,7 +16,7 @@ import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
-import UsersVisibility from '../FormComponents/UsersVisibility.jsx';
+// import UsersVisibility from '../FormComponents/UsersVisibility.jsx';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 
 const newClient = (props) => {
