@@ -38,8 +38,6 @@ const newClient = (props) => {
     check: '',
     clientType: 'Активные',
     categoryId: 0,
-    // users: {
-    // },
     visibility: true,
     categoryName: '',
     nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
