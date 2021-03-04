@@ -10,7 +10,7 @@ export const isPartHidden = (list, index) => {
 };
 
 export const searchQuery = (data, query) => {
-  let re = /[.,\_-\s]/gi;
+  let re = /[.,_-\s]/gi;
   const newQuery = query.toLowerCase();
   return data.filter(
     (item) =>

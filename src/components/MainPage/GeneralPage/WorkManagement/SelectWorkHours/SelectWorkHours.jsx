@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './SelectWorkHours.scss';
 import { formatDateString } from '../../../../../utils/functions.jsx';
 
@@ -56,7 +56,7 @@ const SelectWorkHours = (props) => {
       <div className="select-work-hours__list">
         {props.workArray.map((item, index) => {
           return (
-            <div className="select-work-hours__list-item">
+            <div className="select-work-hours__list-item" key={item.id}>
               <div className="select-work-hours__circle"></div>
               <span className="select-work-hours__work-name">
                 {item.workName}
@@ -65,20 +65,16 @@ const SelectWorkHours = (props) => {
                 <ul className="select-work-hours__products">
                   {item.product.map((product) => {
                     return (
-                      <li>
-                        {`${product.name} - ${product.quantity} шт.`}
-                        {/* <span>{product.name}</span>
-                      <div>({product.quantity} шт.)</div> */}
-                      </li>
+                      <li
+                        key={product.id}
+                      >{`${product.name} - ${product.quantity} шт.`}</li>
                     );
                   })}
                   {item.draft.map((draft) => {
                     return (
-                      <li>
-                        {`${draft.name} - ${draft.quantity} шт.`}
-                        {/* <span>{draft.name}</span>
-                      <div>({draft.quantity} шт.)</div> */}
-                      </li>
+                      <li
+                        key={draft.id}
+                      >{`${draft.name} - ${draft.quantity} шт.`}</li>
                     );
                   })}
                 </ul>

@@ -13,7 +13,7 @@ import PlaceholderLoading from '../../../../../../utils/TableView/PlaceholderLoa
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({});
 
-  const findMissingEmployees = (datesEmployees, employees, curWorkshop) => {
+  const findMissingEmployees = (datesEmployees, employees) => {
     let temp = datesEmployees;
     Object.entries(datesEmployees).map((date) => {
       employees.map((employee) => {
@@ -71,7 +71,6 @@ const TableView = (props) => {
           return 0;
         })
         .map((date) => {
-          let index = 0;
           return (
             <>
               <div className="work-management-page__table-date">
@@ -196,7 +195,10 @@ const TableView = (props) => {
                         </div>
                         {item.works.map((workItem) => {
                           return (
-                            <div className="work-management-page__item">
+                            <div
+                              className="work-management-page__item"
+                              key={workItem.id}
+                            >
                               <Link
                                 title="Редактировать"
                                 to={`/work-management/record-time?employee=${item.employee.id}&date=${item.year},${item.month},${item.day}`}
@@ -220,7 +222,7 @@ const TableView = (props) => {
                               <div className="work-management-page__item work-management-page__item--products">
                                 {workItem.workControlProduct.map((product) => {
                                   return (
-                                    <div>
+                                    <div key={product.id}>
                                       {product.product.name +
                                         ' (' +
                                         addSpaceDelimiter(
@@ -234,7 +236,7 @@ const TableView = (props) => {
                                 })}
                                 {workItem.partsWorks.map((draft) => {
                                   return (
-                                    <div>
+                                    <div key={draft.id}>
                                       {draft.name +
                                         ' (' +
                                         addSpaceDelimiter(
