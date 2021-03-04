@@ -19,9 +19,7 @@ const ProductQuantityInRequest = ({
     isLoading: false,
     timePeriod: timeText,
     difference: 0,
-    renderIcon: () => (
-      <PlaylistIcon className="panel__img panel__img--requests" />
-    ),
+    renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
   });
 
   const getStats = (requests) => {

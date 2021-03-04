@@ -7,16 +7,14 @@ import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Статистика по менеджерам (заказы)',
     isLoaded: false,
     chartName: 'manager-efficiency-graph',
     timePeriod: timeText,
-    renderIcon: () => (
-      <EmployeeIcon className="panel__img panel__img--employee" />
-    ),
+    renderIcon: <EmployeeIcon className="panel__img panel__img--employee" />,
   });
 
   const getStats = (data) => {
@@ -101,7 +99,7 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
       },
     };
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(

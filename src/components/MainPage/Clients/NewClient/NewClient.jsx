@@ -338,7 +338,7 @@ const newClient = (props) => {
             setShowError={setShowError}
           />
           {curTab === 'workHistory' ? (
-            <React.Fragment>
+            <>
               {/* Добавление истории работ */}
               <div className="main-form__item">
                 <div className="main-form__input_name">История работ*</div>
@@ -356,9 +356,9 @@ const newClient = (props) => {
                   />
                 </div>
               </div>
-            </React.Fragment>
+            </>
           ) : (
-            <React.Fragment>
+            <>
               <InputText
                 inputName="Название"
                 required
@@ -540,7 +540,7 @@ const newClient = (props) => {
                   setErrorsArr={setFormErrors}
                 />
               </div>
-            </React.Fragment>
+            </>
           )}
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения

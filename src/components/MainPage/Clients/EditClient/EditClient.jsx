@@ -401,7 +401,7 @@ const EditClient = (props) => {
             setShowError={setShowError}
           />
           {curTab === 'workHistory' ? (
-            <React.Fragment>
+            <>
               {/* Добавление истории работ */}
               <div className="main-form__item">
                 <div className="main-form__input_name">История работ*</div>
@@ -419,11 +419,11 @@ const EditClient = (props) => {
                   />
                 </div>
               </div>
-            </React.Fragment>
+            </>
           ) : curTab === 'requestsHistory' ? (
             <RequestHistory id={clientInputs.id} />
           ) : (
-            <React.Fragment>
+            <>
               <InputText
                 inputName="Название"
                 required
@@ -598,7 +598,7 @@ const EditClient = (props) => {
                   setErrorsArr={setFormErrors}
                 />
               </div>
-            </React.Fragment>
+            </>
           )}
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения

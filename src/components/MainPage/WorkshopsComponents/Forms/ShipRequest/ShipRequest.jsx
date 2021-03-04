@@ -3,7 +3,6 @@ import './ShipRequest.scss';
 import '../../../../../utils/Form/Form.scss';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
-import InputUser from '../../../../../utils/Form/InputUser/InputUser.jsx';
 import InputProducts from '../../../../../utils/Form/InputProducts/InputProducts.jsx';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
 import Button from '../../../../../utils/Form/Button/Button.jsx';
@@ -11,12 +10,9 @@ import UserContext from '../../../../../App.js';
 import {
   editRequest,
   editProductsToRequest,
-  addProductsToRequest,
-  deleteProductsToRequest,
   getRequestById,
-  connectClientToRequest,
 } from '../../../../../utils/RequestsAPI/Requests.jsx';
-import { requestStatuses, workshops } from '../../workshopVariables.js';
+import { workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 
 const ShipRequest = (props) => {

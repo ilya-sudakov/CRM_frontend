@@ -156,7 +156,7 @@ export const renderRequestStatusColumn = (
         value={request.status}
         onChange={(event) => handleStatusChange(event, request)}
       >
-        {requestStatuses.map((status) => {
+        {requestStatuses.map((status, index) => {
           const optionStyle =
             userHasAccess && userHasAccess(status.access) ? 'block' : 'none';
           const optionsValue =
@@ -165,6 +165,7 @@ export const renderRequestStatusColumn = (
               : status.name;
           return (
             <option
+              key={index}
               style={{
                 display: optionStyle,
               }}
@@ -198,8 +199,9 @@ export const renderProductStatusSelect = (
           handleProductStatusChange(product.id, target.value)
         }
       >
-        {productsStatuses.map((status) => (
+        {productsStatuses.map((status, index) => (
           <option
+            key={index}
             value={
               status.oldName === product.status
                 ? status.oldName
@@ -253,6 +255,7 @@ export const renderProductsSubItem = (request, handleStatusChange) => {
         </div>
         {request?.requestProducts.map((product) => (
           <div
+            key={product.id}
             className={`main-window__list-item main-window__list-item--${findStatusClassName(
               productsStatuses,
               product.status,
@@ -348,6 +351,7 @@ export const renderProductsColumn = (
                 productsStatuses,
                 product.status,
               )}`}
+              key={product.id}
             >
               <span onClick={() => createLabelForProduct(product)}>
                 <div className="main-window__mobile-text">Название:</div>

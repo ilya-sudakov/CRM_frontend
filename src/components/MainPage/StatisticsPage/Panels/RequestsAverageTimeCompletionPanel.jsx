@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
 import TimeIcon from '../../../../../assets/etc/time.inline.svg';
-import {
-  dateDiffInDays,
-  formatDateStringNoDate,
-} from '../../../../utils/functions.jsx';
+import { dateDiffInDays } from '../../../../utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
@@ -24,7 +21,7 @@ const RequestsAverageTimeCompletionPanel = ({
     timePeriod: timeText,
     difference: 0,
     invertedStats: true,
-    renderIcon: () => <TimeIcon className="panel__img panel__img--time" />,
+    renderIcon: <TimeIcon className="panel__img panel__img--time" />,
   });
 
   const getStats = (requests) => {

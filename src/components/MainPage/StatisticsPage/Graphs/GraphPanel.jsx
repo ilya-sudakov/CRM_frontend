@@ -22,7 +22,7 @@ const GraphPanel = ({
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>
         <span>{category || 'Категория'}</span>
-        {renderIcon ? <div className="panel__icon">{renderIcon()}</div> : null}
+        {renderIcon ? <div className="panel__icon">{renderIcon}</div> : null}
       </div>
       {windowContent ? (
         <FormWindow

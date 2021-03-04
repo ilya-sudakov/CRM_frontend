@@ -7,7 +7,7 @@ import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
 
 const RequestsQuantityGraphPanel = ({ data, curDate }) => {
   const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Заказы',
@@ -16,7 +16,7 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
     timePeriod: `${months[curDate.getMonth() - 1]} - ${
       months[curDate.getMonth()]
     }`,
-    renderIcon: () => <ListIcon className="panel__img panel__img--list" />,
+    renderIcon: <ListIcon className="panel__img panel__img--list" />,
   });
 
   const getStats = (data, curDate = new Date()) => {
@@ -146,7 +146,7 @@ const RequestsQuantityGraphPanel = ({ data, curDate }) => {
       },
     };
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(

@@ -20,7 +20,7 @@ const OnTimeRequestsDistribution = ({
     isLoading: false,
     timePeriod: timeText,
     difference: 0,
-    renderIcon: () => <ClockIcon className="panel__img panel__img--time" />,
+    renderIcon: <ClockIcon className="panel__img panel__img--time" />,
   });
 
   const getStats = (requests) => {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import WrenchIcon from '../../../../../assets/sidemenu/wrench.inline.svg';
-import { months } from '../../../../utils/dataObjects';
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
 import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js';
 
@@ -15,7 +14,7 @@ const RiggingItemsQuantityForType = ({ data }) => {
     isLoaded: false,
     chartName: 'rigging-items-quantity-graph',
     timePeriod: 'За все время',
-    renderIcon: () => <WrenchIcon className="panel__img panel__img--wrench" />,
+    renderIcon: <WrenchIcon className="panel__img panel__img--wrench" />,
   });
 
   const [statuses, setStatuses] = useState({

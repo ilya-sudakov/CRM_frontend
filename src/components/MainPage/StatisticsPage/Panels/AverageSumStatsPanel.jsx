@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
 import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
-import {
-  addSpaceDelimiter,
-  formatDateStringNoDate,
-} from '../../../../utils/functions.jsx';
+import { addSpaceDelimiter } from '../../../../utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
@@ -23,7 +20,7 @@ const AverageSumStatsPanel = ({
     isLoading: false,
     timePeriod: timeText,
     difference: 0,
-    renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
+    renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
   });
 
   const getStats = (requests) => {

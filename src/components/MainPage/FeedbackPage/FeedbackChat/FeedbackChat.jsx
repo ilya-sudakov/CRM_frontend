@@ -62,7 +62,7 @@ const FeedbackChat = (props) => {
           .map((message, index) => {
             //  if (index === props.messages.length - 5) {
             //    return (
-            //      <React.Fragment>
+            //      <>
             //        <div
             //         className={
             //         showNewMessages
@@ -108,7 +108,7 @@ const FeedbackChat = (props) => {
             //         </div>
             //          <div className="feedback-chat__text">{message.text}</div>
             //        </div>
-            //      </React.Fragment>
+            //      </>
             //   )
             //} else
             return (

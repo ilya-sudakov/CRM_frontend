@@ -1,4 +1,3 @@
-import pdfMake from 'pdfmake';
 import { formatDateString } from '../../../utils/functions.jsx';
 import { getRequestPdfText } from '../../../utils/pdfFunctions.js';
 import {

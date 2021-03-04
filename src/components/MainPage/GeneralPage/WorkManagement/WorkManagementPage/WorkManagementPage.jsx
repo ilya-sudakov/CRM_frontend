@@ -415,7 +415,7 @@ const WorkManagementPage = (props) => {
               props.userHasAccess(workshop.visibility)
             ) {
               return (
-                <React.Fragment>
+                <>
                   <div className="main-window__list-item main-window__list-item--divider">
                     <span
                       title={workshop.minimized ? 'Развернуть' : 'Свернуть'}
@@ -469,7 +469,7 @@ const WorkManagementPage = (props) => {
                     }}
                     data={datesEmployees[workshop.name]}
                   />
-                </React.Fragment>
+                </>
               );
             }
           })}

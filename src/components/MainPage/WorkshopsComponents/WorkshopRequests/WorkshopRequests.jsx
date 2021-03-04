@@ -261,6 +261,7 @@ const WorkshopRequests = (props) => {
                 {statuses.map((status, index) => {
                   return (
                     <div
+                      key={index}
                       className={
                         (status.visible
                           ? 'main-window__button'
@@ -286,6 +287,7 @@ const WorkshopRequests = (props) => {
                   {workshopsFilter.map((workshop, index) => {
                     return (
                       <div
+                        key={index}
                         className={`main-window__button ${
                           workshop.visible
                             ? ''
@@ -321,7 +323,6 @@ const WorkshopRequests = (props) => {
             fieldName: sortOrder.curSort,
             direction: sortOrder[sortOrder.curSort],
           })}
-          deleteItem={deleteItem}
           searchQuery={searchQuery}
           deleteItem={(id) => deleteItem(id, loadRequests)}
           transferRequest={transferRequestId}

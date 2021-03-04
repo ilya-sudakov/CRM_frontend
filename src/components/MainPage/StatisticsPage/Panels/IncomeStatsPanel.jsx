@@ -15,7 +15,7 @@ const IncomeStatsPanel = ({ requests, currDate, timeText, getPrevData }) => {
     isLoading: false,
     timePeriod: timeText,
     difference: 0,
-    renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
+    renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
   });
 
   const getStats = (requests) => {

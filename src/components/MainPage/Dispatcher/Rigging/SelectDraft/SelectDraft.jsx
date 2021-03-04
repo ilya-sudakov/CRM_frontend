@@ -201,7 +201,7 @@ const SelectDraft = (props) => {
           <FormWindow
             title="Выбор чертежа"
             content={
-              <React.Fragment>
+              <>
                 <SearchBar
                   // title="Поиск по чертежам"
                   fullSize
@@ -216,7 +216,7 @@ const SelectDraft = (props) => {
                   setCloseWindow={setCloseWindow}
                   setShowWindow={setShowWindow}
                 />
-              </React.Fragment>
+              </>
             }
             showWindow={showWindow}
             setShowWindow={setShowWindow}

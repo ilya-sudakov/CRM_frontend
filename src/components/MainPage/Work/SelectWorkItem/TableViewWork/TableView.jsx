@@ -1,24 +1,11 @@
-import { useState, useEffect } from 'react';
-import sortIcon from '../../../../../../assets/tableview/sort_icon.png';
+import { useEffect } from 'react';
 import okSVG from '../../../../../../assets/tableview/ok.svg';
 import './TableView.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortByField } from '../../../../../utils/sorting/sorting';
 
 const TableView = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'work',
-    id: 'desc',
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.getAttribute('name');
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === 'desc' ? 'asc' : 'desc',
-    });
-  };
-
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase();
     return data.filter(
@@ -29,14 +16,9 @@ const TableView = (props) => {
   };
 
   const sortProducts = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
-      }
-      return 0;
+    return sortByField(searchQuery(data), {
+      fieldName: 'work',
+      direction: 'asc',
     });
   };
 

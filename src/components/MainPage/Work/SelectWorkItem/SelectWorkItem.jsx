@@ -4,15 +4,12 @@ import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getWork } from '../../../../utils/RequestsAPI/WorkManaging/WorkList.jsx';
 import TableView from './TableViewWork/TableView.jsx';
-import Button from '../../../../utils/Form/Button/Button.jsx';
 import SelectFromButton from '../../../../utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectWorkItem = (props) => {
   const [showWindow, setShowWindow] = useState(false);
   const [works, setWorks] = useState([]);
-  const [workType, setWorkType] = useState('Продукция');
   const [searchQuery, setSearchQuery] = useState('');
-  const [id, setId] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState('');
 
@@ -35,9 +32,7 @@ const SelectWorkItem = (props) => {
   };
 
   const clickWork = (employeeName, employeeId, newWorkType) => {
-    setId(employeeId);
     setFullName(employeeName);
-    setWorkType(newWorkType);
     props.handleWorkItemChange(employeeName, employeeId, newWorkType);
     setShowWindow(!showWindow);
   };
@@ -93,7 +88,7 @@ const SelectWorkItem = (props) => {
         windowName="select-work-item"
         id={props.id}
         content={
-          <React.Fragment>
+          <>
             <SearchBar
               // title="Поиск по работам"
               fullSize
@@ -110,7 +105,7 @@ const SelectWorkItem = (props) => {
               showWindow={showWindow}
               setShowWindow={setShowWindow}
             />
-          </React.Fragment>
+          </>
         }
         showWindow={showWindow}
         setShowWindow={setShowWindow}

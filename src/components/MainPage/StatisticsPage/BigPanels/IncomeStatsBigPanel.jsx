@@ -33,7 +33,7 @@ const IncomeStatsBigPanel = ({
     difference: 0,
     curPeriod: curPeriod,
     currDate: currDate,
-    renderIcon: () => <MoneyIcon className="panel__img panel__img--money" />,
+    renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
   });
 
   const getFullYearData = (requests, currDate) => {

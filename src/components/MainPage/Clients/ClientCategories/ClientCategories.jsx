@@ -111,7 +111,7 @@ const ClientCategories = (props) => {
               : 'Редактирование категории'
           }
           content={
-            <React.Fragment>
+            <>
               {curForm === 'new' ? (
                 <NewClientCategory
                   onSubmit={loadData}
@@ -128,7 +128,7 @@ const ClientCategories = (props) => {
                   editCategory={clientTypes[props.type].editCategoryFunction}
                 />
               )}
-            </React.Fragment>
+            </>
           }
           showWindow={showWindow}
           setShowWindow={setShowWindow}

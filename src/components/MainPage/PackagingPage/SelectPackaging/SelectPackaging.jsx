@@ -45,7 +45,7 @@ const SelectPackaging = (props) => {
       <FormWindow
         title="Выбор упаковки"
         content={
-          <React.Fragment>
+          <>
             <SearchBar
               // title="Поиск по упаковкам"
               fullSize
@@ -68,7 +68,7 @@ const SelectPackaging = (props) => {
               closeWindow={closeWindow}
               setCloseWindow={setCloseWindow}
             />
-          </React.Fragment>
+          </>
         }
         showWindow={showWindow}
         setShowWindow={setShowWindow}

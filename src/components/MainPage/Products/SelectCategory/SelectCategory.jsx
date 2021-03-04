@@ -73,7 +73,7 @@ const SelectCategory = (props) => {
       <FormWindow
         title="Категории продукции"
         content={
-          <React.Fragment>
+          <>
             <SearchBar
               fullSize
               // title="Поиск по категориям"
@@ -91,7 +91,7 @@ const SelectCategory = (props) => {
               isLoading={isLoadingCategories}
               setShowWindow={setShowWindow}
             />
-          </React.Fragment>
+          </>
         }
         headerButton={{
           name: 'Создать категорию',

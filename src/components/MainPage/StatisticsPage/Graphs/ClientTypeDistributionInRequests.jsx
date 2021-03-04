@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import ClientIcon from '../../../../../assets/sidemenu/client.inline.svg';
-import { months } from '../../../../utils/dataObjects';
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Типы клиентов по заказам',
     isLoaded: false,
     chartName: 'client-type-distribution-graph',
     timePeriod: timeText,
-    renderIcon: () => <ClientIcon className="panel__img panel__img--money" />,
+    renderIcon: <ClientIcon className="panel__img panel__img--money" />,
   });
 
   const getStats = (data) => {
@@ -108,7 +107,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
       },
     };
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(

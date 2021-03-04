@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
-import { months } from '../../../../utils/dataObjects';
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Статистика по менеджерам (доходы)',
     isLoaded: false,
     chartName: 'manager-money-graph',
     timePeriod: timeText,
-    renderIcon: () => <MoneyIcon className="panel__img panel__img--list" />,
+    renderIcon: <MoneyIcon className="panel__img panel__img--list" />,
   });
 
   const getStats = (data) => {
@@ -105,7 +104,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
       },
     };
     setTimeout(() => {
-      setIsLoading(false);
+      // setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(

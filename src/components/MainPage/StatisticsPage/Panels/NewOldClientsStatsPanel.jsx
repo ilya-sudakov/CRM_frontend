@@ -20,7 +20,7 @@ const NewOldClientsStatsPanel = ({
     isLoading: false,
     timePeriod: timeText,
     difference: 0,
-    renderIcon: () => <ClientsIcon className="panel__img panel__img--money" />,
+    renderIcon: <ClientsIcon className="panel__img panel__img--money" />,
   });
 
   const getStats = (requests) => {

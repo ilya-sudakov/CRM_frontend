@@ -16,7 +16,7 @@ const AverageProductQuantityProduced = ({ data, curDate }) => {
     isLoading: false,
     timePeriod: 'От прошлой недели',
     difference: 0,
-    renderIcon: () => <BoxIcon className="panel__img panel__img--default" />,
+    renderIcon: <BoxIcon className="panel__img panel__img--default" />,
   });
 
   const getStats = (data, curDate = new Date()) => {

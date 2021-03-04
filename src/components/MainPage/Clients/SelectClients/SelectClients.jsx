@@ -94,7 +94,7 @@ const SelectClient = (props) => {
       <FormWindow
         title="Клиенты"
         content={
-          <React.Fragment>
+          <>
             <SearchBar
               fullSize
               setSearchQuery={setSearchQuery}
@@ -117,7 +117,7 @@ const SelectClient = (props) => {
               closeWindow={closeWindow}
               setCloseWindow={setCloseWindow}
             />
-          </React.Fragment>
+          </>
         }
         showWindow={showWindow}
         setShowWindow={setShowWindow}

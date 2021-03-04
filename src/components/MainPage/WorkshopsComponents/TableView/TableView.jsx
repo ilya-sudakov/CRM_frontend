@@ -4,7 +4,7 @@ import editSVG from '../../../../../assets/tableview/edit.svg';
 import printSVG from '../../../../../assets/tableview/print.svg';
 import copySVG from '../../../../../assets/tableview/copy.svg';
 import transferSVG from '../../../../../assets/tableview/transfer.svg';
-import TruckSVG from '../../../../../assets/sidemenu/truck.inline.svg';
+// import TruckSVG from '../../../../../assets/sidemenu/truck.inline.svg';
 import './TableView.scss';
 import PropTypes from 'prop-types';
 import UserContext from '../../../../App.js';

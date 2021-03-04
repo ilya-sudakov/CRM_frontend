@@ -253,7 +253,7 @@ const Clients = (props) => {
               : 'Запись действия'
           }
           content={
-            <React.Fragment>
+            <>
               {curForm === 'nextContactDate' ? (
                 <EditNextContactDate
                   selectedItem={selectedItem}
@@ -285,7 +285,7 @@ const Clients = (props) => {
                   }
                 />
               )}
-            </React.Fragment>
+            </>
           }
           showWindow={showWindow}
           setShowWindow={setShowWindow}
