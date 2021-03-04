@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';
 import MessageForUser from '../../../../utils/Form/MessageForUser/MessageForUser.jsx';

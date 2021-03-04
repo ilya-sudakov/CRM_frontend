@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorMessage from '../Form/ErrorMessage/ErrorMessage.jsx';
 
 const useForm = (defaultInputs = []) => {

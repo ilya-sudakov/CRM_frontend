@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import NotAllowedPage from '../MainPage/NotAllowedPage/NotAllowedPage.jsx';
 import PropTypes from 'prop-types';

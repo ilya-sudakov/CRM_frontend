@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import FormWindow from '../../../../../utils/Form/FormWindow/FormWindow.jsx';
 import EmployeeInfoPanel from '../EmployeeInfo/EmployeeInfo.jsx';
 

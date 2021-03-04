@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
 import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg';
 import {

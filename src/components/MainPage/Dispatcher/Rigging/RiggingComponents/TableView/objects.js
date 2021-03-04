@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const riggingListOptionsHeader = (
   <div className="main-window__list-item main-window__list-item--header">
     <span className="main-window__list-item--border-checked">Артикул</span>

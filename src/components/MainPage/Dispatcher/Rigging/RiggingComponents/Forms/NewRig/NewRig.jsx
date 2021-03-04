@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './NewRig.scss';
 import '../../../../../../../utils/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';

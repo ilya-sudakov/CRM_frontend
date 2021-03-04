@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './NewClient.scss';
 import '../../../../utils/Form/Form.scss';
 import { addClient } from '../../../../utils/RequestsAPI/Clients.jsx';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FeedbackChat.scss';
 import sendSVG from '../../../../../assets/chat/send.svg';
 import arrowUpSVG from '../../../../../assets/chat/unread_messages__arrow-up.svg';

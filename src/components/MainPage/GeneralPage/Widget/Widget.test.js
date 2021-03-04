@@ -1,4 +1,3 @@
-import React from 'react';
 import Widget from './Widget.jsx';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';

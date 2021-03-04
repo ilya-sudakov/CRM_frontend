@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import sortIcon from '../../../../../../assets/tableview/sort_icon.png';
 import okSVG from '../../../../../../assets/tableview/ok.svg';
 import './TableView.scss';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import Pagination from '../../MainWindow/Pagination/Pagination.jsx';
 import useQuery from '../useQuery.js';

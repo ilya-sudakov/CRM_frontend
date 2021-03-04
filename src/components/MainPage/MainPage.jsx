@@ -1,4 +1,4 @@
-import React, { Suspense, useContext, useEffect, useState } from 'react';
+import { Suspense, useContext, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './MainPage.scss';
 import '../../utils/MainWindow/MainWindow.scss';

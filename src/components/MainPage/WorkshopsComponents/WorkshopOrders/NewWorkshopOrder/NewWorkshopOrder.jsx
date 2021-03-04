@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './NewWorkshopOrder.scss';
 import '../../../../../utils/Form/Form.scss';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';

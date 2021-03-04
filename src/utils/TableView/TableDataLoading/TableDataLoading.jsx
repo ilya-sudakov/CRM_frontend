@@ -1,4 +1,3 @@
-import React from 'react';
 import './TableDataLoading.scss';
 
 const TableDataLoading = (props) => {

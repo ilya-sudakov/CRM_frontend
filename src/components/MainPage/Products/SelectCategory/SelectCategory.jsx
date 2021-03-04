@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './SelectCategory.scss';
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';

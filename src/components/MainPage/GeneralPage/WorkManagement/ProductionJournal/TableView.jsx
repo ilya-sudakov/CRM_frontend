@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
 import EditSVG from '../../../../../../assets/tableview/edit.inline.svg';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './SelectPriceItem.scss';
 import FileUploader from '../../../../utils/Form/FileUploader/FileUploader.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';

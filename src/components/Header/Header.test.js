@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import Header from './Header.jsx';
 // import "@testing-library/jest-dom/extend-expect";

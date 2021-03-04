@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import deleteSVG from '../../../../../assets/select/delete.svg';
 import AddToButton from '../../../../utils/Form/AddToButton/AddToButton.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';

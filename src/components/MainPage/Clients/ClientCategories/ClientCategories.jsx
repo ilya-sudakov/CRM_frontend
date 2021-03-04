@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './ClientCategories.scss';
 import editSVG from '../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../assets/tableview/delete.svg';

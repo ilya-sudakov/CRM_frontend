@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Work.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';

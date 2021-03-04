@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './ViewProduct.scss';
 import '../../../../utils/Form/Form.scss';
 import { getProductById } from '../../../../utils/RequestsAPI/Products.js';

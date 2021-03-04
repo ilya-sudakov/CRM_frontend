@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './EditClientCategory.scss';
 import '../../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -58,8 +58,7 @@ const EditClientCategory = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    // event.preventDefault()
+  const handleSubmit = () => {
     setIsLoading(true);
     console.log(formInputs);
     formIsValid() &&

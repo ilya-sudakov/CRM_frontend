@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './FeedbackPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';

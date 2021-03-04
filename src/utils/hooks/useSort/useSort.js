@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import useQuery from '../useQuery.js';
 import { sortByField } from '../../sorting/sorting.js';

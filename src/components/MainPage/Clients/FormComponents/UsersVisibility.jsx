@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CheckBox from '../../../../utils/Form/CheckBox/CheckBox.jsx';
 import { getUsers } from '../../../../utils/RequestsAPI/Users.jsx';
 

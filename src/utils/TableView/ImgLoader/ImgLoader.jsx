@@ -1,4 +1,3 @@
-import React from 'react';
 import noPhotoIMG from '../../../../assets/priceList/no_img.png';
 import './ImgLoader.scss';
 

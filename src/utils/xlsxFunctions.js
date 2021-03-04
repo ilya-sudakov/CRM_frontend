@@ -4,7 +4,7 @@ import { sortByField } from './sorting/sorting.js';
 
 export const saveExcelFile = async (workBook, fileName) => {
   const buffer = await workBook.xlsx.writeBuffer();
-  saveAs(new Blob([buffer]), `${fileName}.xlsx`);
+  FileSaver.saveAs(new Blob([buffer]), `${fileName}.xlsx`);
 };
 
 function s2ab(s) {

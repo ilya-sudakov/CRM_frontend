@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import deleteSVG from '../../../../../../assets/select/delete.svg';
 import './SelectDraft.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import ContractImg from '../../../assets/sidemenu/contract.inline.svg';
@@ -42,14 +42,18 @@ const SideMenu = (props) => {
                 name: 'Создать клиента',
                 pathname: '/clients/new',
                 link: '/clients/new',
-                renderIcon: () => <PlusImg className="sidemenu__img" />,
+                renderIcon: function () {
+                  <PlusImg className="sidemenu__img" />;
+                },
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               {
                 name: 'Управление категориями',
                 pathname: '/clients/categories',
                 link: '/clients/categories',
-                renderIcon: () => <ContractImg className="sidemenu__img" />,
+                renderIcon: function () {
+                  <ContractImg className="sidemenu__img" />;
+                },
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
@@ -86,7 +90,9 @@ const SideMenu = (props) => {
                 name: 'Создать поставщика',
                 pathname: '/suppliers/new',
                 link: '/suppliers/new',
-                renderIcon: () => <PlusImg className="sidemenu__img" />,
+                renderIcon: function () {
+                  <PlusImg className="sidemenu__img" />;
+                },
                 mainRoles: [
                   'ROLE_ADMIN',
                   'ROLE_MANAGER',
@@ -99,7 +105,9 @@ const SideMenu = (props) => {
                 name: 'Управление категориями',
                 pathname: '/suppliers/categories',
                 link: '/suppliers/categories',
-                renderIcon: () => <ContractImg className="sidemenu__img" />,
+                renderIcon: function () {
+                  <ContractImg className="sidemenu__img" />;
+                },
                 mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
               },
               ...sortCategories(res).map((item) => {
@@ -135,9 +143,10 @@ const SideMenu = (props) => {
     <div className={props.hidden ? 'sidemenu sidemenu--hidden' : 'sidemenu'}>
       {/* ADD BUTTONS ON THE TOP */}
       <div className="sidemenu__add-buttons">
-        {sidemenuItems.map((item) => {
+        {sidemenuItems.map((item, index) => {
           return (
             <Link
+              key={index}
               className={
                 item.addButtonName &&
                 userContext.userHasAccess(item.addButtonRoles) &&

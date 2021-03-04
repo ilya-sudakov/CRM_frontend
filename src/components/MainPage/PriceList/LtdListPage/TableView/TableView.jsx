@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import TableActions from '../../../../../utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from '../../../../../utils/TableView/TableActions/Actions/DeleteItemAction.jsx';

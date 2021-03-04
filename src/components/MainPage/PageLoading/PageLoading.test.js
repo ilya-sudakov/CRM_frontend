@@ -1,4 +1,3 @@
-import React from 'react';
 import PageLoading from './PageLoading.jsx';
 import { render, cleanup } from '@testing-library/react';
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './NewTransportation.scss';
 import '../../../../../utils/Form/Form.scss';
 import { addTransportation } from '../../../../../utils/RequestsAPI/Transportation.jsx';

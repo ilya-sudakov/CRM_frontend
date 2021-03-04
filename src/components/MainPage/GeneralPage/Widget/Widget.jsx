@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import './Widget.scss';
 import Button from '../../../../utils/Form/Button/Button.jsx';

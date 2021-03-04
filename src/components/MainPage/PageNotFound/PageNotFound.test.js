@@ -1,4 +1,3 @@
-import React from 'react';
 import PageNotFound from './PageNotFound.jsx';
 import { cleanup } from '@testing-library/react';
 import { renderWithRouter } from '../../../utils/testing/functions.js';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './RiggingList.scss';
 
 import TableView from './TableView/TableView.jsx';

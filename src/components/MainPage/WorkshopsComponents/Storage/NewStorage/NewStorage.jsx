@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './NewStorage.scss';
 import '../../../../../utils/Form/Form.scss';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import editIcon from '../../../../../../assets/tableview/edit.svg';
 import deleteIcon from '../../../../../../assets/tableview/delete.svg';

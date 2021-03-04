@@ -1,4 +1,3 @@
-import React from 'react';
 import deleteSVG from '../../../../assets/select/delete.svg';
 import ColorPicker from './ColorPicker/ColorPicker.jsx';
 

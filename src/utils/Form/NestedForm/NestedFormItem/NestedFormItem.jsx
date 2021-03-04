@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteSVG from '../../../../../assets/tableview/delete.inline.svg';
 import './NestedFormItem.scss';
 import ChevronSVG from '../../../../../assets/tableview/chevron-down.inline.svg';

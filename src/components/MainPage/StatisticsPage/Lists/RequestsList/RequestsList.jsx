@@ -1,4 +1,3 @@
-import React from 'react';
 import usePagination from '../../../../../utils/hooks/usePagination/usePagination.js';
 import { sortRequests } from '../../../WorkshopsComponents/TableView/functions.js';
 import TableView from '../../../WorkshopsComponents/TableView/TableView.jsx';

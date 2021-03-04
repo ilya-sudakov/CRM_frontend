@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './NewTask.scss';
 import '../../../../../utils/Form/Form.scss';
 import { addMainTask } from '../../../../../utils/RequestsAPI/MainTasks.js';

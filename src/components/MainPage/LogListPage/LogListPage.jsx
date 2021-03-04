@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './LogListPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';

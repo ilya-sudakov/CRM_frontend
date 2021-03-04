@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import editSVG from '../../../../../../assets/tableview/edit.svg';
 import deleteSVG from '../../../../../../assets/tableview/delete.svg';

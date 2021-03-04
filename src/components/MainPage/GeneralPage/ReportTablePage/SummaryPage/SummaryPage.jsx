@@ -1,4 +1,3 @@
-import React from 'react';
 // import "./ReportTablePage.scss";
 import DownloadIcon from '../../../../../../assets/download.svg';
 import InputDate from '../../../../../utils/Form/InputDate/InputDate.jsx';

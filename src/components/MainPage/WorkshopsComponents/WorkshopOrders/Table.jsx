@@ -1,4 +1,3 @@
-import React from 'react';
 import PlaceholderLoading from '../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateString,

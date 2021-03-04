@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
 import { months } from '../../../../utils/dataObjects';
 import {

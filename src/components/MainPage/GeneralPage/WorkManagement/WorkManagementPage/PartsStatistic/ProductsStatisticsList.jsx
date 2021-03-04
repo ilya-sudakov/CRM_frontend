@@ -1,4 +1,3 @@
-import React from 'react';
 import { addSpaceDelimiter } from '../../../../../../utils/functions.jsx';
 import { sortByField } from '../../../../../../utils/sorting/sorting.js';
 

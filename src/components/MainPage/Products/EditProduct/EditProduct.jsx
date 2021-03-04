@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './EditProduct.scss';
 import '../../../../utils/Form/Form.scss';
 import {

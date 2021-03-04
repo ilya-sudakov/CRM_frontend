@@ -1,4 +1,3 @@
-import React from 'react';
 import TasksWidget from './TasksWidget.jsx';
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup } from '@testing-library/react';

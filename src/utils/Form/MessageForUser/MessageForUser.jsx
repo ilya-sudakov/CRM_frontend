@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import Button from '../Button/Button.jsx';
 import PropTypes from 'prop-types';
 import './MessageForUser.scss';

@@ -13,7 +13,6 @@ const useWorkReport = (curDay) => {
   const [isLoading, setIsLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
   const [curLoadedDay, setCurLoadedDay] = useState(curDay);
-  const [employeesMap, setEmployeesMap] = useState({});
   const [worktimeInputs, setWorkTimeInputs] = useState({
     date: curDay,
     lemz: {},
@@ -84,7 +83,7 @@ const useWorkReport = (curDay) => {
       .then(async (res) => {
         const combinedWorks = await combineWorksForSamePeople(
           res,
-          setEmployeesMap,
+          () => {},
           () => {},
         );
         combineOriginalAndNewWorks(

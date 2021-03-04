@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import openWidget from '../../../../../assets/tableview/bx-window-open.svg';
 import './NotificationsWidget.scss';
 import Widget from '../Widget/Widget.jsx';

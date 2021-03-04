@@ -15,7 +15,7 @@ import RecordWorkForm from './RecordWorkForm.jsx';
 import { createWorkListPDF, updateData } from './functions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 
-const ProductionJournal = ({}) => {
+const ProductionJournal = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [curDay, setCurDay] = useState(new Date());
   const [curWorkItem, setCurWorkItem] = useState({
@@ -146,13 +146,13 @@ const ProductionJournal = ({}) => {
       <div className="main-window__header main-window__header--full">
         <div className="main-window__title">Дневник производства</div>
         <div className="main-window__description">
-          Для того, чтобы сохранить введенные вами данные о работе в системе,
+          {`Для того, чтобы сохранить введенные вами данные о работе в системе,
           нажмите кнопку "Сохранить данные" в окне создания/редактирования
           записи о работе. Для редактирования записи о работе, достаточно нажать
           на эту запись мышкой - вы перейдете в окно редактирования. <p />
           Сообщайте пожалуйста об ошибках программы/своих предложениях в
           Обратной связи ("Сообщить об ошибке" в боковом меню слева) - мы будем
-          рады помочь!
+          рады помочь!`}
         </div>
       </div>
       {formWindow}

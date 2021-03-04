@@ -1,4 +1,3 @@
-import React from 'react';
 import { cleanup, screen } from '@testing-library/react';
 import PrivateRoute from './PrivateRoute.jsx';
 import '@testing-library/jest-dom/extend-expect';

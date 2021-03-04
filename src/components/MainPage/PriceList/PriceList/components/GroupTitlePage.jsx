@@ -1,4 +1,3 @@
-import React from 'react';
 import { getDataUri } from '../../../../../utils/functions.jsx';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';

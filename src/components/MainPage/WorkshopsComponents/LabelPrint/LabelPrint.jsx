@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './LabelPrint.scss';
 import Barcode from 'react-barcode';
 import { formatDateString } from '../../../../utils/functions.jsx';

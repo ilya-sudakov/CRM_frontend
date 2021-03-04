@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import PlusSVG from '../../../../assets/sidemenu/plus.inline.svg';
 import './AddToButton.scss';

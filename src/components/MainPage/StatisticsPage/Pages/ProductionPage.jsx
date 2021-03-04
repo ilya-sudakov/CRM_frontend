@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useDraftsList from '../../../../utils/hooks/useDraftsList';
 import { getRecordedWorkByDateRange } from '../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import RiggingItemsQuantityForType from '../Graphs/RiggingItemsQuantityForType.jsx';

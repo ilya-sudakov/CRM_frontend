@@ -1,5 +1,5 @@
 //Таблица с табелем
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { months } from '../../../../../utils/dataObjects.js'; //Список месяцев
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {

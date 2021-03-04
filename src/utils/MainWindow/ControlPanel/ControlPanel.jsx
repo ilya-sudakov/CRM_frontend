@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ChevronSVG from '../../../../assets/tableview/chevron-down.inline.svg';
 import './ControlPanel.scss';
 

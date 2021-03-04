@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import EmployeeIcon from '../../../../../assets/sidemenu/employee.inline.svg';
 import { createGraph, loadCanvas } from '../../../../utils/graphs.js';

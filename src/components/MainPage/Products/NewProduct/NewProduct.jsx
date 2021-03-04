@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './NewProduct.scss';
 import '../../../../utils/Form/Form.scss';
 import { addProduct } from '../../../../utils/RequestsAPI/Products.js';
@@ -42,7 +42,7 @@ const NewProduct = (props) => {
         ),
       )
       .then(() => props.history.push('/products'))
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
         alert('Ошибка при добавлении записи');
       });

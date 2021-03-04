@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
 import PlaylistIcon from '../../../../../assets/sidemenu/play_list.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';

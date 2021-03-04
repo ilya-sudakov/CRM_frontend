@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './TableView.scss';
 import '../../../../../../utils/MainWindow/MainWindow.scss';
 import okSVG from '../../../../../../../assets/tableview/ok.svg';

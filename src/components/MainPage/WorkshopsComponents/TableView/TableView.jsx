@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import { useState, useEffect, useCallback, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import editSVG from '../../../../../assets/tableview/edit.svg';
 import printSVG from '../../../../../assets/tableview/print.svg';

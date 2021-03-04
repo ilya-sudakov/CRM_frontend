@@ -1,4 +1,3 @@
-import React from 'react';
 import LoginPage from './LoginPage.jsx';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import { renderWithRouter } from '../../../utils/testing/functions.js';

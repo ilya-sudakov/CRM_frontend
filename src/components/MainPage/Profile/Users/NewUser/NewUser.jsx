@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './NewUser.scss';
 import '../../../../../utils/Form/Form.scss';
 import { addUser } from '../../../../../utils/RequestsAPI/Users.jsx';

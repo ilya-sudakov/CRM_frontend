@@ -1,4 +1,3 @@
-import React from 'react';
 import SelectPriceItem from '../../SelectPriceItem/SelectPriceItem.jsx';
 import CheckBox from '../../../../../utils/Form/CheckBox/CheckBox.jsx';
 import { sortByField } from '../../../../../utils/sorting/sorting';

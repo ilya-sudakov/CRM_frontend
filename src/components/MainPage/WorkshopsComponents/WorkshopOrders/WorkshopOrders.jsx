@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import './WorkshopOrders.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { formatDateString } from '../../../../utils/functions.jsx';

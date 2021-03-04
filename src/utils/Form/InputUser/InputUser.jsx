@@ -1,4 +1,3 @@
-import React from 'react';
 import './InputUser.scss';
 import SelectUser from '../../../components/MainPage/SelectUser/SelectUser.jsx';
 

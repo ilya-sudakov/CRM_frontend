@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import editSVG from '../../../../../assets/tableview/edit.svg';
 import starSVG from '../../../../../assets/tableview/star.svg';
 import starBorderedSVG from '../../../../../assets/tableview/star_border.svg';

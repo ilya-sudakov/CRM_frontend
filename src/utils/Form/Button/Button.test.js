@@ -1,4 +1,3 @@
-import React from 'react';
 import Button from './Button.jsx';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 

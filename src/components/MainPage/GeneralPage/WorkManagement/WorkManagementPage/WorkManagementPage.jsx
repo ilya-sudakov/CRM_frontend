@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './WorkManagementPage.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import openWidget from '../../../../../../assets/tableview/bx-window-open.svg';
 import { getRecordedWorkByDay } from '../../../../../utils/RequestsAPI/WorkManaging/WorkControl.jsx';

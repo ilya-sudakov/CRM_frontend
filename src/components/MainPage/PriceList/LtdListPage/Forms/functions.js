@@ -1,4 +1,3 @@
-import React from 'react';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
 import {
   getBIKByINN,

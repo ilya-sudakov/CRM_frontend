@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
 import ListIcon from '../../../../../assets/sidemenu/list.inline.svg';
 import { months } from '../../../../utils/dataObjects';

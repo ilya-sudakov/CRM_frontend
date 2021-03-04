@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 const useStickyElement = (
   element,
-  offsetTop = 0,
   stickyClassName = 'main-window__list-item--sticky',
 ) => {
   const getAllParentsHeight = (element) => {

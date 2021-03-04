@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 
 const BigPanel = ({

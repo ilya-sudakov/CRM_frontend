@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import deleteSVG from '../../../../../../assets/select/delete.svg';
 import './SelectWork.scss';
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';

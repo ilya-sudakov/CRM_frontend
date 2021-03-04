@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import deleteSVG from '../../../../assets/select/delete.svg';
-import Select from 'react-select';
+import { useState, useEffect, useCallback } from 'react';
 import './SelectUser.scss';
 import { getUsers } from '../../../utils/RequestsAPI/Users.jsx';
-import { customSelectStyles } from '../../../utils/dataObjects';
 
 const SelectUser = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
-  const [customUser, setCustomUser] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
   const search = () => {
@@ -49,12 +45,10 @@ const SelectUser = (props) => {
     }
   };
 
-  const clickOnOption = (event) => {
-    const value = event.target.getAttribute('name');
-    const id = event.target.getAttribute('id');
+  const clickOnOption = (name, id) => {
     clickOnInput();
-    setSelectedUser(value);
-    props.onChange(value, id);
+    setSelectedUser(name);
+    props.onChange(name, id);
   };
 
   const pressEscKey = useCallback((event) => {
@@ -70,7 +64,7 @@ const SelectUser = (props) => {
         .then((res) => {
           setOptions(res);
         })
-        .catch((error) => {
+        .catch(() => {
           !props.defaultValue && setSelectedUser(props.userData.username);
         });
     if (props.defaultValue) {
@@ -111,13 +105,11 @@ const SelectUser = (props) => {
               : 'select_user__options select_user__options--hidden'
           }
         >
-          {search().map((item, index) => (
+          {search().map((item) => (
             <div
-              id={item.id}
-              optionId={index}
-              name={item.username}
+              key={item.id}
               className="select_user__option_item"
-              onClick={clickOnOption}
+              onClick={() => clickOnOption(item.username, item.id)}
             >
               {item.username}
             </div>

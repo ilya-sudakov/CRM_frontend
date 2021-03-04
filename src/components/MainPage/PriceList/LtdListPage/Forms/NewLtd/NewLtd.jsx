@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './NewLtd.scss';
 import Button from '../../../../../../utils/Form/Button/Button.jsx';
 import { addLTD } from '../../../../../../utils/RequestsAPI/PriceList/lts_list.js';

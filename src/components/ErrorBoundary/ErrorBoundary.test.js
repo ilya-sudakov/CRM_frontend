@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import '@testing-library/jest-dom/extend-expect';

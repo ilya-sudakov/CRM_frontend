@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './SelectPackaging.scss';
 import FormWindow from '../../../../utils/Form/FormWindow/FormWindow.jsx';
 import { getPackaging } from '../../../../utils/RequestsAPI/Products/packaging.js';

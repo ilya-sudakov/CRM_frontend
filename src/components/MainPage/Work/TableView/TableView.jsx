@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 // import sortIcon from '../../../../../assets/tableview/sort_icon.png'
 import editSVG from '../../../../../assets/tableview/edit.svg';

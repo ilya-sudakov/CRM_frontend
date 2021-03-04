@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MainPageWorkspace } from '../lazyImports.jsx';
 import { Link } from 'react-router-dom';
 import './GeneralPage.scss';

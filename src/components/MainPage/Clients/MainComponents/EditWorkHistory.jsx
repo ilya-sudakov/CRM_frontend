@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';
 

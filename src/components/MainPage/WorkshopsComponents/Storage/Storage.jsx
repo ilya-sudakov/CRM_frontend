@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './Storage.scss';
 import '../../../../utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';

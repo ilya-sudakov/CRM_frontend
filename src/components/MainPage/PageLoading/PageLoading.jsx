@@ -1,4 +1,3 @@
-import React from 'react';
 import './PageLoading.scss';
 
 const PageLoading = () => {

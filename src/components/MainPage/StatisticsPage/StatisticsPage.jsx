@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './StatisticsPage.scss';
 import { formatDateStringNoYear } from '../../../utils/functions.jsx';
 import { months } from '../../../utils/dataObjects.js';

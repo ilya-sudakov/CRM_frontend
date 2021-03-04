@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Widget from '../Widget/Widget.jsx';
 import './TasksWidget.scss';
 import {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import RequestsQuantityPanel from '../Panels/RequestsQuantityPanel.jsx';
 import AverageSumStatsPanel from '../Panels/AverageSumStatsPanel.jsx';
 import NewClientsStatsPanel from '../Panels/NewClientsStatsPanel.jsx';

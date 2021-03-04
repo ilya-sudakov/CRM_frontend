@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import usePagination from '../../../../utils/hooks/usePagination/usePagination.js';
 import useSort from '../../../../utils/hooks/useSort/useSort.js';
 import FloatingPlus from '../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';

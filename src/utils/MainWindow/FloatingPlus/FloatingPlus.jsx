@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import './FloatingPlus.scss';
 import plusIcon from '../../../../assets/sidemenu/plus.svg';
 import { Link } from 'react-router-dom';

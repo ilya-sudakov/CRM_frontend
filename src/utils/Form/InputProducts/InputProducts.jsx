@@ -1,6 +1,6 @@
 import './InputProducts.scss';
 import SelectFromButton from '../SelectFromButton/SelectFromButton.jsx';
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './Select.scss';
 import SearchBar from '../../../components/MainPage/SearchBar/SearchBar.jsx';
 import TableView from '../../../components/MainPage/Products/TableView/TableView.jsx';
@@ -265,7 +265,7 @@ const InputProducts = (props) => {
                 <FormWindow
                   title="Выбор продукции"
                   content={
-                    <React.Fragment>
+                    <>
                       <SearchBar
                         fullSize
                         placeholder="Введите название продукции для поиска..."
@@ -287,7 +287,7 @@ const InputProducts = (props) => {
                         setCloseWindow={setCloseWindow}
                         setShowWindow={setShowWindow}
                       />
-                    </React.Fragment>
+                    </>
                   }
                   showWindow={showWindow}
                   setShowWindow={setShowWindow}
@@ -320,6 +320,7 @@ const InputProducts = (props) => {
             >
               {search().map((item, index) => (
                 <div
+                  key={item.id}
                   id={item.id}
                   optionId={index}
                   productId={item.id}
@@ -341,6 +342,7 @@ const InputProducts = (props) => {
             )}
             {selected.map((item, index) => (
               <div
+                key={item.id}
                 className={
                   !props.readOnly &&
                   !props.workshop &&

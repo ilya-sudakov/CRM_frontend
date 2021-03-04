@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './NewFeedback.scss';
 import '../../../../utils/Form/Form.scss';
 import InputText from '../../../../utils/Form/InputText/InputText.jsx';

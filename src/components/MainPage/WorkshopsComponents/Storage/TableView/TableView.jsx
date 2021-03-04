@@ -1,4 +1,3 @@
-import React from 'react';
 import editIcon from '../../../../../../assets/tableview/edit.svg';
 import './TableView.scss';
 import { addSpaceDelimiter } from '../../../../../utils/functions.jsx';

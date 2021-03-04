@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import InputDate from '../../../../utils/Form/InputDate/InputDate.jsx';
 import Button from '../../../../utils/Form/Button/Button.jsx';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FactoryIcon from '../../../assets/sidemenu/factory.inline.svg';
 
 import {

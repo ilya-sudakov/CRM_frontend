@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './NewClientCategory.scss';
 import '../../../../../utils/Form/Form.scss';
 import ErrorMessage from '../../../../../utils/Form/ErrorMessage/ErrorMessage.jsx';
@@ -58,7 +58,7 @@ const NewClientCategory = (props) => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     // event.preventDefault()
     setIsLoading(true);
     console.log(formInputs);

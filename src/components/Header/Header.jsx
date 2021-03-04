@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import exitSVG from '../../../assets/header/exit.svg';
 import HistorySVG from '../../../assets/statistics/history-outlined.inline.svg';
 import employeeSVG from '../../../assets/header/employee.svg';

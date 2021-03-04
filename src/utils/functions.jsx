@@ -319,9 +319,7 @@ export const getDatesFromRequests = (requests) => {
 
 export const createLabelForProduct = () => {
   // we create a canvas element
-  let canvas = document.createElement('canvas');
-  let height = 100;
-  let width = 100;
+  return;
 };
 
 export const getQuantityOfProductsFromRequests = (requests) => {

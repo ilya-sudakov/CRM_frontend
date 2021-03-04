@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../../../../utils/MainWindow/MainWindow.scss';
 import '../../../../utils/Form/Form.scss';
 import okSVG from '../../../../../assets/tableview/calendar_check.svg';

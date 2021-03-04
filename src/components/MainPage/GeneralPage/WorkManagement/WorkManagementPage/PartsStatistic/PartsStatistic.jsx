@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import './PartsStatistic.scss';
 import { createGraph, loadCanvas } from '../../../../../../utils/graphs.js';
 import chevronDownSVG from '../../../../../../../assets/tableview/chevron-down.svg';

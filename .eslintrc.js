@@ -17,6 +17,7 @@ module.exports = {
     browser: true,
     amd: true,
     node: true,
+    es6: true,
   },
   extends: [
     'eslint:recommended',
@@ -33,6 +34,7 @@ module.exports = {
       { endOfLine: 'auto' },
       { usePrettierrc: true },
     ],
+    'react/prop-types': 'off', //ignore prop-types errors
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
   },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './EditCategory.scss';
 import '../../../../../utils/Form/Form.scss';
 import InputText from '../../../../../utils/Form/InputText/InputText.jsx';
