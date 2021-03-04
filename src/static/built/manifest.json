@@ -1,7 +1,8 @@
 {
   "gcm_sender_id": "103953800507",
   "start_url": "/",
-  "name": "c.r.m.",
+  "name": "ERP - система управления предприятием",
+  "background_color": "white",
   "display": "standalone",
   "scope": "/",
   "icons": [
