@@ -87,7 +87,7 @@ const SelectItems = (props) => {
             )}
             {items.map((item, index) => {
               return (
-                <div className="select-items__list-item">
+                <div className="select-items__list-item" key={index}>
                   {getInputElement(
                     {
                       title: 'Название',
