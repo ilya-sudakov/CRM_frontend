@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
-import ClockIcon from '../../../../../assets/etc/time.inline.svg';
+import ClockIcon from 'Assets/etc/time.inline.svg';
 import { dateDiffInDays } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';

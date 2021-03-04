@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import editSVG from '../../../../../assets/tableview/edit.svg';
-import printSVG from '../../../../../assets/tableview/print.svg';
-import copySVG from '../../../../../assets/tableview/copy.svg';
-import transferSVG from '../../../../../assets/tableview/transfer.svg';
-// import TruckSVG from '../../../../../assets/sidemenu/truck.inline.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import printSVG from 'Assets/tableview/print.svg';
+import copySVG from 'Assets/tableview/copy.svg';
+import transferSVG from 'Assets/tableview/transfer.svg';
+// import TruckSVG from 'Assets/sidemenu/truck.inline.svg';
 import './TableView.scss';
 import PropTypes from 'prop-types';
 import UserContext from '../../../../App.js';
@@ -15,10 +15,7 @@ import {
   editRequest,
 } from 'Utils/RequestsAPI/Requests.jsx';
 
-import {
-  createLabelForProduct,
-  scrollToElement,
-} from 'Utils/functions.jsx';
+import { createLabelForProduct, scrollToElement } from 'Utils/functions.jsx';
 import LabelPrint from '../LabelPrint/LabelPrint.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { getPageByRequest, printRequest } from '../functions.js';

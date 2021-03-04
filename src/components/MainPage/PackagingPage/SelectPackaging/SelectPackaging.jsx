@@ -4,8 +4,8 @@ import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import { getPackaging } from 'Utils/RequestsAPI/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import 'Utils/MainWindow/MainWindow.scss';
-import deleteSVG from '../../../../../assets/tableview/delete.svg';
-import okSVG from '../../../../../assets/tableview/ok.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
+import okSVG from 'Assets/tableview/ok.svg';
 import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 

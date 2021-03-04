@@ -3,10 +3,7 @@ import './GeneralTasks.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import {
-  getMainTasks,
-  deleteMainTask,
-} from 'Utils/RequestsAPI/MainTasks.js';
+import { getMainTasks, deleteMainTask } from 'Utils/RequestsAPI/MainTasks.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';

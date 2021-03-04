@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import editIcon from '../../../../../../../assets/tableview/edit.svg';
-import deleteIcon from '../../../../../../../assets/tableview/delete.svg';
+import editIcon from 'Assets/tableview/edit.svg';
+import deleteIcon from 'Assets/tableview/delete.svg';
 import './TableView.scss';
 import { scrollToElement } from 'Utils/functions.jsx';
 import { rigStatuses, rigTypes } from '../rigsVariables';

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import deleteSVG from '../../../../assets/select/delete.svg';
+import deleteSVG from 'Assets/select/delete.svg';
 import AddToButton from '../AddToButton/AddToButton.jsx';
 import './SelectItems.scss';
 

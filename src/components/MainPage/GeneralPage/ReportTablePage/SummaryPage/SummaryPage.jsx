@@ -1,5 +1,5 @@
 // import "./ReportTablePage.scss";
-import DownloadIcon from '../../../../../../assets/download.svg';
+import DownloadIcon from 'Assets/download.svg';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';

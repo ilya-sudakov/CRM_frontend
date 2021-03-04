@@ -1,4 +1,4 @@
-import noPhotoIMG from '../../../../assets/priceList/no_img.png';
+import noPhotoIMG from 'Assets/priceList/no_img.png';
 import './ImgLoader.scss';
 
 const ImgLoader = (props) => {

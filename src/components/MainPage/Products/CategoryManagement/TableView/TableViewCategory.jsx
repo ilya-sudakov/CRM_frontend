@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'Utils/MainWindow/MainWindow.scss';
-import editSVG from '../../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../../assets/tableview/delete.svg';
-import okSVG from '../../../../../../assets/tableview/ok.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
+import okSVG from 'Assets/tableview/ok.svg';
 import './TableViewCategory.scss';
 import { sortByField } from 'Utils/sorting/sorting';
 

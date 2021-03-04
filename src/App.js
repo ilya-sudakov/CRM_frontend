@@ -8,10 +8,14 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 import { refreshToken } from './utils/RequestsAPI/Authorization.js';
 import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx';
 const UserContext = React.createContext();
-import { AppIcon__128 } from '../assets/app_icon__128.png';
-import { AppIcon__144 } from '../assets/app_icon__144.png';
+import { AppIcon__128 } from 'Assets/app_icon__128.png';
+import { AppIcon__144 } from 'Assets/app_icon__144.png';
 import { messaging } from './init-fcm.js';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  // useQuery
+} from 'react-query';
 
 const queryClient = new QueryClient();
 

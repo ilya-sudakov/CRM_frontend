@@ -4,15 +4,15 @@ import 'Utils/MainWindow/MainWindow.scss';
 // import { Link } from 'react-router-dom'
 import UserContext from '../../../App.js';
 
-import tasksImg from '../../../../assets/sidemenu/tasks.svg';
-import clientImg from '../../../../assets/sidemenu/client.svg';
-import listImg from '../../../../assets/sidemenu/list.svg';
-import boxImg from '../../../../assets/sidemenu/box.svg';
-import playListImg from '../../../../assets/sidemenu/play_list.svg';
-import supplierIcon from '../../../../assets/sidemenu/supplier_icon.svg';
-import workTimeIcon from '../../../../assets/sidemenu/work_time_icon.svg';
-// import graphIcon from '../../../../assets/graph-icon.svg';
-import statsIcon from '../../../../assets/statistics/stats-alt.svg';
+import tasksImg from 'Assets/sidemenu/tasks.svg';
+import clientImg from 'Assets/sidemenu/client.svg';
+import listImg from 'Assets/sidemenu/list.svg';
+import boxImg from 'Assets/sidemenu/box.svg';
+import playListImg from 'Assets/sidemenu/play_list.svg';
+import supplierIcon from 'Assets/sidemenu/supplier_icon.svg';
+import workTimeIcon from 'Assets/sidemenu/work_time_icon.svg';
+// import graphIcon from 'Assets/graph-icon.svg';
+import statsIcon from 'Assets/statistics/stats-alt.svg';
 
 import Button from 'Utils/Form/Button/Button.jsx';
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import deleteSVG from '../../../../../../assets/select/delete.svg';
+import deleteSVG from 'Assets/select/delete.svg';
 import './SelectWork.scss';
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
 import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';

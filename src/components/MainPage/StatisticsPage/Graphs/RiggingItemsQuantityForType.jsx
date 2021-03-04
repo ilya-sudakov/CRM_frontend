@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
-import WrenchIcon from '../../../../../assets/sidemenu/wrench.inline.svg';
+import WrenchIcon from 'Assets/sidemenu/wrench.inline.svg';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js';
 

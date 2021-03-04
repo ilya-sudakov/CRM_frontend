@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import editIcon from '../../../../../../assets/tableview/edit.svg';
-import deleteIcon from '../../../../../../assets/tableview/delete.svg';
-import printSVG from '../../../../../../assets/tableview/print.svg';
+import editIcon from 'Assets/tableview/edit.svg';
+import deleteIcon from 'Assets/tableview/delete.svg';
+import printSVG from 'Assets/tableview/print.svg';
 import './TableView.scss';
 import {
   changeVisibilityOfListItem,

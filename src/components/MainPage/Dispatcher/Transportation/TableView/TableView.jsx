@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  formatDateString,
-  addSpaceDelimiter,
-} from 'Utils/functions.jsx';
+import { formatDateString, addSpaceDelimiter } from 'Utils/functions.jsx';
 import './TableView.scss';
-import editSVG from '../../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {

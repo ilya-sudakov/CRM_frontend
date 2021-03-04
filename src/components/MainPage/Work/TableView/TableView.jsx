@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import sortIcon from '../../../../../assets/tableview/sort_icon.png'
-import editSVG from '../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../assets/tableview/delete.svg';
+// import sortIcon from 'Assets/tableview/sort_icon.png'
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';

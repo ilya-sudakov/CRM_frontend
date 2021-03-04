@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import './EditUser.scss';
 import 'Utils/Form/Form.scss';
-import {
-  getUserById,
-  editUser,
-} from 'Utils/RequestsAPI/Users.jsx';
+import { getUserById, editUser } from 'Utils/RequestsAPI/Users.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';

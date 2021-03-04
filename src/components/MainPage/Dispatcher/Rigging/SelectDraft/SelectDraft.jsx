@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import deleteSVG from '../../../../../../assets/select/delete.svg';
+import deleteSVG from 'Assets/select/delete.svg';
 import './SelectDraft.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';

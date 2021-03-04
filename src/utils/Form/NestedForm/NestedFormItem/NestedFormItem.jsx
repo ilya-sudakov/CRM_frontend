@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import DeleteSVG from '../../../../../assets/tableview/delete.inline.svg';
+import DeleteSVG from 'Assets/tableview/delete.inline.svg';
 import './NestedFormItem.scss';
-import ChevronSVG from '../../../../../assets/tableview/chevron-down.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import useMessageForUser from '../../../hooks/useMessageForUser.js';

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import openWidget from '../../../../../assets/tableview/bx-window-open.svg';
+import openWidget from 'Assets/tableview/bx-window-open.svg';
 import './NotificationsWidget.scss';
 import Widget from '../Widget/Widget.jsx';
 import NotificationsList from './NotificationsList/NotificationsList.jsx';

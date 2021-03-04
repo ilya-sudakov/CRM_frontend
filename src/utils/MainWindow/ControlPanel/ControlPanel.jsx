@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ChevronSVG from '../../../../assets/tableview/chevron-down.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import './ControlPanel.scss';
 
 const ControlPanel = (props) => {

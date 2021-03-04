@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './TableView.scss';
-import editSVG from '../../../../../../../assets/tableview/edit.svg';
+import editSVG from 'Assets/tableview/edit.svg';
 import {
   numberToString,
   formatDateString,

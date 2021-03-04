@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import DotsIcon from '../../../../assets/sidemenu/more.inline.svg';
+import DotsIcon from 'Assets/sidemenu/more.inline.svg';
 import './TableActions.scss';
 import ActionItem from './Actions/ActionItem.jsx';
 

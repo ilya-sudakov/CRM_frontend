@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import './FeedbackPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import unreadMessagesSVG from '../../../../assets/chat/unread_messages__mail_icon.svg';
-import deleteSVG from '../../../../assets/tableview/delete.svg';
+import unreadMessagesSVG from 'Assets/chat/unread_messages__mail_icon.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import { Link } from 'react-router-dom';
 import {
   formatDateString,

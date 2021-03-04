@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import './FloatingPlus.scss';
-import plusIcon from '../../../../assets/sidemenu/plus.svg';
+import plusIcon from 'Assets/sidemenu/plus.svg';
 import { Link } from 'react-router-dom';
 import UserContext from '../../../App.js';
 

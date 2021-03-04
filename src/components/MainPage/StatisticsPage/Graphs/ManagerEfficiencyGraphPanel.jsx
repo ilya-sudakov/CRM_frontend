@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
-import EmployeeIcon from '../../../../../assets/sidemenu/employee.inline.svg';
+import EmployeeIcon from 'Assets/sidemenu/employee.inline.svg';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';

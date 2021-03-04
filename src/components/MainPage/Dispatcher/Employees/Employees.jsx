@@ -3,7 +3,7 @@ import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import PrintIcon from '../../../../../assets/print.png';
+import PrintIcon from 'Assets/print.png';
 import { getEmployeesListPdfText } from './functions.js';
 import {
   deleteEmployee,

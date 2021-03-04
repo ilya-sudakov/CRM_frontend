@@ -1,6 +1,6 @@
 import * as Functions from './functions.jsx';
 import { cleanup } from '@testing-library/react';
-import testImage from '../../assets/chat/send.svg';
+import testImage from 'Assets/chat/send.svg';
 
 describe('general functions', () => {
   afterEach(cleanup);

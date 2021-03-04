@@ -1,4 +1,4 @@
-import FactoryIcon from '../../../assets/sidemenu/factory.inline.svg';
+import FactoryIcon from 'Assets/sidemenu/factory.inline.svg';
 
 import {
   mainPage,

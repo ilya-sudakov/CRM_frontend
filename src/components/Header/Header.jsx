@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
-import exitSVG from '../../../assets/header/exit.svg';
-import HistorySVG from '../../../assets/statistics/history-outlined.inline.svg';
-import employeeSVG from '../../../assets/header/employee.svg';
-import logoMobile from '../../../assets/header/header_small-logo.png';
-import ChevronSVG from '../../../assets/tableview/chevron-down.inline.svg';
-import notificationBellSVG from '../../../assets/notifications/notification_bell.svg';
+import exitSVG from 'Assets/header/exit.svg';
+import HistorySVG from 'Assets/statistics/history-outlined.inline.svg';
+import employeeSVG from 'Assets/header/employee.svg';
+import logoMobile from 'Assets/header/header_small-logo.png';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
+import notificationBellSVG from 'Assets/notifications/notification_bell.svg';
 import { Link, withRouter } from 'react-router-dom';
 import './Header.scss';
 import UserContext from '../../App.js';

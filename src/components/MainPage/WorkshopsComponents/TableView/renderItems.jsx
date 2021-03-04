@@ -9,7 +9,7 @@ import {
   requestStatuses,
   workshops,
 } from '../workshopVariables.js';
-import downloadSVG from '../../../../../assets/download.svg';
+import downloadSVG from 'Assets/download.svg';
 import { downloadImage } from './functions.js';
 
 export const renderIdColumn = (request = { id: 0 }, workshopName = '') => {

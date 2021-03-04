@@ -1,10 +1,10 @@
-import contactsImg from '../../../../../assets/priceList/contacts.png';
-import testImg from '../../../../../assets/priceList/no_img.png';
-import listImg from '../../../../../assets/priceList/list.png';
-import companyLogoNoSlogan from '../../../../../assets/priceList/osfix_logo__no_slogan.png';
-import linkButtonImg from '../../../../../assets/priceList/linkButton.png';
-import saleImg from '../../../../../assets/priceList/onSale.png';
-import proprietaryItemImg from '../../../../../assets/priceList/rospatent.png';
+import contactsImg from 'Assets/priceList/contacts.png';
+import testImg from 'Assets/priceList/no_img.png';
+import listImg from 'Assets/priceList/list.png';
+import companyLogoNoSlogan from 'Assets/priceList/osfix_logo__no_slogan.png';
+import linkButtonImg from 'Assets/priceList/linkButton.png';
+import saleImg from 'Assets/priceList/onSale.png';
+import proprietaryItemImg from 'Assets/priceList/rospatent.png';
 import { getDataUri } from 'Utils/functions.jsx';
 import { pdfHeaderCompanyContacts } from './objects.js';
 import { createPDF } from 'Utils/pdfFunctions.js';

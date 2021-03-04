@@ -1,7 +1,7 @@
 import { getDataUri } from 'Utils/functions.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
-import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 
 const GroupTitlePage = ({ titlePage, setTitlePage }) => {

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import PlusSVG from '../../../../assets/sidemenu/plus.inline.svg';
+import PlusSVG from 'Assets/sidemenu/plus.inline.svg';
 import './AddToButton.scss';
 
 const AddToButton = ({ text = 'Добавить', onClick }) => {

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import './PackagingPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import editSVG from '../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../assets/tableview/delete.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import {
   getPackaging,

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import './WorkManagementPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import OneColumnIcon from '../../../../../../assets/tableview/onecolumn.png';
-import okIcon from '../../../../../../assets/tableview/ok.svg';
-import TwoColumnsIcon from '../../../../../../assets/tableview/twocolumns.png';
-import chevronDownSVG from '../../../../../../assets/tableview/chevron-down.svg';
+import OneColumnIcon from 'Assets/tableview/onecolumn.png';
+import okIcon from 'Assets/tableview/ok.svg';
+import TwoColumnsIcon from 'Assets/tableview/twocolumns.png';
+import chevronDownSVG from 'Assets/tableview/chevron-down.svg';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import {
   getAllProductsFromWorkCount,

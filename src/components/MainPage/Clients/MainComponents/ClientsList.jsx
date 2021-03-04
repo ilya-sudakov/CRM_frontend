@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
-import editSVG from '../../../../../assets/tableview/edit.svg';
-import starSVG from '../../../../../assets/tableview/star.svg';
-import starBorderedSVG from '../../../../../assets/tableview/star_border.svg';
-import phoneSVG from '../../../../../assets/tableview/phone.svg';
-import calendarSVG from '../../../../../assets/tableview/calendar.svg';
-import eyeSVG from '../../../../../assets/tableview/eye-invisible-outlined.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import starSVG from 'Assets/tableview/star.svg';
+import starBorderedSVG from 'Assets/tableview/star_border.svg';
+import phoneSVG from 'Assets/tableview/phone.svg';
+import calendarSVG from 'Assets/tableview/calendar.svg';
+import eyeSVG from 'Assets/tableview/eye-invisible-outlined.svg';
 import { formatDateString } from 'Utils/functions.jsx';
 import { sortClients } from './functions.js';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';

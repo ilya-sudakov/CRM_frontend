@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import ChevronSVG from '../../../../assets/tableview/chevron-down.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import './SelectFromButton.scss';
 
 const SelectFromButton = ({ text = 'Выбрать', onClick }) => {

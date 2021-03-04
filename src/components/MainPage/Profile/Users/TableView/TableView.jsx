@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import editSVG from '../../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import './TableView.scss';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';

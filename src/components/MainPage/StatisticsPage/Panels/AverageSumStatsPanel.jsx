@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
-import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
+import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';

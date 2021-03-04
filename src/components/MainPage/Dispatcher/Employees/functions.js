@@ -1,7 +1,4 @@
-import {
-  formatDateString,
-  getEmployeeNameText,
-} from 'Utils/functions.jsx';
+import { formatDateString, getEmployeeNameText } from 'Utils/functions.jsx';
 import {
   createPDF,
   getPDFTitleObject,

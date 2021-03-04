@@ -1,13 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import {
-  formatDateString,
-  scrollToElement,
-} from 'Utils/functions.jsx';
+import { formatDateString, scrollToElement } from 'Utils/functions.jsx';
 import './TableView.scss';
 import { editTaskStatus } from 'Utils/RequestsAPI/MainTasks.js';
-import editSVG from '../../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../../assets/tableview/delete.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {

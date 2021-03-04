@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
-import MoneyIcon from '../../../../../assets/etc/bx-ruble.inline.svg';
+import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
 import { months } from 'Utils/dataObjects';
-import {
-  addSpaceDelimiter,
-  getRandomNiceColor,
-} from 'Utils/functions.jsx';
+import { addSpaceDelimiter, getRandomNiceColor } from 'Utils/functions.jsx';
 import {
   checkIfDateIsInRange,
   checkRequestsForSelectedMonth,

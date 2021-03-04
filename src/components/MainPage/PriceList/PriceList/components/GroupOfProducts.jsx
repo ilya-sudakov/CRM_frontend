@@ -1,7 +1,7 @@
 import SelectPriceItem from '../../SelectPriceItem/SelectPriceItem.jsx';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
-import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 
 const GroupOfProducts = ({ item, priceList, setPriceList, index }) => {
   const handleActivateGroup = (value) => {

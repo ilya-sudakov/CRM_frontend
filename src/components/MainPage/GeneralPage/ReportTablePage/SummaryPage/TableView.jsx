@@ -8,7 +8,7 @@ import {
 } from 'Utils/functions.jsx';
 import { workshops } from '../objects.js';
 import { sortEmployees } from '../functions.js';
-import ChevronSVG from '../../../../../../assets/tableview/chevron-down.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.svg';
 
 const TableView = (props) => {
   useEffect(() => {}, [props.date]);

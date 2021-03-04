@@ -7,7 +7,7 @@ import {
   getTasksControlDatesList,
   getTasksList,
 } from './functions.js';
-import openWidget from '../../../../../assets/tableview/bx-window-open.svg';
+import openWidget from 'Assets/tableview/bx-window-open.svg';
 import UserContext from '../../../../App.js';
 import TasksList from './TasksList/TasksList.jsx';
 

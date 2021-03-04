@@ -2,16 +2,13 @@ import { useEffect, useState } from 'react';
 import './Transportation.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import PrintIcon from '../../../../../assets/print.png';
+import PrintIcon from 'Assets/print.png';
 import TableView from './TableView/TableView.jsx';
 import {
   getTransportations,
   deleteTransportation,
 } from 'Utils/RequestsAPI/Transportation.jsx';
-import {
-  createPDF,
-  getTransportationListPdfText,
-} from 'Utils/pdfFunctions.js';
+import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';

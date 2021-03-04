@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './WorkshopRequests.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import PrintIcon from '../../../../../assets/print.png';
+import PrintIcon from 'Assets/print.png';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
@@ -17,7 +17,7 @@ import {
 } from 'Utils/functions.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { pages, requstsSortOptions } from '../objects.js';
-import chevronDown from '../../../../../assets/tableview/chevron-down.svg';
+import chevronDown from 'Assets/tableview/chevron-down.svg';
 import useSort from 'Utils/hooks/useSort/useSort.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader';
 import { sortByField } from 'Utils/sorting/sorting';

@@ -1,7 +1,4 @@
-import {
-  formatDateString,
-  saveCanvasAsImage,
-} from 'Utils/functions.jsx';
+import { formatDateString, saveCanvasAsImage } from 'Utils/functions.jsx';
 import { requestStatuses } from '../workshopVariables.js';
 import html2canvas from 'html2canvas';
 import { sortByField } from 'Utils/sorting/sorting.js';

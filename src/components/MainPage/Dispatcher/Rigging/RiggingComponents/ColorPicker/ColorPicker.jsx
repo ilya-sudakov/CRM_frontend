@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import chevronDownIcon from '../../../../../../../assets/tableview/chevron-down.svg';
+import chevronDownIcon from 'Assets/tableview/chevron-down.svg';
 import './ColorPicker.scss';
 import {
   editStampColor,

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import './LoginPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import { login } from 'Utils/RequestsAPI/Authorization.js';
-import eyeIcon from '../../../../assets/loginPage/eye.png';
-import companylogo from '../../../../assets/loginPage/login-page_logo.png';
+import eyeIcon from 'Assets/loginPage/eye.png';
+import companylogo from 'Assets/loginPage/login-page_logo.png';
 import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
-import exitSVG from '../../../../assets/header/exit.svg';
+import exitSVG from 'Assets/header/exit.svg';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 

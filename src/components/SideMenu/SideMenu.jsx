@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import ContractImg from '../../../assets/sidemenu/contract.inline.svg';
-import PlusImg from '../../../assets/sidemenu/plus.inline.svg';
+import ContractImg from 'Assets/sidemenu/contract.inline.svg';
+import PlusImg from 'Assets/sidemenu/plus.inline.svg';
 
 import './SideMenu.scss';
 import {

@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import openWidget from '../../../../../../assets/tableview/bx-window-open.svg';
+import openWidget from 'Assets/tableview/bx-window-open.svg';
 import { getRecordedWorkByDay } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
 import UserContext from '../../../../../App.js';

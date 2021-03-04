@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import ChevronSVG from '../../../../../../assets/tableview/chevron-down.inline.svg';
-import EditSVG from '../../../../../../assets/tableview/edit.inline.svg';
-import ShareSVG from '../../../../../../assets/tableview/bx-window-open.inline.svg';
+import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
+import EditSVG from 'Assets/tableview/edit.inline.svg';
+import ShareSVG from 'Assets/tableview/bx-window-open.inline.svg';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import {
-  dateDiffInDays,
-  formatDateStringNoYear,
-} from 'Utils/functions.jsx';
+import { dateDiffInDays, formatDateStringNoYear } from 'Utils/functions.jsx';
 import { Link } from 'react-router-dom';
 import { sortByField } from 'Utils/sorting/sorting.js';
 import { defaultJournalWorkshops } from './objects.js';

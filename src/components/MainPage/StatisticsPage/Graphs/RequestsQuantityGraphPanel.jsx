@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import GraphPanel from './GraphPanel.jsx';
-import ListIcon from '../../../../../assets/sidemenu/list.inline.svg';
+import ListIcon from 'Assets/sidemenu/list.inline.svg';
 import { months } from 'Utils/dataObjects';
 import { formatDateString } from 'Utils/functions.jsx';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';

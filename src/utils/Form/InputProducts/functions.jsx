@@ -1,4 +1,4 @@
-import deleteSVG from '../../../../assets/select/delete.svg';
+import deleteSVG from 'Assets/select/delete.svg';
 import ColorPicker from './ColorPicker/ColorPicker.jsx';
 
 const defaultPropsForLayoutFunctions = {

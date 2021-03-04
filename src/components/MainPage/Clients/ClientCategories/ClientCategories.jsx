@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ClientCategories.scss';
-import editSVG from '../../../../../assets/tableview/edit.svg';
-import deleteSVG from '../../../../../assets/tableview/delete.svg';
+import editSVG from 'Assets/tableview/edit.svg';
+import deleteSVG from 'Assets/tableview/delete.svg';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {

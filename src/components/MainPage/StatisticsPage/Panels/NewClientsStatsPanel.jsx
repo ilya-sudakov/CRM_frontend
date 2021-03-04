@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
-import ClientsIcon from '../../../../../assets/sidemenu/client.inline.svg';
+import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';

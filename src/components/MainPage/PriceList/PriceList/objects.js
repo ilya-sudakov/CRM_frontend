@@ -1,9 +1,9 @@
-import category1Img from '../../../../../assets/priceList/крепеж_для_деревянных_досок.png';
-import category2Img from '../../../../../assets/priceList/крепеж_для_дпк_досок.png';
-import category3Img from '../../../../../assets/priceList/крепежные_элементы.png';
-import categoryImg from '../../../../../assets/priceList/default_category.png';
-import locationType1Img from '../../../../../assets/priceList/Фасад.png';
-import locationType2Img from '../../../../../assets/priceList/Терраса.png';
+import category1Img from 'Assets/priceList/крепеж_для_деревянных_досок.png';
+import category2Img from 'Assets/priceList/крепеж_для_дпк_досок.png';
+import category3Img from 'Assets/priceList/крепежные_элементы.png';
+import categoryImg from 'Assets/priceList/default_category.png';
+import locationType1Img from 'Assets/priceList/Фасад.png';
+import locationType2Img from 'Assets/priceList/Терраса.png';
 import { formatDateString } from 'Utils/functions.jsx';
 
 export const defaultCategories = [

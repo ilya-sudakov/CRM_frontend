@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import okSVG from '../../../../../../../assets/tableview/ok.svg';
+import okSVG from 'Assets/tableview/ok.svg';
 
 const TableView = (props) => {
   const search = () => {

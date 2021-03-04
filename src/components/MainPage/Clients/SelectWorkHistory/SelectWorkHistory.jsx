@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import 'Utils/MainWindow/MainWindow.scss';
 import 'Utils/Form/Form.scss';
-import okSVG from '../../../../../assets/tableview/calendar_check.svg';
-import cancelSVG from '../../../../../assets/tableview/cancel.svg';
+import okSVG from 'Assets/tableview/calendar_check.svg';
+import cancelSVG from 'Assets/tableview/cancel.svg';
 import './SelectWorkHistory.scss';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import { formatDateStringWithTime } from 'Utils/functions.jsx';

@@ -1,8 +1,5 @@
 import './WorkListWidget.scss';
-import {
-  numberToString,
-  roundUpWorkHours,
-} from 'Utils/functions.jsx';
+import { numberToString, roundUpWorkHours } from 'Utils/functions.jsx';
 import { filterEmployeesObject, sortEmployeesObject } from './functions.js';
 import { Link } from 'react-router-dom';
 

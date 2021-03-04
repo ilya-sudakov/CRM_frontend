@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import './ReportsPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import UserContext from '../../../App.js';
-import workTimeIcon from '../../../../assets/sidemenu/work_time_icon.svg';
+import workTimeIcon from 'Assets/sidemenu/work_time_icon.svg';
 import Button from 'Utils/Form/Button/Button.jsx';
 
 const ReportsPage = (props) => {

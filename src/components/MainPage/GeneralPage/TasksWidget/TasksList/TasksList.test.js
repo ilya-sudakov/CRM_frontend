@@ -1,10 +1,7 @@
 import TasksList from './TasksList.jsx';
 import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import {
-  dateDiffInDays,
-  formatDateStringNoYear,
-} from 'Utils/functions.jsx';
+import { dateDiffInDays, formatDateStringNoYear } from 'Utils/functions.jsx';
 import { renderWithRouter } from 'Utils/testing/functions.js';
 
 const mockHistoryPush = jest.fn();

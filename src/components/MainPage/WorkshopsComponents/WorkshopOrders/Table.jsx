@@ -1,10 +1,7 @@
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import {
-  formatDateString,
-  addSpaceDelimiter,
-} from 'Utils/functions.jsx';
+import { formatDateString, addSpaceDelimiter } from 'Utils/functions.jsx';
 
-import editSVG from '../../../../../assets/tableview/edit.svg';
+import editSVG from 'Assets/tableview/edit.svg';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 

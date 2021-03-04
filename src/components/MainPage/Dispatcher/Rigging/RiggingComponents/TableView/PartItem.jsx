@@ -1,4 +1,4 @@
-import editIcon from '../../../../../../../assets/tableview/edit.svg';
+import editIcon from 'Assets/tableview/edit.svg';
 import './TableView.scss';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables';

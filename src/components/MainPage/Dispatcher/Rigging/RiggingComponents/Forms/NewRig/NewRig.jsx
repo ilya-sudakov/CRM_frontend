@@ -6,10 +6,7 @@ import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import {
-  addStamp,
-  addPartsToStamp,
-} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import { addStamp, addPartsToStamp } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 import { rigTypes } from '../../rigsVariables.js';
 
 const NewRig = (props) => {

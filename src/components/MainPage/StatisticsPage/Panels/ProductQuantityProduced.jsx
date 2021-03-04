@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import SmallPanel from './SmallPanel.jsx';
-import BoxIcon from '../../../../../assets/sidemenu/box.inline.svg';
-import {
-  addSpaceDelimiter,
-  dateDiffInDays,
-} from 'Utils/functions.jsx';
+import BoxIcon from 'Assets/sidemenu/box.inline.svg';
+import { addSpaceDelimiter, dateDiffInDays } from 'Utils/functions.jsx';
 
 const ProductQuantityProduced = ({ data, curDate }) => {
   const [stats, setStats] = useState({

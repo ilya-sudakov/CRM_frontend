@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense } from 'react';
 import { RiggingWorkshop } from '../../lazyImports.jsx';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
-import PlusImg from '../../../../../assets/sidemenu/plus.inline.svg';
+import PlusImg from 'Assets/sidemenu/plus.inline.svg';
 import './Rigging.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import PageNotFound from '../../PageNotFound/PageNotFound.jsx';

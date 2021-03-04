@@ -2,10 +2,7 @@ import {
   formatDateStringNoYear,
   getEmployeeNameText,
 } from 'Utils/functions.jsx';
-import {
-  createPDF,
-  defaultStylesPDF,
-} from 'Utils/pdfFunctions.js';
+import { createPDF, defaultStylesPDF } from 'Utils/pdfFunctions.js';
 import { sortByField } from 'Utils/sorting/sorting.js';
 import { defaultJournalWorkshops } from './objects.js';
 

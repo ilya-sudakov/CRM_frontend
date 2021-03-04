@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import searchImg from '../../../../assets/searchbar/search.svg';
+import searchImg from 'Assets/searchbar/search.svg';
 import './SearchBar.scss';
 
 const SearchBar = (props) => {
