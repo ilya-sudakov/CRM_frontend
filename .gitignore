@@ -16,6 +16,7 @@ package-lock.json
 /src/static/built/assets/*
 !/src/static/built/assets/app_icon__128.png
 !/src/static/built/assets/app_icon__144.png
+!/src/static/built/assets/512x512.png
 !/src/static/built/assets/manifest.json
 
 ### STS ###
