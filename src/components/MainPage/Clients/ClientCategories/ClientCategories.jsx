@@ -17,6 +17,7 @@ import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import { sortByField } from 'Utils/sorting/sorting';
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -135,7 +136,6 @@ const ClientCategories = (props) => {
         />
         <SearchBar
           fullSize
-          // title="Поиск по категориям клиентов"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -153,61 +153,47 @@ const ClientCategories = (props) => {
               items={2}
             />
           )}
-          {categories
-            .filter((item) => {
+          {sortByField(
+            categories.filter((item) => {
               return item.name
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase());
-            })
-            .sort((a, b) => {
-              if (
-                a.name.localeCompare(b.name, undefined, { numeric: true }) < 0
-              ) {
-                return -1;
-              }
-              if (
-                a.name.localeCompare(b.name, undefined, { numeric: true }) > 0
-              ) {
-                return 1;
-              }
-              return 0;
-            })
-            .map((item) => {
-              return (
-                <div className="main-window__list-item">
-                  <span>
-                    <div className="main-window__mobile-text">Название: </div>
-                    {item.name}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Видимость: </div>
-                    {item.visibility}
-                  </span>
-                  <div className="main-window__actions">
+            }),
+            { fieldName: 'name', direction: 'asc' },
+          ).map((item) => {
+            return (
+              <div className="main-window__list-item" key={item.id}>
+                <span>
+                  <div className="main-window__mobile-text">Название: </div>
+                  {item.name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Видимость: </div>
+                  {item.visibility}
+                </span>
+                <div className="main-window__actions">
+                  <div
+                    className="main-window__action"
+                    onClick={() => {
+                      setEditCategory(item);
+                      setCurForm('edit');
+                      setShowWindow(!showWindow);
+                    }}
+                  >
+                    <img className="main-window__img" src={editSVG} />
+                  </div>
+                  {props.userHasAccess(['ROLE_ADMIN']) && (
                     <div
                       className="main-window__action"
-                      onClick={() => {
-                        setEditCategory(item);
-                        setCurForm('edit');
-                        setShowWindow(!showWindow);
-                      }}
+                      onClick={() => deleteItem(item.id)}
                     >
-                      <img className="main-window__img" src={editSVG} />
+                      <img className="main-window__img" src={deleteSVG} />
                     </div>
-                    {props.userHasAccess(['ROLE_ADMIN']) && (
-                      <div
-                        className="main-window__action"
-                        onClick={() => {
-                          deleteItem(item.id);
-                        }}
-                      >
-                        <img className="main-window__img" src={deleteSVG} />
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

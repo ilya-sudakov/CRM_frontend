@@ -1,62 +1,26 @@
 import { useState, useEffect } from 'react';
 import './EditClientCategory.scss';
 import 'Utils/Form/Form.scss';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
+import useForm from 'Utils/hooks/useForm';
+import { clientCategoriesDefaultInputs } from '../../objects';
 
 const EditClientCategory = (props) => {
-  const [formInputs, setFormInputs] = useState({
-    name: '',
-    visibility: 'all',
-  });
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: true,
-  });
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    updateFormInputs,
+    errorWindow,
+  } = useForm([
+    ...clientCategoriesDefaultInputs,
+    { name: 'id', defaultValue: 0 },
+    { name: 'type', defaultValue: '' },
+  ]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-    });
-    for (let item in validInputs) {
-      // console.log(item, validInputs[item]);
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setFormErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -76,23 +40,10 @@ const EditClientCategory = (props) => {
         });
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    });
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
-  };
-
   useEffect(() => {
     console.log(props.category);
     props.category !== null &&
-      setFormInputs({
+      updateFormInputs({
         id: props.category.id,
         name: props.category.name,
         visibility: props.category.visibility,
@@ -104,18 +55,16 @@ const EditClientCategory = (props) => {
     <div className="edit-client-category">
       <div className="main-form">
         <form className="main-form__form">
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <InputText
             inputName="Название категории"
             required
             error={formErrors.name}
             defaultValue={formInputs.name}
             name="name"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange('name', target.value)
+            }
             errorsArr={formErrors}
             setErrorsArr={setFormErrors}
           />
@@ -124,7 +73,9 @@ const EditClientCategory = (props) => {
             <div className="main-form__input_field">
               <select
                 name="visibility"
-                onChange={handleInputChange}
+                onChange={({ target }) =>
+                  handleInputChange('visibility', target.value)
+                }
                 value={formInputs.visibility}
               >
                 <option value="all">Все</option>

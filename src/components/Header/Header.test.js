@@ -1,6 +1,5 @@
-import { render, cleanup, fireEvent, screen } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import Header from './Header.jsx';
-// import "@testing-library/jest-dom/extend-expect";
 import { renderWithRouterAndContext } from 'Utils/testing/functions.js';
 
 describe('Header component', () => {
@@ -21,7 +20,7 @@ describe('Header component', () => {
       <Header
         sidemenuHidden={sidemenuHidden}
         setSidemenuHidden={(sidemenuHidden) =>
-          (sidemenuHidden = sidemenuHidden)
+          (sidemenuHidden = !sidemenuHidden)
         }
       />,
     );
