@@ -12,7 +12,7 @@ const ReportsPage = (props) => {
     document.title = 'Отчеты';
   }, []);
 
-  const [menuItems, setMenuItems] = useState({
+  const menuItems = {
     'Учет времени': [
       {
         linkTo: '/reports/employee',
@@ -21,7 +21,7 @@ const ReportsPage = (props) => {
         icon: workTimeIcon,
       },
     ],
-  });
+  };
 
   return (
     <div className="reports-page">
@@ -30,9 +30,9 @@ const ReportsPage = (props) => {
           <div className="main-window__title">Отчеты</div>
         </div>
         <div className="reports-page__buttons">
-          {Object.entries(menuItems).map((category) => {
+          {Object.entries(menuItems).map((category, index) => {
             return (
-              <div className="reports-page__category">
+              <div className="reports-page__category" key={index}>
                 {category[1].map((item) => {
                   if (userContext.userHasAccess(item.access)) {
                     return (

@@ -26,7 +26,6 @@ const NotificationsList = ({ notifications, isLoading }) => {
 export default NotificationsList;
 
 const ListItem = ({ item }) => {
-  const expirationTime = new Date(item.expirationTime);
   return (
     <div
       className={`notifications__list-item ${

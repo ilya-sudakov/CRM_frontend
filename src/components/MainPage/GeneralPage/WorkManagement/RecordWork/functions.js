@@ -194,7 +194,7 @@ export const submitWorkData = async (
                 item.id,
                 originalDraft.partId,
                 originalDraft.partType ??
-                  drafts.find((item) => draft.partId === item.id)?.type,
+                  item.draft.find((item) => draft.partId === item.id)?.type,
               ).then(() =>
                 addDraftToRecordedWork(
                   item.id,

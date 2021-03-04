@@ -42,8 +42,6 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./.nginx/conf.d/app.conf /etc/nginx/sites-enabled/194-58-104-192.ovz.vps.regruhosting.ru
 
 COPY --from=builder /CRM_frontend/src/static/built /usr/share/nginx/html/
-COPY --from=builder /CRM_frontend/src/templates/firebase-messaging-sw.js /usr/share/nginx/html/
-COPY --from=builder /CRM_frontend/src/templates/manifest.json /usr/share/nginx/html/
 
 EXPOSE 80 443
 

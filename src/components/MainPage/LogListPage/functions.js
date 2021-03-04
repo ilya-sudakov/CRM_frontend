@@ -1,3 +1,5 @@
+import { formatDateStringWithTime } from 'Utils/functions.jsx';
+
 export const filterSearchQuery = (data, searchQuery) => {
   const query = searchQuery.toLowerCase();
   return data.filter(

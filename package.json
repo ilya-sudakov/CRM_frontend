@@ -10,7 +10,6 @@
     "webpack:prod": "webpack --mode production",
     "deploy:local": "rsync -av --progress ./src/static/built/ /root/crm.osfix.ru",
     "deploy:remote": "rsync -avzhe ssh --progress ./src/static/built/* root@194.58.104.192:/root/crm.osfix.ru",
-    "copy-static-files": "rsync -av --progress ./src/static/templates/firebase-messaging-sw.js ./src/static/built/ && rsync -av --progress ./src/static/templates/manifest.json ./src/static/built/ ",
     "build-prod": "npm run webpack:prod && npm run deploy:local",
     "prod": "webpack --mode production && npm run prod-server",
     "start": "webpack serve",
@@ -107,13 +106,5 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "^Utils(.*)$": "<rootDir>/src/utils$1",
-      "^Components(.*)$": "<rootDir>/src/components$1"
-    }
   }
 }

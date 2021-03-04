@@ -358,7 +358,6 @@ const MainPage = () => {
                     component={GeneralTasks}
                     userData={userContext.userData}
                     userHasAccess={userContext.userHasAccess}
-                    userData={userContext.userData}
                     allowedRoles={allUsers}
                   />
                   <PrivateRoute

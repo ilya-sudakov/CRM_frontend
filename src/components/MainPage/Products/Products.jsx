@@ -55,13 +55,13 @@ const Products = (props) => {
   const deleteItem = (event) => {
     const id = event.target.dataset.id;
     return deletePackagingFromProduct(id).then(() => {
-      return deleteProduct(id).then(() => loadCategories());
+      return deleteProduct(id);
     });
   };
 
   const deleteItemCategory = (event) => {
     const id = event.target.dataset.id;
-    deleteCategory(id).then(() => loadCategories());
+    deleteCategory(id);
   };
 
   return (

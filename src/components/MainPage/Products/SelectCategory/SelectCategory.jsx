@@ -13,9 +13,10 @@ const SelectCategory = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [id, setId] = useState('');
 
-  const deleteItemCategory = (event) => {
-    const id = event.target.dataset.id;
-    deleteCategory(id).then(() => loadCategories());
+  const deleteItemCategory = () => {
+    return;
+    // const id = event.target.dataset.id;
+    // deleteCategory(id).then(() => loadCategories());
   };
 
   const clickCategory = (categoryId) => {

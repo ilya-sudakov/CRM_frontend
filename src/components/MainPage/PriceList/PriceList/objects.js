@@ -82,7 +82,6 @@ export const pdfHeaderCompanyContacts = {
   name: 'ООО «ОСФИКС»',
   site: 'https://www.osfix.ru',
   legalAddress: 'Лиговский пр., 52, Санкт-Петербург, 191040',
-  name: 'ООО «ОСФИКС»',
   email: 'info@osfix.ru',
   phone: '+7 (812) 449-10-09',
 };

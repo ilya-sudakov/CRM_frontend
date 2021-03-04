@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useDraftsList from 'Utils/hooks/useDraftsList';
 import { getRecordedWorkByDateRange } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import RiggingItemsQuantityForType from '../Graphs/RiggingItemsQuantityForType.jsx';
 
 const ProductionPage = ({ curDate }) => {
-  const { drafts, isLoadingDrafts } = useDraftsList();
+  const { drafts } = useDraftsList();
 
-  const [workData, setWorkData] = useState([]);
+  // const [workData, setWorkData] = useState([]);
 
   const getDataForTwoWeeks = (signal) => {
     let curMonday = curDate;
@@ -25,11 +25,8 @@ const ProductionPage = ({ curDate }) => {
       curMonday.getMonth() + 1,
       curMonday.getFullYear(),
       signal,
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        setWorkData([...res]);
-      });
+    ).then((res) => res.json());
+    // .then((res) => setWorkData([...res]));
   };
 
   useEffect(() => {

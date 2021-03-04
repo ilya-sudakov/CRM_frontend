@@ -53,7 +53,7 @@ const SelectPriceItem = (props) => {
   const handleInputChange = (index, name, value) => {
     let temp = selected;
     let originalItem = selected[index];
-    temp.splice(id, 1, {
+    temp.splice(index, 1, {
       ...originalItem,
       [name]: value,
     });
@@ -139,9 +139,9 @@ const SelectPriceItem = (props) => {
         )}
         {selected.map((item, index) => (
           <NestedFormItem
-            index={index}
+            key={index}
             itemsLength={selected.length}
-            handleDeleteItem={deletePriceItem}
+            handleDeleteItem={() => deletePriceItem(index)}
             isMinimizedDefault={true}
             headerItems={[
               {

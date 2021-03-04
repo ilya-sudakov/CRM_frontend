@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './EditLtd.scss';
 import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+// import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { addLTD, getLTDById } from 'Utils/RequestsAPI/PriceList/lts_list.js';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
@@ -68,7 +68,7 @@ const EditLtd = (props) => {
       addLTD(formInputs)
         .then(() => {})
         .then(() => props.history.push('/ltd-list'))
-        .catch((error) => {
+        .catch(() => {
           setIsLoading(false);
           alert('Ошибка при добавлении записи');
         });
