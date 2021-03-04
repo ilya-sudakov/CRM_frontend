@@ -51,8 +51,10 @@ const useSort = (
         onChange={changeSortOrder}
         value={`${sortOrder.curSort} ${sortOrder[sortOrder.curSort]}`}
       >
-        {(props.sortOptions ?? defaultOptions).map((item) => (
-          <option value={item.value}>{item.text}</option>
+        {(props.sortOptions ?? defaultOptions).map((item, index) => (
+          <option key={index} value={item.value}>
+            {item.text}
+          </option>
         ))}
       </select>
     </div>

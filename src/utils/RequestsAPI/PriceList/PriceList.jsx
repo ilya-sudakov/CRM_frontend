@@ -1,4 +1,4 @@
-import { request, requestCrossOrigin } from '../../utilsAPI.jsx';
+import { request } from '../../utilsAPI.jsx';
 
 export function getPriceList() {
   return request({

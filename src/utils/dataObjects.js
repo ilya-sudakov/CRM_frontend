@@ -24,12 +24,12 @@ export const days = [
 ];
 
 export const customSelectStyles = {
-  container: (provided, state) => ({
+  container: (provided) => ({
     ...provided,
     width: '100%',
     borderColor: '1px solid #00a3a2',
   }),
-  option: (provided, state) => ({
+  option: (provided) => ({
     ...provided,
     borderColor: '1px solid #00a3a2',
   }),

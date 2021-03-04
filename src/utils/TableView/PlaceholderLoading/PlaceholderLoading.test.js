@@ -1,5 +1,5 @@
 import PlaceholderLoading from './PlaceholderLoading.jsx';
-import { render, cleanup, fireEvent, screen } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 
 describe('PlaceholderLoading component', () => {
   afterEach(cleanup);

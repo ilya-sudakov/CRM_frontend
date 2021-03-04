@@ -1,6 +1,6 @@
 import { request } from '../../utilsAPI.jsx';
 
-export function getFeedback(signal) {
+export function getFeedback() {
   return request({
     url: process.env.API_BASE_URL + '/api/v1/feedback/',
     method: 'GET',

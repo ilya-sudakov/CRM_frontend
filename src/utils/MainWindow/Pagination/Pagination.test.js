@@ -1,11 +1,5 @@
 import Pagination from './Pagination.jsx';
-import {
-  cleanup,
-  findByText,
-  fireEvent,
-  getByText,
-  screen,
-} from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import { renderWithRouter } from '../../testing/functions.js';
 
 describe('Pagination component', () => {

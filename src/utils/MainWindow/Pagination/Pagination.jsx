@@ -166,7 +166,7 @@ const Pagination = ({
           {paginationList.indexOf(2) !== -1 ? null : <span>...</span>}
         </>
       )}
-      {paginationList.map((item) => {
+      {paginationList.map((item, index) => {
         return (
           <div
             className={
@@ -174,6 +174,7 @@ const Pagination = ({
                 ? 'main-window__page-number main-window__page-number--active'
                 : 'main-window__page-number'
             }
+            key={index}
             onClick={() => handleInBetweenPageClick(item)}
           >
             {item}

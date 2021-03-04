@@ -52,8 +52,12 @@ const NestedFormItem = ({
           onClick={() => setIsMinimized(!isMinimized)}
           id={id}
         >
-          {headerItems.map((headerItem) => (
-            <div className="form-item__name" style={{ ...headerItem.style }}>
+          {headerItems.map((headerItem, index) => (
+            <div
+              key={index}
+              className="form-item__name"
+              style={{ ...headerItem.style }}
+            >
               <span>{headerItem.text}</span>
               {headerItem.value !== '' ? (
                 <span>{headerItem.value}</span>
@@ -83,8 +87,8 @@ const NestedFormItem = ({
         }}
         ref={formRef}
       >
-        {formInputs.map((input) => (
-          <div className="form-item__item">
+        {formInputs.map((input, index) => (
+          <div key={index} className="form-item__item">
             <div className="form-item__input_field">
               <div className="form-item__input_name">{input.name}</div>
               {input.element}

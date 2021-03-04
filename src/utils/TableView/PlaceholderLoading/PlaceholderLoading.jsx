@@ -28,8 +28,12 @@ const PlaceholderLoading = ({
   if (placeholderContent) {
     return (
       <div className={`placeholder-loading ${wrapperClassName}`}>
-        {elements.map(() => (
-          <div className={itemClassName} style={{ minHeight: minHeight }}>
+        {elements.map((item, index) => (
+          <div
+            key={index}
+            className={itemClassName}
+            style={{ minHeight: minHeight }}
+          >
             {placeholderContent}
           </div>
         ))}
