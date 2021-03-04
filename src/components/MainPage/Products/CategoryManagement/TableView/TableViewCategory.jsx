@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../../../../utils/MainWindow/MainWindow.scss";
 import editSVG from "../../../../../../assets/tableview/edit.svg";
 import deleteSVG from "../../../../../../assets/tableview/delete.svg";
 import okSVG from "../../../../../../assets/tableview/ok.svg";
-import sortIcon from "../../../../../../assets/tableview/sort_icon.png";
 import "./TableViewCategory.scss";
+import { sortByField } from "../../../../../utils/sorting/sorting";
 
 const TableViewCategory = (props) => {
-  const [sortOrder, setSortOrder] = useState({
-    curSort: "name",
-    id: "desc",
-  });
-
-  const changeSortOrder = (event) => {
-    const name = event.target.getAttribute("name");
-    setSortOrder({
-      curSort: name,
-      [name]: sortOrder[name] === "desc" ? "asc" : "desc",
-    });
-  };
-
   const searchQuery = (data) => {
     const query = props.searchQuery.toLowerCase();
     return data.filter(
@@ -31,14 +18,9 @@ const TableViewCategory = (props) => {
   };
 
   const sortProducts = (data) => {
-    return searchQuery(data).sort((a, b) => {
-      if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? 1 : -1;
-      }
-      if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-        return sortOrder[sortOrder.curSort] === "desc" ? -1 : 1;
-      }
-      return 0;
+    return sortByField(searchQuery(data), {
+      fieldName: "name",
+      direction: "asc",
     });
   };
 
@@ -51,14 +33,8 @@ const TableViewCategory = (props) => {
       <div className="main-window">
         <div className="main-window__list main-window__list--full">
           <div className="main-window__list-item main-window__list-item--header">
-            <span>
-              {/* <div className="main-window__mobile-text">Название:</div> */}
-              Название
-            </span>
-            <div className="main-window__actions">
-              {/* <div className="main-window__mobile-text">Название:</div> */}
-              Действия
-            </div>
+            <span>Название</span>
+            <div className="main-window__actions">Действия</div>
           </div>
           {sortProducts(props.data).map((category, category_id) => {
             return (
@@ -82,7 +58,6 @@ const TableViewCategory = (props) => {
                         className="main-window__action"
                         title="Редактировать категорию"
                       >
-                        {/* Редактировать */}
                         <img className="main-window__img" src={editSVG} />
                       </Link>
                     )}
@@ -93,7 +68,6 @@ const TableViewCategory = (props) => {
                       title="Удалить категорию"
                       onClick={props.deleteItem}
                     >
-                      {/* Удалить */}
                       <img className="main-window__img" src={deleteSVG} />
                     </div>
                   )}
@@ -103,7 +77,6 @@ const TableViewCategory = (props) => {
                       className="main-window__action"
                       title="Выбрать категорию"
                     >
-                      {/* Выбрать */}
                       <img className="main-window__img" src={okSVG} />
                     </div>
                   )}
