@@ -24,32 +24,17 @@
     }
   }
 
-  &__button {
-    border: 0;
-    cursor: pointer;
-    outline: none;
-    font-size: 70%;
-    padding: 10px 10px;
-    border-radius: 3px;
-    background-color: $button__background--inverted;
-    color: #ffffff;
-    transition: 0.2s ease-in-out;
-
-    &:hover {
-      background-color: lighten($button__background--inverted, 5%);
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-    }
-  }
-
   .select-client-category__error {
-    width: 80%;
+    width: 100%;
     align-self: flex-end;
     margin-top: 1px;
     font-size: 0.75rem;
-    background-color: #f73434;
-    color: #ffffff;
-    border-radius: 5px;
+    background-color: #fadada;
+    border: 1px solid #d48282;
+    color: #b24f4d;
+    border-radius: 3px;
     padding: 5px 10px;
+    box-sizing: border-box;
     transition: 0.2s ease-in-out;
     cursor: pointer;
 
