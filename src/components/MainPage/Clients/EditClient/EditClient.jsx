@@ -20,7 +20,6 @@ import {
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
@@ -28,46 +27,25 @@ import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
+import { clientsDefaultInputs } from '../objects';
+import useForm from 'Utils/hooks/useForm.js';
 
 const EditClient = (props) => {
-  const [clientInputs, setClientInputs] = useState({
-    name: '',
-    legalEntity: [],
-    contacts: [],
-    workHistory: [],
-    legalEntityNew: [],
-    contactsNew: [],
-    workHistoryNew: [],
-    managerName: props.userData.username,
-    managerId: props.userData.id,
-    site: '',
-    comment: '',
-    storageAddress: '',
-    city: '',
-    visibility: null,
-    workCondition: '',
-    price: '',
-    discount: '',
-    check: '',
-    clientType: 'Активные',
-    categoryId: 0,
-    categoryName: '',
-    favorite: false,
-    nextContactDate: new Date(new Date().setDate(new Date().getDate() + 7)), //Прибавляем 7 дней к сегодняшнему числу
-  });
-  const [formErrors, setFormErrors] = useState({
-    name: false,
-    contacts: false,
-    categoryId: false,
-    site: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: true,
-    contacts: true,
-    categoryId: true,
-    site: true,
-  });
-
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+    updateFormInputs,
+  } = useForm([
+    ...clientsDefaultInputs,
+    { name: 'legalEntityNew', defaultValue: [] },
+    { name: 'workHistoryNew', defaultValue: [] },
+    { name: 'contactsNew', defaultValue: [], isRequired: true },
+    { name: 'id', defaultValue: 0 },
+  ]);
   const clientTypes = {
     clients: {
       name: 'клиент',
@@ -77,123 +55,40 @@ const EditClient = (props) => {
     },
   };
 
-  const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [clientId, setClientId] = useState(0);
   const [curTab, setCurTab] = useState('clientData');
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      contacts: false,
-      site: false,
-    });
-    for (let item in validInputs) {
-      // console.log(item, validInputs[item]);
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setFormErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      // alert("Форма не заполнена");
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
+    if (!formIsValid()) return;
     setIsLoading(true);
-    console.log(clientInputs);
-    formIsValid() &&
-      editClient(
-        {
-          clientType: clientInputs.clientType,
-          comment: clientInputs.comment,
-          manager: clientInputs.managerName,
-          name: clientInputs.name,
-          price: clientInputs.price,
-          site: clientInputs.site,
-          city: clientInputs.city,
-          storageAddress: clientInputs.storageAddress,
-          workCondition: clientInputs.workCondition,
-          check: clientInputs.check,
-          nextDateContact:
-            new Date(clientInputs.nextContactDate).getTime() / 1000,
-          categoryId: clientInputs.categoryId,
-          favorite: clientInputs.favorite,
-          type: clientInputs.type,
-        },
-        clientId,
-      )
-        .then(() => {
-          //PUT if edited, POST if item is new
-          return Promise.all(
-            clientInputs.workHistoryNew.map((selected) => {
-              let edited = false;
-              let oldItem = null;
-              clientInputs.workHistory.map((item) => {
-                if (item.id === selected.id) {
-                  edited = true;
-                  oldItem = item;
-                  return;
-                }
-              });
-              if (selected === oldItem) return;
-              const newWorkHistory = {
-                date: selected.date,
-                action: selected.action,
-                result: selected.result,
-                comment: selected.comment,
-                clientId: clientId,
-              };
-              return edited === true
-                ? editClientWorkHistory(newWorkHistory, selected.id)
-                : addClientWorkHistory(newWorkHistory);
-            }),
-          );
-        })
-        .then(() => {
-          //DELETE items removed by user
-          const itemsArr = clientInputs.workHistory.map((item) => {
-            let deleted = true;
-            clientInputs.workHistoryNew.map((selected) => {
-              if (selected.id === item.id) {
-                deleted = false;
-                return;
-              }
-            });
-            return deleted === true && deleteClientWorkHistory(item.id);
-          });
-          return Promise.all(itemsArr);
-        })
-        .then(() => {
-          //PUT if edited, POST if item is new
-          const itemsArr = clientInputs.legalEntityNew.map((selected) => {
+    console.log(formInputs);
+    editClient(
+      {
+        clientType: formInputs.clientType,
+        comment: formInputs.comment,
+        manager: formInputs.manager,
+        name: formInputs.name,
+        price: formInputs.price,
+        site: formInputs.site,
+        city: formInputs.city,
+        storageAddress: formInputs.storageAddress,
+        workCondition: formInputs.workCondition,
+        check: formInputs.check,
+        nextDateContact: new Date(formInputs.nextContactDate).getTime() / 1000,
+        categoryId: formInputs.categoryId,
+        favorite: formInputs.favorite,
+        type: formInputs.type,
+      },
+      clientId,
+    )
+      .then(() => {
+        //PUT if edited, POST if item is new
+        return Promise.all(
+          formInputs.workHistoryNew.map((selected) => {
             let edited = false;
             let oldItem = null;
-            clientInputs.legalEntity.map((item) => {
+            formInputs.workHistory.map((item) => {
               if (item.id === selected.id) {
                 edited = true;
                 oldItem = item;
@@ -201,104 +96,131 @@ const EditClient = (props) => {
               }
             });
             if (selected === oldItem) return;
-            const newLegalEntity = {
-              name: selected.name,
-              inn: selected.inn,
-              kpp: selected.kpp,
-              ogrn: selected.ogrn,
-              bik: selected.bik,
-              checkingAccount: selected.checkingAccount,
-              legalAddress: selected.legalAddress,
-              factualAddress: selected.factualAddress,
-              legalEntity: selected.legalEntity,
+            const newWorkHistory = {
+              date: selected.date,
+              action: selected.action,
+              result: selected.result,
+              comment: selected.comment,
               clientId: clientId,
             };
             return edited === true
-              ? editClientLegalEntity(newLegalEntity, selected.id)
-              : addClientLegalEntity(newLegalEntity);
+              ? editClientWorkHistory(newWorkHistory, selected.id)
+              : addClientWorkHistory(newWorkHistory);
+          }),
+        );
+      })
+      .then(() => {
+        //DELETE items removed by user
+        const itemsArr = formInputs.workHistory.map((item) => {
+          let deleted = true;
+          formInputs.workHistoryNew.map((selected) => {
+            if (selected.id === item.id) {
+              deleted = false;
+              return;
+            }
           });
-          return Promise.all(itemsArr);
-        })
-        .then(() => {
-          //DELETE items removed by user
-          const itemsArr = clientInputs.legalEntity.map((item) => {
-            let deleted = true;
-            clientInputs.legalEntityNew.map((selected) => {
-              if (selected.id === item.id) {
-                deleted = false;
-                return;
-              }
-            });
-            return deleted === true && deleteClientLegalEntity(item.id);
-          });
-          return Promise.all(itemsArr);
-        })
-        .then(() => {
-          //PUT if edited, POST if item is new
-          const itemsArr = clientInputs.contactsNew.map((selected) => {
-            let edited = false;
-            let oldItem = null;
-            clientInputs.contacts.map((item) => {
-              if (item.id === selected.id) {
-                edited = true;
-                oldItem = item;
-                return;
-              }
-            });
-            if (selected === oldItem) return;
-            const newContacts = {
-              name: selected.name,
-              lastName: selected.lastName,
-              email: selected.email,
-              position: selected.position,
-              phoneNumber: selected.phoneNumber,
-              clientId: clientId,
-            };
-            return edited === true
-              ? editClientContact(newContacts, selected.id)
-              : addClientContact(newContacts);
-          });
-          return Promise.all(itemsArr);
-        })
-        .then(() => {
-          //DELETE items removed by user
-          return Promise.all(
-            clientInputs.contacts.map((item) => {
-              let deleted = true;
-              clientInputs.contactsNew.map((selected) => {
-                if (selected.id === item.id) {
-                  deleted = false;
-                  return;
-                }
-              });
-              return deleted === true && deleteClientContact(item.id);
-            }),
-          );
-        })
-        .then(() => {
-          setIsLoading(false);
-          props.history.push(
-            `/${props.type}/category/${clientInputs.categoryName}/active`,
-          );
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          alert('Ошибка при добавлении записи');
-          console.log(error);
+          return deleted === true && deleteClientWorkHistory(item.id);
         });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setClientInputs({
-      ...clientInputs,
-      [name]: value,
-    });
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
+        return Promise.all(itemsArr);
+      })
+      .then(() => {
+        //PUT if edited, POST if item is new
+        const itemsArr = formInputs.legalEntityNew.map((selected) => {
+          let edited = false;
+          let oldItem = null;
+          formInputs.legalEntity.map((item) => {
+            if (item.id === selected.id) {
+              edited = true;
+              oldItem = item;
+              return;
+            }
+          });
+          if (selected === oldItem) return;
+          const newLegalEntity = {
+            name: selected.name,
+            inn: selected.inn,
+            kpp: selected.kpp,
+            ogrn: selected.ogrn,
+            bik: selected.bik,
+            checkingAccount: selected.checkingAccount,
+            legalAddress: selected.legalAddress,
+            factualAddress: selected.factualAddress,
+            legalEntity: selected.legalEntity,
+            clientId: clientId,
+          };
+          return edited === true
+            ? editClientLegalEntity(newLegalEntity, selected.id)
+            : addClientLegalEntity(newLegalEntity);
+        });
+        return Promise.all(itemsArr);
+      })
+      .then(() => {
+        //DELETE items removed by user
+        const itemsArr = formInputs.legalEntity.map((item) => {
+          let deleted = true;
+          formInputs.legalEntityNew.map((selected) => {
+            if (selected.id === item.id) {
+              deleted = false;
+              return;
+            }
+          });
+          return deleted === true && deleteClientLegalEntity(item.id);
+        });
+        return Promise.all(itemsArr);
+      })
+      .then(() => {
+        //PUT if edited, POST if item is new
+        const itemsArr = formInputs.contactsNew.map((selected) => {
+          let edited = false;
+          let oldItem = null;
+          formInputs.contacts.map((item) => {
+            if (item.id === selected.id) {
+              edited = true;
+              oldItem = item;
+              return;
+            }
+          });
+          if (selected === oldItem) return;
+          const newContacts = {
+            name: selected.name,
+            lastName: selected.lastName,
+            email: selected.email,
+            position: selected.position,
+            phoneNumber: selected.phoneNumber,
+            clientId: clientId,
+          };
+          return edited === true
+            ? editClientContact(newContacts, selected.id)
+            : addClientContact(newContacts);
+        });
+        return Promise.all(itemsArr);
+      })
+      .then(() => {
+        //DELETE items removed by user
+        return Promise.all(
+          formInputs.contacts.map((item) => {
+            let deleted = true;
+            formInputs.contactsNew.map((selected) => {
+              if (selected.id === item.id) {
+                deleted = false;
+                return;
+              }
+            });
+            return deleted === true && deleteClientContact(item.id);
+          }),
+        );
+      })
+      .then(() => {
+        setIsLoading(false);
+        props.history.push(
+          `/${props.type}/category/${formInputs.categoryName}/active`,
+        );
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        alert('Ошибка при добавлении записи');
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -313,8 +235,8 @@ const EditClient = (props) => {
         .then((res) => res.json())
         .then((res) => {
           console.log(res);
-          setClientInputs({
-            ...clientInputs,
+          updateFormInputs({
+            ...formInputs,
             id: res.id,
             name: res.name,
             site: res.site,
@@ -325,14 +247,14 @@ const EditClient = (props) => {
             check: res.check,
             city: res.city,
             clientType: res.clientType,
-            managerName: res.manager,
+            manager: res.manager,
             nextContactDate: res.nextDateContact,
             legalEntity: res.legalEntities,
-            contacts: res.contacts,
-            workHistory: res.histories,
             legalEntityNew: res.legalEntities,
-            contactsNew: res.contacts,
+            workHistory: res.histories,
             workHistoryNew: res.histories,
+            contacts: res.contacts,
+            contactsNew: res.contacts,
             categoryId: res.category.id,
             favorite: res.favorite,
             type: res.type,
@@ -389,11 +311,7 @@ const EditClient = (props) => {
               </div>
             </div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           {curTab === 'workHistory' ? (
             <>
               {/* Добавление истории работ */}
@@ -402,20 +320,16 @@ const EditClient = (props) => {
                 <div className="main-form__input_field">
                   <SelectWorkHistory
                     handleWorkHistoryChange={(value) => {
-                      validateField('workHistory', value);
-                      setClientInputs({
-                        ...clientInputs,
-                        workHistoryNew: value,
-                      });
+                      handleInputChange('workHistoryNew', value);
                     }}
-                    defaultValue={clientInputs.workHistory}
+                    defaultValue={formInputs.workHistoryNew}
                     userHasAccess={props.userHasAccess}
                   />
                 </div>
               </div>
             </>
           ) : curTab === 'requestsHistory' ? (
-            <RequestHistory id={clientInputs.id} />
+            <RequestHistory id={formInputs.id} />
           ) : (
             <>
               <InputText
@@ -423,21 +337,19 @@ const EditClient = (props) => {
                 required
                 name="name"
                 error={formErrors.name}
-                defaultValue={clientInputs.name}
+                defaultValue={formInputs.name}
                 errorsArr={formErrors}
                 setErrorsArr={setFormErrors}
-                handleInputChange={handleInputChange}
+                handleInputChange={({ target }) =>
+                  handleInputChange('name', target.value)
+                }
               />
               {/* Добавление юридических лиц */}
               <SelectLegalEntity
-                handleLegalEntityChange={(value) => {
-                  // validateField("legalEntity", value);
-                  setClientInputs({
-                    ...clientInputs,
-                    legalEntityNew: value,
-                  });
-                }}
-                defaultValue={clientInputs.legalEntity}
+                handleLegalEntityChange={(value) =>
+                  handleInputChange('legalEntityNew', value)
+                }
+                defaultValue={formInputs.legalEntityNew}
                 userHasAccess={props.userHasAccess}
                 isMinimizedDefault={true}
               />
@@ -445,14 +357,10 @@ const EditClient = (props) => {
                 <div className="main-form__group-name">Контактные данные</div>
                 {/* Добавление контактных лиц */}
                 <SelectContacts
-                  handleContactsChange={(value) => {
-                    validateField('contacts', value);
-                    setClientInputs({
-                      ...clientInputs,
-                      contactsNew: value,
-                    });
-                  }}
-                  defaultValue={clientInputs.contacts}
+                  handleContactsChange={(value) =>
+                    handleInputChange('contactsNew', value)
+                  }
+                  defaultValue={formInputs.contactsNew}
                   userHasAccess={props.userHasAccess}
                   isMinimizedDefault={true}
                 />
@@ -463,57 +371,68 @@ const EditClient = (props) => {
                   error={formErrors.site}
                   errorsArr={formErrors}
                   setErrorsArr={setFormErrors}
-                  defaultValue={clientInputs.site}
-                  handleInputChange={handleInputChange}
+                  defaultValue={formInputs.site}
+                  handleInputChange={({ target }) =>
+                    handleInputChange('site', target.value)
+                  }
                 />
               </div>
               <InputText
                 inputName="Комментарий"
                 name="comment"
-                defaultValue={clientInputs.comment}
-                handleInputChange={handleInputChange}
+                defaultValue={formInputs.comment}
+                handleInputChange={({ target }) =>
+                  handleInputChange('comment', target.value)
+                }
                 type="textarea"
               />
               <InputText
                 inputName="Адрес склада"
                 name="storageAddress"
-                defaultValue={clientInputs.storageAddress}
-                handleInputChange={handleInputChange}
+                defaultValue={formInputs.storageAddress}
+                handleInputChange={({ target }) =>
+                  handleInputChange('storageAddress', target.value)
+                }
               />
               <InputDate
                 inputName="Дата след. контакта"
                 name="nextContactDate"
-                selected={Date.parse(clientInputs.nextContactDate)}
-                handleDateChange={(value) => {
-                  setClientInputs({
-                    ...clientInputs,
-                    nextContactDate: value,
-                  });
-                }}
+                selected={Date.parse(formInputs.nextContactDate)}
+                handleDateChange={(date) =>
+                  handleInputChange('nextContactDate', date)
+                }
               />
               <InputText
                 inputName="Условия работы"
                 name="workCondition"
-                defaultValue={clientInputs.workCondition}
-                handleInputChange={handleInputChange}
+                defaultValue={formInputs.workCondition}
+                handleInputChange={({ target }) =>
+                  handleInputChange('workCondition', target.value)
+                }
               />
               <InputText
                 inputName="Город"
                 name="city"
-                defaultValue={clientInputs.city}
-                handleInputChange={handleInputChange}
+                defaultValue={formInputs.city}
+                handleInputChange={({ target }) =>
+                  handleInputChange('city', target.value)
+                }
               />
               <InputText
                 inputName="Прайс"
                 name="price"
-                defaultValue={clientInputs.price}
-                handleInputChange={handleInputChange}
+                defaultValue={formInputs.price}
+                handleInputChange={({ target }) =>
+                  handleInputChange('price', target.value)
+                }
               />
               <InputText
                 inputName="Акт сверки"
                 name="check"
-                handleInputChange={handleInputChange}
-                defaultValue={clientInputs.check}
+                handleInputChange={({ target }) =>
+                  handleInputChange('check', target.value)
+                }
+                defaultValue={formInputs.check}
               />
               <InputUser
                 inputName="Ответственный менеджер"
@@ -521,17 +440,13 @@ const EditClient = (props) => {
                 filteredRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                 required
                 name="manager"
-                handleUserChange={(value, id) => {
-                  setClientInputs({
-                    ...clientInputs,
-                    managerId: Number.parseInt(id),
-                    managerName: value,
-                  });
-                }}
-                defaultValue={clientInputs.managerName}
+                handleInputChange={(value) =>
+                  handleInputChange('manager', value)
+                }
+                defaultValue={formInputs.manager}
                 searchPlaceholder="Введите имя менеджера для поиска..."
-                // errorsArr={formErrors}
-                // setErrorsArr={setFormErrors}
+                errorsArr={formErrors}
+                setErrorsArr={setFormErrors}
               />
 
               {/* Временно - бинарный выбор, виден ли клиент всем пользователям */}
@@ -541,7 +456,7 @@ const EditClient = (props) => {
                   <CheckBox
                     text="Запись видна всем пользователям"
                     name="visibility"
-                    checked={clientInputs.visibility}
+                    checked={formInputs.visibility}
                     disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
                     onChange={(value) =>
                       handleInputValueChange(value, 'visibility')
@@ -558,8 +473,10 @@ const EditClient = (props) => {
                   <div className="main-form__input_field">
                     <select
                       name="clientType"
-                      onChange={handleInputChange}
-                      value={clientInputs.clientType}
+                      onChange={({ target }) =>
+                        handleInputChange('clientType', target.value)
+                      }
+                      value={formInputs.clientType}
                     >
                       <option value="Активные">Активные</option>
                       <option value="Потенциальные">Потенциальные</option>
@@ -576,18 +493,10 @@ const EditClient = (props) => {
                   windowName="select-category"
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
-                    validateField('categoryId', value);
-                    setClientInputs({
-                      ...clientInputs,
-                      categoryId: value,
-                      categoryName: name,
-                    });
-                    setFormErrors({
-                      ...formErrors,
-                      categoryId: false,
-                    });
+                    handleInputChange('categoryId', value);
+                    handleInputChange('categoryName', name);
                   }}
-                  defaultValue={clientInputs.categoryName}
+                  defaultValue={formInputs.categoryName}
                   errorsArr={formErrors}
                   setErrorsArr={setFormErrors}
                 />
@@ -606,11 +515,11 @@ const EditClient = (props) => {
                   '/' +
                     props.type +
                     '/category/' +
-                    clientInputs.categoryName +
+                    formInputs.categoryName +
                     '/' +
-                    (clientInputs.clientType === 'Активные'
+                    (formInputs.clientType === 'Активные'
                       ? 'active'
-                      : clientInputs.clientType === 'Потенциальные'
+                      : formInputs.clientType === 'Потенциальные'
                       ? 'potential'
                       : 'in-progress'),
                 )
