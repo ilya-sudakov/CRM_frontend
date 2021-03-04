@@ -2,7 +2,10 @@
   "gcm_sender_id": "103953800507",
   "start_url": "/",
   "name": "ERP - система управления предприятием",
+  "description": "Система управления предприятием",
+  "short_name": "ERP - система",
   "background_color": "white",
+  "theme_color": "#00A3A2",
   "display": "standalone",
   "scope": "/",
   "icons": [
