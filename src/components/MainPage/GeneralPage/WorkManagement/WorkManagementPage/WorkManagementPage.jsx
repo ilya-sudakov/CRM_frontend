@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import './WorkManagementPage.scss';
 import '../../../../../utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-// import viewSVG from '../../../../../../assets/tableview/view.svg';
 import OneColumnIcon from '../../../../../../assets/tableview/onecolumn.png';
 import okIcon from '../../../../../../assets/tableview/ok.svg';
 import TwoColumnsIcon from '../../../../../../assets/tableview/twocolumns.png';
@@ -18,7 +17,6 @@ import { getRecordedWorkByDateRange } from '../../../../../utils/RequestsAPI/Wor
 import { getEmployeesByWorkshop } from '../../../../../utils/RequestsAPI/Employees.jsx';
 import Button from '../../../../../utils/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
-import UserContext from '../../../../../App.js';
 import TableView from './TableView/TableView.jsx';
 import FloatingPlus from '../../../../../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import PlaceholderLoading from '../../../../../utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
@@ -27,9 +25,8 @@ import ControlPanel from '../../../../../utils/MainWindow/ControlPanel/ControlPa
 const WorkManagementPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [workItems, setWorkItems] = useState([]);
-  const [employeesMap, setEmployeesMap] = useState({});
   const [datesEmployees, setDatesEmployees] = useState({});
-  const [employees, setEmployees] = useState({});
+  // const [employees, setEmployees] = useState({});
   const [partsStatistics, setPartsStatistics] = useState({});
   const [draftsStatistics, setDraftsStatistics] = useState([]);
   const [curPage, setCurPage] = useState('Сотрудники');
@@ -78,16 +75,11 @@ const WorkManagementPage = (props) => {
       className: 'office',
     },
   ]);
-  const userContext = useContext(UserContext);
   const [dates, setDates] = useState({
     start: new Date(new Date().setDate(new Date().getDate() - 1)),
     end: new Date(),
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [sortOrder, setSortOrder] = useState({
-    curSort: 'lastName',
-    date: 'desc',
-  });
 
   async function loadWorks(signal) {
     setIsLoading(true);
@@ -148,7 +140,7 @@ const WorkManagementPage = (props) => {
       }
     });
     // console.log(newEmployees);
-    setEmployees(newEmployees);
+    // setEmployees(newEmployees);
   };
 
   const combineWorksForSamePeople = (works) => {
@@ -188,10 +180,7 @@ const WorkManagementPage = (props) => {
           }));
         }
       }),
-    ).then(() => {
-      // console.log(newEmployeesMap)
-      setEmployeesMap(newEmployeesMap);
-    });
+    );
   };
 
   const loadEmployeesCount = (signal) => {
@@ -454,7 +443,7 @@ const WorkManagementPage = (props) => {
                     </span>
                   </div>
                   <TableView
-                    employees={employees}
+                    // employees={employees}
                     isLoading={isLoading}
                     isOneColumn={isOneColumn}
                     employees={workshop.employees}

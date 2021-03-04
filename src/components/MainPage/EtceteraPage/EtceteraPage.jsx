@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import './EtceteraPage.scss';
 import '../../../utils/MainWindow/MainWindow.scss';
 // import { Link } from 'react-router-dom'
@@ -11,7 +11,7 @@ import boxImg from '../../../../assets/sidemenu/box.svg';
 import playListImg from '../../../../assets/sidemenu/play_list.svg';
 import supplierIcon from '../../../../assets/sidemenu/supplier_icon.svg';
 import workTimeIcon from '../../../../assets/sidemenu/work_time_icon.svg';
-import graphIcon from '../../../../assets/graph-icon.svg';
+// import graphIcon from '../../../../assets/graph-icon.svg';
 import statsIcon from '../../../../assets/statistics/stats-alt.svg';
 
 import Button from '../../../utils/Form/Button/Button.jsx';
@@ -23,7 +23,7 @@ const EtceteraPage = (props) => {
     document.title = 'Разное';
   }, []);
 
-  const [menuItems, setMenuItems] = useState({
+  const menuItems = {
     Клиенты: [
       {
         linkTo: '/clients/categories',
@@ -92,7 +92,7 @@ const EtceteraPage = (props) => {
         icon: statsIcon,
       },
     ],
-  });
+  };
 
   return (
     <div className="etcetera-page">
@@ -102,9 +102,9 @@ const EtceteraPage = (props) => {
         </div>
         <div className="etcetera-page__buttons">
           {/* {console.log(Object.entries(menuItems))} */}
-          {Object.entries(menuItems).map((category) => {
+          {Object.entries(menuItems).map((category, index) => {
             return (
-              <div className="excetera-page__category">
+              <div className="excetera-page__category" key={index}>
                 <span className="excetera-page__category-name">
                   {category[0]}
                 </span>

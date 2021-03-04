@@ -14,7 +14,6 @@ const ColorPicker = (props) => {
   const clickOnColorOption = (event) => {
     const id = props.id;
     const color = event.target.classList[1].split('color-picker_option--')[1];
-    const name = props.type.split('/')[0];
     const type = props.type.split('/')[1];
     const req = Object.assign({
       color: color,
@@ -25,8 +24,6 @@ const ColorPicker = (props) => {
       editStampPartColor(req, id).then(() => props.loadData());
     }
     setShowColorPicker(false);
-    // console.log(req, id, type === 'part');
-    // clickOnColorPickerOverlay(event); //Hide options
   };
 
   return (
@@ -41,10 +38,7 @@ const ColorPicker = (props) => {
       ></div>
       <div
         className="color-picker_name"
-        onClick={(event) => {
-          //   clickOnColorPicker(event)
-          setShowColorPicker(!showColorPicker);
-        }}
+        onClick={() => setShowColorPicker(!showColorPicker)}
       >
         {props.defaultName}
         <img className="tableview__img" src={chevronDownIcon} />
@@ -56,8 +50,9 @@ const ColorPicker = (props) => {
             : 'color-picker_picker color-picker_picker--hidden'
         }
       >
-        {Object.values(rigStatuses).map((status) => (
+        {Object.values(rigStatuses).map((status, index) => (
           <div
+            key={index}
             onClick={clickOnColorOption}
             className={`color-picker_option color-picker_option--${status.className}`}
           >
