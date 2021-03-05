@@ -3,7 +3,7 @@ const urlsToCache  = ['/assets/header_small-logo.png','offlinePage.html'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(() => cache.addAll(new Request(urlsToCache)))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
   );
 });
 
