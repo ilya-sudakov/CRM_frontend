@@ -16,7 +16,7 @@ if ("serviceWorker" in navigator) {
     });
 }
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./offlinePage/sw.js');
+  navigator.serviceWorker.register('./sw.js');
 }
 ReactDOM.render(
   <BrowserRouter>

@@ -12,7 +12,8 @@ package-lock.json
 /src/static/built/*
 
 !/src/static/built/firebase-messaging-sw.js
-!/src/static/built/offlinePage
+!/src/static/built/sw.js
+!/src/static/built/offlinePage.html
 !/src/static/built/assets/
 /src/static/built/assets/*
 !/src/static/built/assets/app_icon__128.png
