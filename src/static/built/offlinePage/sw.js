@@ -1,34 +1,32 @@
+const cacheVersion = 1;
 const CACHE_NAME = 'offlinePage';
 const urlsToCache  = ['/assets/header_small-logo.png','offlinePage.html'];
+const offlinePage = 'offlinePage.html';
+
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+    caches.open(currentCache.offline).then(function(cache) {
+      return cache.addAll([offlinePage]);
+   })
   );
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    (async () => {
-      if ('navigationPreload' in self.registration) {
-        await self.registration.navigationPreload.enable();
-      }
-    })(),
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', function(event) {
+// Now to retrieve the cached pages, we will use the fetch event.
+this.addEventListener('fetch', event => {
   if(event.request.mode === 'navigate' || (event.request.method === 'GET')) {
-    event.respondWith(
-      caches.match('offlinePage.html')
-    );
+     event.respondWith(
+        fetch(event.request.url).catch(error => {
+           // Return the offline page
+           return caches.match(offlinePage);
+        })
+     );
   }
   else{
-    event.respondWith(
-       caches.match(event.request).then(function (response) {
-          return response || fetch(event.request);
-       })
-    );
- }
+     event.respondWith(
+        caches.match(event.request).then(function (response) {
+           return response || fetch(event.request);
+        })
+     );
+  }
 });
