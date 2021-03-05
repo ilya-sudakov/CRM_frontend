@@ -1,4 +1,4 @@
-const cacheVersion = 2;
+const cacheVersion = 3;
 const CACHE_NAME = 'offlinePage';
 const urlsToCache  = ['assets/header_small-logo.png','offlinePage.html'];
 const offlinePage = 'offlinePage.html';
@@ -8,11 +8,12 @@ const currentCache = {
 
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(currentCache.offline).then(function(cache) {
-      return cache.addAll([offlinePage]);
-   })
-  );
+   event.waitUntil(
+      caches.open(currentCache.offline)
+      .then(cache => {
+        return cache.addAll(filesToCache);
+      })
+    );
 });
 
 // Now to retrieve the cached pages, we will use the fetch event.
