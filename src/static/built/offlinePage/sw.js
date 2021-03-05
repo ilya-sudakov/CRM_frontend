@@ -21,9 +21,5 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match('offlinePage.html')
-      .then(function(response) {
-        return response
-      }
-    )
   );
 });
