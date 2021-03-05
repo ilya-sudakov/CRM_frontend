@@ -59,26 +59,3 @@ export function editEmployee(newPart, id) {
     body: JSON.stringify(newPart),
   });
 }
-
-//методы для работы с multipart
-// export function addEmployee(employeeInfo) {
-//   return request(
-//     {
-//       url: process.env.API_BASE_URL + '/api/v1/employee/',
-//       method: 'POST',
-//       body: employeeInfo,
-//     },
-//     'multipart/form-data',
-//   )
-// }
-
-// export function editEmployee(employeeInfo, id) {
-//   return request(
-//     {
-//       url: process.env.API_BASE_URL + '/api/v1/employee/' + id,
-//       method: 'PUT',
-//       body: employeeInfo,
-//     },
-//     'multipart/form-data',
-//   )
-// }
