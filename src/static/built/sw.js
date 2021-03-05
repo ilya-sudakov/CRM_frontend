@@ -18,9 +18,9 @@ self.addEventListener('install', (event) => {
 
 // Now to retrieve the cached pages, we will use the fetch event.
 this.addEventListener('fetch', event => {
-  if(event.request.mode === 'navigate' || (event.request.method === 'GET')) {
+  if(event.request.method === 'GET') {
      event.respondWith(
-        fetch(event.request.url).catch(error => {
+        fetch(event.request).catch(error => {
            // Return the offline page
            return caches.match(offlinePage);
         })
