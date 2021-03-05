@@ -120,6 +120,7 @@ const SelectClientCategory = (props) => {
               setCloseWindow={setCloseWindow}
               closeWindow={closeWindow}
               setShowWindow={setShowWindow}
+              isLoading={isLoading}
             />
           </>
         }

@@ -33,7 +33,7 @@ const TableView = (props) => {
 
   useEffect(() => {
     let temp = [];
-    props.categories.map((element, index) =>
+    props.categories.map((element) =>
       temp.push({
         id: element.id,
         hidden: true,
@@ -51,7 +51,7 @@ const TableView = (props) => {
           <span>Категория</span>
           <div className="main-window__actions">Действия</div>
         </div>
-        {props.categories.map((category, category_id) => (
+        {props.categories.map((category) => (
           <>
             <div
               className="main-window__list-item"

@@ -117,7 +117,7 @@ const SelectPackaging = (props) => {
             </div>
             {selected.map((item, index) => {
               return (
-                <div className="main-window__list-item">
+                <div className="main-window__list-item" key={item.id}>
                   <span>
                     <div className="main-window__mobile-text">Название:</div>
                     {item.name}
@@ -159,8 +159,6 @@ const SelectPackaging = (props) => {
 };
 
 const TableView = (props) => {
-  const [selectedItem, setSelectedItem] = useState({});
-
   useEffect(() => {
     props.setShowWindow && props.setShowWindow(false);
   }, [props.closeWindow]);
@@ -190,13 +188,11 @@ const TableView = (props) => {
           .map((item) => {
             return (
               <div
+                key={item.id}
                 className="main-window__list-item"
                 onClick={(event) => {
                   event.preventDefault();
                   props.onSelect(item);
-                  setSelectedItem({
-                    ...item,
-                  });
                   props.setCloseWindow(!props.closeWindow);
                   props.setShowWindow(false);
                 }}

@@ -35,32 +35,17 @@ const SelectWork = (props) => {
 
   const handleNewPart = () => {
     //Открыть по дефолту форму
-    const id = selected.length;
-    setSelected([
-      ...selected,
-      {
-        product: [],
-        draft: [],
-        workName: '',
-        workType: '',
-        workId: null,
-        hours: 0,
-        comment: '',
-      },
-    ]);
-    props.handleWorkChange([
-      ...selected,
-      {
-        product: [],
-        draft: [],
-        workName: '',
-        workId: null,
-        workType: '',
-        hours: 0,
-        comment: '',
-        isOld: false,
-      },
-    ]);
+    const newPart = {
+      product: [],
+      draft: [],
+      workName: '',
+      workType: '',
+      workId: null,
+      hours: 0,
+      comment: '',
+    };
+    setSelected([...selected, newPart]);
+    props.handleWorkChange([...selected, newPart]);
   };
 
   const deletePart = (id) => {

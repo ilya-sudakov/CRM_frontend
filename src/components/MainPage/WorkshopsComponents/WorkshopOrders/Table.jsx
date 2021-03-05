@@ -37,6 +37,7 @@ const Tableview = ({
             className={
               'main-window__list-item main-window__list-item--' + order.status
             }
+            key={order.id}
           >
             <span>
               <div className="main-window__mobile-text">Дата создания: </div>
@@ -49,14 +50,12 @@ const Tableview = ({
             <span>
               <div className="main-window__mobile-text">Продукция: </div>
               <div className="main-window__list-col">
-                {order.products.map((product) => {
-                  return (
-                    <div className="workshop-orders__products">
-                      <div>{product.name}</div>
-                      <div> ({addSpaceDelimiter(product.quantity)} шт.)</div>
-                    </div>
-                  );
-                })}
+                {order.products.map((product) => (
+                  <div className="workshop-orders__products" key={product.id}>
+                    <div>{product.name}</div>
+                    <div> ({addSpaceDelimiter(product.quantity)} шт.)</div>
+                  </div>
+                ))}
               </div>
             </span>
             <span>

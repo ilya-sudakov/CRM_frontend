@@ -188,7 +188,6 @@ const SelectContacts = (props) => {
                     ),
                   },
                 ]}
-                handleDeleteItem={deleteContact}
               />
             ))}
           </div>

@@ -10,7 +10,6 @@ const SelectClient = (props) => {
   const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [clients, setClients] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [id, setId] = useState(0);
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +96,7 @@ const SelectClient = (props) => {
           <>
             <SearchBar
               fullSize
-              setSearchQuery={setSearchQuery}
+              setSearchQuery={() => {}}
               placeholder="Введите название для поиска..."
               onButtonClick={(query) => {
                 if (query === '') {
@@ -179,6 +178,7 @@ const TableView = (props) => {
                         : 'https://' + client.site
                     }
                     target="_blank"
+                    rel="noreferrer"
                   >
                     {client.site.split('//').length > 1
                       ? client.site.split('//')[1]

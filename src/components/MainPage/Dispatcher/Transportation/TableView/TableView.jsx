@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDateString, addSpaceDelimiter } from 'Utils/functions.jsx';
 import './TableView.scss';
@@ -7,12 +6,6 @@ import deleteSVG from 'Assets/tableview/delete.svg';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    props.data.length > 0 && setIsLoading(false);
-  }, [props.data]);
-
   return (
     <div className="tableview_transportation">
       <div className="main-window__list main-window__list--full">

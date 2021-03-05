@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { formatDateString, scrollToElement } from 'Utils/functions.jsx';
 import './TableView.scss';
@@ -9,7 +9,6 @@ import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLo
 
 const TableView = (props) => {
   const [scrolledToPrev, setScrolledToPrev] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleConditionChange = (event) => {
     const condition = event.target.value;
@@ -28,10 +27,6 @@ const TableView = (props) => {
       });
   };
 
-  useEffect(() => {
-    props.data.length > 0 && setIsLoading(false);
-  }, [props.data]);
-
   const prevRef = useCallback(
     (node) => {
       const id = Number.parseInt(props.history.location.hash.split('#')[1]);
@@ -46,10 +41,6 @@ const TableView = (props) => {
           node,
           props.data.find((item) => item.id === id),
         );
-        // node.scrollIntoView({
-        //   behavior: 'smooth',
-        //   block: 'start',
-        // })
         scrollToElement(node, 0);
         setScrolledToPrev(true);
       }

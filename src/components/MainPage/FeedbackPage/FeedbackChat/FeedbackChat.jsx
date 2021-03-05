@@ -4,7 +4,6 @@ import sendSVG from 'Assets/chat/send.svg';
 import arrowUpSVG from 'Assets/chat/unread_messages__arrow-up.svg';
 import 'Utils/Form/Form.scss';
 import {
-  formatDateString,
   formatDateStringWithTime,
   formatDateStringToTime,
 } from 'Utils/functions.jsx';
@@ -60,59 +59,8 @@ const FeedbackChat = (props) => {
             return 0;
           })
           .map((message, index) => {
-            //  if (index === props.messages.length - 5) {
-            //    return (
-            //      <>
-            //        <div
-            //         className={
-            //         showNewMessages
-            //         ? 'feedback-chat__divider'
-            //            : 'feedback-chat__divider feedback-chat__divider--hidden'
-            //           }
-            //        >
-            //          <span>Новые сообщения</span>
-            //         </div>
-            //        <div className="feedback-chat__message">
-            //           {(index === 0 ||
-            //            (index > 0 &&
-            //                props.messages[index - 1].author !==
-            //                 message.author)) && (
-            //             <div
-            //              data-letters={
-            //                 message.author[0] +
-            //                message.author[1] +
-            //                message.author[2]
-            //              }
-            //            ></div>
-            //          )}
-            //           {/* {(index === 0 || (index > 0 && props.messages[index - 1].author !== message.author)) && <img className="feedback-chat__img" src={sendSVG} alt="" />} */}
-            //          <div className="feedback-chat__header">
-            //            {(index === 0 ||
-            //             (index > 0 &&
-            //                props.messages[index - 1].author !==
-            //                 message.author)) && (
-            //               <div className="feedback-chat__author">
-            //               {message.author}
-            //              </div>
-            //         )}
-            //         <div className="feedback-chat__date">
-            //           {new Date().getDate() +
-            //              '.' +
-            //              (new Date().getMonth() + 1) ===
-            //             new Date(message.date).getDate() +
-            //              '.' +
-            //               (new Date(message.date).getMonth() + 1)
-            //               ? formatDateStringToTime(message.date)
-            //                : formatDateStringWithTime(message.date)}
-            //                //           </div>
-            //         </div>
-            //          <div className="feedback-chat__text">{message.text}</div>
-            //        </div>
-            //      </>
-            //   )
-            //} else
             return (
-              <div className="feedback-chat__message">
+              <div className="feedback-chat__message" key={message.id}>
                 {(index === 0 ||
                   (index > 0 &&
                     props.messages[index - 1].author !== message.author)) && (
@@ -183,7 +131,6 @@ const FeedbackChat = (props) => {
           className="feedback-chat__button"
           onClick={(event) => {
             event.preventDefault();
-            // console.log(newMessage);
             props.handleSubmit(newMessage);
             setNewMessage('');
           }}

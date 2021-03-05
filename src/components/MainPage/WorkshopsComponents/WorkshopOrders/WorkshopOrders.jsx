@@ -129,6 +129,7 @@ const WorkshopOrders = (props) => {
                 <div>Фильтр по статусам: </div>
                 {statuses.map((status, index) => (
                   <div
+                    key={index}
                     className={`main-window__button ${
                       status.visible ? '' : 'main-window__button--inverted'
                     } main-window__list-item--${status.className}`}

@@ -59,16 +59,6 @@ const SelectLegalEntity = (props) => {
     props.handleLegalEntityChange([...temp]);
   };
 
-  const onHeaderClick = () => {
-    const temp = selected;
-    temp.splice(index, 1, {
-      ...item,
-      isMinimized: !item.isMinimized,
-    });
-    setSelected([...temp]);
-    props.handleLegalEntityChange([...temp]);
-  };
-
   const fetchINNData = (item, index) => {
     setIsLoading(true);
     //Получаем данные о компании(Головной офис - MAIN BRANCH) по ИНН
@@ -144,6 +134,7 @@ const SelectLegalEntity = (props) => {
           {selected.map((item, index) => (
             <NestedFormItem
               item={item}
+              key={index}
               index={index}
               readOnly={props.readOnly}
               itemsLength={selected.length}

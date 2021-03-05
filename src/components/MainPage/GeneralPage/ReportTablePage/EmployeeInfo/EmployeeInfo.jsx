@@ -84,7 +84,9 @@ const EmployeeInfoPanel = ({ selectedInfo, dates = [], header }) => {
                   </div>
                   {filteredData?.map((item) =>
                     item.length > 0 ? (
-                      item.map((workItem) => <WorksItem item={workItem} />)
+                      item.map((workItem, index) => (
+                        <WorksItem item={workItem} key={index} />
+                      ))
                     ) : (
                       <WorksItem item={item} />
                     ),
@@ -117,10 +119,10 @@ const WorksItem = ({ item }) => {
       {(item.workControlProduct.length > 0 || item?.partsWorks.length > 0) && (
         <div className="employee-info__list">
           {item.workControlProduct.map((product) => (
-            <ProductItem item={product} />
+            <ProductItem item={product} key={product.id} />
           ))}
           {item.partsWorks.map((draft) => (
-            <ProductItem item={draft} />
+            <ProductItem item={draft} key={draft.id} />
           ))}
         </div>
       )}

@@ -140,10 +140,11 @@ const HalfOfTheMonthList = ({
       <div className="main-window__list">
         <div className="main-window__list-item main-window__list-item--header">
           <span>ФИО сотрудника</span>
-          {dates.map((dateItem) => {
+          {dates.map((dateItem, index) => {
             const weekday = new Date(new Date(date).setDate(dateItem)).getDay();
             return (
               <span
+                key={index}
                 className={
                   weekday === 6 || weekday === 0
                     ? 'report-table-page__day--weekend'
@@ -182,7 +183,7 @@ const HalfOfTheMonthList = ({
                   ).map((work) => {
                     const fullEmployeeName = getEmployeeNameText(work.employee);
                     return (
-                      <div className="main-window__list-item">
+                      <div className="main-window__list-item" key={work.id}>
                         <span>{fullEmployeeName}</span>
                         {Object.values(work.works).map(
                           (workItem, workItemIndex) => {

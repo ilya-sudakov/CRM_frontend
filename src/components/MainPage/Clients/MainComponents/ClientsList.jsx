@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import editSVG from 'Assets/tableview/edit.svg';
 import starSVG from 'Assets/tableview/star.svg';
 import starBorderedSVG from 'Assets/tableview/star_border.svg';
@@ -50,6 +50,7 @@ const ClientsList = ({
         sortClients(clients, searchQuery, sortOrder).map((item, index) => (
           <ListItem
             index={index}
+            key={index}
             item={item}
             userContext={userContext}
             editItemFunction={editItemFunction}
@@ -219,6 +220,7 @@ const ListItem = ({
               : 'https://' + item.site
           }
           target="_blank"
+          rel="noreferrer"
         >
           {item.site.split('//').length > 1
             ? item.site.split('//')[1]

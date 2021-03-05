@@ -63,8 +63,7 @@ const ViewFeedback = (props) => {
       feedbackId,
     )
       .then(() => setIsLoading(false))
-      // .then(() => props.history.push('/feedback'))
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
         alert('Ошибка при изменении записи');
       });
@@ -173,28 +172,22 @@ const ViewFeedback = (props) => {
                 setIsLoading(true);
                 // console.log(formInputs)
                 console.log('handleReadMessages', formInputs.isRead);
-                return (
-                  editFeedback(
-                    {
-                      date: new Date(formInputs.date).getTime() / 1000,
-                      subject: formInputs.subject,
-                      text: formInputs.text,
-                      author: formInputs.author,
-                      status: formInputs.status,
-                      isRead: true,
-                    },
-                    feedbackId,
-                  )
-                    .then(() => setIsLoading(false))
-                    .then(() => {
-                      // loadData(feedbackId)
-                    })
-                    // .then(() => props.history.push('/feedback'))
-                    .catch((error) => {
-                      setIsLoading(false);
-                      alert('Ошибка при изменении записи');
-                    })
-                );
+                return editFeedback(
+                  {
+                    date: new Date(formInputs.date).getTime() / 1000,
+                    subject: formInputs.subject,
+                    text: formInputs.text,
+                    author: formInputs.author,
+                    status: formInputs.status,
+                    isRead: true,
+                  },
+                  feedbackId,
+                )
+                  .then(() => setIsLoading(false))
+                  .catch(() => {
+                    setIsLoading(false);
+                    alert('Ошибка при изменении записи');
+                  });
               }}
               handleSubmit={(message) => {
                 console.log('handleSubmit');

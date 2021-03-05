@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import { formatDateString } from 'Utils/functions.jsx';

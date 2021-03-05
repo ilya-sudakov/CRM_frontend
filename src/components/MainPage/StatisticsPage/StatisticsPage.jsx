@@ -162,10 +162,10 @@ const StatisticsPage = () => {
   };
 
   const pages = {
-    requests: () => (
+    requests: (
       <RequestsPage currDate={currDate} timePeriod={timePeriod[curPeriod]} />
     ),
-    production: () => (
+    production: (
       <ProductionPage curDate={new Date()} timePeriod={timePeriod[curPeriod]} />
     ),
   };
@@ -207,7 +207,7 @@ const StatisticsPage = () => {
           }
           itemsCount={timePeriod[curPeriod].itemsCount}
         />
-        {pages[curPage]()}
+        {pages[curPage]}
       </div>
     </div>
   );

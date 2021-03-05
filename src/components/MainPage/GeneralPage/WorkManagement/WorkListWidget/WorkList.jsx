@@ -34,6 +34,7 @@ const WorkList = ({
                   <ListItem
                     date={date}
                     item={item}
+                    key={employee.id}
                     employeesMap={employeesMap}
                   />
                 );

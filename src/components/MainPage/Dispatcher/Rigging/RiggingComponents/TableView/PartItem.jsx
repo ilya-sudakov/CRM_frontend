@@ -77,8 +77,10 @@ const PartItem = ({ part, refItem, loadData, type, stampId }) => {
             ).then(() => loadData())
           }
         >
-          {Object.values(rigStatuses).map((status) => (
-            <option value={status.className}>{status.name}</option>
+          {Object.values(rigStatuses).map((status, index) => (
+            <option key={index} value={status.className}>
+              {status.name}
+            </option>
           ))}
         </select>
       </span>

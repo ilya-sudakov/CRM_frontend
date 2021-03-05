@@ -118,7 +118,7 @@ const PackagingPage = (props) => {
             })
             .map((packageItem, packageIndex) => {
               return (
-                <div className="main-window__list-item">
+                <div className="main-window__list-item" key={packageItem.id}>
                   <span>
                     <div className="main-window__mobile-text">Название:</div>
                     {packageItem.name}

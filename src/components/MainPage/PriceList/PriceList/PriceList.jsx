@@ -267,6 +267,7 @@ const PriceList = () => {
                 {optionalCols.map((item, index) => {
                   return (
                     <div
+                      key={index}
                       className={
                         item.active
                           ? 'main-form__button'

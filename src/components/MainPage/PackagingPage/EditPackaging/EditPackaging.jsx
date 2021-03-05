@@ -30,7 +30,7 @@ const EditPackaging = (props) => {
     editPackaging(packagingId, formInputs)
       .then(() => {})
       .then(() => props.history.push('/packaging'))
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
         alert('Ошибка при изменении записи');
       });

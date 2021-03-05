@@ -23,13 +23,14 @@ const TasksList = ({
           items={3}
         />
       ) : (
-        Object.entries(controlDates).map((date) => {
+        Object.entries(controlDates).map((date, index) => {
           const isExpired = new Date(date[0]) < new Date();
           return (
             <ListWrapper
               isExpired={isExpired}
               date={date}
               tasks={tasks}
+              key={index}
               userHasAccess={userHasAccess}
             />
           );
@@ -75,7 +76,7 @@ const ListWrapper = ({
             formatDateString(task.dateControl) === formatDateString(date[0]),
         )
         .map((task) => (
-          <ListItem task={task} userHasAccess={userHasAccess} />
+          <ListItem task={task} key={task.id} userHasAccess={userHasAccess} />
         ))}
     </div>
   );

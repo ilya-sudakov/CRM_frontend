@@ -111,11 +111,12 @@ const RiggingList = () => {
         </div>
         <div className="main-window__control-panel-wrapper">
           <div className="main-window__status-panel">
-            {Object.entries(statuses).map((status) => (
+            {Object.entries(statuses).map((status, index) => (
               <div
                 className={`main-window__button ${
                   !status[1].active ? 'main-window__button--inverted' : ''
                 } main-window__list-item--${status[0]}`}
+                key={index}
                 onClick={() => {
                   let temp = statuses;
                   Object.entries(statuses).map((status) => {

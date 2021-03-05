@@ -43,6 +43,7 @@ const LogListPage = () => {
           <div className="main-window__menu">
             {Object.values(logItemsTypes).map((item) => (
               <div
+                key={item.id}
                 className={
                   curCategory === item.originalName
                     ? 'main-window__item--active main-window__item'

@@ -1,4 +1,4 @@
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import SideMenu from './SideMenu.jsx';
 import '@testing-library/jest-dom/extend-expect';
 import { renderWithRouterAndContext } from 'Utils/testing/functions.js';

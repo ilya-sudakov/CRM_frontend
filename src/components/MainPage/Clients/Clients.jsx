@@ -209,9 +209,10 @@ const Clients = (props) => {
             />
           </div>
           <div className="main-window__menu">
-            {menuItems.map((menuItem) => (
+            {menuItems.map((menuItem, index) => (
               <MenuItem
                 type={props.type}
+                key={index}
                 curCategory={curCategory}
                 location={props.location}
                 item={menuItem}

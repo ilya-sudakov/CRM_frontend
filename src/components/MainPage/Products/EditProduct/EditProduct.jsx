@@ -44,7 +44,7 @@ const EditProduct = (props) => {
         ),
       )
       .then(() => props.history.push('/products'))
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
         alert('Ошибка при добавлении записи');
       });

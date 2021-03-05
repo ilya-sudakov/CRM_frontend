@@ -250,6 +250,7 @@ const SelectDraft = (props) => {
           {search().map((item, index) => (
             <div
               id={item.id}
+              key={index}
               type={item.type}
               number={item.number}
               optionId={index}
@@ -264,7 +265,7 @@ const SelectDraft = (props) => {
       )}
       <div className="select-draft__selected">
         {selected.map((item, index) => (
-          <div className="select-draft__selected_row">
+          <div className="select-draft__selected_row" key={index}>
             <div className="select-draft__selected_item">
               <input
                 type="text"

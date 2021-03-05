@@ -157,6 +157,7 @@ const FeedbackPage = (props) => {
                   {statuses.map((status, index) => {
                     return (
                       <div
+                        key={index}
                         className={
                           (status.visible
                             ? 'main-window__button'
@@ -184,6 +185,7 @@ const FeedbackPage = (props) => {
                 {userCategories.map((category, index) => {
                   return (
                     <div
+                      key={index}
                       className={
                         category.active
                           ? 'main-window__button'

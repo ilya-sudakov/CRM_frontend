@@ -109,8 +109,10 @@ export const renderSelectPackaging = (
     >
       {products
         .find((product) => product.id === Number.parseInt(item.productId))
-        ?.packings?.map((packagingItem) => (
-          <option value={packagingItem.id}>{packagingItem.name}</option>
+        ?.packings?.map((packagingItem, index) => (
+          <option key={index} value={packagingItem.id}>
+            {packagingItem.name}
+          </option>
         ))}
     </select>
   );

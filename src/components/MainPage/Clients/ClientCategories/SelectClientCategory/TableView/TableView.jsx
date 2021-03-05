@@ -1,14 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import okSVG from 'Assets/tableview/ok.svg';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
-  // const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
-    // props.data.length > 0 && setIsLoading(false)
     props.setShowWindow && props.setShowWindow(false);
   }, [props.closeWindow, props.data]);
 
@@ -50,6 +47,7 @@ const TableView = (props) => {
             .map((item) => {
               return (
                 <div
+                  key={item.id}
                   className="main-window__list-item"
                   onClick={() => {
                     props.selectCategory(item.id, item.name);

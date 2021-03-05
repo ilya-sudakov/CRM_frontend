@@ -140,6 +140,7 @@ const Users = (props) => {
                 {userRoles.map((role, index) => {
                   return (
                     <div
+                      key={index}
                       className={
                         (role.visible
                           ? 'main-window__button'

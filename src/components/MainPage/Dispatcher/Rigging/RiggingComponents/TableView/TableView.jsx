@@ -86,8 +86,6 @@ const TableView = (props) => {
   const prevRef = useCallback(
     (node) => {
       const rig = Number.parseInt(query.get('rig'));
-      const part = Number.parseInt(query.get('part'));
-
       if (
         !props.data ||
         scrolledToPrev ||
@@ -173,8 +171,10 @@ const TableView = (props) => {
                     ).then(() => props.loadData());
                   }}
                 >
-                  {Object.values(rigStatuses).map((status) => (
-                    <option value={status.className}>{status.name}</option>
+                  {Object.values(rigStatuses).map((status, index) => (
+                    <option key={index} value={status.className}>
+                      {status.name}
+                    </option>
                   ))}
                 </select>
               </span>
@@ -218,6 +218,7 @@ const TableView = (props) => {
                       : null;
                   return (
                     <PartItem
+                      key={part.id}
                       part={part}
                       refItem={ref}
                       loadData={props.loadData}

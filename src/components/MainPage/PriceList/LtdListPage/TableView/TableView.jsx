@@ -42,6 +42,7 @@ const TableView = ({
             <div
               className="main-window__list-item"
               onClick={onSelect ? () => onSelect(item) : null}
+              key={item.id}
             >
               <span>{item.name}</span>
               <span>{item.legalAddress}</span>

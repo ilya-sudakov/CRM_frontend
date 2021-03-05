@@ -21,7 +21,7 @@ const GeneralTasks = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   //Статусы задач
-  const [taskStatuses, setTaskStatuses] = useState([
+  const taskStatuses = [
     {
       name: 'Выполнено',
       className: 'completed',
@@ -47,7 +47,7 @@ const GeneralTasks = (props) => {
       className: 'problem',
       visible: false,
     },
-  ]);
+  ];
   //Уникальные пользователи
   const [taskUsers, setTaskUsers] = useState({});
 
@@ -182,9 +182,10 @@ const GeneralTasks = (props) => {
               <div className="main-window__info-panel">
                 <div className="main-window__filter-pick">
                   <div>Фильтр по пользователям: </div>
-                  {Object.entries(taskUsers).map((user) => {
+                  {Object.entries(taskUsers).map((user, index) => {
                     return (
                       <div
+                        key={index}
                         className={
                           user[1]
                             ? 'main-window__button'

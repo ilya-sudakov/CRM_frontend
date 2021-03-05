@@ -96,6 +96,7 @@ const SelectParts = (props) => {
                 readOnly={props.readOnly}
                 index={index}
                 id={item.id}
+                key={item.id}
                 itemsLength={selected.length}
                 isMinimizedDefault={
                   item.id === Number.parseInt(props.scrollToId)
@@ -144,11 +145,13 @@ const SelectParts = (props) => {
                         value={item.location}
                         disabled={props.readOnly}
                       >
-                        {Object.entries(workshopsLocations).map((workshop) => (
-                          <option value={workshop[0]}>
-                            {workshop[1].name}
-                          </option>
-                        ))}
+                        {Object.entries(workshopsLocations).map(
+                          (workshop, index) => (
+                            <option key={index} value={workshop[0]}>
+                              {workshop[1].name}
+                            </option>
+                          ),
+                        )}
                       </select>
                     ),
                   },

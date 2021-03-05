@@ -33,7 +33,7 @@ const TableView = ({
 
   return (
     <div className="notes-journal__list">
-      {Object.values(workshops).map((workshop) => {
+      {Object.values(workshops).map((workshop, index) => {
         const filteredEmployees = sortByField(
           filterEmployees(employees, searchQuery).filter(
             (employee) => employee.workshop === workshop.name,
@@ -45,7 +45,7 @@ const TableView = ({
         );
         if (filteredEmployees.length === 0) return null;
         return (
-          <div className="notes-journal__list-item">
+          <div className="notes-journal__list-item" key={index}>
             <span
               onClick={() =>
                 setWorkshops({
@@ -79,7 +79,7 @@ const TableView = ({
                       document.documentElement.clientWidth ||
                       document.body.clientWidth) <= 768;
                   return (
-                    <div className="employees__row">
+                    <div className="employees__row" key={employee.id}>
                       <span>
                         <Link
                           to={`/dispatcher/employees/edit/${employee.id}`}
@@ -179,6 +179,7 @@ const DayItem = ({
         ?.map((work) => (
           <WorkItem
             work={work}
+            key={work.id}
             onClick={() =>
               handleOpenWorkForm(
                 dayType,
@@ -214,14 +215,16 @@ const WorkItem = ({ work, onClick }) => {
       {work.product.length > 0 ? (
         <div className="employees__item-list">
           {work.product?.map((product) => (
-            <span>{`${product.name} - ${product.quantity} шт`}</span>
+            <span
+              key={product.id}
+            >{`${product.name} - ${product.quantity} шт`}</span>
           ))}
         </div>
       ) : null}
       {work.draft.length > 0 ? (
         <div className="employees__item-list">
           {work.draft?.map((draft) => (
-            <span>{`${draft.name} - ${draft.quantity} шт`}</span>
+            <span key={draft.id}>{`${draft.name} - ${draft.quantity} шт`}</span>
           ))}
         </div>
       ) : null}

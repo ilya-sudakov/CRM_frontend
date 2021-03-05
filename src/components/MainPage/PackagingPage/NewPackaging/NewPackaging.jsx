@@ -25,7 +25,7 @@ const NewPackaging = (props) => {
     addPackaging(formInputs)
       .then(() => {})
       .then(() => props.history.push('/packaging'))
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
         alert('Ошибка при добавлении записи');
       });

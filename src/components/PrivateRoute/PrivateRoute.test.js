@@ -31,6 +31,15 @@ const userHasAccess = (rolesNeeded = []) => {
   return check;
 };
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
 describe('PrivateRoute component', () => {
   afterEach(cleanup);
 

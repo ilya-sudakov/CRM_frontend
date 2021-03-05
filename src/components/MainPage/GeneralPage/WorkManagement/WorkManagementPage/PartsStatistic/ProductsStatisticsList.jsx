@@ -19,7 +19,7 @@ const ProductsStatisticsList = ({ isHidden, data }) => {
         direction: 'desc',
       }).map((part) => {
         return (
-          <div className="main-window__list-item">
+          <div className="main-window__list-item" key={part.id}>
             <span>
               <div className="main-window__mobile-text">Название:</div>
               {part.name}

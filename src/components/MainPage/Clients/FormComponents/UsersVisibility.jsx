@@ -68,7 +68,7 @@ const UsersVisibility = (props) => {
         </div>
       ) : null}
       {Object.entries(users).map((user) => (
-        <div className="main-form__input_field">
+        <div className="main-form__input_field" key={user[1].id}>
           <CheckBox
             text={user[1].username}
             checked={user[1].selected}

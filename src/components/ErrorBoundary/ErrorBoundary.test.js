@@ -35,7 +35,6 @@ describe('ErrorBoundary component', () => {
   });
 
   it("reloads the page if user clicked 'reload' button", () => {
-    const { location } = window;
     delete window.location;
     window.location = { reload: jest.fn() };
     renderWithRouter(

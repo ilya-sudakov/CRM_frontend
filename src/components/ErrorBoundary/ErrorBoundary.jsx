@@ -1,14 +1,17 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
-import "../MainPage/ErrorPage/ErrorPage.scss";
-import { Link } from "react-router-dom";
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+import '../MainPage/ErrorPage/ErrorPage.scss';
+import { Link } from 'react-router-dom';
 
 export default class ErrorBoundary extends Component {
-  state = {
-    error: "",
-    errorInfo: "",
-    hasError: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      error: '',
+      errorInfo: '',
+      hasError: false,
+    };
+  }
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
@@ -18,13 +21,16 @@ export default class ErrorBoundary extends Component {
     this.setState({ errorInfo });
   }
   render() {
-    const { hasError, errorInfo } = this.state;
+    const {
+      hasError,
+      //  errorInfo
+    } = this.state;
 
     if (hasError) {
       return (
         <div className="error-page">
           <div className="error-page__title">{`Ошибка в ${
-            this.props.componentName || "одном из компонентов"
+            this.props.componentName || 'одном из компонентов'
           }!`}</div>
           <div className="error-page__description">
             Что-то пошло не так и, скорее всего, вы нашли ошибку.

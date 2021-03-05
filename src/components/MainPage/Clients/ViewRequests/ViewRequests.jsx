@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import './ViewRequests.scss';
 import TableView from '../../WorkshopsComponents/TableView/TableView.jsx';
 import usePagination from 'Utils/hooks/usePagination/usePagination';

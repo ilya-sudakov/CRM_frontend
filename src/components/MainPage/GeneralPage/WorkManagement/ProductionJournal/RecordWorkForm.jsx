@@ -35,7 +35,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const { products, categories, isLoadingProducts } = useProductsList();
+  const { products, categories } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 

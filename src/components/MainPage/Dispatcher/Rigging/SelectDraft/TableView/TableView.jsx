@@ -66,10 +66,11 @@ const TableView = (props) => {
                   .toLowerCase()
                   .includes(props.searchQuery.toLowerCase()),
             )
-            .map((draft, index) => {
+            .map((draft) => {
               return (
                 <div
                   className="main-window__list-item"
+                  key={draft.id}
                   onClick={() => {
                     console.log(draft);
                     props.selectDraft(
