@@ -63,6 +63,7 @@ const getWorkshopList = (
   const prevDay = new Date(new Date(curDate).setDate(curDate.getDate() - 1));
   const filteredEmployees = sortEmployees(employees, workshop);
   if (filteredEmployees.length === 0) return null;
+  console.log(filteredEmployees);
   const listItems = filteredEmployees.map((employee) => [
     { text: getEmployeeNameText(employee), style: 'regularText', fontSize: 11 },
     {
@@ -85,7 +86,7 @@ const getWorkshopList = (
     },
     {
       table: {
-        widths: [150, '*', '*'],
+        widths: [140, '*', '*'],
         body: [
           [
             { text: 'ФИО сотрудника', style: 'tableHeader' },
