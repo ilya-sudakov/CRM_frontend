@@ -1,7 +1,10 @@
-const cacheVersion = 1;
+const cacheVersion = 2;
 const CACHE_NAME = 'offlinePage';
-const urlsToCache  = ['/assets/header_small-logo.png','offlinePage.html'];
+const urlsToCache  = ['./assets/header_small-logo.png','offlinePage.html'];
 const offlinePage = 'offlinePage.html';
+const currentCache = {
+   offline: CACHE_NAME + cacheVersion
+};
 
 
 self.addEventListener('install', (event) => {
