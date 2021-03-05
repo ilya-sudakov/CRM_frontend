@@ -63,20 +63,30 @@ const getWorkshopList = (
   const prevDay = new Date(new Date(curDate).setDate(curDate.getDate() - 1));
   const filteredEmployees = sortEmployees(employees, workshop);
   if (filteredEmployees.length === 0) return null;
-  console.log(filteredEmployees);
-  const listItems = filteredEmployees.map((employee) => [
-    { text: getEmployeeNameText(employee), style: 'regularText', fontSize: 11 },
-    {
-      stack: getDaysWorkText(yesterdaysWork[workshop.engName][employee.id]),
-      style: 'regularText',
-      fontSize: 11,
-    },
-    {
-      stack: getDaysWorkText(todaysWork[workshop.engName][employee.id]),
-      style: 'regularText',
-      fontSize: 11,
-    },
-  ]);
+  let listItems = [];
+  filteredEmployees.map((employee) => {
+    const yesterdaysWorks = yesterdaysWork[workshop.engName][employee.id];
+    const todaysWorks = todaysWork[workshop.engName][employee.id];
+    if (todaysWorks.works.length === 0 && yesterdaysWorks.works.length === 0)
+      return;
+    listItems.push([
+      {
+        text: getEmployeeNameText(employee),
+        style: 'regularText',
+        fontSize: 11,
+      },
+      {
+        stack: getDaysWorkText(yesterdaysWorks),
+        style: 'regularText',
+        fontSize: 11,
+      },
+      {
+        stack: getDaysWorkText(todaysWorks),
+        style: 'regularText',
+        fontSize: 11,
+      },
+    ]);
+  });
   const list = [
     {
       text: `${workshop.name}\n`,
