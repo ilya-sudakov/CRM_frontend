@@ -1,4 +1,4 @@
-import { render, cleanup } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 
 import { App } from './App.js';
 import { renderWithContext } from './utils/testing/functions.js';
@@ -7,7 +7,7 @@ describe('App component', () => {
   afterEach(cleanup);
 
   it('matches snapshot', () => {
-    const { asFragment } = render(<App />);
+    const { asFragment } = renderWithContext(<App />);
     expect(asFragment()).toMatchSnapshot();
   });
 

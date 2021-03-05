@@ -20,8 +20,13 @@ export const renderWithRouter = (component) => {
 };
 
 export const renderWithContext = (component) => {
+  const history = createMemoryHistory();
   return {
-    ...render(<App value={UserContext}>{component}</App>),
+    ...render(
+      <MemoryRouter history={history}>
+        <App value={UserContext}>{component}</App>
+      </MemoryRouter>,
+    ),
   };
 };
 
