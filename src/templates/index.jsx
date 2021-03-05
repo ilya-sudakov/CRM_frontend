@@ -15,7 +15,9 @@ if ("serviceWorker" in navigator) {
       console.log("Service worker registration failed, error:", err);
     });
 }
-
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./offlinePage/sw.js');
+}
 ReactDOM.render(
   <BrowserRouter>
     <App />
