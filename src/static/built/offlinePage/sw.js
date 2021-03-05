@@ -19,7 +19,16 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match('offlinePage.html')
-  );
+  if(event.request.mode === 'navigate' || (event.request.method === 'GET')) {
+    event.respondWith(
+      caches.match('offlinePage.html')
+    );
+  }
+  else{
+    event.respondWith(
+       caches.match(event.request).then(function (response) {
+          return response || fetch(event.request);
+       })
+    );
+ }
 });
