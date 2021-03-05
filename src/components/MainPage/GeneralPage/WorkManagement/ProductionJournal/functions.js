@@ -63,29 +63,33 @@ const getWorkshopList = (
   const prevDay = new Date(new Date(curDate).setDate(curDate.getDate() - 1));
   const filteredEmployees = sortEmployees(employees, workshop);
   if (filteredEmployees.length === 0) return null;
-  let listItems = [];
+  let listItems = [],
+    index = 0;
   filteredEmployees.map((employee) => {
     const yesterdaysWorks = yesterdaysWork[workshop.engName][employee.id];
     const todaysWorks = todaysWork[workshop.engName][employee.id];
     if (todaysWorks.works.length === 0 && yesterdaysWorks.works.length === 0)
       return;
+    const defaultStyle = {
+      style: 'regularText',
+      fontSize: 11,
+      fillColor: index % 2 === 0 ? '#fff' : '#eee',
+    };
     listItems.push([
       {
         text: getEmployeeNameText(employee),
-        style: 'regularText',
-        fontSize: 11,
+        ...defaultStyle,
       },
       {
         stack: getDaysWorkText(yesterdaysWorks),
-        style: 'regularText',
-        fontSize: 11,
+        ...defaultStyle,
       },
       {
         stack: getDaysWorkText(todaysWorks),
-        style: 'regularText',
-        fontSize: 11,
+        ...defaultStyle,
       },
     ]);
+    index++;
   });
   const list = [
     {
