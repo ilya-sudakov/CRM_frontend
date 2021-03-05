@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './App.scss';
 import './variables.scss';
 const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx')); //lazy-загрузка компонента MainPage
@@ -142,36 +142,34 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Switch>
-          <Route
-            path="/login"
-            render={(props) => (
-              <LoginPage
-                isAuthorized={isAuthorized}
-                setUserData={setUserData}
-                {...props}
-              />
-            )}
-          />
-          {/* Отображение компонента загрузки страницы, пока грузятся внутренние компоненты */}
-          <Suspense fallback={<PageLoading />}>
-            <UserContext.Provider
-              value={{
-                userData: user,
-                isAuthorized,
-                expiredIn,
-                userHasAccess,
-                newNotifications,
-                lastNotification,
-                setLastNotification,
-              }}
-            >
-              <PrivateRoute path="/" component={MainPage} />
-            </UserContext.Provider>
-          </Suspense>
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <Route
+          path="/login"
+          render={(props) => (
+            <LoginPage
+              isAuthorized={isAuthorized}
+              setUserData={setUserData}
+              {...props}
+            />
+          )}
+        />
+        {/* Отображение компонента загрузки страницы, пока грузятся внутренние компоненты */}
+        <Suspense fallback={<PageLoading />}>
+          <UserContext.Provider
+            value={{
+              userData: user,
+              isAuthorized,
+              expiredIn,
+              userHasAccess,
+              newNotifications,
+              lastNotification,
+              setLastNotification,
+            }}
+          >
+            <PrivateRoute path="/" component={MainPage} />
+          </UserContext.Provider>
+        </Suspense>
+      </Switch>
     </QueryClientProvider>
   );
 };

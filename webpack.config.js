@@ -63,7 +63,7 @@ module.exports = {
       hash: true,
       template: './src/templates/index.html',
       filename: 'index.html',
-      favicon: './assets/favicon.ico',
+      favicon: './src/static/built/assets/favicon.ico',
       manifest: './src/static/built/assets/manifest.json',
     }),
     new Dotenv({
