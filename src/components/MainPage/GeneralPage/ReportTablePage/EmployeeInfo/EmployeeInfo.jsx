@@ -154,7 +154,7 @@ const ProductItem = ({ item }) => {
 const WeekSummary = ({ selectedInfo, dates }) => {
   console.log(selectedInfo?.works);
   const hours =
-    selectedInfo?.works && typeof selectedInfo?.works === 'array'
+    selectedInfo?.works && Array.isArray(selectedInfo?.works)
       ? selectedInfo.works.reduce(
           (sum, cur) =>
             dates.find((date) => filterWorksByDate(cur, date)) !== undefined
