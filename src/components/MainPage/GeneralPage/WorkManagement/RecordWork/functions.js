@@ -16,7 +16,6 @@ export const submitWorkData = async (
   inputs,
 ) => {
   setIsLoading(true);
-  console.log(worktimeInputs);
   return await Promise.all(
     worktimeInputs.works.map(async (item) => {
       console.log(item);
