@@ -1,6 +1,6 @@
 const cacheVersion = 3;
 const CACHE_NAME = 'offlinePage';
-const filesToCache  = ['assets/header_small-logo.png','offlinePage.html'];
+const filesToCache  = ['/assets/header_small-logo.png','offlinePage.html'];
 const offlinePage = 'offlinePage.html';
 const currentCache = {
    offline: CACHE_NAME + cacheVersion
