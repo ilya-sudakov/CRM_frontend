@@ -152,16 +152,23 @@ const ProductItem = ({ item }) => {
 };
 
 const WeekSummary = ({ selectedInfo, dates }) => {
-  const hours = selectedInfo?.works?.reduce(
-    (sum, cur) =>
-      dates.find((date) => filterWorksByDate(cur, date)) !== undefined
-        ? sum +
-          (cur.length > 0
-            ? cur.reduce((sumInner, curInner) => sumInner + curInner.hours, 0)
-            : cur.hours)
-        : sum,
-    0,
-  );
+  console.log(selectedInfo?.works);
+  const hours =
+    selectedInfo?.works && typeof selectedInfo?.works === 'array'
+      ? selectedInfo.works.reduce(
+          (sum, cur) =>
+            dates.find((date) => filterWorksByDate(cur, date)) !== undefined
+              ? sum +
+                (cur.length > 0
+                  ? cur.reduce(
+                      (sumInner, curInner) => sumInner + curInner.hours,
+                      0,
+                    )
+                  : cur.hours)
+              : sum,
+          0,
+        )
+      : new Array();
   return (
     <div className="employee-info__employee-title">
       Всего:
