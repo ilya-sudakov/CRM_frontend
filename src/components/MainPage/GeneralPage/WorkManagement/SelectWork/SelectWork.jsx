@@ -43,6 +43,7 @@ const SelectWork = (props) => {
       workId: null,
       hours: 0,
       comment: '',
+      isOld: false,
     };
     setSelected([...selected, newPart]);
     props.handleWorkChange([...selected, newPart]);
