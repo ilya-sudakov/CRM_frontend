@@ -4,24 +4,22 @@ import { formatDateString } from './functions.jsx';
 import { sortByField } from './sorting/sorting.js';
 
 export const defaultStylesPDF = {
-  header: {
-    fontSize: 20,
-    bold: true,
-  },
   title: {
-    fontSize: 22,
-    bold: true,
+    fontSize: 18,
+    alignment: 'left',
   },
   subheader: {
-    fontSize: 16,
+    fontSize: 14,
+    alignment: 'left',
   },
   regularText: {
     fontSize: 11,
     alignment: 'left',
   },
   tableHeader: {
-    fontSize: 12,
-    bold: true,
+    fontSize: 11,
+    // bold: true,
+    color: '#555',
     alignment: 'left',
   },
 };

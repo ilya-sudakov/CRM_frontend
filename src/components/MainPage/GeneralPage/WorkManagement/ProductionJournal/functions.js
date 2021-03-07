@@ -72,8 +72,11 @@ const getWorkshopList = (
       return;
     const defaultStyle = {
       style: 'regularText',
-      fontSize: 11,
+      fontSize: 10,
+      color: '#444',
       fillColor: index % 2 === 0 ? '#fff' : '#eee',
+      border: [false, false, false, true],
+      borderColor: ['#bbb', '#bbb', '#bbb', '#bbb'],
     };
     listItems.push([
       {
@@ -91,24 +94,35 @@ const getWorkshopList = (
     ]);
     index++;
   });
+  const listHeaderStyles = {
+    style: 'tableHeader',
+    border: [false, false, false, true],
+    borderColor: ['#bbb', '#bbb', '#bbb', '#bbb'],
+  };
   const list = [
     {
       text: `${workshop.name}\n`,
-      alignment: 'left',
       style: 'subheader',
-      margin: [0, 15, 0, 5],
+      margin: [0, 10, 0, 5],
     },
     {
       table: {
         widths: [140, '*', '*'],
+        headerRows: 1,
         body: [
           [
-            { text: 'ФИО сотрудника', style: 'tableHeader' },
+            {
+              text: 'ФИО сотрудника',
+              ...listHeaderStyles,
+            },
             {
               text: formatDateStringNoYear(prevDay),
-              style: 'tableHeader',
+              ...listHeaderStyles,
             },
-            { text: formatDateStringNoYear(curDate), style: 'tableHeader' },
+            {
+              text: formatDateStringNoYear(curDate),
+              ...listHeaderStyles,
+            },
           ],
           ...listItems,
         ],
@@ -137,9 +151,8 @@ export const createWorkListPDF = (
     content: [
       {
         text: 'Дневник производства\n',
-        alignment: 'center',
         style: 'title',
-        margin: [0, 0, 0, 10],
+        margin: [0, 0, 0, 0],
       },
       ...list,
     ],
