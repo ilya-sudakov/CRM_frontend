@@ -1,6 +1,6 @@
 import {
   formatDateStringNoYear,
-  getEmployeeNameText,
+  // getEmployeeNameText,
 } from 'Utils/functions.jsx';
 import { createPDF, defaultStylesPDF } from 'Utils/pdfFunctions.js';
 import { sortByField } from 'Utils/sorting/sorting.js';
@@ -80,7 +80,7 @@ const getWorkshopList = (
     };
     listItems.push([
       {
-        text: getEmployeeNameText(employee),
+        text: `${employee.lastName} ${employee.name} ${employee.middleName[0]}.`,
         ...defaultStyle,
       },
       {
@@ -107,7 +107,7 @@ const getWorkshopList = (
     },
     {
       table: {
-        widths: [140, '*', '*'],
+        widths: [110, '*', '*'],
         headerRows: 1,
         body: [
           [
