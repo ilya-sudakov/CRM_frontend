@@ -28,7 +28,7 @@ const getDaysWorkText = (workItem) => {
       { text: draftText, fontSize: 10, color: '#666' },
       work.comment && {
         text: `Комментарий: ${work.comment}`,
-        fontSize: 10,
+        fontSize: 9,
         color: '#999',
         italics: true,
       },
