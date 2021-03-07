@@ -24,8 +24,8 @@ const getDaysWorkText = (workItem) => {
     const draftText = getProductListText(work.draft);
     return [
       `${work.workName} - ${work.hours} ч\n`,
-      { text: productText, fontSize: 10, color: '#666' },
-      { text: draftText, fontSize: 10, color: '#666' },
+      { text: productText, fontSize: 9, color: '#666' },
+      { text: draftText, fontSize: 9, color: '#666' },
       work.comment && {
         text: `Комментарий: ${work.comment}`,
         fontSize: 9,
