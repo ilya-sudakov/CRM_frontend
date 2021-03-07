@@ -83,6 +83,7 @@ const GeneralPage = (props) => {
               {props.userHasAccess([
                 'ROLE_ADMIN',
                 'ROLE_WORKSHOP',
+                'ROLE_DISPATCHER',
                 'ROLE_ENGINEER',
                 'ROLE_MANAGER',
               ]) && (
