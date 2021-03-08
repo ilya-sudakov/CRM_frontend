@@ -1,13 +1,9 @@
 export const sortEmployees = (employees) => {
   return employees.sort((a, b) => {
-    a = a[1];
-    b = b[1];
-    if (a.employee.lastName < b.employee.lastName) {
-      return -1;
-    }
-    if (a.employee.lastName > b.employee.lastName) {
-      return 1;
-    }
+    a = a[1].employee.lastName;
+    b = b[1].employee.lastName;
+    if (a < b) return -1;
+    if (a > b) return 1;
     return 0;
   });
 };
