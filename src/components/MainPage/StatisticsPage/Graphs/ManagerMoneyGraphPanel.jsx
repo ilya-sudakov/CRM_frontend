@@ -1,7 +1,7 @@
 import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
-import useBarChart from 'Utils/hooks/statistics/useBarChart';
+import useBarChart from 'Utils/hooks/statistics/useBarChartStatPanel';
 import { getStatsticsGraphWidgetOptions } from './functions.js';
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {

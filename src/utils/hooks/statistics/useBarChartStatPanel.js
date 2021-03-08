@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import GraphPanel from 'Components/MainPage/StatisticsPage/Graphs/GraphPanel.jsx';
 
-const useBarChart = (
+const useBarChartStatPanel = (
   defaultStats = {},
   data = [],
   getStats = () => {},
@@ -72,4 +72,4 @@ const useBarChart = (
   };
 };
 
-export default useBarChart;
+export default useBarChartStatPanel;
