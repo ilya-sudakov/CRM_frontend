@@ -2,6 +2,7 @@ import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import useBarChart from 'Utils/hooks/statistics/useBarChart';
+import { getStatsticsGraphWidgetOptions } from './functions.js';
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
   const { graphPanel, setIsLoading, setStats, renderGraph } = useBarChart(
@@ -51,44 +52,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
         />
       ),
     }));
-
-    const options = {
-      type: 'pie',
-      data: {
-        labels: Object.entries(managers).map((item) => item[0]),
-        datasets: [
-          {
-            backgroundColor: [
-              '#3e95cd',
-              '#8e5ea2',
-              '#3cba9f',
-              '#e8c3b9',
-              '#c45850',
-              '#bbbbbb',
-              '#bbbbbb',
-              '#bbbbbb',
-            ],
-            data: Object.entries(managers).map((item) => item[1]),
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio:
-          (window.innerWidth ||
-            document.documentElement.clientWidth ||
-            document.body.clientWidth) > 500
-            ? true
-            : false,
-        animation: {
-          easing: 'easeInOutCirc',
-        },
-        tooltips: {
-          mode: 'index',
-        },
-      },
-    };
-
+    const options = getStatsticsGraphWidgetOptions(managers);
     renderGraph(options);
   };
 
