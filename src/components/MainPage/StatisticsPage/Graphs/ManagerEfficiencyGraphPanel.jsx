@@ -7,7 +7,7 @@ import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Статистика по менеджерам (заказы)',
@@ -18,6 +18,7 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
   });
 
   const getStats = (data) => {
+    setIsLoading(true);
     let managers = {};
     const filteredRequests = data.filter((request) => {
       if (
@@ -99,7 +100,7 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
       },
     };
     setTimeout(() => {
-      // setIsLoading(false);
+      setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(
@@ -119,7 +120,7 @@ const ManagerEfficiencyGraphPanel = ({ data, currDate, timeText }) => {
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoading && data.length > 0) {
+    if (!isLoading && data.length > 0) {
       setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,

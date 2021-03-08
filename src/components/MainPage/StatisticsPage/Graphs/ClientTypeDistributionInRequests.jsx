@@ -7,7 +7,7 @@ import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Типы клиентов по заказам',
@@ -18,6 +18,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
   });
 
   const getStats = (data) => {
+    setIsLoading(true);
     let clientTypes = {
       Активные: 0,
       Потенциальные: 0,
@@ -127,7 +128,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoading && data.length > 1) {
+    if (!isLoading && data.length > 1) {
       setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,

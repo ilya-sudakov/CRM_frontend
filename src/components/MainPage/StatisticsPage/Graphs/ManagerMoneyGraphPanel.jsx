@@ -7,7 +7,7 @@ import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
   const [graph, setGraph] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [canvasLoaded, setCanvasLoaded] = useState(false);
   const [stats, setStats] = useState({
     category: 'Статистика по менеджерам (доходы)',
@@ -18,6 +18,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
   });
 
   const getStats = (data) => {
+    setIsLoading(true);
     let managers = {};
     const filteredRequests = data.filter((request) => {
       if (
@@ -124,7 +125,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
 
   //При обновлении тек. даты
   useEffect(() => {
-    if (!stats.isLoading && data.length > 1) {
+    if (!isLoading && data.length > 1) {
       setCanvasLoaded(false);
       setStats((stats) => ({
         ...stats,
