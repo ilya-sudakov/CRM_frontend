@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FormErrorsMessage = ({ error = false, hideError }) => {
+const FormErrorMessage = ({ error = false, hideError }) => {
   const Message = styled.div`
     border: 1px solid #d48282;
     border-radius: 3px;
@@ -28,4 +28,4 @@ const FormErrorsMessage = ({ error = false, hideError }) => {
   );
 };
 
-export default FormErrorsMessage;
+export default FormErrorMessage;

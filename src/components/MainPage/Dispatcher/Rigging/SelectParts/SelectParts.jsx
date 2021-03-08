@@ -7,7 +7,7 @@ import {
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { scrollToElement } from 'Utils/functions.jsx';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import FormErrorsMessage from 'Utils/FormErrorsMessage/FormErrorsMessage.jsx';
+import FormErrorMessage from 'Utils/FormErrorMessage/FormErrorMessage.jsx';
 
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([]);
@@ -221,7 +221,7 @@ const SelectParts = (props) => {
             ))}
           </div>
         </div>
-        <FormErrorsMessage
+        <FormErrorMessage
           error={props.error}
           hideError={() => props.hideError()}
         />
