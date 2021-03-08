@@ -1,5 +1,6 @@
 import {
   formatDateStringNoYear,
+  addSpaceDelimiter,
   // getEmployeeNameText,
 } from 'Utils/functions.jsx';
 import { createPDF, defaultStylesPDF } from 'Utils/pdfFunctions.js';
@@ -14,7 +15,10 @@ export const updateData = (worksList, selectedWork, newData) => {
 
 const getProductListText = (products) => {
   return products
-    .map((product) => `${product.name} - ${product.quantity} шт\n`)
+    .map(
+      (product) =>
+        `${product.name} - ${addSpaceDelimiter(product.quantity)} шт\n`,
+    )
     .join('');
 };
 
@@ -107,7 +111,7 @@ const getWorkshopList = (
     },
     {
       table: {
-        widths: [110, '*', '*'],
+        widths: [120, '*', '*'],
         headerRows: 1,
         body: [
           [
