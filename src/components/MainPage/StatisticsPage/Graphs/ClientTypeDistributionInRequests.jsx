@@ -108,7 +108,7 @@ const ClientTypeDistributionInRequests = ({ data, currDate, timeText }) => {
       },
     };
     setTimeout(() => {
-      // setIsLoading(false);
+      setIsLoading(false);
       canvasLoaded && graph.destroy();
       setGraph(
         createGraph(

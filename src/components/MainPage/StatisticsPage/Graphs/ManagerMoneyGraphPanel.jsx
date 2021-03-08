@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import GraphPanel from './GraphPanel.jsx';
 import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
-import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useBarChart from 'Utils/hooks/statistics/useBarChart';
 
 const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
-  const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [canvasLoaded, setCanvasLoaded] = useState(false);
-  const [stats, setStats] = useState({
-    category: 'Статистика по менеджерам (доходы)',
-    isLoaded: false,
-    chartName: 'manager-money-graph',
-    timePeriod: timeText,
-    renderIcon: <MoneyIcon className="panel__img panel__img--list" />,
-  });
+  const { graphPanel, setIsLoading, setStats, renderGraph } = useBarChart(
+    {
+      category: 'Статистика по менеджерам (доходы)',
+      chartName: 'manager-money-graph',
+      timePeriod: timeText,
+      renderIcon: <MoneyIcon className="panel__img panel__img--list" />,
+    },
+    data,
+    (data) => getStats(data),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (data) => {
     setIsLoading(true);
@@ -51,29 +51,13 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
         />
       ),
     }));
-    renderGraph(managers);
-  };
 
-  const renderGraph = (dataset) => {
-    if (!canvasLoaded) {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-      loadCanvas(
-        `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`,
-      );
-    }
-
-    setCanvasLoaded(true);
     const options = {
       type: 'pie',
       data: {
-        labels: Object.entries(dataset).map((item) => item[0]),
+        labels: Object.entries(managers).map((item) => item[0]),
         datasets: [
           {
-            // label: 'Population (millions)',
             backgroundColor: [
               '#3e95cd',
               '#8e5ea2',
@@ -84,7 +68,7 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
               '#bbbbbb',
               '#bbbbbb',
             ],
-            data: Object.entries(dataset).map((item) => item[1]),
+            data: Object.entries(managers).map((item) => item[1]),
           },
         ],
       },
@@ -104,39 +88,11 @@ const ManagerMoneyGraphPanel = ({ data, currDate, timeText }) => {
         },
       },
     };
-    setTimeout(() => {
-      // setIsLoading(false);
-      canvasLoaded && graph.destroy();
-      setGraph(
-        createGraph(
-          options,
-          document.getElementsByClassName(
-            `panel__chart--${stats.chartName}`,
-          )[0],
-        ),
-      );
-    }, 150);
+
+    renderGraph(options);
   };
 
-  //При первом рендере
-  useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data);
-  }, [data, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    if (!isLoading && data.length > 1) {
-      setCanvasLoaded(false);
-      setStats((stats) => ({
-        ...stats,
-        timePeriod: timeText,
-      }));
-      graph.destroy();
-      getStats(data);
-    }
-  }, [currDate]);
-
-  return <GraphPanel {...stats} />;
+  return graphPanel;
 };
 
 export default ManagerMoneyGraphPanel;
