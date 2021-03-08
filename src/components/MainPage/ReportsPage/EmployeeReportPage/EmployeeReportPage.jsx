@@ -9,12 +9,12 @@ import useWorkReportByRange from 'Utils/hooks/useWorkReportByRange.js';
 import UserContext from '../../../../App.js';
 import './EmployeeReportPage.scss';
 import { months } from 'Utils/dataObjects.js';
+import { getWeekDays } from './functions.js';
 import {
-  getWeekDays,
-  getPreviousMonthDates,
   getPreviousQuarterDates,
+  getPreviousMonthDates,
   getDaysArray,
-} from './functions.js';
+} from 'Utils/helpers/time.js';
 
 const EmployeeReportPage = () => {
   const [selectedInfo, setSelectedInfo] = useState(null);

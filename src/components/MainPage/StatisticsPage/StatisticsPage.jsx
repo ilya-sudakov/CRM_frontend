@@ -4,16 +4,15 @@ import { formatDateStringNoYear } from 'Utils/functions.jsx';
 import { months } from 'Utils/dataObjects.js';
 
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import {
-  getDaysArray,
-  getPreviousMonthDates,
-  getPreviousWeekDays,
-  getPreviousQuarterDates,
-  getPreviousYearDates,
-} from './functions.js';
+import { getPreviousWeekDays, getPreviousYearDates } from './functions.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import ProductionPage from './Pages/ProductionPage.jsx';
 import RequestsPage from './Pages/RequestsPage.jsx';
+import {
+  getPreviousQuarterDates,
+  getPreviousMonthDates,
+  getDaysArray,
+} from 'Utils/helpers/time.js';
 
 const StatisticsPage = () => {
   const [curPeriod, setCurPeriod] = useState('month');
