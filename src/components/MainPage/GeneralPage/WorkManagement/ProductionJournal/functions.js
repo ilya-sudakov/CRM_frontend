@@ -107,7 +107,9 @@ const getWorkshopList = (
     {
       text: `${workshop.name}\n`,
       style: 'subheader',
-      margin: [0, 10, 0, 5],
+      fontSize: 12,
+      color: '#333',
+      margin: [0, 15, 0, 5],
     },
     {
       table: {
