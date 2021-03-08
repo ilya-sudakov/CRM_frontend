@@ -1,22 +1,21 @@
-import { useState, useEffect } from 'react';
-import GraphPanel from './GraphPanel.jsx';
+import { useState } from 'react';
 import WrenchIcon from 'Assets/sidemenu/wrench.inline.svg';
-import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import { checkRiggingTypesInputs } from '../../Dispatcher/Rigging/RiggingComponents/rigsVariables.js';
+import { getStatsticsGraphWidgetOptions } from './functions.js';
+import useBarChart from 'Utils/hooks/statistics/useBarChartStatPanel';
 
 const RiggingItemsQuantityForType = ({ data }) => {
-  const [graph, setGraph] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [canvasLoaded, setCanvasLoaded] = useState(false);
-
-  const [stats, setStats] = useState({
-    category: 'Кол-во деталей оснастки в производстве',
-    isLoaded: false,
-    chartName: 'rigging-items-quantity-graph',
-    timePeriod: 'За все время',
-    renderIcon: <WrenchIcon className="panel__img panel__img--wrench" />,
-  });
-
+  const { graphPanel, setIsLoading, renderGraph } = useBarChart(
+    {
+      category: 'Кол-во деталей оснастки в производстве',
+      chartName: 'rigging-items-quantity-graph',
+      timePeriod: 'За все время',
+      renderIcon: <WrenchIcon className="panel__img panel__img--wrench" />,
+    },
+    data,
+    (data) => getStats(data),
+    'За все время',
+  );
   const [statuses, setStatuses] = useState({
     cuttingDimensions: {
       name: 'Распил/Габариты',
@@ -49,7 +48,6 @@ const RiggingItemsQuantityForType = ({ data }) => {
     setIsLoading(true);
     let newStatuses = statuses;
     Object.entries(statuses).map((status) => {
-      // console.log(status)
       let temp = 0;
       temp = data.filter((draft) => {
         if (
@@ -70,79 +68,12 @@ const RiggingItemsQuantityForType = ({ data }) => {
       });
     });
     setStatuses({ ...newStatuses });
-    setIsLoading(false);
-    renderGraph(newStatuses);
+
+    const options = getStatsticsGraphWidgetOptions(newStatuses);
+    renderGraph(options);
   };
 
-  const renderGraph = (dataset) => {
-    if (!canvasLoaded) {
-      setStats((stats) => ({
-        ...stats,
-        isLoaded: true,
-      }));
-      loadCanvas(
-        `panel__chart-wrapper--${stats.chartName}`,
-        `panel__chart panel__chart--${stats.chartName}`,
-      );
-    }
-    setCanvasLoaded(true);
-    const options = {
-      type: 'pie',
-      data: {
-        labels: Object.entries(dataset).map((item) => item[1].name),
-        datasets: [
-          {
-            // label: 'Population (millions)',
-            backgroundColor: [
-              '#3e95cd',
-              '#8e5ea2',
-              '#3cba9f',
-              '#e8c3b9',
-              '#c45850',
-            ],
-            data: Object.entries(dataset).map((item) => item[1].data),
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio:
-          (window.innerWidth ||
-            document.documentElement.clientWidth ||
-            document.body.clientWidth) > 500
-            ? true
-            : false,
-        animation: {
-          easing: 'easeInOutCirc',
-        },
-        tooltips: {
-          mode: 'index',
-        },
-      },
-    };
-    setTimeout(() => {
-      setIsLoading(false);
-      canvasLoaded && graph.destroy();
-      setGraph(
-        createGraph(
-          options,
-          document.getElementsByClassName(
-            `panel__chart--${stats.chartName}`,
-          )[0],
-        ),
-      );
-    }, 150);
-  };
-
-  useEffect(() => {
-    // console.log(statuses)
-    if (stats.isLoaded || data.length === 0 || isLoading) {
-      return;
-    }
-    getStats(data);
-  }, [data, stats, statuses]);
-
-  return <GraphPanel {...stats} />;
+  return graphPanel;
 };
 
 export default RiggingItemsQuantityForType;

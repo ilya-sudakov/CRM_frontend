@@ -15,7 +15,7 @@ export const getStatsticsGraphWidgetOptions = (dataset) => {
             '#bbbbbb',
             '#bbbbbb',
           ],
-          data: Object.entries(dataset).map((item) => item[1]),
+          data: Object.entries(dataset).map((item) => item[1].data ?? item[1]),
         },
       ],
     },
