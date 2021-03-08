@@ -41,3 +41,39 @@ export const sortStampParts = (data) => {
     return 0;
   });
 };
+
+export const getRigsDefaultInputs = (type = 'stamp') => {
+  return [
+    {
+      name: 'name',
+      defaultValue: '',
+      isRequired: true,
+    },
+    {
+      name: 'number',
+      defaultValue: '',
+      isRequired: true,
+    },
+    {
+      name: 'comment',
+      defaultValue: '',
+    },
+    {
+      name: 'parts',
+      defaultValue: [],
+      isRequired: true,
+    },
+    {
+      name: 'lastEdited',
+      defaultValue: new Date(),
+    },
+    {
+      name: 'color',
+      defaultValue: 'production',
+    },
+    {
+      name: 'status',
+      defaultValue: type,
+    },
+  ];
+};

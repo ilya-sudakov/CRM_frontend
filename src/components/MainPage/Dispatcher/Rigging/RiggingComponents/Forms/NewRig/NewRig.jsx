@@ -2,130 +2,47 @@ import { useState, useEffect } from 'react';
 import './NewRig.scss';
 import 'Utils/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';
-
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import useForm from 'Utils/hooks/useForm.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { addStamp, addPartsToStamp } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 import { rigTypes } from '../../rigsVariables.js';
+import { getRigsDefaultInputs } from '../../TableView/functions';
 
 const NewRig = (props) => {
-  const [rigInputs, setRigInputs] = useState({
-    name: '',
-    number: '',
-    comment: '',
-    parts: [],
-    lastEdited: new Date(),
-    color: 'production',
-    status: props.type,
-  });
-  const [riggingErrors, setRiggingErrors] = useState({
-    name: false,
-    number: false,
-    parts: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    name: false,
-    number: false,
-    parts: false,
-  });
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    formErrors,
+    setFormErrors,
+    formIsValid,
+    errorWindow,
+  } = useForm(getRigsDefaultInputs(props.type));
   const [isLoading, setIsLoading] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case 'parts':
-        setValidInputs({
-          ...validInputs,
-          parts: value.length > 0,
-        });
-        break;
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          });
-        }
-        break;
-    }
-  };
-
-  const formIsValid = () => {
-    let check = true;
-    let newErrors = Object.assign({
-      name: false,
-      number: false,
-      parts: false,
-    });
-    for (let item in validInputs) {
-      if (validInputs[item] === false) {
-        check = false;
-        newErrors = Object.assign({
-          ...newErrors,
-          [item]: true,
-        });
-      }
-    }
-    setRiggingErrors(newErrors);
-    if (check === true) {
-      return true;
-    } else {
-      setIsLoading(false);
-      setShowError(true);
-      return false;
-    }
-  };
-
   const handleSubmit = () => {
+    if (!formIsValid()) return;
     setIsLoading(true);
     let itemId = 1;
-    formIsValid() &&
-      addStamp(rigInputs)
-        .then((res) => res.json())
-        .then((res) => (itemId = res.id))
-        .then(() => {
-          const parts = rigInputs.parts.map((item) => {
-            let newPart = Object.assign({
+    addStamp(formInputs)
+      .then((res) => res.json())
+      .then((res) => (itemId = res.id))
+      .then(() =>
+        Promise.all(
+          formInputs.parts.map((item) =>
+            addPartsToStamp({
               ...item,
               riggingId: itemId,
-            });
-            return addPartsToStamp(newPart);
-          });
-          Promise.all(parts).then(() =>
-            props.history.push(rigTypes[props.type].redirectURL),
-          );
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          alert('Ошибка при добавлении записи');
-          console.log(error);
-        });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setRigInputs({
-      ...rigInputs,
-      [name]: value,
-    });
-    setRiggingErrors({
-      ...riggingErrors,
-      [name]: false,
-    });
-  };
-
-  const handlePartsChange = (newParts) => {
-    validateField('parts', newParts);
-    setRigInputs({
-      ...rigInputs,
-      parts: newParts,
-    });
-    setRiggingErrors({
-      ...riggingErrors,
-      parts: false,
-    });
+            }),
+          ),
+        ),
+      )
+      .then(() => props.history.push(rigTypes[props.type].redirectURL))
+      .catch((error) => {
+        setIsLoading(false);
+        alert('Ошибка при добавлении записи');
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -141,46 +58,52 @@ const NewRig = (props) => {
               rigTypes[props.type].name
             }`}</div>
           </div>
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <InputText
             inputName="Название оснастки(оборудования)"
             required
-            error={riggingErrors.name}
+            error={formErrors.name}
             name="name"
-            handleInputChange={handleInputChange}
-            errorsArr={riggingErrors}
-            setErrorsArr={setRiggingErrors}
+            handleInputChange={({ target }) =>
+              handleInputChange('name', target.value)
+            }
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Артикул оснастки(оборудования)"
             required
-            error={riggingErrors.number}
+            error={formErrors.number}
             name="number"
-            handleInputChange={handleInputChange}
-            errorsArr={riggingErrors}
-            setErrorsArr={setRiggingErrors}
+            handleInputChange={({ target }) =>
+              handleInputChange('number', target.value)
+            }
+            errorsArr={formErrors}
+            setErrorsArr={setFormErrors}
           />
           <InputText
             inputName="Комментарий"
             name="comment"
-            handleInputChange={handleInputChange}
+            handleInputChange={({ target }) =>
+              handleInputChange('comment', target.value)
+            }
           />
-          <SelectParts handlePartsChange={handlePartsChange} />
+          <SelectParts
+            handlePartsChange={(parts) => handleInputChange('parts', parts)}
+            error={formErrors.parts}
+            hideError={() => setFormErrors({ ...formErrors, parts: false })}
+          />
           <div className="main-form__input_hint">
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <input
+            <Button
               className="main-form__submit main-form__submit--inverted"
-              type="submit"
+              inverted
               onClick={() =>
                 props.history.push(rigTypes[props.type].redirectURL)
               }
-              value="Вернуться назад"
+              text="Вернуться назад"
             />
             <Button
               text="Добавить запись"

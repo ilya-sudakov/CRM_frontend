@@ -7,6 +7,7 @@ import {
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { scrollToElement } from 'Utils/functions.jsx';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
+import FormErrorsMessage from 'Utils/FormErrorsMessage/FormErrorsMessage.jsx';
 
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([]);
@@ -14,11 +15,13 @@ const SelectParts = (props) => {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    if (props.defaultValue !== undefined && !defaultValueLoaded) {
+    console.log(props.defaultValue);
+    if (props.defaultValue === undefined) return;
+    if (!defaultValueLoaded || props.defaultValue !== selected) {
       setSelected([...props.defaultValue]);
       setDefaultValueLoaded(true);
     }
-  }, [props.defaultValue, selected]);
+  }, [props.defaultValue]);
 
   useEffect(() => {
     const titleElement = document.getElementById(props.scrollToId);
@@ -218,6 +221,10 @@ const SelectParts = (props) => {
             ))}
           </div>
         </div>
+        <FormErrorsMessage
+          error={props.error}
+          hideError={() => props.hideError()}
+        />
       </div>
     </div>
   );
