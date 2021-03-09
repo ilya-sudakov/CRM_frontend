@@ -18,9 +18,7 @@ const SmallPanel = ({
 }) => {
   const [showWindow, setShowWindow] = useState(false);
 
-  useEffect(() => {}, [isLoaded]);
-
-  useEffect(() => {}, [showWindow, setShowWindow, windowContent]);
+  useEffect(() => {}, [isLoaded, showWindow, setShowWindow, windowContent]);
 
   return (
     <div

@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const NewClientsStatsPanel = ({
   requests,
@@ -11,17 +10,18 @@ const NewClientsStatsPanel = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Новые клиенты',
-    percentage: 0,
-    value: null,
-    linkTo: '/clients/categories',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <ClientsIcon className="panel__img panel__img--money" />,
-  });
+  const { smallPanel, setStats } = useSmallStatPanel(
+    {
+      category: 'Новые клиенты',
+      linkTo: '/clients/categories',
+      timePeriod: timeText,
+      renderIcon: <ClientsIcon className="panel__img panel__img--money" />,
+    },
+    requests,
+    (data) => getStats(data),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -129,22 +129,7 @@ const NewClientsStatsPanel = ({
     }));
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getStats(requests);
-    }
-  }, [currDate]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default NewClientsStatsPanel;

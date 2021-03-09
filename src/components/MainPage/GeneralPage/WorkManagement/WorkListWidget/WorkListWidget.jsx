@@ -37,7 +37,6 @@ const WorkListWidget = () => {
       ),
     ).then(() => {
       setEmployeesMap(newEmployeesMap);
-      console.log(newEmployeesMap);
     });
   };
 
@@ -57,7 +56,6 @@ const WorkListWidget = () => {
         .then((res) => {
           setRecordedWork(res);
           combineWorkHoursForSamePeople(res);
-          console.log(res);
           setIsLoading(false);
         })
         .catch((error) => {
