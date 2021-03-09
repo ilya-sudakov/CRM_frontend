@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import PlaylistIcon from 'Assets/sidemenu/play_list.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const ProductQuantityInRequest = ({
   requests,
@@ -10,17 +9,18 @@ const ProductQuantityInRequest = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Среднее кол-во позиций в заказе',
-    percentage: 0,
-    value: null,
-    linkTo: '/requests',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
-  });
+  const { smallPanel, setStats, updateStats } = useSmallStatPanel(
+    {
+      category: 'Среднее кол-во позиций в заказе',
+      linkTo: '/requests',
+      timePeriod: timeText,
+      renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
+    },
+    requests,
+    (requests) => getStats(requests),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -70,36 +70,11 @@ const ProductQuantityInRequest = ({
           sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
-      isLoaded: true,
-      isLoading: false,
-      value: Math.floor(curMonthAverage * 100) / 100,
-      difference: curMonthAverage - prevMonthAverage,
-      percentage:
-        Math.floor(
-          ((curMonthAverage - prevMonthAverage) /
-            (prevMonthAverage === 0 ? 1 : prevMonthAverage)) *
-            100 *
-            100,
-        ) / 100,
     }));
+    updateStats(prevMonthAverage, curMonthAverage);
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getStats(requests);
-    }
-  }, [currDate]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default ProductQuantityInRequest;

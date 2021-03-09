@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import ClockIcon from 'Assets/etc/time.inline.svg';
 import { dateDiffInDays } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const OnTimeRequestsDistribution = ({
   requests,
@@ -11,17 +10,18 @@ const OnTimeRequestsDistribution = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Вовремя выполненные заказы',
-    percentage: 0,
-    value: null,
-    linkTo: '/requests',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <ClockIcon className="panel__img panel__img--time" />,
-  });
+  const { smallPanel, setStats } = useSmallStatPanel(
+    {
+      category: 'Вовремя выполненные заказы',
+      linkTo: '/requests',
+      timePeriod: timeText,
+      renderIcon: <ClockIcon className="panel__img panel__img--time" />,
+    },
+    requests,
+    (requests) => getStats(requests),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -124,22 +124,7 @@ const OnTimeRequestsDistribution = ({
     }));
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getStats(requests);
-    }
-  }, [currDate]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default OnTimeRequestsDistribution;

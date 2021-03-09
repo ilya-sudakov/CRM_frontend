@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import PlaylistIcon from 'Assets/sidemenu/play_list.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const RequestsQuantityPanel = ({
   requests,
@@ -10,17 +9,18 @@ const RequestsQuantityPanel = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Заявки',
-    percentage: 0,
-    value: null,
-    linkTo: '/requests',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
-  });
+  const { smallPanel, setStats, updateStats } = useSmallStatPanel(
+    {
+      category: 'Заявки',
+      linkTo: '/requests',
+      timePeriod: timeText,
+      renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
+    },
+    requests,
+    (requests) => getRequestQuantityStats(requests),
+    timeText,
+    [currDate],
+  );
 
   const getRequestQuantityStats = (requests) => {
     setStats((stats) => ({
@@ -53,6 +53,7 @@ const RequestsQuantityPanel = ({
       return false;
     });
 
+    updateStats(prevMonthQuantity, curMonthQuantity);
     setStats((stats) => ({
       ...stats,
       windowContent: (
@@ -62,38 +63,10 @@ const RequestsQuantityPanel = ({
           sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
-      isLoaded: true,
-      isLoading: false,
-      value: curMonthQuantity,
-      difference: curMonthQuantity - prevMonthQuantity,
-      percentage:
-        Math.floor(
-          ((curMonthQuantity - prevMonthQuantity) /
-            (prevMonthQuantity === 0 ? 1 : prevMonthQuantity)) *
-            100 *
-            100,
-        ) / 100,
     }));
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    if (!stats.isLoaded && !stats.isLoading && requests.length > 1) {
-      getRequestQuantityStats(requests);
-    }
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getRequestQuantityStats(requests);
-    }
-  }, [currDate, timeText]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default RequestsQuantityPanel;
