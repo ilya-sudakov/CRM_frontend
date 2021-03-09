@@ -25,20 +25,19 @@ const WorkListWidget = () => {
     Promise.all(
       works.map(
         (work) =>
-          (newEmployeesMap = Object.assign({
+          (newEmployeesMap = {
             ...newEmployeesMap,
             [work.employee.id]: {
               hours:
                 newEmployeesMap[work.employee.id] !== undefined
-                  ? Number.parseInt(newEmployeesMap[work.employee.id].hours) +
-                    Number.parseInt(work.hours)
-                  : [work.hours],
+                  ? newEmployeesMap[work.employee.id].hours + work.hours
+                  : work.hours,
             },
-          })),
+          }),
       ),
     ).then(() => {
-      // console.log(newEmployeesMap)
       setEmployeesMap(newEmployeesMap);
+      console.log(newEmployeesMap);
     });
   };
 
@@ -58,6 +57,7 @@ const WorkListWidget = () => {
         .then((res) => {
           setRecordedWork(res);
           combineWorkHoursForSamePeople(res);
+          console.log(res);
           setIsLoading(false);
         })
         .catch((error) => {

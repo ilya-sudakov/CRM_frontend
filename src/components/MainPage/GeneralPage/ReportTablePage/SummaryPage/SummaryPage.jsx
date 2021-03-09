@@ -1,4 +1,3 @@
-// import "./ReportTablePage.scss";
 import DownloadIcon from 'Assets/download.svg';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
@@ -8,7 +7,7 @@ import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';
 import { EmployeeInfo } from './InfoComponents.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
-import { getDaysArray } from '../functions.js';
+import { getDaysArray } from 'Utils/helpers/time';
 
 const SummaryPage = ({
   setSearchQuery,
