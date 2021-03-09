@@ -25,6 +25,7 @@ const Widget = ({
               inverted
               text={linkTo.text}
               imgSrc={linkTo.img ?? null}
+              renderImg={linkTo.renderImg}
               onClick={() => history.push(linkTo.address)}
             ></Button>
           ) : null}

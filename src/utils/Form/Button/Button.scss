@@ -52,6 +52,11 @@
       filter: brightness(1) invert(0);
     }
 
+    svg {
+      max-width: 20px;
+      margin-right: 5px;
+    }
+
     .button__circle {
       border: 4px rgba(100, 100, 100, 0.5) solid;
       border-top: 4px #666666 solid;

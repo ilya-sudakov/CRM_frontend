@@ -7,7 +7,7 @@ import {
   getTasksControlDatesList,
   getTasksList,
 } from './functions.js';
-import openWidget from 'Assets/tableview/bx-window-open.svg';
+import OpenWidget from 'Assets/tableview/bx-window-open.inline.svg';
 import UserContext from '../../../../App.js';
 import TasksList from './TasksList/TasksList.jsx';
 
@@ -56,7 +56,9 @@ const TasksWidget = () => {
       linkTo={{
         address: '/dispatcher/general-tasks',
         text: 'Открыть',
-        img: openWidget,
+        renderImg: (
+          <OpenWidget className="main-window__img main-window__img--open" />
+        ),
       }}
       content={
         <TasksList

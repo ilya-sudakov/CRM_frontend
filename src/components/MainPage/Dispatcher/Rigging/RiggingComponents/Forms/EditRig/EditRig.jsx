@@ -41,10 +41,10 @@ const EditRig = (props) => {
     editStamp({ ...formInputs, lastEdited: new Date() }, stampId)
       .then(() => {
         //PUT if edited, POST if part is new
-        const partsArr = formInputs.stampParts.map((selected) => {
+        const partsArr = formInputs.parts.map((selected) => {
           let edited = false;
           let oldItem = null;
-          formInputs.parts.map((item) => {
+          formInputs.stampParts.map((item) => {
             if (item.id === selected.id) {
               edited = true;
               oldItem = item;
@@ -67,9 +67,9 @@ const EditRig = (props) => {
         });
         Promise.all(partsArr).then(() => {
           //DELETE parts removed by user
-          const partsArr = formInputs.parts.map((item) => {
+          const partsArr = formInputs.stampParts.map((item) => {
             let deleted = true;
-            formInputs.stampParts.map((selected) => {
+            formInputs.parts.map((selected) => {
               if (selected.id === item.id) {
                 deleted = false;
                 return;

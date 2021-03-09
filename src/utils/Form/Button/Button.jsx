@@ -7,6 +7,7 @@ const Button = ({
   className = '',
   isLoading = false,
   imgSrc = '',
+  renderImg,
   type = 'button',
   text = 'Нажмите',
   onClick = null,
@@ -40,6 +41,7 @@ const Button = ({
           alt=""
         />
       )}
+      {renderImg && renderImg}
       <span
         className={`button__text ${isLoading ? 'button__text--hidden' : ''}`}
       >
@@ -58,6 +60,7 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   isRecent: PropTypes.bool,
   imgSrc: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  renderImg: PropTypes.any,
   type: PropTypes.string,
   text: PropTypes.string,
   style: PropTypes.object,
