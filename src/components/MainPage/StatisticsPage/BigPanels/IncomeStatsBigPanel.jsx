@@ -190,38 +190,35 @@ const IncomeStatsBigPanel = ({
       isLoaded: false,
     }));
 
-    let curMonthIncome = 0;
-    let prevMonthIncome = 0;
+    const filterRequests = (requests, currDate, keepOld = true) => {
+      let monthIncome = 0;
+      const data = requests.filter((request) => {
+        const date = new Date(request.date);
+        if (
+          checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
+          request.status === 'Завершено'
+        ) {
+          monthIncome += Number.parseFloat(request.sum || 0);
+          return !keepOld;
+        }
+        if (request.status !== 'Завершено') {
+          return false;
+        }
+        return keepOld;
+      });
+
+      return [data, monthIncome];
+    };
 
     //check prev month
-    let temp = requests.filter((request) => {
-      const date = new Date(request.date);
-      const prevMonth = getPrevData(currDate.startDate);
-      if (
-        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
-        request.status === 'Завершено'
-      ) {
-        prevMonthIncome += Number.parseFloat(request.sum || 0);
-        return false;
-      }
-      if (request.status !== 'Завершено') {
-        return false;
-      }
-      return true;
-    });
-
+    const prevMonth = getPrevData(currDate.startDate);
+    let [temp, prevMonthIncome] = filterRequests(requests, prevMonth);
     //check cur month
-    const filteredRequests = temp.filter((request) => {
-      const date = new Date(request.date);
-      if (
-        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === 'Завершено'
-      ) {
-        curMonthIncome += Number.parseFloat(request.sum || 0);
-        return true;
-      }
-      return false;
-    });
+    let [filteredRequests, curMonthIncome] = filterRequests(
+      temp,
+      currDate,
+      false,
+    );
 
     const monthsIncome = getFullYearData(requests, currDate);
     const monthsAccumilationIncome = getFullYearAccumilationData(
