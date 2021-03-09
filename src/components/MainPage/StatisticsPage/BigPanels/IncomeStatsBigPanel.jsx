@@ -33,6 +33,26 @@ const IncomeStatsBigPanel = ({
     renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
   });
 
+  const filterRequests = (requests, currDate, keepOld = true) => {
+    let monthIncome = 0;
+    const data = requests.filter((request) => {
+      const date = new Date(request.date);
+      if (
+        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
+        request.status === 'Завершено'
+      ) {
+        monthIncome += Number.parseFloat(request.sum || 0);
+        return !keepOld;
+      }
+      if (request.status !== 'Завершено') {
+        return false;
+      }
+      return keepOld;
+    });
+
+    return [data, monthIncome];
+  };
+
   const getFullYearData = (requests, currDate) => {
     let monthsIncome = [];
     const curYear = currDate.startDate.getFullYear();
@@ -46,15 +66,12 @@ const IncomeStatsBigPanel = ({
         (prev, cur) => prev + Number.parseFloat(cur.sum ?? 0),
         0,
       );
+      const color =
+        curMonth === i ? '#B74F3B' : curMonth - 1 === i ? '#3BB7B6' : '#cccccc';
       monthsIncome.push({
         value: totalIncome,
         label: months[i],
-        color:
-          curMonth === i
-            ? '#B74F3B'
-            : curMonth - 1 === i
-            ? '#3BB7B6'
-            : '#cccccc',
+        color: color,
       });
     }
     return monthsIncome;
@@ -96,40 +113,35 @@ const IncomeStatsBigPanel = ({
     return monthsIncome;
   };
 
+  const colors = [
+    '#F1B5CB',
+    '#E88EED',
+    '#CC3F0C',
+    '#9A6D38',
+    '#33673B',
+    '#DB8A74',
+    '#444054',
+    '#FFB7FF',
+    '#3B8EA5',
+    '#F4C3C2',
+    '#2D728F',
+    '#F3DAD8',
+    '#D6D9CE',
+  ];
+
   const getIncomeByClients = (requests, currDate) => {
     let clients = {};
-
-    const colors = [
-      '#F1B5CB',
-      '#E88EED',
-      '#CC3F0C',
-      '#9A6D38',
-      '#33673B',
-      '#DB8A74',
-      '#444054',
-      '#FFB7FF',
-      '#3B8EA5',
-      '#F4C3C2',
-      '#2D728F',
-      '#F3DAD8',
-      '#D6D9CE',
-    ];
-
     requests.map((request) => {
       const curId = request?.client?.id;
-
       if (curId && clients[curId] === undefined) {
         const filteredRequests = requests.filter(
           (item) => item.client?.id === curId,
         );
-
         const dataset = getFullYearData(filteredRequests, currDate).map(
           (item) => item.value,
         );
-
         //dont account for requests w/ sum of 0
         if (dataset.reduce((prev, cur) => prev + cur, 0) === 0) return;
-
         return (clients = {
           ...clients,
           [curId]: {
@@ -140,7 +152,6 @@ const IncomeStatsBigPanel = ({
         });
       }
     });
-
     //pick only 10 clients who provided most income
     let topIds = {};
     const newClients = Object.values(clients)
@@ -189,26 +200,6 @@ const IncomeStatsBigPanel = ({
       ...stats,
       isLoaded: false,
     }));
-
-    const filterRequests = (requests, currDate, keepOld = true) => {
-      let monthIncome = 0;
-      const data = requests.filter((request) => {
-        const date = new Date(request.date);
-        if (
-          checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-          request.status === 'Завершено'
-        ) {
-          monthIncome += Number.parseFloat(request.sum || 0);
-          return !keepOld;
-        }
-        if (request.status !== 'Завершено') {
-          return false;
-        }
-        return keepOld;
-      });
-
-      return [data, monthIncome];
-    };
 
     //check prev month
     const prevMonth = getPrevData(currDate.startDate);
