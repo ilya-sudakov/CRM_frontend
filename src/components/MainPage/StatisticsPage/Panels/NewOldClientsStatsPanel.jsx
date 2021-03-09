@@ -1,7 +1,7 @@
 import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
-import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
+import { statisticsFindNewClients } from './functions.js';
 
 const NewOldClientsStatsPanel = ({
   requests,
@@ -30,56 +30,20 @@ const NewOldClientsStatsPanel = ({
     }));
 
     let clients = {};
-    //filter all clients except once from cur and prev month
-
-    let prevMonthNewClients = 0;
-    let curMonthNewClients = 0;
     const prevMonth = getPrevData(currDate.startDate);
 
-    //find new clients from prev month
-    const filteredRequests = requests.filter((request) => {
-      if (
-        request.client !== null &&
-        checkIfDateIsInRange(
-          request.date,
-          prevMonth.startDate,
-          prevMonth.endDate,
-        ) &&
-        clients[request.client.id] === undefined
-      ) {
-        prevMonthNewClients++;
-        clients = {
-          ...clients,
-          [request.client.id]: '',
-        };
-        return false;
-      }
-      if (request.client === null) {
-        return false;
-      }
-      return true;
-    });
-
-    //find new clients from cur month
-    const filteredRequestsNew = filteredRequests.filter((request) => {
-      if (
-        request.client !== null &&
-        checkIfDateIsInRange(
-          request.date,
-          currDate.startDate,
-          currDate.endDate,
-        ) &&
-        clients[request.client.id] === undefined
-      ) {
-        curMonthNewClients++;
-        clients = {
-          ...clients,
-          [request.client.id]: '',
-        };
-        return true;
-      }
-      return false;
-    });
+    //filter all clients except once from cur and prev month
+    const [filteredRequests, prevMonthNewClients] = statisticsFindNewClients(
+      requests,
+      clients,
+      prevMonth,
+    );
+    const [filteredRequestsNew, curMonthNewClients] = statisticsFindNewClients(
+      filteredRequests,
+      clients,
+      currDate,
+      false,
+    );
 
     setStats((stats) => ({
       ...stats,

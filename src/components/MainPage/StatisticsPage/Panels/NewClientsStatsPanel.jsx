@@ -2,6 +2,7 @@ import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
+import { statisticsFindNewClients } from './functions.js';
 
 const NewClientsStatsPanel = ({
   requests,
@@ -30,10 +31,8 @@ const NewClientsStatsPanel = ({
     }));
 
     let clients = {};
-    //filter all clients except once from cur and prev month
 
-    let prevMonthNewClients = 0;
-    let curMonthNewClients = 0;
+    //filter all clients except once from cur and prev month
     const prevMonth = getPrevData(currDate.startDate);
 
     const filteredRequests = requests.filter((request) => {
@@ -60,50 +59,18 @@ const NewClientsStatsPanel = ({
       return true;
     });
 
-    //find new clients from prev month
-    filteredRequests.filter((request) => {
-      if (
-        request.client !== null &&
-        checkIfDateIsInRange(
-          request.date,
-          prevMonth.startDate,
-          prevMonth.endDate,
-        ) &&
-        clients[request.client.id] === undefined
-      ) {
-        prevMonthNewClients++;
-        clients = {
-          ...clients,
-          [request.client.id]: '',
-        };
-        return false;
-      }
-      if (request.client === null) {
-        return false;
-      }
-      return true;
-    });
+    const [, prevMonthNewClients] = statisticsFindNewClients(
+      filteredRequests,
+      clients,
+      prevMonth,
+    );
 
-    //find new clients from cur month
-    const filteredRequestsNew = requests.filter((request) => {
-      if (
-        request.client !== null &&
-        checkIfDateIsInRange(
-          request.date,
-          currDate.startDate,
-          currDate.endDate,
-        ) &&
-        clients[request.client.id] === undefined
-      ) {
-        curMonthNewClients++;
-        clients = {
-          ...clients,
-          [request.client.id]: '',
-        };
-        return true;
-      }
-      return false;
-    });
+    const [filteredRequestsNew, curMonthNewClients] = statisticsFindNewClients(
+      requests,
+      clients,
+      currDate,
+      false,
+    );
 
     setStats((stats) => ({
       ...stats,
