@@ -23,28 +23,17 @@ const AverageSumStatsPanel = ({
     [currDate],
   );
 
-  const getStats = (requests) => {
-    setStats((stats) => ({
-      ...stats,
-      isLoading: true,
-      isLoaded: false,
-    }));
-
-    let curMonthAverage = 0;
-    let prevMonthAverage = 0;
-    let prevMonthLength = 0;
-    let curMonthLength = 0;
-
-    //check prev data
-    let temp = requests.filter((request) => {
+  const filterRequests = (requests, curDate) => {
+    let monthLength = 0;
+    let averageMonth = 0;
+    const data = requests.filter((request) => {
       const date = new Date(request.date);
-      const prevMonth = getPrevData(currDate.startDate);
       if (
-        checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate) &&
+        checkIfDateIsInRange(date, curDate.startDate, curDate.endDate) &&
         request.status === 'Завершено'
       ) {
-        prevMonthLength++;
-        prevMonthAverage += Number.parseFloat(request.sum || 0);
+        monthLength++;
+        averageMonth += Number.parseFloat(request.sum || 0);
         return false;
       }
       if (request.status !== 'Завершено') {
@@ -52,19 +41,28 @@ const AverageSumStatsPanel = ({
       }
       return true;
     });
+    return [data, monthLength, averageMonth];
+  };
 
-    const filteredRequests = temp.filter((request) => {
-      const date = new Date(request.date);
-      if (
-        checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
-        request.status === 'Завершено'
-      ) {
-        curMonthLength++;
-        curMonthAverage += Number.parseFloat(request.sum || 0);
-        return true;
-      }
-      return false;
-    });
+  const getStats = (requests) => {
+    setStats((stats) => ({
+      ...stats,
+      isLoading: true,
+      isLoaded: false,
+    }));
+
+    const prevMonth = getPrevData(currDate.startDate);
+
+    //check prev data
+    let [temp, prevMonthLength, prevMonthAverage] = filterRequests(
+      requests,
+      prevMonth,
+    );
+    //check cur data
+    let [filteredRequests, curMonthLength, curMonthAverage] = filterRequests(
+      temp,
+      currDate,
+    );
 
     curMonthAverage =
       curMonthAverage / (curMonthLength !== 0 ? curMonthLength : 1);

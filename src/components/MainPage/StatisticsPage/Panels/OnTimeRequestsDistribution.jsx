@@ -26,7 +26,7 @@ const OnTimeRequestsDistribution = ({
   const filterRequests = (requests, currDate) => {
     let monthOnTime = 0;
     let monthAllQuantity = 0;
-    requests.filter((request) => {
+    const data = requests.filter((request) => {
       const date = new Date(request.date);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
@@ -48,7 +48,7 @@ const OnTimeRequestsDistribution = ({
       }
       return true;
     });
-    return [requests, monthOnTime, monthAllQuantity];
+    return [data, monthOnTime, monthAllQuantity];
   };
 
   const getStats = (requests) => {
@@ -60,14 +60,13 @@ const OnTimeRequestsDistribution = ({
 
     //check prev month
     const prevMonth = getPrevData(currDate.startDate);
-    const [
-      temp,
-      prevMonthOnTimeQuantity,
-      prevMonthAllQuantity,
-    ] = filterRequests(requests, prevMonth);
+    let [temp, prevMonthOnTimeQuantity, prevMonthAllQuantity] = filterRequests(
+      requests,
+      prevMonth,
+    );
 
     //check cur month
-    const [
+    let [
       filteredRequests,
       curMonthOnTimeQuantity,
       curMonthAllQuantity,
