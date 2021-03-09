@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import MoneyIcon from 'Assets/etc/bx-ruble.inline.svg';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const AverageSumStatsPanel = ({
   requests,
@@ -11,17 +10,18 @@ const AverageSumStatsPanel = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Средняя сумма заказа',
-    percentage: 0,
-    value: null,
-    linkTo: '/requests',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
-  });
+  const { smallPanel, setStats } = useSmallStatPanel(
+    {
+      category: 'Средняя сумма заказа',
+      linkTo: '/requests',
+      timePeriod: timeText,
+      renderIcon: <MoneyIcon className="panel__img panel__img--money" />,
+    },
+    requests,
+    (requests) => getStats(requests),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -94,22 +94,7 @@ const AverageSumStatsPanel = ({
     }));
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getStats(requests);
-    }
-  }, [currDate]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default AverageSumStatsPanel;

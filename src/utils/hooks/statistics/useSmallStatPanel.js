@@ -21,7 +21,7 @@ const useSmallStatPanel = (
 
   //При первой загрузке
   useEffect(() => {
-    !stats.isLoaded && data.length > 1 && getStats(data);
+    !stats.isLoaded && data.length > 0 && getStats(data);
   }, [data, stats]);
 
   //При обновлении тек. даты
@@ -29,7 +29,7 @@ const useSmallStatPanel = (
     setStats((stats) => {
       return { ...stats, timePeriod: newTimeText };
     });
-    if (!stats.isLoading && data.length > 1) {
+    if (!stats.isLoading && data.length > 0) {
       getStats(data);
     }
   }, updates);

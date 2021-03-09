@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
-import SmallPanel from './SmallPanel.jsx';
 import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
-import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
+import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
 
 const NewOldClientsStatsPanel = ({
   requests,
@@ -11,17 +9,18 @@ const NewOldClientsStatsPanel = ({
   timeText,
   getPrevData,
 }) => {
-  const [stats, setStats] = useState({
-    category: 'Старые новые клиенты',
-    percentage: 0,
-    value: null,
-    linkTo: '/clients/categories',
-    isLoaded: false,
-    isLoading: false,
-    timePeriod: timeText,
-    difference: 0,
-    renderIcon: <ClientsIcon className="panel__img panel__img--money" />,
-  });
+  const { smallPanel, setStats, updateStats } = useSmallStatPanel(
+    {
+      category: 'Старые новые клиенты',
+      linkTo: '/clients/categories',
+      timePeriod: timeText,
+      renderIcon: <ClientsIcon className="panel__img panel__img--money" />,
+    },
+    requests,
+    (data) => getStats(data),
+    timeText,
+    [currDate],
+  );
 
   const getStats = (requests) => {
     setStats((stats) => ({
@@ -91,36 +90,11 @@ const NewOldClientsStatsPanel = ({
           sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
-      isLoaded: true,
-      isLoading: false,
-      value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),
-      difference: curMonthNewClients - prevMonthNewClients,
-      percentage:
-        Math.floor(
-          ((curMonthNewClients - prevMonthNewClients) /
-            (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
-            100 *
-            100,
-        ) / 100,
     }));
+    updateStats(prevMonthNewClients, curMonthNewClients);
   };
 
-  //При первой загрузке
-  useEffect(() => {
-    !stats.isLoaded && requests.length > 1 && getStats(requests);
-  }, [requests, stats]);
-
-  //При обновлении тек. даты
-  useEffect(() => {
-    setStats((stats) => {
-      return { ...stats, timePeriod: timeText };
-    });
-    if (!stats.isLoading && requests.length > 1) {
-      getStats(requests);
-    }
-  }, [currDate]);
-
-  return <SmallPanel {...stats} />;
+  return smallPanel;
 };
 
 export default NewOldClientsStatsPanel;

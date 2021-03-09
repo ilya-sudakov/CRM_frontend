@@ -40,8 +40,8 @@ const ProductionPage = ({ curDate }) => {
   return (
     <div className="statistics__page-wrapper">
       <div className="statistics__row">
-        {/* <ProductQuantityProduced data={workData} curDate={curDate} />
-          <AverageProductQuantityProduced data={workData} curDate={curDate} /> */}
+        {/* <ProductQuantityProduced data={workData} curDate={curDate} /> */}
+        {/* <AverageProductQuantityProduced data={workData} curDate={curDate} /> */}
       </div>
       <div className="statistics__row">
         <RiggingItemsQuantityForType data={drafts} />

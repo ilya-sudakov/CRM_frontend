@@ -105,7 +105,6 @@ const NewClientsStatsPanel = ({
       return false;
     });
 
-    updateStats(prevMonthNewClients, curMonthNewClients);
     setStats((stats) => ({
       ...stats,
       windowContent: (
@@ -116,6 +115,7 @@ const NewClientsStatsPanel = ({
         />
       ),
     }));
+    updateStats(prevMonthNewClients, curMonthNewClients);
   };
 
   return smallPanel;
