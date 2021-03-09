@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import SmallPanel from 'Components/MainPage/StatisticsPage/Panels/SmallPanel.jsx';
+import { addSpaceDelimiter } from 'Utils/functions.jsx';
 
 const useSmallStatPanel = (
   defaultStats = {},
@@ -33,10 +34,28 @@ const useSmallStatPanel = (
     }
   }, updates);
 
+  const updateStats = (prevMonthData, curMonthData) => {
+    return setStats((stats) => ({
+      ...stats,
+      isLoaded: true,
+      isLoading: false,
+      value: addSpaceDelimiter(Math.floor(curMonthData * 100) / 100),
+      difference: curMonthData - prevMonthData,
+      percentage:
+        Math.floor(
+          ((curMonthData - prevMonthData) /
+            (prevMonthData === 0 ? 1 : prevMonthData)) *
+            100 *
+            100,
+        ) / 100,
+    }));
+  };
+
   const smallPanel = <SmallPanel {...stats} />;
 
   return {
     setStats,
+    updateStats,
     smallPanel,
   };
 };

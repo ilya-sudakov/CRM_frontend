@@ -1,5 +1,4 @@
 import ClientsIcon from 'Assets/sidemenu/client.inline.svg';
-import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
@@ -10,7 +9,7 @@ const NewClientsStatsPanel = ({
   timeText,
   getPrevData,
 }) => {
-  const { smallPanel, setStats } = useSmallStatPanel(
+  const { smallPanel, setStats, updateStats } = useSmallStatPanel(
     {
       category: 'Новые клиенты',
       linkTo: '/clients/categories',
@@ -106,6 +105,7 @@ const NewClientsStatsPanel = ({
       return false;
     });
 
+    updateStats(prevMonthNewClients, curMonthNewClients);
     setStats((stats) => ({
       ...stats,
       windowContent: (
@@ -115,17 +115,6 @@ const NewClientsStatsPanel = ({
           sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),
-      isLoaded: true,
-      isLoading: false,
-      value: addSpaceDelimiter(Math.floor(curMonthNewClients * 100) / 100),
-      difference: curMonthNewClients - prevMonthNewClients,
-      percentage:
-        Math.floor(
-          ((curMonthNewClients - prevMonthNewClients) /
-            (prevMonthNewClients === 0 ? 1 : prevMonthNewClients)) *
-            100 *
-            100,
-        ) / 100,
     }));
   };
 
