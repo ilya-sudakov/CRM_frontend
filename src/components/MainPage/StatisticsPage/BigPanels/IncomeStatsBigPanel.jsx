@@ -83,32 +83,21 @@ const IncomeStatsBigPanel = ({
     const curYear = currDate.startDate.getFullYear();
     const isFutureMonth = (curMonth) =>
       curYear === new Date().getFullYear() && curMonth > new Date().getMonth();
-
     for (let i = 0; i < 12; i++) {
       const newRequests = checkRequestsForSelectedMonth(
         requests,
         new Date(curYear, i, 1),
       );
-
       const curMonthIncome = newRequests.reduce(
         (prev, cur) => prev + Number.parseFloat(cur.sum || 0),
         0,
       );
-
-      if (isFutureMonth(i)) {
-        monthsIncome.push({
-          value: 0,
-          label: months[i],
-          color: '#3e95cd',
-        });
-      } else {
-        totalSum += curMonthIncome;
-        monthsIncome.push({
-          value: totalSum,
-          label: months[i],
-          color: '#3e95cd',
-        });
-      }
+      if (isFutureMonth(i)) totalSum += curMonthIncome;
+      monthsIncome.push({
+        value: isFutureMonth(i) ? 0 : totalSum,
+        label: months[i],
+        color: '#3e95cd',
+      });
     }
     return monthsIncome;
   };
