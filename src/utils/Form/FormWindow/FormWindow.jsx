@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './FormWindow.scss';
 import PropTypes from 'prop-types';
@@ -10,7 +10,19 @@ const FormWindow = ({
   headerButton,
   content = '',
 }) => {
-  useEffect(() => {}, [showWindow, setShowWindow]);
+  const pressEscKey = useCallback(
+    (event) => {
+      if (event.keyCode === 27 && showWindow) return setShowWindow(false);
+    },
+    [showWindow],
+  );
+
+  useEffect(() => {
+    document.addEventListener('keydown', pressEscKey, false);
+    return () => {
+      document.removeEventListener('keydown', pressEscKey, false);
+    };
+  }, [showWindow, setShowWindow]);
 
   const clickOnSelectWindow = (e) => {
     e.preventDefault();
