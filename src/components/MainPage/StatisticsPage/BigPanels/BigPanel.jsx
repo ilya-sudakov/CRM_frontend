@@ -58,15 +58,19 @@ const BigPanel = ({
       <div className="panel__values">
         {curPeriod.name === 'Месяц' &&
         currDate.startDate.getMonth() === 0 ? null : (
-          <div className="panel__value panel__value--previous">
-            <span>{`Пред. ${curPeriod.name.toLowerCase()}`}</span>
-            <div>{isLoaded ? prevValue || 0 : null}</div>
-          </div>
+          <PanelValue
+            curPeriod={curPeriod}
+            type="previous"
+            value={prevValue}
+            isLoaded={isLoaded}
+          />
         )}
-        <div className="panel__value panel__value--current">
-          <span>{`Текущ. ${curPeriod.name.toLowerCase()}`}</span>
-          <div>{isLoaded ? value || 0 : null}</div>
-        </div>
+        <PanelValue
+          curPeriod={curPeriod}
+          type="current"
+          value={value}
+          isLoaded={isLoaded}
+        />
       </div>
       {curPeriod.name === 'Месяц' &&
       currDate.startDate.getMonth() === 0 ? null : (
@@ -107,3 +111,14 @@ const BigPanel = ({
 };
 
 export default BigPanel;
+
+const PanelValue = ({ curPeriod, isLoaded, value, type = 'current' }) => {
+  return (
+    <div className={`panel__value panel__value--${type}`}>
+      <span>{`${
+        type === 'current' ? 'Текущ' : 'Пред'
+      }. ${curPeriod.name.toLowerCase()}`}</span>
+      <div>{isLoaded ? value || 0 : null}</div>
+    </div>
+  );
+};
