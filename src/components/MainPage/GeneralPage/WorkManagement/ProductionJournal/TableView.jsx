@@ -166,17 +166,8 @@ const DayItem = ({
           <span>{`${works?.reduce((sum, cur) => cur.hours + sum, 0)} ч`}</span>
         ) : null}
       </div>
-      {works
-        ?.sort((a, b) => {
-          if (a.hours > b.hours) {
-            return -1;
-          }
-          if (a.hours < b.hours) {
-            return 1;
-          }
-          return 0;
-        })
-        ?.map((work) => (
+      {sortByField(works, { fieldName: 'hours', direction: 'desc' })?.map(
+        (work) => (
           <WorkItem
             work={work}
             key={work.id}
@@ -191,7 +182,8 @@ const DayItem = ({
               )
             }
           />
-        ))}
+        ),
+      )}
     </span>
   );
 };
@@ -212,22 +204,8 @@ const WorkItem = ({ work, onClick }) => {
         <span>{work.workName}</span>
         <span>{`${work.hours} ч`}</span>
       </div>
-      {work.product.length > 0 ? (
-        <div className="employees__item-list">
-          {work.product?.map((product) => (
-            <span
-              key={product.id}
-            >{`${product.name} - ${product.quantity} шт`}</span>
-          ))}
-        </div>
-      ) : null}
-      {work.draft.length > 0 ? (
-        <div className="employees__item-list">
-          {work.draft?.map((draft) => (
-            <span key={draft.id}>{`${draft.name} - ${draft.quantity} шт`}</span>
-          ))}
-        </div>
-      ) : null}
+      <ProductList work={work} name="product" />
+      <ProductList work={work} name="draft" />
       {work.comment !== '' ? (
         <div className="employees__comment">
           <span>Комментарий:</span>
@@ -240,6 +218,19 @@ const WorkItem = ({ work, onClick }) => {
       {noDraftError ? (
         <div className="employees__error">Не указан чертеж</div>
       ) : null}
+    </div>
+  );
+};
+
+const ProductList = ({ work = {}, name = '' }) => {
+  if (work[name].length === 0) return null;
+  return (
+    <div className="employees__item-list">
+      {work[name]?.map((product) => (
+        <span
+          key={product.id}
+        >{`${product.name} - ${product.quantity} шт`}</span>
+      ))}
     </div>
   );
 };
