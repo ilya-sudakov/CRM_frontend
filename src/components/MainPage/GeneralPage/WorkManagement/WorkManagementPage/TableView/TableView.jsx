@@ -5,10 +5,12 @@ import {
   numberToString,
   formatDateString,
   addSpaceDelimiter,
+  getEmployeeNameText,
 } from 'Utils/functions.jsx';
 import { days } from 'Utils/dataObjects';
 import { Link } from 'react-router-dom';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import { sortEmployees } from '../../../ReportTablePage/functions';
 
 const TableView = (props) => {
   const [datesEmployees, setDatesEmployees] = useState({});
@@ -28,7 +30,6 @@ const TableView = (props) => {
         }
       });
     });
-    // console.log(temp)
     return temp;
   };
 
@@ -42,6 +43,18 @@ const TableView = (props) => {
     let newData = props.data;
     newData[date][employee.id].isOpen = !value;
     props.onChange(newData);
+  };
+
+  const sortWorks = (works) => {
+    return works.sort((a, b) => {
+      if (a.hours < b.hours) {
+        return 1;
+      }
+      if (a.hours > b.hours) {
+        return -1;
+      }
+      return 0;
+    });
   };
 
   return (
@@ -78,16 +91,7 @@ const TableView = (props) => {
                   ' - ' +
                   days[new Date(date[0]).getDay()]}
               </div>
-              {Object.values(date[1])
-                .sort((a, b) => {
-                  if (a.employee.lastName < b.employee.lastName) {
-                    return -1;
-                  }
-                  if (a.employee.lastName > b.employee.lastName) {
-                    return 1;
-                  }
-                  return 0;
-                })
+              {sortEmployees(Object.values(date[1]))
                 .filter((item) =>
                   item.employee.lastName
                     .toLowerCase()
@@ -99,9 +103,18 @@ const TableView = (props) => {
                     (new Date(date[0]).getDay() !== 0 &&
                       new Date(date[0]).getDay() !== 6)
                   ) {
+                    const workHours =
+                      Math.floor(
+                        item.works.reduce((sum, cur) => {
+                          if (cur.hours !== undefined) {
+                            return sum + cur.hours;
+                          } else {
+                            return sum;
+                          }
+                        }, 0) * 100,
+                      ) / 100;
                     return (
                       <div
-                        // index={index++}
                         className={
                           (item.isOpen
                             ? 'work-management-page__row '
@@ -117,29 +130,11 @@ const TableView = (props) => {
                         <div className="work-management-page__item work-management-page__item--header">
                           <span className="header--hours">
                             {item.works.length > 0
-                              ? Math.floor(
-                                  item.works.reduce((sum, cur) => {
-                                    if (cur.hours !== undefined) {
-                                      return sum + cur.hours;
-                                    } else {
-                                      return sum;
-                                    }
-                                  }, 0) * 100,
-                                ) /
-                                  100 +
-                                ' ' +
-                                numberToString(
-                                  Math.floor(
-                                    item.works.reduce((sum, cur) => {
-                                      if (cur.hours !== undefined) {
-                                        return sum + cur.hours;
-                                      } else {
-                                        return sum;
-                                      }
-                                    }, 0) * 100,
-                                  ) / 100,
-                                  ['ч', 'ч', 'ч'],
-                                )
+                              ? `${workHours} ${numberToString(workHours, [
+                                  'ч',
+                                  'ч',
+                                  'ч',
+                                ])}`
                               : 'Нет записи!'}
                           </span>
                           <div className="header__wrapper header__wrapper--person">
@@ -147,12 +142,7 @@ const TableView = (props) => {
                               {item.employee.position + ' '}
                             </span>
                             <span className="header--name">
-                              {' ' +
-                                item.employee.lastName +
-                                ' ' +
-                                item.employee.name +
-                                ' ' +
-                                item.employee.middleName}
+                              {getEmployeeNameText(item.employee)}
                             </span>
                           </div>
                           <div
@@ -162,29 +152,11 @@ const TableView = (props) => {
                             <span className="header--top-work">
                               {item.works.length > 0 ? (
                                 <>
-                                  {
-                                    item.works.sort((a, b) => {
-                                      if (a.hours < b.hours) {
-                                        return 1;
-                                      }
-                                      if (a.hours > b.hours) {
-                                        return -1;
-                                      }
-                                      return 0;
-                                    })[0].workList.work
-                                  }
+                                  {sortWorks(item.works)[0].workList.work}
                                   <span className="header--hours">
                                     {`${
                                       Math.floor(
-                                        item.works.sort((a, b) => {
-                                          if (a.hours < b.hours) {
-                                            return 1;
-                                          }
-                                          if (a.hours > b.hours) {
-                                            return -1;
-                                          }
-                                          return 0;
-                                        })[0].hours * 100,
+                                        sortWorks(item.works)[0].hours * 100,
                                       ) / 100
                                     } ч`}
                                   </span>
