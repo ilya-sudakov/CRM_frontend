@@ -77,8 +77,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
   const handleDelete = () => {
     setIsLoading(true);
     console.log('deleting element', worktimeInputs);
-    const id = originalWork.id;
     const originalWork = worktimeInputs.originalWorks[0];
+    const id = originalWork.id;
     return Promise.all(
       originalWork.product.map((product) =>
         deleteProductFromRecordedWork(id, product.product.id),
