@@ -64,7 +64,7 @@ const FileUploader = ({
         ? event.dataTransfer.files
         : event.target.files;
     let file = files[0];
-    console.log(files);
+    console.log(files, data);
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null)
@@ -73,7 +73,6 @@ const FileUploader = ({
 
     let reader = new FileReader();
     const { size } = file;
-    // setData([]);
     if (size / 1024 / 1024 > maxSize) {
       setHasError(`Файл превышает ${maxSize} МБайт`);
       return false;
@@ -92,7 +91,7 @@ const FileUploader = ({
         break;
     }
     reader.onload = (loadEvent) => {
-      setData([...data, ...files]);
+      setData((data) => [...data, ...files]);
       onChange(loadEvent.target.result);
     };
     setHasError(false);
@@ -122,7 +121,7 @@ const FileUploader = ({
     };
   }, []);
 
-  useEffect(() => {}, [isDraggingOver]);
+  useEffect(() => {}, [isDraggingOver, data]);
 
   const canLoadMoreFiles =
     multipleFiles || (!multipleFiles && data.length === 0);
