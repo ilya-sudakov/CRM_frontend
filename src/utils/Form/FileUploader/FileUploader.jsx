@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './FileUploader.scss';
+import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
@@ -10,6 +11,7 @@ const FileUploader = ({
   uniqueId = 0,
   error = false,
   hideError,
+  multipleFiles = true,
 }) => {
   const [data, setData] = useState([]);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -105,6 +107,7 @@ const FileUploader = ({
   };
 
   useEffect(() => {
+    if (!dropRef.current) return;
     const div = dropRef.current;
     div.addEventListener('dragenter', onDragEnter);
     div.addEventListener('dragleave', onDragLeave);
@@ -121,56 +124,60 @@ const FileUploader = ({
 
   useEffect(() => {}, [isDraggingOver]);
 
+  const canLoadMoreFiles =
+    multipleFiles || (!multipleFiles && data.length === 0);
   return (
     <div className="file-uploader">
-      <div
-        className={`file-uploader__wrapper ${
-          isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
-        } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
-        ref={dropRef}
-        style={{
-          minHeight: 'var(--file-uploader__min-height)',
-        }}
-      >
-        {isDraggingOver ? (
-          <div
-            className="file-uploader__info"
-            draggable="true"
-            onDragStart={(e) => e.preventDefault()}
-          >
-            <div className="file-uploader__text">
-              Отпустите файл для загрузки
+      {canLoadMoreFiles ? (
+        <div
+          className={`file-uploader__wrapper ${
+            isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
+          } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
+          ref={dropRef}
+          style={{
+            minHeight: 'var(--file-uploader__min-height)',
+          }}
+        >
+          {isDraggingOver ? (
+            <div
+              className="file-uploader__info"
+              draggable="true"
+              onDragStart={(e) => e.preventDefault()}
+            >
+              <div className="file-uploader__text">
+                Отпустите файл для загрузки
+              </div>
             </div>
-          </div>
-        ) : (
-          <div
-            className="file-uploader__info"
-            draggable="true"
-            onDragStart={(e) => e.preventDefault()}
-          >
-            <div className="file-uploader__text">Перетащите файл сюда</div>
-            <div className="file-uploader__text file-uploader__text--small">
-              или
-            </div>
+          ) : (
+            <div
+              className="file-uploader__info"
+              draggable="true"
+              onDragStart={(e) => e.preventDefault()}
+            >
+              <div className="file-uploader__text">Перетащите файл сюда</div>
+              <div className="file-uploader__text file-uploader__text--small">
+                или
+              </div>
 
-            <div className="file-uploader__input">
-              <label
-                className="main-window__button"
-                htmlFor={`fileuploader-${uniqueId}`}
-              >
-                Загрузите файл
-              </label>
-              <input
-                onChange={handleDropFile}
-                type="file"
-                name="file"
-                multiple="multiple"
-                id={`fileuploader-${uniqueId}`}
-              />
+              <div className="file-uploader__input">
+                <label
+                  className="main-window__button"
+                  htmlFor={`fileuploader-${uniqueId}`}
+                >
+                  Загрузите файл
+                </label>
+                <input
+                  onChange={handleDropFile}
+                  type="file"
+                  name="file"
+                  multiple={multipleFiles ? 'multiple' : false}
+                  id={`fileuploader-${uniqueId}`}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : null}
       {(error || hasError) && (
         <div
           className="file-uploader__error"
@@ -182,15 +189,18 @@ const FileUploader = ({
           {error ? 'Поле не заполнено!' : hasError}
         </div>
       )}
-      {formats[regex.toString()] && (
-        <div className="file-uploader__hint">
-          {formats[regex.toString()].text}
-        </div>
-      )}
+      {canLoadMoreFiles
+        ? formats[regex.toString()] && (
+            <div className="file-uploader__hint">
+              {formats[regex.toString()].text}
+            </div>
+          )
+        : null}
       {data.length > 0 ? (
         <ul className="file-uploader__file-list">
           {data.map((item, index) => (
             <li key={index}>
+              <ImageView imgSrc={item.name} />
               <div>{item?.name ?? 'фотография.jpeg'}</div>
               <div onClick={(event) => handleDeleteFile(event, index)}>
                 удалить
