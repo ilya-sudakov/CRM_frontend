@@ -86,25 +86,6 @@ describe('PrivateRoute component', () => {
     );
   });
 
-  it('renders component if no restrictions are provided', () => {
-    renderWithRouter(
-      <UserContext.Provider
-        value={{
-          userData: defaultUser,
-          isAuthorized: true,
-          userHasAccess,
-        }}
-      >
-        <PrivateRoute>123</PrivateRoute>
-      </UserContext.Provider>,
-    );
-
-    setTimeout(
-      async () => expect(await screen.findByText('123')).toBeInTheDocument(),
-      1000,
-    );
-  });
-
   it('renders component if user is allowed', () => {
     renderWithRouter(
       <UserContext.Provider
@@ -131,7 +112,7 @@ describe('PrivateRoute component', () => {
       <UserContext.Provider
         value={{
           userData: defaultUser,
-          isAuthorized: false,
+          isAuthorized: true,
           userHasAccess,
         }}
       >
