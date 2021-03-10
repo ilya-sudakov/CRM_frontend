@@ -200,7 +200,12 @@ const FileUploader = ({
         <ul className="file-uploader__file-list">
           {data.map((item, index) => (
             <li key={index}>
-              <ImageView imgSrc={item.name} />
+              <ImageView
+                file={{
+                  imgSrc: item,
+                  extension: item.type.split('/')[1],
+                }}
+              />
               <div>{item?.name ?? 'фотография.jpeg'}</div>
               <div onClick={(event) => handleDeleteFile(event, index)}>
                 удалить
