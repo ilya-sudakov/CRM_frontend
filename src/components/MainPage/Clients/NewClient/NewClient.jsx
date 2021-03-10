@@ -15,7 +15,6 @@ import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
-// import UsersVisibility from '../FormComponents/UsersVisibility.jsx';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import useForm from 'Utils/hooks/useForm.js';
 import { clientsDefaultInputs } from '../objects';
@@ -31,7 +30,17 @@ const newClient = (props) => {
     setFormErrors,
     formIsValid,
     errorWindow,
-  } = useForm(clientsDefaultInputs);
+  } = useForm([
+    ...clientsDefaultInputs,
+    {
+      name: 'manager',
+      defaultValue: userContext.userHasAccess(['ROLE_ADMIN'])
+        ? ''
+        : userContext.userData.username,
+      isRequired: true,
+      isValid: !userContext.userHasAccess(['ROLE_ADMIN']),
+    },
+  ]);
   const clientTypes = {
     clients: {
       name: 'клиент',
@@ -384,8 +393,9 @@ const newClient = (props) => {
                   userHasAccess={userContext.userHasAccess}
                   name="categoryId"
                   handleCategoryChange={(value, name) => {
-                    handleInputChange('categoryId', value);
+                    console.log(value, name);
                     handleInputChange('categoryName', name);
+                    handleInputChange('categoryId', value);
                   }}
                   errorsArr={formErrors}
                   setErrorsArr={setFormErrors}

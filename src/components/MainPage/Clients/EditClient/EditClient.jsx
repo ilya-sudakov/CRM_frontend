@@ -49,6 +49,11 @@ const EditClient = (props) => {
     { name: 'id', defaultValue: 0 },
     { name: 'favorite', defaultValue: false },
     { name: 'type', defaultValue: '' },
+    {
+      name: 'manager',
+      defaultValue: '',
+      isRequired: true,
+    },
   ]);
   const clientTypes = {
     clients: {

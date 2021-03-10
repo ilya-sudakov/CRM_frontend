@@ -76,9 +76,4 @@ export const clientsDefaultInputs = [
     name: 'nextContactDate',
     defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
   },
-  {
-    name: 'manager',
-    defaultValue: '',
-    isRequired: true,
-  },
 ];
