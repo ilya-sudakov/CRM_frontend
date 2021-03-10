@@ -5,7 +5,6 @@ import okSVG from 'Assets/tableview/ok.svg';
 
 const TableView = (props) => {
   const search = () => {
-    // console.log(drafts);
     let re = /[.,\s\-_]/gi;
     const query = props.searchQuery.toLowerCase();
     let searchArr = query.split(' ');
@@ -53,70 +52,57 @@ const TableView = (props) => {
             <span>Тип</span>
             <div className="main-window__actions">Действие</div>
           </div>
-          {search()
-            .filter(
-              (draft) =>
-                draft.number
-                  .toLowerCase()
-                  .includes(props.searchQuery.toLowerCase()) ||
-                draft.name
-                  .toLowerCase()
-                  .includes(props.searchQuery.toLowerCase()) ||
-                draft.location
-                  .toLowerCase()
-                  .includes(props.searchQuery.toLowerCase()),
-            )
-            .map((draft) => {
-              return (
-                <div
-                  className="main-window__list-item"
-                  key={draft.id}
-                  onClick={() => {
-                    console.log(draft);
-                    props.selectDraft(
-                      draft.id,
-                      draft.name,
-                      draft.type,
-                      draft.number,
-                    );
-                    props.setCloseWindow(!props.closeWindow);
-                  }}
-                >
-                  <span>
-                    <div className="main-window__mobile-text">Артикул:</div>
-                    {draft.number}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Название:</div>
-                    {draft.name}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">
-                      Местоположение:
-                    </div>
-                    {draft.location}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Тип:</div>
-                    {partTypes[draft.type]}
-                  </span>
-                  <div className="main-window__actions">
-                    <div
-                      className="main-window__action"
-                      onClick={() => {
-                        props.selectDraft(draft.id, draft.name, draft.type);
-                        console.log(props.closeWindow);
-                        props.setCloseWindow(!props.closeWindow);
-                      }}
-                      title="Выбрать деталь"
-                    >
-                      {/* Выбрать */}
-                      <img className="main-window__img" src={okSVG} alt="" />
-                    </div>
+          {search().map((draft) => {
+            return (
+              <div
+                className="main-window__list-item"
+                key={draft.id}
+                onClick={() => {
+                  console.log(draft);
+                  props.selectDraft(
+                    draft.id,
+                    draft.name,
+                    draft.type,
+                    draft.number,
+                  );
+                  props.setCloseWindow(!props.closeWindow);
+                }}
+              >
+                <span>
+                  <div className="main-window__mobile-text">Артикул:</div>
+                  {draft.number}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Название:</div>
+                  {draft.name}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">
+                    Местоположение:
+                  </div>
+                  {draft.location}
+                </span>
+                <span>
+                  <div className="main-window__mobile-text">Тип:</div>
+                  {partTypes[draft.type]}
+                </span>
+                <div className="main-window__actions">
+                  <div
+                    className="main-window__action"
+                    onClick={() => {
+                      props.selectDraft(draft.id, draft.name, draft.type);
+                      console.log(props.closeWindow);
+                      props.setCloseWindow(!props.closeWindow);
+                    }}
+                    title="Выбрать деталь"
+                  >
+                    {/* Выбрать */}
+                    <img className="main-window__img" src={okSVG} alt="" />
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

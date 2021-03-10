@@ -18,7 +18,6 @@ const SelectDraft = (props) => {
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
 
   const search = () => {
-    // console.log(drafts);
     let re = /[.,\s\-_]/gi;
     const query = searchQuery.toLowerCase();
     let searchArr = query.split(' ');
@@ -76,49 +75,27 @@ const SelectDraft = (props) => {
     const type = event.currentTarget.getAttribute('type');
     const number = event.currentTarget.getAttribute('number');
     setShowOptions(!showOptions);
-    setSelected([
-      ...selected,
-      {
-        partId: id,
-        name: value,
-        number: number,
-        type: type,
-        quantity: 0,
-      },
-    ]);
-    props.onChange([
-      ...selected,
-      {
-        partId: id,
-        type: type,
-        number: number,
-        name: value,
-        quantity: 0,
-      },
-    ]);
+    const newDraft = {
+      partId: id,
+      name: value,
+      number: number,
+      type: type,
+      quantity: 0,
+    };
+    setSelected([...selected, newDraft]);
+    props.onChange([...selected, newDraft]);
   };
 
   const selectDraft = (id, value, type, number) => {
-    setSelected([
-      ...selected,
-      {
-        partId: id,
-        type: type,
-        name: value,
-        number: number,
-        quantity: 0,
-      },
-    ]);
-    props.onChange([
-      ...selected,
-      {
-        partId: id,
-        type: type,
-        name: value,
-        number: number,
-        quantity: 0,
-      },
-    ]);
+    const newDraft = {
+      partId: id,
+      type: type,
+      name: value,
+      number: number,
+      quantity: 0,
+    };
+    setSelected([...selected, newDraft]);
+    props.onChange([...selected, newDraft]);
   };
 
   const clickOnSelected = (event) => {
