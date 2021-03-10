@@ -85,7 +85,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
 };
 
 //Получение URI из полученной картинки
-export function getDataUri(url, extension, quality) {
+export function getDataUri(url, extension, quality = 0.92) {
   return new Promise((resolve, reject) => {
     var img = new Image();
     img.onload = () => {
@@ -95,8 +95,8 @@ export function getDataUri(url, extension, quality) {
       var ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
       var dataURL = canvas.toDataURL(
-        extension ? 'image/' + extension : 'image/png',
-        quality ? quality : 0.92,
+        extension ? `image/${extension}` : 'image/png',
+        quality,
       );
       resolve(dataURL);
     };

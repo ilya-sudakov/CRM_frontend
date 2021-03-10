@@ -6,13 +6,12 @@ const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
   type = 'readAsDataURL',
   onChange,
-  previewImage,
   maxSize = 5,
   uniqueId = 0,
   error = false,
   hideError,
 }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   let dragCounter = 0;
   const [hasError, setHasError] = useState(false);
@@ -57,21 +56,22 @@ const FileUploader = ({
     event.preventDefault();
     event.stopPropagation();
     setIsDraggingOver(false);
-    let file =
-      event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
-        ? event.dataTransfer.files[0]
-        : event.target.files[0];
     dragCounter = 0;
+    const files =
+      event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
+        ? event.dataTransfer.files
+        : event.target.files;
+    let file = files[0];
+    console.log(files);
 
     //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
     if (file.name.match(regex) === null)
       return setHasError('Некорректный формат файла!');
-
     if (type === 'fileOnly') return onChange(file);
 
     let reader = new FileReader();
     const { size } = file;
-    setData(null);
+    // setData([]);
     if (size / 1024 / 1024 > maxSize) {
       setHasError(`Файл превышает ${maxSize} МБайт`);
       return false;
@@ -90,15 +90,17 @@ const FileUploader = ({
         break;
     }
     reader.onload = (loadEvent) => {
-      setData(file);
+      setData([...data, ...files]);
       onChange(loadEvent.target.result);
     };
     setHasError(false);
   };
 
-  const handleDeleteFile = (event) => {
+  const handleDeleteFile = (event, index) => {
     event.preventDefault();
-    setData(null);
+    let temp = data;
+    temp.splice(index, 1);
+    setData([...temp]);
     onChange('');
   };
 
@@ -117,33 +119,20 @@ const FileUploader = ({
     };
   }, []);
 
-  useEffect(() => {}, [previewImage, isDraggingOver]);
+  useEffect(() => {}, [isDraggingOver]);
 
   return (
     <div className="file-uploader">
-      {previewImage && previewImage !== '' ? (
-        <img className="file-uploader__preview-image" src={previewImage} />
-      ) : null}
       <div
         className={`file-uploader__wrapper ${
           isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
         } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
         ref={dropRef}
         style={{
-          minHeight:
-            data || (previewImage && previewImage !== '')
-              ? 'fit-content'
-              : 'var(--file-uploader__min-height)',
+          minHeight: 'var(--file-uploader__min-height)',
         }}
       >
-        {data || (previewImage && previewImage !== '') ? (
-          <ul className="file-uploader__file-list">
-            <li>
-              <div>{data?.name ?? 'фотография.jpeg'}</div>
-              <div onClick={handleDeleteFile}>удалить</div>
-            </li>
-          </ul>
-        ) : isDraggingOver ? (
+        {isDraggingOver ? (
           <div
             className="file-uploader__info"
             draggable="true"
@@ -175,6 +164,7 @@ const FileUploader = ({
                 onChange={handleDropFile}
                 type="file"
                 name="file"
+                multiple="multiple"
                 id={`fileuploader-${uniqueId}`}
               />
             </div>
@@ -197,6 +187,18 @@ const FileUploader = ({
           {formats[regex.toString()].text}
         </div>
       )}
+      {data.length > 0 ? (
+        <ul className="file-uploader__file-list">
+          {data.map((item, index) => (
+            <li key={index}>
+              <div>{item?.name ?? 'фотография.jpeg'}</div>
+              <div onClick={(event) => handleDeleteFile(event, index)}>
+                удалить
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 };
@@ -207,7 +209,6 @@ FileUploader.propTypes = {
   regex: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  previewImage: PropTypes.string,
   uniqueId: PropTypes.string,
   error: PropTypes.string,
   hideError: PropTypes.func,
