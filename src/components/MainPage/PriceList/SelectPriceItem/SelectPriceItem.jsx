@@ -89,7 +89,8 @@ const SelectPriceItem = (props) => {
           {!props.readOnly && (
             <FileUploader
               uniqueId={`file${index}${props.uniqueId}`}
-              onChange={(result) => onImageDataChange(result, imgInfo)}
+              type="readAsDataURL"
+              onChange={(result) => onImageDataChange(result[0], imgInfo)}
               defaultValue={
                 imgInfo.previewImage && imgInfo.previewImage !== ''
                   ? [imgInfo.previewImage]

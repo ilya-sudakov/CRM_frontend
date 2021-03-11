@@ -55,7 +55,17 @@ const FileUploader = ({
     e.stopPropagation();
   };
 
-  const handleDropFile = (event) => {
+  const getFileData = (file) => {
+    return new Promise((resolve) => {
+      let reader = new FileReader();
+      reader.onload = (loadEvent) => resolve(loadEvent.target.result);
+      if (type === 'readAsArrayBuffer') return reader.readAsArrayBuffer(file);
+      if (type === 'readAsDataURL') return reader.readAsDataURL(file);
+      return reader.readAsDataURL(file);
+    });
+  };
+
+  const handleDropFile = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setIsDraggingOver(false);
@@ -64,7 +74,6 @@ const FileUploader = ({
       event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
         ? event.dataTransfer.files
         : event.target.files;
-    let file = files[0];
     console.log(files, data);
 
     let errorMessage = null;
@@ -81,29 +90,24 @@ const FileUploader = ({
     });
     if (errorMessage) return setHasError(errorMessage);
     setHasError(false);
-
-    //Для разных типов файла - разные функции обработки данных
-    let reader = new FileReader();
-    switch (type) {
-      case 'readAsArrayBuffer':
-        reader.readAsArrayBuffer(file);
-        break;
-      case 'files':
-        setData((data) => [...data, ...files]);
-        onChange([...data, ...files]);
-        break;
-      case 'readAsDataURL':
-        reader.readAsDataURL(file);
-        break;
-      default:
-        reader.readAsDataURL(file);
-        break;
-    }
-    reader.onload = (loadEvent) => {
+    if (type === 'files') {
       setData((data) => [...data, ...files]);
-      onChange(loadEvent.target.result);
-    };
-    setHasError(false);
+      onChange([...data, ...files]);
+      setHasError(false);
+      return;
+    }
+
+    let temp = [];
+    return await Promise.all(
+      Array.from(files).map(async (fileItem) =>
+        temp.push(await getFileData(fileItem)),
+      ),
+    ).then(() => {
+      setData((data) => [...data, ...temp]);
+      onChange([...data, ...temp]);
+      setHasError(false);
+      return;
+    });
   };
 
   const handleDeleteFile = (event, index) => {
@@ -111,7 +115,7 @@ const FileUploader = ({
     let temp = data;
     temp.splice(index, 1);
     setData([...temp]);
-    onChange('');
+    onChange([...temp]);
   };
 
   useEffect(() => {
@@ -133,7 +137,13 @@ const FileUploader = ({
   useEffect(() => {}, [isDraggingOver, data]);
 
   useEffect(() => {
-    if (defaultValue && defaultValue.length > 0 && data.length === 0) {
+    if (
+      defaultValue &&
+      defaultValue.length > 0 &&
+      data.length === 0 &&
+      defaultValue[0] !== '' &&
+      defaultValue[0] !== undefined
+    ) {
       setData([...defaultValue]);
     }
   }, [defaultValue]);
@@ -181,7 +191,7 @@ const FileUploader = ({
                   Загрузите файл
                 </label>
                 <input
-                  onChange={handleDropFile}
+                  onChange={async (event) => await handleDropFile(event)}
                   type="file"
                   name="file"
                   multiple={multipleFiles ? 'multiple' : false}
@@ -216,24 +226,9 @@ const FileUploader = ({
           style={{ marginTop: canLoadMoreFiles ? '10px' : '0' }}
         >
           {data.map((item, index) => {
-            const isBase64 =
-              (typeof item === 'string' && item.length > 1000) ||
-              (typeof item === 'string' && item.length === 0);
-            const isLocalPath = typeof item === 'string' && item.length <= 200;
-            console.log(item);
             return (
               <li key={index}>
-                <ImageView
-                  file={{
-                    data: item,
-                    isBase64: isBase64 || isLocalPath,
-                    extension: isLocalPath
-                      ? item.split('.')[1]
-                      : isBase64
-                      ? item.split('image/')[1]?.split(';base64')[0]
-                      : item?.type?.split('/')[1],
-                  }}
-                />
+                <ImageView file={item} />
                 <div>{item?.name ?? 'фотография.jpeg'}</div>
                 <div onClick={(event) => handleDeleteFile(event, index)}>
                   удалить

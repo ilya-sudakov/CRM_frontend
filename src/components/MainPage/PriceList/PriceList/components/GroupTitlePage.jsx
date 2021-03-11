@@ -26,9 +26,12 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
         <div className="main-form__input_field">
           <FileUploader
             uniqueId={`fileTitlePage${index}`}
+            type="readAsDataURL"
             onChange={async (result) => {
               const downgraded =
-                result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+                result[0] !== ''
+                  ? await getDataUri(result[0], 'jpeg', 0.3)
+                  : '';
               setTitlePage({
                 ...titlePage,
                 [name]: downgraded,

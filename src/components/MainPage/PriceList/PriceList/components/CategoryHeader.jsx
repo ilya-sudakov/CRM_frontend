@@ -25,15 +25,16 @@ const CategoryHeader = ({
       <div className="main-form__input_field">
         <FileUploader
           uniqueId={'categoryImg' + categoryIndex}
+          type="readAsDataURL"
           onChange={(result) => {
             let originalList = categories;
             originalList.splice(categoryIndex, 1, {
               ...category,
-              img: result,
+              img: result[0],
             });
             setCategories([...originalList]);
           }}
-          defaultValue={[category.img]}
+          defaultValue={category.img !== '' ? [category.img] : undefined}
         />
       </div>
     </div>
