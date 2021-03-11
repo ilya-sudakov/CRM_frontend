@@ -229,7 +229,7 @@ const FileUploader = ({
             return (
               <li key={index}>
                 <ImageView file={item} />
-                <div>{item?.name ?? 'фотография.jpeg'}</div>
+                <div>{item?.name ?? 'no_name'}</div>
                 <div onClick={(event) => handleDeleteFile(event, index)}>
                   удалить
                 </div>

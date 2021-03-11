@@ -76,7 +76,7 @@ const SelectPriceItem = (props) => {
 
   const onImageDataChange = async (result, imgInfo) => {
     const downgraded =
-      result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+      result !== '' && result ? await getDataUri(result, 'jpeg', 0.3) : '';
     imgInfo.setter(downgraded);
     props.handleImgChange(downgraded, imgInfo.itemName);
   };

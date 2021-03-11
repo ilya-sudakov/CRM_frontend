@@ -29,7 +29,7 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
             type="readAsDataURL"
             onChange={async (result) => {
               const downgraded =
-                result[0] !== ''
+                result[0] !== '' && result[0]
                   ? await getDataUri(result[0], 'jpeg', 0.3)
                   : '';
               setTitlePage({

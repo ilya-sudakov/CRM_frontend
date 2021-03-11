@@ -3,27 +3,27 @@ import useFormWindow from 'Utils/hooks/useFormWindow';
 
 import './ImageView.scss';
 
+const getFileExtension = (item) => {
+  const isBase64 =
+    (typeof item === 'string' && item.length > 1000) ||
+    (typeof item === 'string' && item.length === 0);
+  const isLocalPath = typeof item === 'string' && item.length <= 200;
+  const extension = isLocalPath
+    ? item.split('.')[1]
+    : isBase64
+    ? item.split('image/')[1]?.split(';base64')[0]
+    : item?.type?.split('/')[1];
+  return extension;
+};
+
 const ImageView = ({ file, closeWindow = null }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
-  const getFileExtension = (item) => {
-    const isBase64 =
-      (typeof item === 'string' && item.length > 1000) ||
-      (typeof item === 'string' && item.length === 0);
-    const isLocalPath = typeof item === 'string' && item.length <= 200;
-    const extension = isLocalPath
-      ? item.split('.')[1]
-      : isBase64
-      ? item.split('image/')[1]?.split(';base64')[0]
-      : item?.type?.split('/')[1];
-    return extension;
-  };
   const isBase64 = typeof file === 'string';
   const { formWindow, toggleFormWindow } = useFormWindow(
     isBase64 ? 'Просмотр' : file?.name,
     <img className="image-view__img image-view__img--full" ref={imgBigRef} />,
   );
-
   const extension = getFileExtension(file);
   const isImage =
     extension === 'png' ||
@@ -60,9 +60,7 @@ const ImageView = ({ file, closeWindow = null }) => {
           ref={imgRef}
         />
       ) : (
-        <div className="image-view__img image-view__img--placeholder">
-          {'Файл'}
-        </div>
+        <div className="image-view__img image-view__img--placeholder">Файл</div>
       )}
       {formWindow}
     </div>
