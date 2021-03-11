@@ -6,8 +6,9 @@ import './ImageView.scss';
 const ImageView = ({ file }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
+  const isBase64 = typeof file?.data === 'string';
   const { formWindow, setShowWindow, showWindow } = useFormWindow(
-    'Просмотр',
+    isBase64 ? 'Просмотр' : file?.data?.name,
     <img className="image-view__img image-view__img--full" ref={imgBigRef} />,
   );
 
@@ -25,7 +26,6 @@ const ImageView = ({ file }) => {
   }, [file]);
 
   const loadFile = (file, object) => {
-    const isBase64 = typeof file === 'string';
     if (isBase64) return (object.src = file);
     object.src = URL.createObjectURL(file);
     object.onload = () => URL.revokeObjectURL(object.src); // free memory

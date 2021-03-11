@@ -5,7 +5,7 @@ import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
-  type = 'readAsDataURL',
+  type = 'files',
   onChange,
   maxSize = 5,
   uniqueId = 0,
@@ -67,22 +67,30 @@ const FileUploader = ({
     let file = files[0];
     console.log(files, data);
 
-    //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
-    if (file.name.match(regex) === null)
-      return setHasError('Некорректный формат файла!');
-    if (type === 'fileOnly') return onChange(file);
+    let errorMessage = null;
+    Array.from(files).map((item) => {
+      //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
+      if (item.name.match(regex) === null)
+        return (errorMessage = 'Некорректный формат файла!');
 
-    let reader = new FileReader();
-    const { size } = file;
-    if (size / 1024 / 1024 > maxSize) {
-      setHasError(`Файл превышает ${maxSize} МБайт`);
-      return false;
-    }
+      const { size } = item;
+      if (size / 1024 / 1024 > maxSize) {
+        errorMessage = `Файл превышает ${maxSize} МБайт`;
+        return false;
+      }
+    });
+    if (errorMessage) return setHasError(errorMessage);
     setHasError(false);
+
     //Для разных типов файла - разные функции обработки данных
+    let reader = new FileReader();
     switch (type) {
       case 'readAsArrayBuffer':
         reader.readAsArrayBuffer(file);
+        break;
+      case 'files':
+        setData((data) => [...data, ...files]);
+        onChange([...data, ...files]);
         break;
       case 'readAsDataURL':
         reader.readAsDataURL(file);
