@@ -216,15 +216,20 @@ const FileUploader = ({
           style={{ marginTop: canLoadMoreFiles ? '10px' : '0' }}
         >
           {data.map((item, index) => {
-            const isBase64 = typeof item === 'string' && item.length > 1000;
+            const isBase64 =
+              (typeof item === 'string' && item.length > 1000) ||
+              (typeof item === 'string' && item.length === 0);
+            const isLocalPath = typeof item === 'string' && item.length <= 200;
             console.log(item);
             return (
               <li key={index}>
                 <ImageView
                   file={{
                     data: item,
-                    isBase64: typeof item === 'string' || isBase64,
-                    extension: isBase64
+                    isBase64: isBase64 || isLocalPath,
+                    extension: isLocalPath
+                      ? item.split('.')[1]
+                      : isBase64
                       ? item.split('image/')[1]?.split(';base64')[0]
                       : item?.type?.split('/')[1],
                   }}
