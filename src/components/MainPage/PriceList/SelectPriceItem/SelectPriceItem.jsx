@@ -90,7 +90,7 @@ const SelectPriceItem = (props) => {
             <FileUploader
               uniqueId={`file${index}${props.uniqueId}`}
               onChange={(result) => onImageDataChange(result, imgInfo)}
-              previewImage={imgInfo.previewImage}
+              defaultValue={[imgInfo.previewImage]}
             />
           )}
         </div>

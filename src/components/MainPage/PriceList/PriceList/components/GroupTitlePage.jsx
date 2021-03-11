@@ -34,7 +34,7 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
                 [name]: downgraded,
               });
             }}
-            previewImage={titlePage[name] !== '' ? titlePage[name] : null}
+            defaultValue={titlePage[name] !== '' ? [titlePage[name]] : null}
           />
         </div>
       </div>

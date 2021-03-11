@@ -33,7 +33,7 @@ const CategoryHeader = ({
             });
             setCategories([...originalList]);
           }}
-          previewImage={category.img}
+          defaultValue={[category.img]}
         />
       </div>
     </div>
