@@ -11,7 +11,8 @@ const FileUploader = ({
   uniqueId = 0,
   error = false,
   hideError,
-  multipleFiles = true,
+  multipleFiles = false,
+  defaultValue,
 }) => {
   const [data, setData] = useState([]);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
@@ -123,6 +124,12 @@ const FileUploader = ({
 
   useEffect(() => {}, [isDraggingOver, data]);
 
+  useEffect(() => {
+    if (defaultValue && defaultValue.length > 0 && data.length === 0) {
+      setData([...defaultValue]);
+    }
+  }, [defaultValue]);
+
   const canLoadMoreFiles =
     multipleFiles || (!multipleFiles && data.length === 0);
   return (
@@ -197,20 +204,26 @@ const FileUploader = ({
         : null}
       {data.length > 0 ? (
         <ul className="file-uploader__file-list">
-          {data.map((item, index) => (
-            <li key={index}>
-              <ImageView
-                file={{
-                  imgSrc: item,
-                  extension: item.type.split('/')[1],
-                }}
-              />
-              <div>{item?.name ?? 'фотография.jpeg'}</div>
-              <div onClick={(event) => handleDeleteFile(event, index)}>
-                удалить
-              </div>
-            </li>
-          ))}
+          {data.map((item, index) => {
+            const isBase64 = typeof item === 'string';
+            return (
+              <li key={index}>
+                <ImageView
+                  file={{
+                    data: item,
+                    isBase64: isBase64,
+                    extension: isBase64
+                      ? item.split('image/')[1].split(';base64')[0]
+                      : item.type.split('/')[1],
+                  }}
+                />
+                <div>{item?.name ?? 'фотография.jpeg'}</div>
+                <div onClick={(event) => handleDeleteFile(event, index)}>
+                  удалить
+                </div>
+              </li>
+            );
+          })}
         </ul>
       ) : null}
     </div>

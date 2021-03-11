@@ -21,6 +21,7 @@ const NewEmployee = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
+    console.log(formInputs);
     if (!formIsValid()) return;
     setIsLoading(true);
     addEmployee({
@@ -154,7 +155,7 @@ const NewEmployee = (props) => {
           <div className="main-form__input_name">Паспорт</div>
           <FileUploader
             onChange={(result) => handleInputChange('passportScan1', result)}
-            previewImage={formInputs.passportScan1}
+            multipleFiles
           />
         </div>
         <InputText

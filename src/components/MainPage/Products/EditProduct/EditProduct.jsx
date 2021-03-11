@@ -70,7 +70,7 @@ const EditProduct = (props) => {
             productionLocation: oldProduct.productionLocation,
             category: oldProduct.category,
             comment: oldProduct.comment,
-            photo: oldProduct.photo,
+            photo: [oldProduct.photo],
           });
         })
         .catch((error) => {
@@ -214,7 +214,7 @@ const EditProduct = (props) => {
                 result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
               handleInputChange('photo', downgraded);
             }}
-            previewImage={formInputs.photo}
+            defaultValue={formInputs.photo}
             error={formErrors.photo}
             hideError={() => setFormErrors({ ...formErrors, photo: false })}
           />
