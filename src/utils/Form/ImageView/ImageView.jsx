@@ -32,12 +32,18 @@ const ImageView = ({ file }) => {
   };
 
   return (
-    <div className="image-view">
+    <div
+      className="image-view"
+      onClick={
+        file.data && file.data !== '' && isImage
+          ? () => setShowWindow(!showWindow)
+          : null
+      }
+    >
       {file.data && file.data !== '' && isImage ? (
         <img
           className="image-view__img image-view__img--preview"
           ref={imgRef}
-          onClick={() => setShowWindow(!showWindow)}
         />
       ) : (
         <div className="image-view__img image-view__img--placeholder">
