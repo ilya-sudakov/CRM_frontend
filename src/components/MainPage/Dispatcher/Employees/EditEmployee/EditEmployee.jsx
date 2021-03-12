@@ -199,7 +199,7 @@ const EditEmployee = (props) => {
           </div>
         </div>
         <div className="main-form__item">
-          <div className="main-form__input_name">Паспорт*</div>
+          <div className="main-form__input_name">Документы</div>
           <FileUploader
             onChange={(files) => handleInputChange('employeePhotos', files)}
             defaultValue={formInputs.employeePhotos}
