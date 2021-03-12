@@ -148,6 +148,27 @@ const FileUploader = ({
     }
   }, [defaultValue]);
 
+  const getFileName = (item) => {
+    const isBase64 =
+      (typeof item === 'string' && item.length > 1000) ||
+      (typeof item === 'string' && item.length === 0);
+    const isLocalPath = typeof item === 'string' && item.length <= 200;
+    const isRemoteFile =
+      typeof item === 'object' && item?.url !== undefined && item?.url !== null;
+    const isRawFile =
+      typeof item === 'object' &&
+      item?.name !== undefined &&
+      item?.name !== null &&
+      item?.size !== undefined &&
+      item?.size !== null;
+    if (isRemoteFile)
+      return item?.url?.split(/\/fileWithoutDB\/downloadFile\//)[1];
+    if (isLocalPath) return item.split('assets/')[1];
+    if (isBase64) return 'файл_без_имени';
+    if (isRawFile) return item?.name;
+    return item?.type?.split('/')[1] ?? 'файл_без_имени';
+  };
+
   const canLoadMoreFiles =
     multipleFiles || (!multipleFiles && data.length === 0);
   return (
@@ -229,7 +250,7 @@ const FileUploader = ({
             return (
               <li key={index}>
                 <ImageView file={item} />
-                <div>{item?.name ?? 'no_name'}</div>
+                <div>{getFileName(item)}</div>
                 <div onClick={(event) => handleDeleteFile(event, index)}>
                   удалить
                 </div>

@@ -17,13 +17,34 @@ const getFileExtension = (item) => {
   return item?.type?.split('/')[1] ?? 'file';
 };
 
+const getFileName = (item) => {
+  const isBase64 =
+    (typeof item === 'string' && item.length > 1000) ||
+    (typeof item === 'string' && item.length === 0);
+  const isLocalPath = typeof item === 'string' && item.length <= 200;
+  const isRemoteFile =
+    typeof item === 'object' && item?.url !== undefined && item?.url !== null;
+  const isRawFile =
+    typeof item === 'object' &&
+    item?.name !== undefined &&
+    item?.name !== null &&
+    item?.size !== undefined &&
+    item?.size !== null;
+  if (isRemoteFile)
+    return item?.url?.split(/\/fileWithoutDB\/downloadFile\//)[1];
+  if (isLocalPath) return item.split('assets/')[1];
+  if (isBase64) return 'Просмотр';
+  if (isRawFile) return item?.name;
+  return item?.type?.split('/')[1] ?? 'file';
+};
+
 const ImageView = ({ file, closeWindow = null }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
   const isBase64 = typeof file === 'string';
   const isRemoteFile = typeof file === 'object' && file?.url;
   const { formWindow, toggleFormWindow } = useFormWindow(
-    isBase64 ? 'Просмотр' : file?.name,
+    getFileName(file),
     <img className="image-view__img image-view__img--full" ref={imgBigRef} />,
   );
   const extension = getFileExtension(file);

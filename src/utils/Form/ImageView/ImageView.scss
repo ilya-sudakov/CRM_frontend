@@ -34,7 +34,7 @@
         &--full {
             width: 100%;
             max-width: 800px;
-            border-radius: 5px;
+            border-radius: 0;
         }
 
         &--preview,
@@ -53,8 +53,16 @@
 
     .form-window {
         &__content {
-            max-width: fit-content;
+            width: fit-content;
             height: fit-content;
+
+            .form-window__body {
+                padding: 0;
+
+                .main-window {
+                    display: flex;
+                }
+            }
         }
     }
 }
