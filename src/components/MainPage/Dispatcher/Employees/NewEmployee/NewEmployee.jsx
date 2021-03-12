@@ -154,7 +154,7 @@ const NewEmployee = (props) => {
         <div className="main-form__item">
           <div className="main-form__input_name">Паспорт</div>
           <FileUploader
-            onChange={(files) => handleInputChange('passportScan1', files)}
+            onChange={(files) => handleInputChange('employeePhotos', files)}
             multipleFiles
           />
         </div>

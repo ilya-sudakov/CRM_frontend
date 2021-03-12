@@ -8,18 +8,20 @@ const getFileExtension = (item) => {
     (typeof item === 'string' && item.length > 1000) ||
     (typeof item === 'string' && item.length === 0);
   const isLocalPath = typeof item === 'string' && item.length <= 200;
-  const extension = isLocalPath
-    ? item.split('.')[1]
-    : isBase64
-    ? item.split('image/')[1]?.split(';base64')[0]
-    : item?.type?.split('/')[1];
-  return extension;
+  const isRemoteFile =
+    typeof item === 'object' && item?.url !== undefined && item?.url !== null;
+  if (isRemoteFile)
+    return item?.url?.split(/\/fileWithoutDB\/downloadFile\/[^.]*./)[1];
+  if (isLocalPath) return item.split('.')[1];
+  if (isBase64) return item.split('image/')[1]?.split(';base64')[0];
+  return item?.type?.split('/')[1] ?? 'file';
 };
 
 const ImageView = ({ file, closeWindow = null }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
   const isBase64 = typeof file === 'string';
+  const isRemoteFile = typeof file === 'object' && file?.url;
   const { formWindow, toggleFormWindow } = useFormWindow(
     isBase64 ? 'Просмотр' : file?.name,
     <img className="image-view__img image-view__img--full" ref={imgBigRef} />,
@@ -32,6 +34,7 @@ const ImageView = ({ file, closeWindow = null }) => {
     extension === 'jpg';
 
   const loadFile = (file, object) => {
+    if (isRemoteFile) return (object.src = file?.url);
     if (isBase64) return (object.src = file);
     object.src = URL.createObjectURL(file);
     object.onload = () => URL.revokeObjectURL(object.src); // free memory

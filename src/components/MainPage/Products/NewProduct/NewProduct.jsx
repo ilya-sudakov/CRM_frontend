@@ -158,7 +158,7 @@ const NewProduct = (props) => {
             onChange={async (result) => {
               const downgraded =
                 result[0] !== '' && result[0]
-                  ? await getDataUri(result, 'jpeg', 0.3)
+                  ? await getDataUri(result[0], 'jpeg', 0.3)
                   : '';
               handleInputChange('photo', downgraded);
             }}
