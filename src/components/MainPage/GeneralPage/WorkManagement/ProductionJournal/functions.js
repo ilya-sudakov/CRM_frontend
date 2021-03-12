@@ -72,7 +72,12 @@ const getWorkshopList = (
   filteredEmployees.map((employee) => {
     const yesterdaysWorks = yesterdaysWork[workshop.engName][employee.id];
     const todaysWorks = todaysWork[workshop.engName][employee.id];
-    if (todaysWorks.works.length === 0 && yesterdaysWorks.works.length === 0)
+    if (
+      (todaysWorks?.works?.length === 0 &&
+        yesterdaysWorks?.works?.length === 0) ||
+      !todaysWorks ||
+      !yesterdaysWorks
+    )
       return;
     const defaultStyle = {
       style: 'regularText',
