@@ -12,17 +12,21 @@ const Users = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { sortPanel, sortedData } = useSort(users, {
-    ignoreURL: false,
-    sortOrder: {
-      curSort: 'username',
-      username: 'asc',
+  const { sortPanel, sortedData } = useSort(
+    users,
+    {
+      ignoreURL: false,
+      sortOrder: {
+        curSort: 'username',
+        username: 'asc',
+      },
+      sortOptions: [
+        { value: 'username asc', text: 'По имени (А-Я)' },
+        { value: 'username desc', text: 'По имени (Я-А)' },
+      ],
     },
-    sortOptions: [
-      { value: 'username asc', text: 'По имени (А-Я)' },
-      { value: 'username desc', text: 'По имени (Я-А)' },
-    ],
-  });
+    [users],
+  );
   const [userRoles, setUserRoles] = useState([
     {
       name: 'Руководитель',
