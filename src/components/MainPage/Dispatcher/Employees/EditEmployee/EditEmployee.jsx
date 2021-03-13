@@ -78,12 +78,12 @@ const EditEmployee = (props) => {
       setEmployeeId(id);
       getEmployeeById(id)
         .then((res) => res.json())
-        .then((oldRequest) => {
+        .then((oldRequest) =>
           updateFormInputs({
             ...oldRequest,
             dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
-          });
-        })
+          }),
+        )
         .catch((error) => {
           console.log(error);
           alert('Неправильный индекс сотрудника!');
