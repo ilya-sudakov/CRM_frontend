@@ -58,14 +58,3 @@ export const getAuthHeaders = (contentType = 'application/json') => {
   }
   return { headers: headers };
 };
-
-export const getAuthHeadersFormData = () => {
-  let headers = {};
-  if (localStorage.getItem('accessToken')) {
-    headers = {
-      ...headers,
-      authorization: `Bearer_${localStorage.getItem('accessToken')}`,
-    };
-  }
-  return { headers: headers };
-};

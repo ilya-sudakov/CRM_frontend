@@ -8,6 +8,7 @@ import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects.js';
+import { createFormDataFromObject } from 'Utils/functions.jsx';
 
 const NewEmployee = (props) => {
   const {
@@ -24,20 +25,19 @@ const NewEmployee = (props) => {
     console.log(formInputs);
     if (!formIsValid()) return;
     setIsLoading(true);
-    addEmployee({
+    const employeeData = {
       ...formInputs,
-      dateOfBirth: Number.parseInt(formInputs.dateOfBirth.getTime() / 1000),
+      dateOfBirth: formInputs.dateOfBirth.toUTCString(),
       patentExpirationDate:
         formInputs.patentExpirationDate === null
           ? null
-          : Number.parseInt(formInputs.patentExpirationDate.getTime() / 1000),
+          : formInputs.patentExpirationDate.toUTCString(),
       registrationExpirationDate:
         formInputs.registrationExpirationDate === null
           ? null
-          : Number.parseInt(
-              formInputs.registrationExpirationDate.getTime() / 1000,
-            ),
-    })
+          : formInputs.registrationExpirationDate.toUTCString(),
+    };
+    addEmployee(createFormDataFromObject(employeeData))
       .then(() => props.history.push('/dispatcher/employees'))
       .catch((error) => {
         setIsLoading(false);
