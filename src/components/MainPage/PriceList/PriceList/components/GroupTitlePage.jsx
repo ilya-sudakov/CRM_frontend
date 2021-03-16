@@ -37,7 +37,11 @@ const GroupTitlePage = ({ titlePage, setTitlePage }) => {
                 [name]: downgraded,
               });
             }}
-            defaultValue={titlePage[name] !== '' ? [titlePage[name]] : null}
+            defaultValue={
+              titlePage[name] !== '' && titlePage[name]
+                ? [titlePage[name]]
+                : null
+            }
           />
         </div>
       </div>
