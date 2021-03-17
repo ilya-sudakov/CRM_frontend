@@ -305,10 +305,14 @@ const newClient = (props) => {
               <InputText
                 inputName="Город"
                 name="city"
+                required
                 defaultValue={formInputs.city}
                 handleInputChange={({ target }) =>
                   handleInputChange('city', target.value)
                 }
+                error={formErrors.city}
+                errorsArr={formErrors}
+                setErrorsArr={setFormErrors}
               />
               <InputText
                 inputName="Прайс"

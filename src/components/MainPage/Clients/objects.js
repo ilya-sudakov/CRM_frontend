@@ -34,6 +34,7 @@ export const clientsDefaultInputs = [
   {
     name: 'city',
     defaultValue: '',
+    isRequired: true,
   },
   {
     name: 'storageAddress',
