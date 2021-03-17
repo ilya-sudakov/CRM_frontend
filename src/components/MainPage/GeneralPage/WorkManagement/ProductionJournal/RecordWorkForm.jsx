@@ -194,11 +194,9 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             ) : null}
             {worktimeInputs.works?.length > 0 &&
             worktimeInputs.works?.reduce((sum, cur) => {
-              if (cur.workType === 'Без продукции/чертежа') {
-                return sum + 1;
-              } else if (cur.workType === 'Чертеж') {
-                return sum + 1;
-              } else return cur?.product.length;
+              if (cur.workType === 'Без продукции/чертежа') return sum + 1;
+              if (cur.workType === 'Чертеж') return sum + 1;
+              return cur?.product.length;
             }, 0) > 0 ? (
               <Button
                 text="Сохранить данные"
