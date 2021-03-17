@@ -2,6 +2,10 @@ import Excel from 'exceljs';
 import { getDataUri } from 'Utils/functions.jsx';
 import { saveExcelFile } from 'Utils/xlsxFunctions.js';
 import { getPriceListColumnValue } from './functions.js';
+// eslint-disable-next-line no-unused-vars
+import contactsExcel from 'Assets/priceList/contacts_excel.png';
+// eslint-disable-next-line no-unused-vars
+import companyLogo from 'Assets/priceList/osfix_logo.png';
 
 const getPriceListDefaultColumnXLSX = (name, width = 30) => {
   return {
@@ -597,6 +601,7 @@ export async function getPriceListExcel(
   const rospatentTempImg = await getDataUri('assets/rospatent.png');
   Promise.all(
     categories.map((category) => {
+      if (!category.active) return;
       const filteredData = filterPriceListItems(priceList, category.name);
       //adding category name
       if (filteredData.length > 0 && !isMini) {
