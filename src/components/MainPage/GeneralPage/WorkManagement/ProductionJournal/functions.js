@@ -17,7 +17,7 @@ const getProductListText = (products) => {
   return products
     .map(
       (product) =>
-        `${product.name} - ${addSpaceDelimiter(product.quantity)} шт\n`,
+        `${product.name} - ${addSpaceDelimiter(Number(product.quantity))} шт\n`,
     )
     .join('');
 };
