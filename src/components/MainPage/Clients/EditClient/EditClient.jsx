@@ -40,6 +40,7 @@ const EditClient = (props) => {
     setFormErrors,
     formIsValid,
     errorWindow,
+    hideError,
     updateFormInputs,
   } = useForm([
     ...clientsDefaultInputs,
@@ -327,6 +328,8 @@ const EditClient = (props) => {
                   handleContactsChange={(value) =>
                     handleInputChange('contactsNew', value)
                   }
+                  error={formErrors.contacts}
+                  hideError={() => hideError('contacts')}
                   defaultValue={formInputs.contactsNew}
                   userHasAccess={props.userHasAccess}
                   isMinimizedDefault={true}

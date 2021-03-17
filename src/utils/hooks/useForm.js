@@ -120,10 +120,15 @@ const useForm = (defaultInputs = []) => {
     setValidInputs({ ...newValidInputs });
   };
 
+  const hideError = (fieldName) => {
+    setFormErrors((formErrors) => ({ ...formErrors, [fieldName]: false }));
+  };
+
   return {
     formIsValid,
     formInputs,
     formErrors,
+    hideError,
     setFormErrors,
     handleInputChange,
     errorWindow,

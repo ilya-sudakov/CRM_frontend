@@ -29,6 +29,7 @@ const newClient = (props) => {
     formErrors,
     setFormErrors,
     formIsValid,
+    hideError,
     errorWindow,
   } = useForm([
     ...clientsDefaultInputs,
@@ -253,6 +254,8 @@ const newClient = (props) => {
                   handleContactsChange={(value) =>
                     handleInputChange('contacts', value)
                   }
+                  error={formErrors.contacts}
+                  hideError={() => hideError('contacts')}
                   defaultValue={formInputs.contacts}
                   userHasAccess={userContext.userHasAccess}
                 />

@@ -5,6 +5,7 @@ const FormErrorMessage = ({ error = false, hideError }) => {
     border: 1px solid #d48282;
     border-radius: 3px;
     box-sizing: border-box;
+    margin-top: 1px;
     width: 100%;
     height: 1.6rem;
     padding: 5px 10px;

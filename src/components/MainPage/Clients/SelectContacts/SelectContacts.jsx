@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import FormErrorMessage from 'Utils/FormErrorMessage/FormErrorMessage.jsx';
 import './SelectContacts.scss';
 
 const SelectContacts = (props) => {
@@ -192,6 +193,7 @@ const SelectContacts = (props) => {
             ))}
           </div>
         </div>
+        <FormErrorMessage error={props.error} hideError={props.hideError} />
       </div>
     </div>
   );
