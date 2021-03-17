@@ -1,17 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   getProductsByCategory,
-  getProductsByLocation,
   getProductById,
 } from '../../RequestsAPI/Products.js';
 import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js';
-import UserContext from '../../../App.js';
 
 const useProductsList = (shouldExecute = true) => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
-  const userContext = useContext(UserContext);
 
   const loadData = () => {
     setIsLoadingProducts(true);
@@ -21,49 +18,20 @@ const useProductsList = (shouldExecute = true) => {
         let productsArr = [];
         const categoriesArr = res;
         setCategories(res);
-
-        if (
-          userContext.userHasAccess([
-            'ROLE_ADMIN',
-            'ROLE_DISPATCHER',
-            'ROLE_ENGINEER',
-            'ROLE_MANAGER',
-            // 'ROLE_WORKSHOP', //Временно цеха видят всю продукцию
-          ])
-        ) {
-          await Promise.all(
-            categoriesArr.map(async (item) => {
-              const category = {
-                category: item.category,
-              };
-              return await getProductsByCategory(category) //Продукция по категории
-                .then((res) => res.json())
-                .then((res) => {
-                  res.map((item) => productsArr.push(item));
-                  setProducts([...productsArr]);
-                  return;
-                });
-            }),
-          );
-        } else if (userContext.userHasAccess(['ROLE_WORKSHOP'])) {
-          const usersWorkshop = userContext.userHasAccess(['ROLE_LEMZ'])
-            ? 'ЦехЛЭМЗ'
-            : userContext.userHasAccess(['ROLE_LEPSARI'])
-            ? 'ЦехЛепсари'
-            : userContext.userHasAccess(['ROLE_LIGOSVKIY'])
-            ? 'ЦехЛиговский'
-            : 'ЦехЛЭМЗ';
-
-          await getProductsByLocation({
-            productionLocation: usersWorkshop,
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              res.map((item) => productsArr.push(item));
-              setProducts([...productsArr]);
-              return;
-            });
-        }
+        await Promise.all(
+          categoriesArr.map(async (item) => {
+            const category = {
+              category: item.category,
+            };
+            return await getProductsByCategory(category) //Продукция по категории
+              .then((res) => res.json())
+              .then((res) => {
+                res.map((item) => productsArr.push(item));
+                setProducts([...productsArr]);
+                return;
+              });
+          }),
+        );
 
         return { productsArr, categoriesArr };
       })
