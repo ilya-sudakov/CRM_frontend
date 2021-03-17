@@ -24,9 +24,10 @@ export const defaultStylesPDF = {
   },
 };
 
-export const createPDF = (data) => {
+export const createPDF = (data, print = false) => {
   pdfMake.vfs = font.pdfMake.vfs;
-  return pdfMake.createPdf(data).print();
+  if (print) return pdfMake.createPdf(data).print();
+  return pdfMake.createPdf(data).open();
 };
 
 export const getPDFTitleObject = (name) => {
