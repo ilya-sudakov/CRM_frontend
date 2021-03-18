@@ -122,14 +122,14 @@ export const submitWorkData = async (
               product !== undefined &&
               originalProduct.quantity !== Number.parseFloat(product.quantity)
             ) {
-              console.log('edit product', product);
+              console.log('edit product', product, originalProduct);
               return deleteProductFromRecordedWork(
                 item.id,
-                originalProduct.product.id,
+                originalProduct.id,
               ).then(() =>
                 addProductToRecordedWork(
                   item.id,
-                  product.product.id,
+                  product.id,
                   product.quantity,
                   {
                     name: product.name,
