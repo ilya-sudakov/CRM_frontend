@@ -12,6 +12,7 @@ import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects';
+import { createFormDataFromObject } from 'Utils/functions.jsx';
 
 const EditEmployee = (props) => {
   const {
@@ -27,27 +28,23 @@ const EditEmployee = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const formatDateObjects = (date) => {
-    date === null ? null : Number.parseInt(new Date(date).getTime() / 1000);
+    return date === null || date === undefined
+      ? null
+      : Number.parseInt(new Date(date).getTime() / 1000);
   };
 
   const handleSubmit = () => {
     if (!formIsValid()) return;
     setIsLoading(true);
-    return editEmployee(
-      {
-        ...formInputs,
-        dateOfBirth: Number.parseInt(
-          new Date(formInputs.dateOfBirth).getTime() / 1000,
-        ),
-        patentExpirationDate: formatDateObjects(
-          formInputs.patentExpirationDate,
-        ),
-        registrationExpirationDate: formatDateObjects(
-          formInputs.registrationExpirationDate,
-        ),
-      },
-      employeeId,
-    )
+    const formData = createFormDataFromObject({
+      ...formInputs,
+      dateOfBirth: formatDateObjects(formInputs.dateOfBirth),
+      patentExpirationDate: formatDateObjects(formInputs.patentExpirationDate),
+      registrationExpirationDate: formatDateObjects(
+        formInputs.registrationExpirationDate,
+      ),
+    });
+    return editEmployee(formData, employeeId)
       .then(() => props.history.push('/dispatcher/employees'))
       .catch((error) => {
         setIsLoading(false);
@@ -202,8 +199,8 @@ const EditEmployee = (props) => {
           <div className="main-form__input_name">Документы</div>
           <FileUploader
             onChange={(files) => handleInputChange('employeePhotos', files)}
-            defaultValue={formInputs.employeePhotos}
             multipleFiles
+            defaultValue={formInputs.employeePhotos}
           />
         </div>
         <InputText

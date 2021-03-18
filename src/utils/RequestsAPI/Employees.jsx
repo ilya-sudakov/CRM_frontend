@@ -56,7 +56,7 @@ export const addEmployee = (data) => {
 
 export const editEmployee = (data, id) => {
   const headers = getAuthHeaders('multipart/form-data');
-  return axios.post(
+  return axios.put(
     `${process.env.API_BASE_URL}/api/v1/employee/${id}`,
     data,
     headers,
