@@ -38,24 +38,21 @@ export const submitWorkData = async (
           if (originalWork.id && item === undefined) {
             console.log('deleting element', worktimeInputs);
             return Promise.all(
-              originalWork.product.map((product) => {
-                return deleteProductFromRecordedWork(
-                  originalWork.id,
-                  product.product.id,
-                );
-              }),
+              originalWork.product.map((product) =>
+                deleteProductFromRecordedWork(originalWork.id, product.id),
+              ),
             )
-              .then(() => {
-                return Promise.all(
-                  originalWork.draft.map((draft) => {
-                    return deleteDraftFromRecordedWork(
+              .then(() =>
+                Promise.all(
+                  originalWork.draft.map((draft) =>
+                    deleteDraftFromRecordedWork(
                       originalWork.id,
                       draft.partId,
                       draft.partType,
-                    );
-                  }),
-                );
-              })
+                    ),
+                  ),
+                ),
+              )
               .then(() => deleteRecordedWork(originalWork.id));
           }
         }),
