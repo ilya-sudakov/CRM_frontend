@@ -21,7 +21,7 @@
     position: relative;
 
     &--dragging {
-      background-color: #ffffff;
+      background-color: #fff;
     }
 
     &--error {
@@ -45,7 +45,7 @@
       text-align: center;
       width: fit-content;
       font-size: 1rem;
-      color: #333333;
+      color: #333;
       margin-bottom: 5px;
 
       &:last-child {
@@ -54,7 +54,7 @@
 
       &--small {
         font-size: 0.85rem;
-        color: #777777;
+        color: #777;
       }
     }
 
@@ -142,12 +142,15 @@
           box-sizing: border-box;
         }
         &:nth-child(3) {
-          color: #777777;
+          color: #999;
           margin-left: 10px;
           cursor: pointer;
+          font-size: 0.8rem;
+          transition: 100ms ease-in-out;
 
           &:hover {
             text-decoration: underline;
+            color: #666;
           }
         }
       }
