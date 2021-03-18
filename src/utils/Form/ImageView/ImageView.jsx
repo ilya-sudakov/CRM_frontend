@@ -1,5 +1,8 @@
 import { createRef, useEffect } from 'react';
 import useFormWindow from 'Utils/hooks/useFormWindow';
+import Button from 'Utils/form/Button/Button.jsx';
+import { imgToBlobDownload } from 'Utils/functions.jsx';
+import axios from 'axios';
 
 import './ImageView.scss';
 
@@ -38,6 +41,25 @@ const getFileName = (item) => {
   return item?.type?.split('/')[1] ?? 'file';
 };
 
+const downloadImage = (_file) => {
+  const fileName = getFileName(_file);
+  const isLocalPath = typeof _file === 'string' && _file.length <= 200;
+  if (_file?.url || isLocalPath) {
+    return axios
+      .get(_file?.url ?? _file, {
+        responseType: 'blob',
+      })
+      .then(({ data }) => {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+      });
+  }
+  return imgToBlobDownload(_file, fileName);
+};
+
 const ImageView = ({ file, closeWindow = null }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
@@ -45,7 +67,12 @@ const ImageView = ({ file, closeWindow = null }) => {
   const isRemoteFile = typeof file === 'object' && file?.url;
   const { formWindow, toggleFormWindow } = useFormWindow(
     getFileName(file),
-    <img className="image-view__img image-view__img--full" ref={imgBigRef} />,
+    <>
+      <img className="image-view__img image-view__img--full" ref={imgBigRef} />
+      <div className="image-view__buttons">
+        <Button inverted onClick={() => downloadImage(file)} text="Скачать" />
+      </div>
+    </>,
   );
   const extension = getFileExtension(file);
   const isImage =

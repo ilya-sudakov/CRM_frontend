@@ -62,6 +62,17 @@
                 .main-window {
                     display: flex;
                 }
+
+                .image-view__buttons {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    box-sizing: border-box;
+                    border-top: 1px solid #ccc;
+                    width: 100%;
+                    padding: 10px 15px;
+                    background-color: #fff;
+                }
             }
         }
     }
