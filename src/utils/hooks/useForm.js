@@ -34,15 +34,17 @@ const useForm = (defaultInputs = []) => {
   };
 
   const handleInputChange = (name, value) => {
-    validateField(name, value);
+    if (validInputs[name] !== undefined) {
+      validateField(name, value);
+      setFormErrors({
+        ...formErrors,
+        [name]: false,
+      });
+    }
     setFormInputs((formInputs) => ({
       ...formInputs,
       [name]: value,
     }));
-    setFormErrors({
-      ...formErrors,
-      [name]: false,
-    });
   };
 
   const formIsValid = () => {
