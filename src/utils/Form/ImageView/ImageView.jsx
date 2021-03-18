@@ -60,6 +60,16 @@ const downloadImage = (_file) => {
   return imgToBlobDownload(_file, fileName);
 };
 
+const getLink = (_file) => {
+  const isLocalPath = typeof _file === 'string' && _file.length <= 200;
+  if (_file?.url || isLocalPath) return _file?.url ?? _file;
+};
+
+const copyLinkToClipboard = (_file) => {
+  const link = getLink(_file);
+  navigator.clipboard.writeText(link);
+};
+
 const ImageView = ({ file, closeWindow = null }) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
@@ -71,6 +81,13 @@ const ImageView = ({ file, closeWindow = null }) => {
       <img className="image-view__img image-view__img--full" ref={imgBigRef} />
       <div className="image-view__buttons">
         <Button inverted onClick={() => downloadImage(file)} text="Скачать" />
+        {isRemoteFile ? (
+          <Button
+            inverted
+            onClick={() => copyLinkToClipboard(file)}
+            text="Скопировать ссылку"
+          />
+        ) : null}
       </div>
     </>,
   );
