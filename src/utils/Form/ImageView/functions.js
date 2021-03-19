@@ -39,6 +39,14 @@ export const getFileName = (item) => {
 export const downloadImage = (_file) => {
   const fileName = getFileName(_file);
   const isLocalPath = typeof _file === 'string' && _file.length <= 200;
+  if (_file instanceof File) {
+    let url = window.URL.createObjectURL(new Blob([_file]));
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    return;
+  }
   if (_file?.url || isLocalPath) {
     return axios
       .get(_file?.url ?? _file, {
