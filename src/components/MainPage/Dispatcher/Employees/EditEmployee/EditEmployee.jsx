@@ -13,6 +13,7 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
+import { format } from 'date-fns';
 
 const EditEmployee = (props) => {
   const {
@@ -30,7 +31,7 @@ const EditEmployee = (props) => {
   const formatDateObjects = (date) => {
     return date === null || date === undefined
       ? null
-      : Number.parseInt(new Date(date).getTime() / 1000);
+      : format(new Date(date), 'yyyy-MM-dd');
   };
 
   const handleSubmit = () => {

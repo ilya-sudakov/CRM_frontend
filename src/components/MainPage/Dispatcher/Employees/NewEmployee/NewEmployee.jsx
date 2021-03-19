@@ -9,6 +9,7 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects.js';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
+import { format } from 'date-fns';
 
 const NewEmployee = (props) => {
   const {
@@ -27,15 +28,15 @@ const NewEmployee = (props) => {
     setIsLoading(true);
     const employeeData = {
       ...formInputs,
-      dateOfBirth: formInputs.dateOfBirth.toUTCString(),
+      dateOfBirth: format(formInputs.dateOfBirth, 'yyyy-MM-dd'),
       patentExpirationDate:
         formInputs.patentExpirationDate === null
           ? null
-          : formInputs.patentExpirationDate.toUTCString(),
+          : format(formInputs.patentExpirationDate, 'yyyy-MM-dd'),
       registrationExpirationDate:
         formInputs.registrationExpirationDate === null
           ? null
-          : formInputs.registrationExpirationDate.toUTCString(),
+          : format(formInputs.registrationExpirationDate, 'yyyy-MM-dd'),
     };
     addEmployee(createFormDataFromObject(employeeData))
       .then(() => props.history.push('/dispatcher/employees'))

@@ -113,6 +113,7 @@ const ImageView = ({ file, closeWindow = null }) => {
   }, [file]);
 
   useEffect(() => {
+    console.log(closeWindow);
     if (!closeWindow) return;
     toggleFormWindow();
   }, [closeWindow]);

@@ -4,11 +4,11 @@ const getDateMonthString = (date) =>
   date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
-export const formatDateString = (dateString) => {
+export const formatDateString = (dateString, separator = '.') => {
   const date = new Date(dateString);
   return `${
     date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  }.${getDateMonthString(date)}.${date.getFullYear()}`;
+  }${separator}${getDateMonthString(date)}${separator}${date.getFullYear()}`;
 };
 
 export const formatDateStringNoDate = (dateString) => {
