@@ -48,6 +48,7 @@ const EditEmployee = (props) => {
         formInputs.registrationExpirationDate,
       ),
     };
+    console.log(employeeData);
     const formData = createFormDataFromObject(employeeData);
     return editEmployee(formData, employeeId)
       .then(() => props.history.push('/dispatcher/employees'))

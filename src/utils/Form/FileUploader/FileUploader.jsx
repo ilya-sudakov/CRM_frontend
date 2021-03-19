@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { sortByField } from 'Utils/sorting/sorting.js';
 import PropTypes from 'prop-types';
 import './FileUploader.scss';
 import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
@@ -247,17 +248,19 @@ const FileUploader = ({
           className="file-uploader__file-list"
           style={{ marginTop: canLoadMoreFiles ? '10px' : '0' }}
         >
-          {data.map((item, index) => {
-            return (
-              <li key={index}>
-                <ImageView file={item} />
-                <div>{getFileName(item)}</div>
-                <div onClick={(event) => handleDeleteFile(event, index)}>
-                  удалить
-                </div>
-              </li>
-            );
-          })}
+          {sortByField(data, { fieldName: 'id', direction: 'asc' }).map(
+            (item, index) => {
+              return (
+                <li key={index}>
+                  <ImageView file={item} />
+                  <div>{getFileName(item)}</div>
+                  <div onClick={(event) => handleDeleteFile(event, index)}>
+                    удалить
+                  </div>
+                </li>
+              );
+            },
+          )}
         </ul>
       ) : null}
     </div>

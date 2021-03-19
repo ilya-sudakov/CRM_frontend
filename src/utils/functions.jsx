@@ -398,6 +398,7 @@ export const createFormDataFromObject = (object) => {
       case 'undefined':
         break;
       case 'array': {
+        if (object[item].length === 0) break;
         for (var i = 0; i < object[item].length; i++) {
           formData.append(item, object[item][i]);
         }
