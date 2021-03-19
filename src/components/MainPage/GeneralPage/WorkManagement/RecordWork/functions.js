@@ -99,7 +99,7 @@ export const submitWorkData = async (
               console.log('add product', product);
               return addProductToRecordedWork(
                 item.id,
-                product.id,
+                product.productId,
                 product.quantity,
                 {
                   name: product.name,
@@ -119,14 +119,14 @@ export const submitWorkData = async (
               product !== undefined &&
               originalProduct.quantity !== Number.parseFloat(product.quantity)
             ) {
-              console.log('edit product', product, originalProduct);
+              console.log('edit product', item.id, product, originalProduct);
               return deleteProductFromRecordedWork(
                 item.id,
-                originalProduct.id,
+                product.productId,
               ).then(() =>
                 addProductToRecordedWork(
                   item.id,
-                  product.id,
+                  product.productId,
                   product.quantity,
                   {
                     name: product.name,

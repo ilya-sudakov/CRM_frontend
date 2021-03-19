@@ -136,7 +136,8 @@ const NewRecordWork = (props) => {
           isOld: true,
           product: [
             ...item.workControlProduct.map((item) => ({
-              id: item.product.id,
+              id: item.id,
+              productId: item.product.id,
               name: item.product.name,
               quantity: item.quantity,
             })),
