@@ -174,6 +174,7 @@ const TableView = (props) => {
                               <Link
                                 title="Редактировать"
                                 to={`/work-management/record-time?employee=${item.employee.id}&date=${item.year},${item.month},${item.day}`}
+                                target="_blank"
                               >
                                 {workItem.workList.work +
                                   ' - ' +

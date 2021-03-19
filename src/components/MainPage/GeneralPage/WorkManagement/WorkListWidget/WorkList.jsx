@@ -60,6 +60,7 @@ const ListItem = ({ item, employeesMap, date = new Date() }) => {
       className={`work-list-widget__item ${
         employeesMap[item.id] ? '' : 'work-list-widget__item--no-data'
       }`}
+      target="_blank"
     >
       <div>{item.lastName + ' ' + item.name + ' ' + item.middleName}</div>
       <div>
