@@ -211,10 +211,13 @@ const EditProduct = (props) => {
           <FileUploader
             onChange={async (result) => {
               const downgraded =
-                result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+                result[0] !== '' && result[0]
+                  ? await getDataUri(result[0], 'jpeg', 0.3)
+                  : '';
               handleInputChange('photo', downgraded);
             }}
-            previewImage={formInputs.photo}
+            type="readAsDataURL"
+            defaultValue={formInputs.photo !== '' ? [formInputs.photo] : []}
             error={formErrors.photo}
             hideError={() => setFormErrors({ ...formErrors, photo: false })}
           />

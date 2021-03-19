@@ -21,7 +21,7 @@ export const employeesDefaultInputs = [
     isRequired: true,
     isValid: true,
   },
-  { name: 'passportScan1', defaultValue: '' },
+  { name: 'employeePhotos', defaultValue: '' },
   { name: 'comment', defaultValue: '' },
   {
     name: 'relevance',

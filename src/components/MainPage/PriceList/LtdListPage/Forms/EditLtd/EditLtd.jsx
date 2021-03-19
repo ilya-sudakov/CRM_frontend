@@ -5,6 +5,7 @@ import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { addLTD, getLTDById } from 'Utils/RequestsAPI/PriceList/lts_list.js';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import { getDataUri } from 'Utils/functions.jsx';
 import { fetchINNData, getInputsListFromArray } from '../functions.js';
 import {
   ltdFormAddressInputs,
@@ -190,9 +191,16 @@ const EditLtd = (props) => {
           <div className="main-form__item">
             <div className="main-form__input_name">Лого*</div>
             <FileUploader
-              previewImage={formInputs.logo}
+              onChange={async (result) => {
+                const downgraded =
+                  result[0] !== '' && result[0]
+                    ? await getDataUri(result[0], 'jpeg', 0.3)
+                    : '';
+                handleInputChange('logo', downgraded);
+              }}
+              type="readAsDataURL"
+              defaultValue={formInputs.logo !== '' ? [formInputs.logo] : []}
               error={formErrors.logo}
-              onChange={(value) => handleInputChange('logo', value)}
               hideError={() => setFormErrors({ ...formErrors, logo: false })}
             />
           </div>

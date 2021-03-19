@@ -76,7 +76,7 @@ const SelectPriceItem = (props) => {
 
   const onImageDataChange = async (result, imgInfo) => {
     const downgraded =
-      result !== '' ? await getDataUri(result, 'jpeg', 0.3) : '';
+      result !== '' && result ? await getDataUri(result, 'jpeg', 0.3) : '';
     imgInfo.setter(downgraded);
     props.handleImgChange(downgraded, imgInfo.itemName);
   };
@@ -89,8 +89,13 @@ const SelectPriceItem = (props) => {
           {!props.readOnly && (
             <FileUploader
               uniqueId={`file${index}${props.uniqueId}`}
-              onChange={(result) => onImageDataChange(result, imgInfo)}
-              previewImage={imgInfo.previewImage}
+              type="readAsDataURL"
+              onChange={(result) => onImageDataChange(result[0], imgInfo)}
+              defaultValue={
+                imgInfo.previewImage && imgInfo.previewImage !== ''
+                  ? [imgInfo.previewImage]
+                  : undefined
+              }
             />
           )}
         </div>

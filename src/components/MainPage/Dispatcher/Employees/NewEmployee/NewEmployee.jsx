@@ -8,6 +8,8 @@ import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects.js';
+import { createFormDataFromObject } from 'Utils/functions.jsx';
+import { format } from 'date-fns';
 
 const NewEmployee = (props) => {
   const {
@@ -23,20 +25,21 @@ const NewEmployee = (props) => {
   const handleSubmit = () => {
     if (!formIsValid()) return;
     setIsLoading(true);
-    addEmployee({
+    const employeeData = {
       ...formInputs,
-      dateOfBirth: Number.parseInt(formInputs.dateOfBirth.getTime() / 1000),
+      files: Array.from(formInputs.employeePhotos),
+      employeePhotos: undefined,
+      dateOfBirth: format(formInputs.dateOfBirth, 'yyyy-MM-dd'),
       patentExpirationDate:
         formInputs.patentExpirationDate === null
-          ? null
-          : Number.parseInt(formInputs.patentExpirationDate.getTime() / 1000),
+          ? undefined
+          : format(formInputs.patentExpirationDate, 'yyyy-MM-dd'),
       registrationExpirationDate:
         formInputs.registrationExpirationDate === null
-          ? null
-          : Number.parseInt(
-              formInputs.registrationExpirationDate.getTime() / 1000,
-            ),
-    })
+          ? undefined
+          : format(formInputs.registrationExpirationDate, 'yyyy-MM-dd'),
+    };
+    addEmployee(createFormDataFromObject(employeeData))
       .then(() => props.history.push('/dispatcher/employees'))
       .catch((error) => {
         setIsLoading(false);
@@ -151,10 +154,10 @@ const NewEmployee = (props) => {
           </div>
         </div>
         <div className="main-form__item">
-          <div className="main-form__input_name">Паспорт</div>
+          <div className="main-form__input_name">Документы</div>
           <FileUploader
-            onChange={(result) => handleInputChange('passportScan1', result)}
-            previewImage={formInputs.passportScan1}
+            onChange={(files) => handleInputChange('employeePhotos', files)}
+            multipleFiles
           />
         </div>
         <InputText

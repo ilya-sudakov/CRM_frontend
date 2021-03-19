@@ -198,8 +198,9 @@ const PriceList = () => {
               uniqueId="excel-reader"
               type="readAsArrayBuffer"
               onChange={(result) => {
+                console.log(result);
                 const { parsedData, disclaimer, titlePage } = parseExcelData(
-                  result,
+                  result[0],
                 );
                 setDisclaimer(disclaimer);
                 setTitlePage(titlePage);

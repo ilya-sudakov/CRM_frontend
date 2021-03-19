@@ -1,4 +1,5 @@
-import { request } from '../utilsAPI.jsx';
+import axios from 'axios';
+import { getAuthHeaders, request } from '../utilsAPI.jsx';
 
 export function getEmployees() {
   return request({
@@ -44,18 +45,20 @@ export function deleteEmployee(id) {
   });
 }
 
-export function addEmployee(newPart) {
-  return request({
-    url: process.env.API_BASE_URL + '/api/v1/employee/',
-    method: 'POST',
-    body: JSON.stringify(newPart),
-  });
-}
+export const addEmployee = (data) => {
+  const headers = getAuthHeaders('multipart/form-data');
+  return axios.post(
+    `${process.env.API_BASE_URL}/api/v1/employee/`,
+    data,
+    headers,
+  );
+};
 
-export function editEmployee(newPart, id) {
-  return request({
-    url: process.env.API_BASE_URL + '/api/v1/employee/' + id,
-    method: 'PUT',
-    body: JSON.stringify(newPart),
-  });
-}
+export const editEmployee = (data, id) => {
+  const headers = getAuthHeaders('multipart/form-data');
+  return axios.put(
+    `${process.env.API_BASE_URL}/api/v1/employee/${id}`,
+    data,
+    headers,
+  );
+};

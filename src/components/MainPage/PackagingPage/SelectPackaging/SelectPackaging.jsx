@@ -22,7 +22,7 @@ const SelectPackaging = (props) => {
     return getPackaging(signal)
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setPackages(res);
         return setIsLoading(false);
       })

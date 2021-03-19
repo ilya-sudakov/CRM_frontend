@@ -11,6 +11,8 @@ const useFormWindow = (
 
   useEffect(() => {}, [...updates, showWindow]);
 
+  const toggleFormWindow = () => setShowWindow(!showWindow);
+
   const formWindow = (
     <FormWindow
       title={windowTitle}
@@ -21,7 +23,7 @@ const useFormWindow = (
     />
   );
 
-  return { formWindow, showWindow, setShowWindow };
+  return { toggleFormWindow, formWindow, showWindow, setShowWindow };
 };
 
 export default useFormWindow;

@@ -4,11 +4,11 @@ const getDateMonthString = (date) =>
   date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
 //Получение строки типа 'дд.мм.ГГГГ' из объекта Date
-export const formatDateString = (dateString) => {
+export const formatDateString = (dateString, separator = '.') => {
   const date = new Date(dateString);
   return `${
     date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-  }.${getDateMonthString(date)}.${date.getFullYear()}`;
+  }${separator}${getDateMonthString(date)}${separator}${date.getFullYear()}`;
 };
 
 export const formatDateStringNoDate = (dateString) => {
@@ -85,7 +85,7 @@ export const imgToBlobDownload = (imageSrc, imageName) => {
 };
 
 //Получение URI из полученной картинки
-export function getDataUri(url, extension, quality) {
+export function getDataUri(url, extension, quality = 0.92) {
   return new Promise((resolve, reject) => {
     var img = new Image();
     img.onload = () => {
@@ -95,8 +95,8 @@ export function getDataUri(url, extension, quality) {
       var ctx = canvas.getContext('2d');
       ctx.drawImage(img, 0, 0);
       var dataURL = canvas.toDataURL(
-        extension ? 'image/' + extension : 'image/png',
-        quality ? quality : 0.92,
+        extension ? `image/${extension}` : 'image/png',
+        quality,
       );
       resolve(dataURL);
     };
@@ -392,7 +392,22 @@ export const getEmployeeNameText = (employee) => {
 export const createFormDataFromObject = (object) => {
   let formData = new FormData();
   for (var item in object) {
-    formData.append(item, object[item]);
+    const type = Array.isArray(object[item]) ? 'array' : typeof object[item];
+    console.log(type, object[item]);
+    switch (type) {
+      case 'undefined':
+        break;
+      case 'array': {
+        if (object[item].length === 0) break;
+        for (var i = 0; i < object[item].length; i++) {
+          formData.append(item, object[item][i]);
+        }
+        break;
+      }
+      default:
+        formData.append(item, object[item]);
+        break;
+    }
   }
   return formData;
 };

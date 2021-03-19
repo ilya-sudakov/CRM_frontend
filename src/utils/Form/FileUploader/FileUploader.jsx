@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { sortByField } from 'Utils/sorting/sorting.js';
 import PropTypes from 'prop-types';
 import './FileUploader.scss';
+import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
-  type = 'readAsDataURL',
+  type = 'files',
   onChange,
-  previewImage,
   maxSize = 5,
   uniqueId = 0,
   error = false,
   hideError,
+  multipleFiles = false,
+  defaultValue,
 }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   let dragCounter = 0;
   const [hasError, setHasError] = useState(false);
@@ -53,56 +56,70 @@ const FileUploader = ({
     e.stopPropagation();
   };
 
-  const handleDropFile = (event) => {
+  const getFileData = (file) => {
+    return new Promise((resolve) => {
+      let reader = new FileReader();
+      reader.onload = (loadEvent) => resolve(loadEvent.target.result);
+      if (type === 'readAsArrayBuffer') return reader.readAsArrayBuffer(file);
+      if (type === 'readAsDataURL') return reader.readAsDataURL(file);
+      return reader.readAsDataURL(file);
+    });
+  };
+
+  const handleDropFile = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     setIsDraggingOver(false);
-    let file =
-      event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
-        ? event.dataTransfer.files[0]
-        : event.target.files[0];
     dragCounter = 0;
+    const files =
+      event?.dataTransfer?.files && event?.dataTransfer?.files?.length > 0
+        ? event.dataTransfer.files
+        : event.target.files;
+    console.log(files, data);
 
-    //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
-    if (file.name.match(regex) === null)
-      return setHasError('Некорректный формат файла!');
-
-    if (type === 'fileOnly') return onChange(file);
-
-    let reader = new FileReader();
-    const { size } = file;
-    setData(null);
-    if (size / 1024 / 1024 > maxSize) {
-      setHasError(`Файл превышает ${maxSize} МБайт`);
-      return false;
-    }
     setHasError(false);
-    //Для разных типов файла - разные функции обработки данных
-    switch (type) {
-      case 'readAsArrayBuffer':
-        reader.readAsArrayBuffer(file);
-        break;
-      case 'readAsDataURL':
-        reader.readAsDataURL(file);
-        break;
-      default:
-        reader.readAsDataURL(file);
-        break;
+    let errorMessage = null;
+    const filteredFiles = Array.from(files).filter((item) => {
+      if (item.name.match(regex) === null) {
+        errorMessage = 'Некорректный формат файла!';
+        return false;
+      }
+      const { size } = item;
+      if (size / 1024 / 1024 > maxSize) {
+        errorMessage = `Файл превышает ${maxSize} МБайт`;
+        return false;
+      }
+      return true;
+    });
+    if (errorMessage) setHasError(errorMessage);
+    if (type === 'files') {
+      setData((data) => [...data, ...filteredFiles]);
+      onChange([...data, ...filteredFiles]);
+      return;
     }
-    reader.onload = (loadEvent) => {
-      setData(file);
-      onChange(loadEvent.target.result);
-    };
-    setHasError(false);
+
+    let temp = [];
+    return await Promise.all(
+      filteredFiles.map(async (fileItem) =>
+        temp.push(await getFileData(fileItem)),
+      ),
+    ).then(() => {
+      setData((data) => [...data, ...temp]);
+      onChange([...data, ...temp]);
+      return;
+    });
   };
 
-  const handleDeleteFile = (event) => {
+  const handleDeleteFile = (event, index) => {
     event.preventDefault();
-    setData(null);
-    onChange('');
+    let temp = data;
+    temp.splice(index, 1);
+    setData([...temp]);
+    onChange([...temp]);
   };
 
   useEffect(() => {
+    if (!dropRef.current) return;
     const div = dropRef.current;
     div.addEventListener('dragenter', onDragEnter);
     div.addEventListener('dragleave', onDragLeave);
@@ -117,70 +134,97 @@ const FileUploader = ({
     };
   }, []);
 
-  useEffect(() => {}, [previewImage, isDraggingOver]);
+  useEffect(() => {}, [isDraggingOver, data]);
 
+  useEffect(() => {
+    if (
+      defaultValue &&
+      defaultValue.length > 0 &&
+      data.length === 0 &&
+      defaultValue[0] !== '' &&
+      defaultValue[0] !== undefined
+    ) {
+      setData([...defaultValue]);
+    }
+  }, [defaultValue]);
+
+  const getFileName = (item) => {
+    const isBase64 =
+      (typeof item === 'string' && item.length > 1000) ||
+      (typeof item === 'string' && item.length === 0);
+    const isLocalPath = typeof item === 'string' && item.length <= 200;
+    const isRemoteFile =
+      typeof item === 'object' && item?.url !== undefined && item?.url !== null;
+    const isRawFile =
+      typeof item === 'object' &&
+      item?.name !== undefined &&
+      item?.name !== null &&
+      item?.size !== undefined &&
+      item?.size !== null;
+    if (isRemoteFile)
+      return item?.url?.split(/\/fileWithoutDB\/downloadFile\//)[1];
+    if (isLocalPath) return item.split('assets/')[1];
+    if (isBase64) return 'файл_без_имени';
+    if (isRawFile) return item?.name;
+    return item?.type?.split('/')[1] ?? 'файл_без_имени';
+  };
+
+  const canLoadMoreFiles =
+    multipleFiles || (!multipleFiles && data.length === 0);
   return (
     <div className="file-uploader">
-      {previewImage && previewImage !== '' ? (
-        <img className="file-uploader__preview-image" src={previewImage} />
-      ) : null}
-      <div
-        className={`file-uploader__wrapper ${
-          isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
-        } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
-        ref={dropRef}
-        style={{
-          minHeight:
-            data || (previewImage && previewImage !== '')
-              ? 'fit-content'
-              : 'var(--file-uploader__min-height)',
-        }}
-      >
-        {data || (previewImage && previewImage !== '') ? (
-          <ul className="file-uploader__file-list">
-            <li>
-              <div>{data?.name ?? 'фотография.jpeg'}</div>
-              <div onClick={handleDeleteFile}>удалить</div>
-            </li>
-          </ul>
-        ) : isDraggingOver ? (
-          <div
-            className="file-uploader__info"
-            draggable="true"
-            onDragStart={(e) => e.preventDefault()}
-          >
-            <div className="file-uploader__text">
-              Отпустите файл для загрузки
+      {canLoadMoreFiles ? (
+        <div
+          className={`file-uploader__wrapper ${
+            isDraggingOver ? 'file-uploader__wrapper--dragging' : ''
+          } ${hasError || error ? 'file-uploader__wrapper--error' : ''}`}
+          ref={dropRef}
+          style={{
+            minHeight: 'var(--file-uploader__min-height)',
+          }}
+        >
+          {isDraggingOver ? (
+            <div
+              className="file-uploader__info"
+              draggable="true"
+              onDragStart={(e) => e.preventDefault()}
+            >
+              <div className="file-uploader__text">
+                {`Отпустите ${multipleFiles ? 'файлы' : 'файл'} для загрузки`}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div
-            className="file-uploader__info"
-            draggable="true"
-            onDragStart={(e) => e.preventDefault()}
-          >
-            <div className="file-uploader__text">Перетащите файл сюда</div>
-            <div className="file-uploader__text file-uploader__text--small">
-              или
-            </div>
+          ) : (
+            <div
+              className="file-uploader__info"
+              draggable="true"
+              onDragStart={(e) => e.preventDefault()}
+            >
+              <div className="file-uploader__text">{`Перетащите ${
+                multipleFiles ? 'файлы' : 'файл'
+              } сюда`}</div>
+              <div className="file-uploader__text file-uploader__text--small">
+                или
+              </div>
 
-            <div className="file-uploader__input">
-              <label
-                className="main-window__button"
-                htmlFor={`fileuploader-${uniqueId}`}
-              >
-                Загрузите файл
-              </label>
-              <input
-                onChange={handleDropFile}
-                type="file"
-                name="file"
-                id={`fileuploader-${uniqueId}`}
-              />
+              <div className="file-uploader__input">
+                <label
+                  className="main-window__button"
+                  htmlFor={`fileuploader-${uniqueId}`}
+                >
+                  {`Загрузите ${multipleFiles ? 'файлы' : 'файл'}`}
+                </label>
+                <input
+                  onChange={async (event) => await handleDropFile(event)}
+                  type="file"
+                  name="file"
+                  multiple={multipleFiles ? 'multiple' : false}
+                  id={`fileuploader-${uniqueId}`}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : null}
       {(error || hasError) && (
         <div
           className="file-uploader__error"
@@ -192,11 +236,33 @@ const FileUploader = ({
           {error ? 'Поле не заполнено!' : hasError}
         </div>
       )}
-      {formats[regex.toString()] && (
-        <div className="file-uploader__hint">
-          {formats[regex.toString()].text}
-        </div>
-      )}
+      {canLoadMoreFiles
+        ? formats[regex.toString()] && (
+            <div className="file-uploader__hint">
+              {formats[regex.toString()].text}
+            </div>
+          )
+        : null}
+      {data.length > 0 ? (
+        <ul
+          className="file-uploader__file-list"
+          style={{ marginTop: canLoadMoreFiles ? '10px' : '0' }}
+        >
+          {sortByField(data, { fieldName: 'id', direction: 'asc' }).map(
+            (item, index) => {
+              return (
+                <li key={index}>
+                  <ImageView file={item} />
+                  <div>{getFileName(item)}</div>
+                  <div onClick={(event) => handleDeleteFile(event, index)}>
+                    удалить
+                  </div>
+                </li>
+              );
+            },
+          )}
+        </ul>
+      ) : null}
     </div>
   );
 };
@@ -207,7 +273,6 @@ FileUploader.propTypes = {
   regex: PropTypes.string,
   type: PropTypes.string,
   onChange: PropTypes.func,
-  previewImage: PropTypes.string,
   uniqueId: PropTypes.string,
   error: PropTypes.string,
   hideError: PropTypes.func,

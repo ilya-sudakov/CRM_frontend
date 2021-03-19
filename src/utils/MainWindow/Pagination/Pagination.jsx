@@ -55,6 +55,11 @@ const Pagination = ({
     ) {
       temp.push(i);
     }
+    console.log(
+      paginationList[0] + index,
+      paginationList[paginationList.length - 1] + index,
+      temp,
+    );
     return temp;
   };
 
@@ -120,6 +125,7 @@ const Pagination = ({
     setCurPage(item);
     pushParamToURL('page', item, ignoreURL);
     if (lastPage < 5) return;
+    console.log(isFirstPageNotInTheFirstPlace, isLastPageNotInTheLastPlace);
     if (isFirstPageNotInTheFirstPlace) {
       return setPaginationList(calcPagesForSkippedPages(-1));
     }
