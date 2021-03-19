@@ -83,13 +83,11 @@ export const combineWorksForSamePeople = (
                 ...work,
                 ...workList,
                 isOld: true,
-                product: work.workControlProduct.map((product) => {
-                  return {
-                    ...product,
-                    name: product.product.name,
-                    status: product.product.status,
-                  };
-                }),
+                product: work.workControlProduct.map((product) => ({
+                  ...product,
+                  name: product.product.name,
+                  status: product.product.status,
+                })),
                 draft: work.partsWorks,
               },
             ],
@@ -105,13 +103,11 @@ export const combineWorksForSamePeople = (
                 ...work,
                 ...workList,
                 isOld: true,
-                product: work.workControlProduct.map((product) => {
-                  return {
-                    ...product,
-                    name: product.product.name,
-                    status: product.product.status,
-                  };
-                }),
+                product: work.workControlProduct.map((product) => ({
+                  ...product,
+                  name: product.product.name,
+                  status: product.product.status,
+                })),
                 draft: work.partsWorks,
               },
             ],

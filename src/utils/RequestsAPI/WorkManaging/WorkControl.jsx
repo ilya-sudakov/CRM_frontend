@@ -76,7 +76,7 @@ export function addProductToRecordedWork(
 
 export function deleteProductFromRecordedWork(id, productId) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/${id}&${productId}`,
+    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/V2/${id}&${productId}`,
     method: 'DELETE',
   });
 }

@@ -81,7 +81,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
     const id = originalWork.id;
     return Promise.all(
       originalWork.product.map((product) =>
-        deleteProductFromRecordedWork(id, product.product.id),
+        deleteProductFromRecordedWork(id, product.id),
       ),
     )
       .then(() =>

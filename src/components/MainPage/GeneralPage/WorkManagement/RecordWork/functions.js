@@ -120,18 +120,16 @@ export const submitWorkData = async (
               originalProduct.quantity !== Number.parseFloat(product.quantity)
             ) {
               console.log('edit product', item.id, product, originalProduct);
-              return deleteProductFromRecordedWork(
-                item.id,
-                product.productId,
-              ).then(() =>
-                addProductToRecordedWork(
-                  item.id,
-                  product.productId,
-                  product.quantity,
-                  {
-                    name: product.name,
-                  },
-                ),
+              return deleteProductFromRecordedWork(item.id, product.id).then(
+                () =>
+                  addProductToRecordedWork(
+                    item.id,
+                    product?.productId ?? product?.product?.id,
+                    product.quantity,
+                    {
+                      name: product.name,
+                    },
+                  ),
               );
             }
           }),
