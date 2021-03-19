@@ -76,36 +76,35 @@ const FileUploader = ({
         : event.target.files;
     console.log(files, data);
 
+    setHasError(false);
     let errorMessage = null;
-    Array.from(files).map((item) => {
-      //При загрузке файла, проверяем удовлетворяет ли файл необходимому формату
-      if (item.name.match(regex) === null)
-        return (errorMessage = 'Некорректный формат файла!');
-
+    const filteredFiles = Array.from(files).filter((item) => {
+      if (item.name.match(regex) === null) {
+        errorMessage = 'Некорректный формат файла!';
+        return false;
+      }
       const { size } = item;
       if (size / 1024 / 1024 > maxSize) {
         errorMessage = `Файл превышает ${maxSize} МБайт`;
         return false;
       }
+      return true;
     });
-    if (errorMessage) return setHasError(errorMessage);
-    setHasError(false);
+    if (errorMessage) setHasError(errorMessage);
     if (type === 'files') {
-      setData((data) => [...data, ...files]);
-      onChange([...data, ...files]);
-      setHasError(false);
+      setData((data) => [...data, ...filteredFiles]);
+      onChange([...data, ...filteredFiles]);
       return;
     }
 
     let temp = [];
     return await Promise.all(
-      Array.from(files).map(async (fileItem) =>
+      filteredFiles.map(async (fileItem) =>
         temp.push(await getFileData(fileItem)),
       ),
     ).then(() => {
       setData((data) => [...data, ...temp]);
       onChange([...data, ...temp]);
-      setHasError(false);
       return;
     });
   };

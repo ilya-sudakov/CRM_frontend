@@ -122,6 +122,7 @@ const ImageView = ({ file, closeWindow = null }) => {
     <div
       className="image-view"
       onClick={file && file !== '' && isImage ? () => toggleFormWindow() : null}
+      title="Открыть в полном размере"
     >
       {file && file !== '' && isImage ? (
         <img
