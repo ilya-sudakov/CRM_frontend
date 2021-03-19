@@ -70,7 +70,7 @@ const EditProduct = (props) => {
             productionLocation: oldProduct.productionLocation,
             category: oldProduct.category,
             comment: oldProduct.comment,
-            photo: [oldProduct.photo],
+            photo: oldProduct.photo,
           });
         })
         .catch((error) => {
@@ -217,7 +217,7 @@ const EditProduct = (props) => {
               handleInputChange('photo', downgraded);
             }}
             type="readAsDataURL"
-            defaultValue={formInputs.photo !== '' ? formInputs.photo : []}
+            defaultValue={formInputs.photo !== '' ? [formInputs.photo] : []}
             error={formErrors.photo}
             hideError={() => setFormErrors({ ...formErrors, photo: false })}
           />

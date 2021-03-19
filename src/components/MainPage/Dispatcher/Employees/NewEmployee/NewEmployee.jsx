@@ -23,19 +23,20 @@ const NewEmployee = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
-    console.log(formInputs);
     if (!formIsValid()) return;
     setIsLoading(true);
     const employeeData = {
       ...formInputs,
+      files: Array.from(formInputs.employeePhotos),
+      employeePhotos: undefined,
       dateOfBirth: format(formInputs.dateOfBirth, 'yyyy-MM-dd'),
       patentExpirationDate:
         formInputs.patentExpirationDate === null
-          ? null
+          ? undefined
           : format(formInputs.patentExpirationDate, 'yyyy-MM-dd'),
       registrationExpirationDate:
         formInputs.registrationExpirationDate === null
-          ? null
+          ? undefined
           : format(formInputs.registrationExpirationDate, 'yyyy-MM-dd'),
     };
     addEmployee(createFormDataFromObject(employeeData))

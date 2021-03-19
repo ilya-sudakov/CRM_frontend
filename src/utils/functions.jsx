@@ -392,7 +392,21 @@ export const getEmployeeNameText = (employee) => {
 export const createFormDataFromObject = (object) => {
   let formData = new FormData();
   for (var item in object) {
-    formData.append(item, object[item]);
+    const type = Array.isArray(object[item]) ? 'array' : typeof object[item];
+    console.log(type, object[item]);
+    switch (type) {
+      case 'undefined':
+        break;
+      case 'array': {
+        for (var i = 0; i < object[item].length; i++) {
+          formData.append(item, object[item][i]);
+        }
+        break;
+      }
+      default:
+        formData.append(item, object[item]);
+        break;
+    }
   }
   return formData;
 };

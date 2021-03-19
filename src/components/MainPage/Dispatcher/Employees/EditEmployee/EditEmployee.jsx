@@ -14,6 +14,7 @@ import useForm from 'Utils/hooks/useForm';
 import { employeesDefaultInputs } from '../objects';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
 import { format } from 'date-fns';
+import axios from 'axios';
 
 const EditEmployee = (props) => {
   const {
@@ -30,21 +31,24 @@ const EditEmployee = (props) => {
 
   const formatDateObjects = (date) => {
     return date === null || date === undefined
-      ? null
+      ? undefined
       : format(new Date(date), 'yyyy-MM-dd');
   };
 
   const handleSubmit = () => {
     if (!formIsValid()) return;
     setIsLoading(true);
-    const formData = createFormDataFromObject({
+    const employeeData = {
       ...formInputs,
+      files: Array.from(formInputs.employeePhotos),
+      employeePhotos: undefined,
       dateOfBirth: formatDateObjects(formInputs.dateOfBirth),
       patentExpirationDate: formatDateObjects(formInputs.patentExpirationDate),
       registrationExpirationDate: formatDateObjects(
         formInputs.registrationExpirationDate,
       ),
-    });
+    };
+    const formData = createFormDataFromObject(employeeData);
     return editEmployee(formData, employeeId)
       .then(() => props.history.push('/dispatcher/employees'))
       .catch((error) => {
@@ -76,12 +80,30 @@ const EditEmployee = (props) => {
       setEmployeeId(id);
       getEmployeeById(id)
         .then((res) => res.json())
-        .then((oldRequest) =>
+        .then(async (data) => {
+          let fileList = [];
+          await Promise.all(
+            data.employeePhotos.map((item) =>
+              axios
+                .get(item.url, {
+                  responseType: 'blob',
+                })
+                .then(({ data }) =>
+                  fileList.push(
+                    new File([data], item.url.split('downloadFile/')[1], {
+                      type: data.type,
+                    }),
+                  ),
+                ),
+            ),
+          );
+          console.log(fileList);
           updateFormInputs({
-            ...oldRequest,
-            dateOfBirth: oldRequest.dateOfBirth ?? new Date(),
-          }),
-        )
+            ...data,
+            dateOfBirth: data.dateOfBirth ?? new Date(),
+            employeePhotos: fileList,
+          });
+        })
         .catch((error) => {
           console.log(error);
           alert('Неправильный индекс сотрудника!');
