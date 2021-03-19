@@ -189,7 +189,7 @@ const FileUploader = ({
               onDragStart={(e) => e.preventDefault()}
             >
               <div className="file-uploader__text">
-                Отпустите файл для загрузки
+                {`Отпустите ${multipleFiles ? 'файлы' : 'файл'} для загрузки`}
               </div>
             </div>
           ) : (
@@ -198,7 +198,9 @@ const FileUploader = ({
               draggable="true"
               onDragStart={(e) => e.preventDefault()}
             >
-              <div className="file-uploader__text">Перетащите файл сюда</div>
+              <div className="file-uploader__text">{`Перетащите ${
+                multipleFiles ? 'файлы' : 'файл'
+              } сюда`}</div>
               <div className="file-uploader__text file-uploader__text--small">
                 или
               </div>
@@ -208,7 +210,7 @@ const FileUploader = ({
                   className="main-window__button"
                   htmlFor={`fileuploader-${uniqueId}`}
                 >
-                  Загрузите файл
+                  {`Загрузите ${multipleFiles ? 'файлы' : 'файл'}`}
                 </label>
                 <input
                   onChange={async (event) => await handleDropFile(event)}
