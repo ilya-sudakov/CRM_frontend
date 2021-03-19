@@ -63,4 +63,4 @@ export const getLink = (_file) => {
 export const copyLinkToClipboard = (_file) => {
   const link = getLink(_file);
   navigator.clipboard.writeText(link);
-}; 
+};
