@@ -1,6 +1,6 @@
 import { createRef, useEffect } from 'react';
 import useFormWindow from 'Utils/hooks/useFormWindow';
-import Button from 'Utils/form/Button/Button.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 import { imgToBlobDownload } from 'Utils/functions.jsx';
 import axios from 'axios';
 
