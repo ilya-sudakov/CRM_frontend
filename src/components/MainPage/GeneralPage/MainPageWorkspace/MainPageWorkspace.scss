@@ -52,6 +52,21 @@
     }
   }
 
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+
+    &__row {
+      &--horizontal {
+        flex-direction: column;
+
+        .widget {
+          max-width: Max(100%, 280px);
+        }
+      }
+    }
+  }
+
   @media (max-width: 500px) {
     padding: 0;
   }
