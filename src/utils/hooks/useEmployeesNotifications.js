@@ -5,14 +5,14 @@ import {
   getEmployeesByExpiredDocuments,
 } from '../RequestsAPI/Employees.jsx';
 
-const useEmployeesNotifications = () => {
+const useEmployeesNotifications = (type = 'birthday') => {
   const [employees, setEmployees] = useState([]);
   const [isLoadingEmployees, setIsLoadingEmployees] = useState(true);
 
-  const loadData = () => {
+  const loadBirthdays = (signal) => {
     setIsLoadingEmployees(true);
     let employeesTemp = [];
-    return getEmployeesByComingBirthday()
+    return getEmployeesByComingBirthday(signal)
       .then((res) => res.json())
       .then((res) => {
         const filteredEmployees = res
@@ -22,28 +22,18 @@ const useEmployeesNotifications = () => {
               new Date(item.dateOfBirth).setFullYear(new Date().getFullYear()),
             );
             let birthdayDays = '';
-            console.log(
-              expirationTime,
-              new Date(),
-              dateDiffInDays(new Date(), expirationTime),
-            );
-            if (expirationTime.getDate() === new Date().getDate()) {
-              birthdayDays = 'Сегодня день рождения';
-            }
             const dateDiff = dateDiffInDays(new Date(), expirationTime);
             if (dateDiff <= 0) {
-              birthdayDays = `День рождения был ${Math.abs(
-                dateDiff,
-              )} дн. назад`;
+              birthdayDays = `${Math.abs(dateDiff)} дн. назад`;
             }
             if (dateDiff > 0) {
-              birthdayDays = `День рождения будет через ${dateDiffInDays(
+              birthdayDays = `Через ${dateDiffInDays(
                 new Date(),
                 expirationTime,
               )} дн.`;
             }
             if (expirationTime.getDate() === new Date().getDate()) {
-              birthdayDays = 'Сегодня день рождения!';
+              birthdayDays = 'Сегодня';
             }
             return {
               id: item.id,
@@ -56,8 +46,19 @@ const useEmployeesNotifications = () => {
             };
           });
         employeesTemp.push(...filteredEmployees);
+        setIsLoadingEmployees(false);
+        return setEmployees([...employeesTemp]);
       })
-      .then(() => getEmployeesByExpiredDocuments())
+      .catch((error) => {
+        console.log(error);
+        return setIsLoadingEmployees(false);
+      });
+  };
+
+  const loadDocuments = (signal) => {
+    setIsLoadingEmployees(true);
+    let employeesTemp = [];
+    return getEmployeesByExpiredDocuments(signal)
       .then((res) => res.json())
       .then((res) => {
         const filteredEmployees = res
@@ -85,6 +86,24 @@ const useEmployeesNotifications = () => {
         console.log(error);
         return setIsLoadingEmployees(false);
       });
+  };
+
+  const loadData = (signal) => {
+    switch (type) {
+      case 'birthday': {
+        loadBirthdays(signal);
+        break;
+      }
+      case 'documents': {
+        loadDocuments(signal);
+        break;
+      }
+      default: {
+        loadBirthdays(signal);
+        break;
+      }
+    }
+    return;
   };
 
   useEffect(() => {

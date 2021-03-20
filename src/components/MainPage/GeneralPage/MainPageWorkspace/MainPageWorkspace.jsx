@@ -7,12 +7,19 @@ import Notifications from '../Notifications/NotificationsWidget.jsx';
 const MainPageWorkspace = (props) => {
   return (
     <div className="main-page-workspace">
-      <TasksWidget />
-      <WorkManagement />
-      {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
-      {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-        <Notifications />
-      )}
+      <div className="main-page-workspace__row main-page-workspace__row--horizontal">
+        <TasksWidget />
+        <WorkManagement />
+        {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
+      </div>
+      <div className="main-page-workspace__row main-page-workspace__row--vertical">
+        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
+          <Notifications type="birthday" />
+        )}
+        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
+          <Notifications type="documents" />
+        )}
+      </div>
     </div>
   );
 };
