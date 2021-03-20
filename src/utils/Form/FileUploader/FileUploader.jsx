@@ -251,7 +251,7 @@ const FileUploader = ({
           {sortByField(data, { fieldName: 'id', direction: 'asc' }).map(
             (item, index) => {
               return (
-                <li key={index}>
+                <li key={item.name}>
                   <ImageView file={item} />
                   <div>{getFileName(item)}</div>
                   <div onClick={(event) => handleDeleteFile(event, index)}>
