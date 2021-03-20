@@ -7,7 +7,6 @@ import {
   getTasksControlDatesList,
   getTasksList,
 } from './functions.js';
-import TaskIcon from 'Assets/sidemenu/round-task-alt.inline.svg';
 import UserContext from '../../../../App.js';
 import TasksList from './TasksList/TasksList.jsx';
 
@@ -57,13 +56,6 @@ const TasksWidget = () => {
         address: '/dispatcher/general-tasks',
         text: 'Открыть',
       }}
-      icon={
-        <TaskIcon
-          width={24}
-          height={24}
-          className="main-window__img main-window__img--task"
-        />
-      }
       content={
         <TasksList
           tasks={tasks}

@@ -23,7 +23,7 @@ const WorkList = ({
             0
         ) {
           return (
-            <>
+            <div className="work-list-widget__workshop-group">
               <div className="work-list-widget__workshop-item">
                 {workshop.name}
               </div>
@@ -39,7 +39,7 @@ const WorkList = ({
                   />
                 );
               })}
-            </>
+            </div>
           );
         }
       })}
