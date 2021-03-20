@@ -21,11 +21,14 @@
     margin-right: 15px;
 
     &--mini {
-        // min-width: 200px;
         max-width: none;
         min-height: auto;
-        height: 100%;
+        height: fit-content;
         max-height: calc(33.33vh - 60px - 20px);
+
+        .widget__content {
+            height: fit-content;
+        }
     }
 
     &__title {
