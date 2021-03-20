@@ -7,7 +7,7 @@ import {
   getTasksControlDatesList,
   getTasksList,
 } from './functions.js';
-import OpenWidget from 'Assets/tableview/bx-window-open.inline.svg';
+import TaskIcon from 'Assets/sidemenu/round-task-alt.inline.svg';
 import UserContext from '../../../../App.js';
 import TasksList from './TasksList/TasksList.jsx';
 
@@ -56,10 +56,14 @@ const TasksWidget = () => {
       linkTo={{
         address: '/dispatcher/general-tasks',
         text: 'Открыть',
-        renderImg: (
-          <OpenWidget className="main-window__img main-window__img--open" />
-        ),
       }}
+      icon={
+        <TaskIcon
+          width={24}
+          height={24}
+          className="main-window__img main-window__img--task"
+        />
+      }
       content={
         <TasksList
           tasks={tasks}
