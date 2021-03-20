@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import './Widget.scss';
-import Button from 'Utils/Form/Button/Button.jsx';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Widget = ({
   title = '',
@@ -11,9 +10,8 @@ const Widget = ({
   subTitle = '',
   customHeader = null,
   miniWidget = false,
+  icon = null,
 }) => {
-  let history = useHistory();
-
   return (
     <div
       className={`widget ${className ?? ''} ${
@@ -23,17 +21,19 @@ const Widget = ({
       {customHeader ?? (
         <div className="widget__title">
           {!miniWidget && <div className="widget__sub-title">{subTitle}</div>}
-          <span>{title}</span>
-          {!miniWidget && linkTo ? (
-            <Button
-              className="main-window__button main-window__button--inverted"
-              inverted
-              text={linkTo.text}
-              imgSrc={linkTo.img ?? null}
-              renderImg={linkTo.renderImg}
-              onClick={() => history.push(linkTo.address)}
-            ></Button>
-          ) : null}
+          {linkTo ? (
+            <Link to={linkTo.address} title={linkTo.text}>
+              <span>
+                {icon}
+                {title}
+              </span>
+            </Link>
+          ) : (
+            <span>
+              {icon}
+              {title}
+            </span>
+          )}
         </div>
       )}
       <div className="widget__content">{content}</div>
@@ -49,4 +49,6 @@ Widget.proptypes = {
   linkTo: PropTypes.object,
   subTitle: PropTypes.string,
   customHeader: PropTypes.object,
+  miniWidget: PropTypes.bool,
+  icon: PropTypes.any,
 };
