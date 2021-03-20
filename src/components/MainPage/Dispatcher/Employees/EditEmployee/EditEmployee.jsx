@@ -95,7 +95,8 @@ const EditEmployee = (props) => {
                       type: data.type,
                     }),
                   ),
-                ),
+                )
+                .catch((error) => console.log(error)),
             ),
           );
           console.log(fileList);
