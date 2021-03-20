@@ -21,8 +21,8 @@
     margin-right: 15px;
 
     &--mini {
-        min-width: 200px;
-        max-width: 350px;
+        // min-width: 200px;
+        max-width: none;
         min-height: auto;
         height: 100%;
         max-height: calc(33.33vh - 60px - 20px);

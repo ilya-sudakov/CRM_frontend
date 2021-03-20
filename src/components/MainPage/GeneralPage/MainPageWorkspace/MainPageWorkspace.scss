@@ -11,6 +11,8 @@
   padding: 0 10px;
   padding-left: 12px;
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
 
   &__buttons {
     display: flex;
@@ -26,20 +28,21 @@
   }
 
   &__row {
+    width: 100%;
+    display: flex;
+    .widget {
+      width: 100%;
+      box-sizing: border-box;
+      max-width: Min(calc(50% - 15px), 800px);
+    }
     &--horizontal {
-      display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
-      width: calc(100% - 350px);
     }
     &--vertical {
-      display: flex;
       flex-direction: column;
-      width: 30%;
-      max-width: fit-content;
-
       .widget {
         margin-right: 0;
+        max-width: none;
       }
     }
   }
