@@ -9,11 +9,11 @@
 
         .notifications__category {
             color: #999;
-            padding-bottom: 5px;
-            font-size: 1rem;
+            padding-bottom: 3px;
+            font-size: 0.95rem;
 
             &:not(:first-child) {
-                padding-top: 10px;
+                padding-top: 5px;
             }
         }
 
@@ -77,7 +77,7 @@
                 font-size: 0.9rem;
 
                 div,
-                a {
+                span {
                     cursor: pointer;
                     white-space: nowrap;
                     max-width: 100%;
