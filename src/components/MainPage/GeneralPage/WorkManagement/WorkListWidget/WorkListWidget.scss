@@ -35,7 +35,7 @@
   .work-list-widget__item {
     padding: 5px 10px;
     margin-bottom: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #ddd;
     border-radius: 3px;
     width: calc(100% - 5px);
     font-size: 85%;
@@ -53,7 +53,7 @@
 
     &--no-data {
       background-color: #fdf6f6;
-      border-color: #d2c2c3;
+      border-color: #e2dbdb;
       color: #555555;
 
       .work-list-widget__info-message {
