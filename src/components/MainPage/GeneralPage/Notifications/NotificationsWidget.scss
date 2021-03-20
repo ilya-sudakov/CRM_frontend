@@ -4,23 +4,46 @@
     &__list {
         display: flex;
         flex-direction: column;
-        margin-top: 5px;
+        padding-bottom: 10px;
+
+        .notifications__category {
+            color: #999;
+            padding-bottom: 3px;
+            font-size: 0.95rem;
+
+            &:not(:first-child) {
+                padding-top: 5px;
+            }
+        }
 
         .notifications__list-item {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            position: relative;
+            margin-bottom: 5px;
+            padding: 5px 5px;
+            padding-left: 20px;
             align-items: center;
             font-size: 1rem;
-            margin-bottom: 5px;
             border-radius: 3px;
             box-sizing: border-box;
-            padding: 5px 15px;
-            // padding-right: 30px;
-            position: relative;
             transition: 100ms ease-in-out;
 
-            border: 1px solid #dddddd;
+            &::before {
+                position: absolute;
+                left: 4px;
+                top: calc(50% - 4px);
+                content: "";
+                background-color: #ddd;
+                border-radius: 999px;
+                width: 8px;
+                height: 8px;
+            }
+
+            &:hover {
+                background-color: #eee;
+            }
 
             &--unread {
                 &::after {
@@ -39,10 +62,6 @@
                 margin-bottom: 0;
             }
 
-            &:hover {
-                background-color: #efefef;
-            }
-
             .main-window__img {
                 filter: invert(0);
                 margin-right: 0;
@@ -53,9 +72,11 @@
                 display: flex;
                 flex-direction: column;
                 width: 100%;
+                color: #000000;
+                font-size: 0.9rem;
 
                 div,
-                a {
+                span {
                     cursor: pointer;
                     white-space: nowrap;
                     max-width: 100%;

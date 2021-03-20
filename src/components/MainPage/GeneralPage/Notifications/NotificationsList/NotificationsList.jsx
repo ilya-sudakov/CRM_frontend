@@ -1,10 +1,18 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import CakeIcon from 'Assets/notifications/birthday-cake.inline.svg';
-import DocumentsIcon from 'Assets/statistics/document-report.inline.svg';
 
-const NotificationsList = ({ notifications, isLoading }) => {
+const NotificationsList = ({ notifications, isLoading, type }) => {
+  const types = {
+    birthday: [
+      'Сегодня',
+      'Через 1 дн.',
+      'Через 2 дн.',
+      '1 дн. назад',
+      '2 дн. назад',
+    ],
+    documents: ['Просроченные документы', 'Не указаны сроки документов'],
+  };
   return (
     <div className="notifications__list">
       {isLoading ? (
@@ -13,9 +21,20 @@ const NotificationsList = ({ notifications, isLoading }) => {
           itemClassName="notifications__list-item"
         />
       ) : notifications.length > 0 ? (
-        notifications.map((notification) => (
-          <ListItem item={notification} key={notification.id} />
-        ))
+        types[type].map((typeItem) => {
+          const filteredNotifications = notifications.filter(
+            (notification) => notification.description === typeItem,
+          );
+          if (filteredNotifications.length === 0) return null;
+          return (
+            <>
+              <div className="notifications__category">{typeItem}</div>
+              {filteredNotifications.map((notification) => (
+                <ListItem item={notification} key={notification.id} />
+              ))}
+            </>
+          );
+        })
       ) : (
         <div className="main-window__info-text">Нет уведомлений</div>
       )}
@@ -32,15 +51,9 @@ const ListItem = ({ item }) => {
         item.read ? '' : 'notifications__list-item--unread'
       }`}
     >
-      <div className="notifications__list-wrapper">
-        <Link to={item.link}>{item.name}</Link>
-        <div>{item.description}</div>
-      </div>
-      {item.type === 'ДР' ? (
-        <CakeIcon className="main-window__img" />
-      ) : (
-        <DocumentsIcon className="main-window__img" />
-      )}
+      <Link to={item.link} className="notifications__list-wrapper">
+        <span>{item.name}</span>
+      </Link>
     </div>
   );
 };

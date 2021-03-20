@@ -10,16 +10,21 @@ const Widget = ({
   linkTo,
   subTitle = '',
   customHeader = null,
+  miniWidget = false,
 }) => {
   let history = useHistory();
 
   return (
-    <div className={`widget ${className ?? ''}`}>
+    <div
+      className={`widget ${className ?? ''} ${
+        miniWidget ? 'widget--mini' : ''
+      }`}
+    >
       {customHeader ?? (
         <div className="widget__title">
-          <div className="widget__sub-title">{subTitle}</div>
+          {!miniWidget && <div className="widget__sub-title">{subTitle}</div>}
           <span>{title}</span>
-          {linkTo ? (
+          {!miniWidget && linkTo ? (
             <Button
               className="main-window__button main-window__button--inverted"
               inverted
