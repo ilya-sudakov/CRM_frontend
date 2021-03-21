@@ -8,7 +8,7 @@ import useEmployeesNotifications from 'Utils/hooks/useEmployeesNotifications.js'
 const NotificationsWidget = ({ type = 'birthday' }) => {
   const types = {
     birthday: {
-      title: 'Дни рождений',
+      title: 'Дни рождения',
     },
     documents: {
       title: 'Документы',
