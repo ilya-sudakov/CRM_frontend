@@ -67,7 +67,7 @@ const MainPageWorkspace = (props) => {
         <Button
           text={
             <div className="button__text-group">
-              <span>Табель</span>
+              <span>Табель сотрудников</span>
               <span className="button__text--sub">
                 Таблица учета рабочего времени
               </span>
