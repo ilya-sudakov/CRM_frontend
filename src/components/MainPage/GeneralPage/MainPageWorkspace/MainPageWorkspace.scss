@@ -29,21 +29,29 @@
 
   &__row {
     width: 100%;
-    display: flex;
     .widget {
       width: 100%;
       box-sizing: border-box;
       max-width: Min(calc(50% - 15px), 800px);
     }
     &--horizontal {
-      flex-direction: row;
-      flex-wrap: wrap;
-      width: 70%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 15px;
+      grid-auto-rows: minmax(min-content, max-content);
+      column-gap: 15px;
+      width: calc(70% - 15px);
+      margin-right: 15px;
       .widget {
-        min-width: 400px;
+        width: 100%;
+        min-width: 450px;
+        margin-right: 0;
+        margin-bottom: 0;
+        max-width: Min(100%, 700px);
       }
     }
     &--vertical {
+      display: flex;
       flex-direction: column;
       width: 30%;
       .widget {
