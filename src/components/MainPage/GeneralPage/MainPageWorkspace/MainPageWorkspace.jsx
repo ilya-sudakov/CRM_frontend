@@ -95,11 +95,10 @@ const MainPageWorkspace = (props) => {
             <div className="button__text-group">
               <span>Скачать табель</span>
               <span className="button__text--sub">
-                {`за ${months[new Date().getMonth()]}`}
+                {`за ${months[new Date().getMonth()].toLowerCase()}`}
               </span>
             </div>
           }
-          // imgSrc={DownloadIcon}
           className="main-window__button main-window__button--inverted main-window__button--big"
           inverted
           isLoading={isLoading}
