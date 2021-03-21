@@ -21,27 +21,13 @@ const MainPageWorkspace = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getFilteredWorkshops = () => {
-    if (
-      props.userHasAccess(['ROLE_ADMIN']) ||
-      props.userHasAccess(['ROLE_DISPATCHER'])
-    ) {
+    if (props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']))
       return workshops;
-    }
-    if (props.userHasAccess(['ROLE_LEMZ'])) {
-      return ['ЦехЛЭМЗ'];
-    }
-    if (props.userHasAccess(['ROLE_LEPSARI'])) {
-      return ['ЦехЛепсари'];
-    }
-    if (props.userHasAccess(['ROLE_LIGOVSKIY'])) {
-      return ['ЦехЛиговский'];
-    }
-    if (props.userHasAccess(['ROLE_ENGINEER'])) {
-      return ['Офис'];
-    }
-    if (props.userHasAccess(['ROLE_MANAGER'])) {
-      return ['Офис'];
-    }
+    if (props.userHasAccess(['ROLE_LEMZ'])) return ['ЦехЛЭМЗ'];
+    if (props.userHasAccess(['ROLE_LEPSARI'])) return ['ЦехЛепсари'];
+    if (props.userHasAccess(['ROLE_LIGOVSKIY'])) return ['ЦехЛиговский'];
+    if (props.userHasAccess(['ROLE_ENGINEER'])) return ['Офис'];
+    if (props.userHasAccess(['ROLE_MANAGER'])) return ['Офис'];
   };
 
   async function downloadTableReport() {
@@ -54,46 +40,30 @@ const MainPageWorkspace = (props) => {
   return (
     <div className="main-page-workspace">
       <div className="main-page-workspace__buttons">
-        {props.userHasAccess([
-          'ROLE_ADMIN',
-          'ROLE_DISPATCHER',
-          'ROLE_MANAGER',
-          'ROLE_WORKSHOP',
-          'ROLE_ENGINEER',
-        ]) && (
-          <Button
-            text={
-              <div className="button__text-group">
-                <span>Учесть рабочее время</span>
-                <span className="button__text--sub">
-                  Заполнить форму работы за день
-                </span>
-              </div>
-            }
-            className="main-window__button main-window__button--big"
-            onClick={() => history.push('/work-management/record-time/new')}
-          />
-        )}
-        {props.userHasAccess([
-          'ROLE_ADMIN',
-          'ROLE_DISPATCHER',
-          'ROLE_MANAGER',
-          'ROLE_WORKSHOP',
-          'ROLE_ENGINEER',
-        ]) && (
-          <Button
-            text={
-              <div className="button__text-group">
-                <span>Дневник производства</span>
-                <span className="button__text--sub">
-                  Список работ сотрудников за 2 дня
-                </span>
-              </div>
-            }
-            className="main-window__button main-window__button--big"
-            onClick={() => history.push('/work-management/journal')}
-          />
-        )}
+        <Button
+          text={
+            <div className="button__text-group">
+              <span>Учесть рабочее время</span>
+              <span className="button__text--sub">
+                Заполнить форму работы за день
+              </span>
+            </div>
+          }
+          className="main-window__button main-window__button--big"
+          onClick={() => history.push('/work-management/record-time/new')}
+        />
+        <Button
+          text={
+            <div className="button__text-group">
+              <span>Дневник производства</span>
+              <span className="button__text--sub">
+                Список работ сотрудников за 2 дня
+              </span>
+            </div>
+          }
+          className="main-window__button main-window__button--big"
+          onClick={() => history.push('/work-management/journal')}
+        />
         <Button
           text={
             <div className="button__text-group">
