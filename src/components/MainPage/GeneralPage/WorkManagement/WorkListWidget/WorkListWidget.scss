@@ -30,7 +30,9 @@
     }
 
     .work-list-widget__workshop-group {
-      margin-top: 8px;
+      &:not(:first-child) {
+        margin-top: 8px;
+      }
     }
   }
   .work-list-widget__item {
