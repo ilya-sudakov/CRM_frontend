@@ -95,7 +95,7 @@ const MainPageWorkspace = (props) => {
             <div className="button__text-group">
               <span>Скачать табель</span>
               <span className="button__text--sub">
-                {`за ${months[new Date().getMonth()].toLowerCase()}`}
+                {`За ${months[new Date().getMonth()].toLowerCase()}`}
               </span>
             </div>
           }
