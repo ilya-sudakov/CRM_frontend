@@ -191,7 +191,7 @@
     .main-form__fieldset {
       width: calc(100% - 0px);
       margin: 10px 0;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -204,10 +204,9 @@
       // border-top: 1px solid #dddddd;
       // border-bottom: 1px solid #dddddd;
       .main-form__group-name {
-        // font-weight: bold;
         text-align: left;
         width: fit-content;
-        font-size: 110%;
+        font-size: 1.3rem;
         margin-left: 10px;
         align-self: flex-start;
         margin-bottom: 15px;
@@ -217,10 +216,10 @@
         &:after {
           content: "";
           position: absolute;
-          width: calc(100% + 5px);
+          width: 100%;
           background-color: #dddddd;
           height: 2px;
-          top: calc(100% + 5px);
+          top: calc(100% + 3px);
           left: 0;
         }
       }
