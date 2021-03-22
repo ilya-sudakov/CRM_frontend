@@ -143,19 +143,24 @@
           font-size: 0.85rem;
           color: #444;
         }
-        &:nth-child(3) {
-          cursor: pointer;
-          margin-left: 10px;
-          border: 1px solid transparent;
-          transition: 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-          font-size: 0.8rem;
-          color: #999;
-          border-radius: 9999px;
+      }
 
-          &:hover {
-            color: #222;
-            padding: 5px 10px;
-            border: 1px solid #bbb;
+      svg {
+        cursor: pointer;
+        padding: 5px 5px;
+
+        &:first-child {
+          margin-left: 10px;
+        }
+
+        path:first-child {
+          transition: 100ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+          fill: #999;
+        }
+
+        &:hover {
+          path:first-child {
+            fill: #555;
           }
         }
       }

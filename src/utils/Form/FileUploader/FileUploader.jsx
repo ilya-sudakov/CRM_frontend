@@ -3,6 +3,8 @@ import { sortByField } from 'Utils/sorting/sorting.js';
 import PropTypes from 'prop-types';
 import './FileUploader.scss';
 import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
+import RemoveIcon from 'Assets/tableview/delete.inline.svg';
+import DownloadIcon from 'Assets/download.inline.svg';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
@@ -254,9 +256,18 @@ const FileUploader = ({
                 <li key={item.name}>
                   <ImageView file={item} />
                   <div>{getFileName(item)}</div>
-                  <div onClick={(event) => handleDeleteFile(event, index)}>
-                    удалить
-                  </div>
+                  <DownloadIcon
+                    width={30}
+                    height={30}
+                    viewBox="0 0 24 24"
+                    // onClick={(event) => handleDeleteFile(event, index)}
+                  />
+                  <RemoveIcon
+                    width={30}
+                    height={30}
+                    viewBox="0 0 24 24"
+                    onClick={(event) => handleDeleteFile(event, index)}
+                  />
                 </li>
               );
             },
