@@ -5,6 +5,7 @@ import './FileUploader.scss';
 import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
 import RemoveIcon from 'Assets/tableview/delete.inline.svg';
 import DownloadIcon from 'Assets/download.inline.svg';
+import { downloadImage } from '../ImageView/functions';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
@@ -260,7 +261,7 @@ const FileUploader = ({
                     width={30}
                     height={30}
                     viewBox="0 0 24 24"
-                    // onClick={(event) => handleDeleteFile(event, index)}
+                    onClick={() => downloadImage(item)}
                   />
                   <RemoveIcon
                     width={30}
