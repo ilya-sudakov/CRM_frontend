@@ -76,20 +76,24 @@ const UpdateList = ({ updates, isLoading = false }) => {
 };
 
 const UpdateItem = ({ update }) => {
+  const description = update?.fields?.description?.stringValue;
+  const list = update?.fields?.list?.arrayValue?.values;
+  const name = update?.fields?.name?.stringValue;
+
   return (
     <>
       <div className="update-log-widget__title">
-        <span>{update?.fields?.name?.stringValue}</span>
+        <span>{name}</span>
         <span>{`Обновление от ${formatDateString(update?.createTime)}`}</span>
       </div>
       <div className="update-log-widget__group">
-        {update?.fields?.list?.arrayValue?.values?.map((update) => (
+        {list?.map((update) => (
           <div key={update?.stringValue}>{update?.stringValue}</div>
         ))}
       </div>
-      <div className="update-log-widget__description">
-        {update?.fields?.description?.stringValue}
-      </div>
+      {description ? (
+        <div className="update-log-widget__description">{description}</div>
+      ) : null}
     </>
   );
 };
