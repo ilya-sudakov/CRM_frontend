@@ -24,10 +24,14 @@
         max-width: none;
         min-height: auto;
         height: fit-content;
-        max-height: calc(33.33vh - 60px - 20px);
+        max-height: calc(33.33vh - 60px - 1px);
 
         .widget__content {
             height: fit-content;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 
