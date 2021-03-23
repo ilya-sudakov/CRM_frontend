@@ -3,6 +3,7 @@ import { WorkManagement } from '../../lazyImports.jsx';
 import TasksWidget from '../TasksWidget/TasksWidget.jsx';
 import GraphWidget from '../GraphWidget/GraphWidget.jsx';
 import Notifications from '../Notifications/NotificationsWidget.jsx';
+import UpdateLogWidget from '../UpdateLogWidget/UpdateLogWidget.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
@@ -117,6 +118,7 @@ const MainPageWorkspace = (props) => {
         {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
           <Notifications type="documents" />
         )}
+        <UpdateLogWidget />
       </div>
     </div>
   );

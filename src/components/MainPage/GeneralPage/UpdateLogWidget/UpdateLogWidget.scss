@@ -1,0 +1,50 @@
+.update-log-widget {
+    font-size: 1rem;
+    .widget__content {
+        padding-right: 0;
+    }
+    &__list {
+        padding-right: 4px;
+
+        .update-log-widget__title {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+
+            &:not(:first-child) {
+                margin-top: 30px;
+            }
+
+            span {
+                font-size: 0.95rem;
+                &:nth-child(2) {
+                    font-size: 0.8rem;
+                    color: #aaa;
+                }
+            }
+        }
+
+        .update-log-widget__group {
+            font-size: 0.8rem;
+
+            > div {
+                position: relative;
+                padding-left: 12px;
+                color: #666;
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0.3rem;
+                    background-color: #ddd;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 999px;
+                }
+            }
+        }
+    }
+}
