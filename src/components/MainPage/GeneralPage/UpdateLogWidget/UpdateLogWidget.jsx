@@ -65,9 +65,11 @@ const UpdateList = ({ updates, isLoading = false }) => {
       {isLoading ? (
         <PlaceholderLoading />
       ) : (
-        updates.map((update) => (
-          <UpdateItem key={update.createTime} update={update} />
-        ))
+        <>
+          {updates.map((update) => (
+            <UpdateItem key={update.createTime} update={update} />
+          ))}
+        </>
       )}
     </div>
   );
@@ -84,6 +86,9 @@ const UpdateItem = ({ update }) => {
         {update?.fields?.list?.arrayValue?.values?.map((update) => (
           <div key={update?.stringValue}>{update?.stringValue}</div>
         ))}
+      </div>
+      <div className="update-log-widget__description">
+        {update?.fields?.description?.stringValue}
       </div>
     </>
   );
