@@ -17,10 +17,15 @@ const UpdateLogWidget = () => {
       )
       .then(({ data }) => {
         const { documents } = data;
-        const sortedByDate = sortByField(documents, {
-          fieldName: 'createTime',
-          direction: 'desc',
-        });
+        const sortedByDate = sortByField(
+          documents.filter(
+            (document) => document?.fields?.isVisible?.booleanValue,
+          ),
+          {
+            fieldName: 'createTime',
+            direction: 'desc',
+          },
+        );
         if (sortedByDate.length < 4) {
           setUpdatesList([...sortedByDate]);
           return setIsLoading(false);
@@ -50,9 +55,13 @@ const UpdateLogWidget = () => {
 export default UpdateLogWidget;
 
 const UpdateList = ({ updates, isLoading = false }) => {
-  if (!isLoading && updates.length === 0) return null;
   return (
     <div className="update-log-widget__list">
+      {!isLoading && updates.length === 0 && (
+        <div className="update-log-widget__title">
+          <span>Нет последних обновлений</span>
+        </div>
+      )}
       {isLoading ? (
         <PlaceholderLoading />
       ) : (
