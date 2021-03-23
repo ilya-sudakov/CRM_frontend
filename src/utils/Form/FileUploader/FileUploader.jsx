@@ -5,7 +5,7 @@ import './FileUploader.scss';
 import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
 import RemoveIcon from 'Assets/tableview/delete.inline.svg';
 import DownloadIcon from 'Assets/download.inline.svg';
-import { downloadImage } from '../ImageView/functions';
+import { downloadImage, getFileExtension } from '../ImageView/functions';
 
 const FileUploader = ({
   regex = /.+\.(jpeg|jpg|png|img)/,
@@ -253,16 +253,24 @@ const FileUploader = ({
         >
           {sortByField(data, { fieldName: 'id', direction: 'asc' }).map(
             (item, index) => {
+              const extension = getFileExtension(item);
+              const isImage =
+                extension === 'png' ||
+                extension === 'jpeg' ||
+                extension === 'img' ||
+                extension === 'jpg';
               return (
                 <li key={item.name}>
                   <ImageView file={item} />
                   <div>{getFileName(item)}</div>
-                  <DownloadIcon
-                    width={30}
-                    height={30}
-                    viewBox="0 0 24 24"
-                    onClick={() => downloadImage(item)}
-                  />
+                  {isImage && (
+                    <DownloadIcon
+                      width={30}
+                      height={30}
+                      viewBox="0 0 24 24"
+                      onClick={() => downloadImage(item)}
+                    />
+                  )}
                   <RemoveIcon
                     width={30}
                     height={30}
