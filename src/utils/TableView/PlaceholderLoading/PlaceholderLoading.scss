@@ -1,16 +1,11 @@
 .placeholder-loading {
     @keyframes pulse-placeholder-loading {
-        0% {
-            // border-color: #ebebeb;
-            background-color: #ebebeb;
+        0%,
+        100% {
+            background-color: #e7e7e7;
         }
         50% {
-            // border-color: #d5d5d5;
-            background-color: #d5d5d5;
-        }
-        100% {
-            // border-color: #ebebeb;
-            background-color: #ebebeb;
+            background-color: #efefef;
         }
     }
 

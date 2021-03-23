@@ -34,6 +34,20 @@
         margin-top: 8px;
       }
     }
+
+    &--placeholder {
+      .work-list-widget__item {
+        &:first-child {
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+        }
+
+        &:nth-child(2) {
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
+    }
   }
   .work-list-widget__item {
     border: 1px solid #ddd;
