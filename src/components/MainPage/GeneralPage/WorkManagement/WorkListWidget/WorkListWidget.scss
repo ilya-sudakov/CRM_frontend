@@ -1,6 +1,9 @@
 @import "../../../../../variables.scss";
 
 .work-list-widget {
+  .widget__content {
+    padding-right: 0;
+  }
   &__info {
     font-size: 1rem;
     margin-top: 5px;
@@ -14,6 +17,7 @@
     overflow-y: auto;
     font-size: 100%;
     box-sizing: border-box;
+    padding-right: 4px;
 
     .work-list-widget__workshop-item {
       margin-right: auto;

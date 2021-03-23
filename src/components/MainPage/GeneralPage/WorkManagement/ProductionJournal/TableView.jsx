@@ -229,7 +229,7 @@ const ProductList = ({ work = {}, name = '' }) => {
       {work[name]?.map((product) => (
         <span
           key={product.id}
-        >{`${product.name} - ${product.quantity} шт`}</span>
+        >{`- ${product.name} - ${product.quantity} шт`}</span>
       ))}
     </div>
   );
