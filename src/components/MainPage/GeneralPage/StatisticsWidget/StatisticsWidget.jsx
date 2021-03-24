@@ -8,6 +8,7 @@ import {
   getRequestIncomeStats,
 } from '../../StatisticsPage/functions';
 import { getPreviousMonthDates } from 'Utils/helpers/time.js';
+import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import useRequestsData from 'Utils/hooks/useRequestsData';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
@@ -33,11 +34,11 @@ const StatisticsWidget = () => {
         name: 'Заказы',
         prevPeriod: {
           name: periods.prevPeriod,
-          value: `${prevPeriodQuantity} зкз`,
+          value: `${prevPeriodQuantity} зак.`,
         },
         curPeriod: {
           name: periods.curPeriod,
-          value: `${curPeriodQuantity} зкз`,
+          value: `${curPeriodQuantity} зак.`,
         },
         difference: getDifferenceInPercentages(
           prevPeriodQuantity,
@@ -66,11 +67,11 @@ const StatisticsWidget = () => {
         name: 'Доход',
         prevPeriod: {
           name: periods.prevPeriod,
-          value: `${prevPeriodQuantity} ₽`,
+          value: `${addSpaceDelimiter(prevPeriodQuantity)} ₽`,
         },
         curPeriod: {
           name: periods.curPeriod,
-          value: `${curPeriodQuantity} ₽`,
+          value: `${addSpaceDelimiter(curPeriodQuantity)} ₽`,
         },
         difference: getDifferenceInPercentages(
           prevPeriodQuantity,
