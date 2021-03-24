@@ -11,7 +11,8 @@
 
         .statistics-widget__item {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
+            align-items: center;
             width: 100%;
             font-size: 0.9rem;
             color: #555;
@@ -22,16 +23,18 @@
 
             .list__item {
                 flex: 0 1 17.5%;
-                text-align: center;
                 &:not(:last-child) {
                     margin-right: 10px;
                 }
                 &--name {
-                    text-align: left;
+                    width: 100%;
+                    flex: auto;
+                    max-width: 60px;
                 }
                 &--period {
                     flex: 30%;
                     white-space: nowrap;
+                    font-size: 0.8rem;
                     span {
                         &:not(:last-child) {
                             margin-right: 5px;
@@ -43,27 +46,30 @@
                 }
                 &--value {
                     white-space: nowrap;
+                    flex: 0 1 50px;
+                    max-height: 50px;
+                    color: #777;
+                    font-size: 0.8rem;
                 }
                 &--difference {
                     position: relative;
-                    padding-left: 18px;
+                    padding-left: 15px;
                     text-align: left;
+                    min-width: 50px;
                     &::before {
                         content: "";
                         position: absolute;
                         left: 0;
                         top: calc(50% - 4px);
-                        border: 8px solid transparent;
+                        border: 6px solid transparent;
                         border-top-color: #ccc;
-                        // width: 8px;
-                        // height: 8px;
                     }
                 }
                 &--positive {
                     &::before {
                         border-top-color: transparent;
                         border-bottom-color: green;
-                        top: calc(50% - 12px);
+                        top: calc(50% - 9px);
                     }
                 }
                 &--negative {

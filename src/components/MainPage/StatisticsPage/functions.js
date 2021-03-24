@@ -101,9 +101,34 @@ export const getRequestQuantityStats = (requests, currDate, prevData) => {
   return [prevMonthQuantity, curMonthQuantity, filteredRequests];
 };
 
+export const getRequestIncomeStats = (requests, currDate, prevData) => {
+  let curMonthIncome = 0;
+  let prevMonthIncome = 0;
+  //check prev period
+  let temp = requests.filter((request) => {
+    const date = new Date(request.date);
+    if (checkIfDateIsInRange(date, prevData.startDate, prevData.endDate)) {
+      prevMonthIncome += Number.parseFloat(request.sum);
+      return false;
+    }
+    return true;
+  });
+  //check cur period
+  const filteredRequests = temp.filter((request) => {
+    const date = new Date(request.date);
+    if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
+      curMonthIncome += Number.parseFloat(request.sum);
+      return true;
+    }
+    return false;
+  });
+
+  return [prevMonthIncome, curMonthIncome, filteredRequests];
+};
+
 export const getDifferenceInPercentages = (prevData, curData) => {
   return (
-    Math.floor(
+    Math.ceil(
       ((curData - prevData) / (prevData === 0 ? 1 : prevData)) * 100 * 100,
     ) / 100
   );

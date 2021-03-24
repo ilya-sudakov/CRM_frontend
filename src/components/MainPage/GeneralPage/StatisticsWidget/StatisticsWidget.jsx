@@ -5,7 +5,9 @@ import {
   getRequestQuantityStats,
   getPreviousWeekDays,
   getDifferenceInPercentages,
+  getRequestIncomeStats,
 } from '../../StatisticsPage/functions';
+import { getPreviousMonthDates } from 'Utils/helpers/time.js';
 import useRequestsData from 'Utils/hooks/useRequestsData';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
@@ -14,7 +16,7 @@ const StatisticsWidget = () => {
   const [statistics, setStatistics] = useState([]);
 
   const getRequestsQuantity = useCallback(
-    (prevDate, curDate) => {
+    (prevDate, curDate, periods) => {
       if (requests.length === 0) return null;
       const [prevPeriodQuantity, curPeriodQuantity] = getRequestQuantityStats(
         requests,
@@ -30,10 +32,13 @@ const StatisticsWidget = () => {
       return {
         name: 'Заказы',
         prevPeriod: {
-          name: 'Прошлая неделя',
+          name: periods.prevPeriod,
           value: `${prevPeriodQuantity} зкз`,
         },
-        curPeriod: { name: 'Эта неделя', value: `${curPeriodQuantity} зкз` },
+        curPeriod: {
+          name: periods.curPeriod,
+          value: `${curPeriodQuantity} зкз`,
+        },
         difference: getDifferenceInPercentages(
           prevPeriodQuantity,
           curPeriodQuantity,
@@ -43,18 +48,79 @@ const StatisticsWidget = () => {
     [requests],
   );
 
+  const getRequestsIncome = useCallback(
+    (prevDate, curDate, periods) => {
+      if (requests.length === 0) return null;
+      const [prevPeriodQuantity, curPeriodQuantity] = getRequestIncomeStats(
+        requests,
+        {
+          startDate: curDate.startDate,
+          endDate: curDate.endDate,
+        },
+        {
+          startDate: prevDate.startDate,
+          endDate: prevDate.endDate,
+        },
+      );
+      return {
+        name: 'Доход',
+        prevPeriod: {
+          name: periods.prevPeriod,
+          value: `${prevPeriodQuantity} ₽`,
+        },
+        curPeriod: {
+          name: periods.curPeriod,
+          value: `${curPeriodQuantity} ₽`,
+        },
+        difference: getDifferenceInPercentages(
+          prevPeriodQuantity,
+          curPeriodQuantity,
+        ),
+      };
+    },
+    [requests],
+  );
+
+  const getAllStats = () => {
+    let statsList = [];
+    const curDateWeek = getPreviousWeekDays(new Date(), 'current');
+    const prevDateWeek = getPreviousWeekDays(new Date());
+    const curDateMonth = getPreviousMonthDates(new Date(), 'current');
+    const prevDateMonth = getPreviousMonthDates(new Date());
+    statsList.push(
+      getRequestsQuantity(prevDateWeek, curDateWeek, {
+        prevPeriod: 'Прошлая неделя',
+        curPeriod: 'Эта неделя',
+      }),
+    );
+    statsList.push(
+      getRequestsQuantity(prevDateMonth, curDateMonth, {
+        prevPeriod: 'Прошлый месяц',
+        curPeriod: 'Этот месяц',
+      }),
+    );
+    statsList.push(
+      getRequestsIncome(prevDateMonth, curDateMonth, {
+        prevPeriod: 'Прошлый месяц',
+        curPeriod: 'Этот месяц',
+      }),
+    );
+    setStatistics((statistics) => [
+      ...statistics,
+      ...statsList.filter((stat) => stat !== null && stat),
+    ]);
+  };
+
   useEffect(() => {
-    const curDate = getPreviousWeekDays(new Date(), 'current');
-    const prevDate = getPreviousWeekDays(new Date());
-    const reqsQuantity = getRequestsQuantity(prevDate, curDate);
-    reqsQuantity !== null &&
-      setStatistics((statistics) => [...statistics, reqsQuantity]);
+    if (requests.length === 0) return;
+    getAllStats();
   }, [requests]);
 
   return (
     <Widget
       className="statistics-widget"
       title="Статистика"
+      subTitle="Эта неделя"
       miniWidget
       linkTo={{
         address: '/statistics',
