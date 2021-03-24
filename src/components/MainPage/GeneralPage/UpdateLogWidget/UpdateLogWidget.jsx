@@ -1,14 +1,32 @@
 import './UpdateLogWidget.scss';
 import Widget from '../Widget/Widget.jsx';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { sortByField } from 'Utils/sorting/sorting.js';
 import { formatDateString, dateDiffInDays } from 'Utils/functions.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import UserContext from '../../../../App.js';
 
 const UpdateLogWidget = () => {
   const [updatesList, setUpdatesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { userHasAccess } = useContext(UserContext);
+
+  const visibilityItems = {
+    all: [
+      'ROLE_ADMIN',
+      'ROLE_WORKSHOP',
+      'ROLE_DISPATCHER',
+      'ROLE_MANAGER',
+      'ROLE_ENGINEER',
+    ],
+    hidden: [],
+    admin: ['ROLE_ADMIN'],
+    manager: ['ROLE_ADMIN', 'ROLE_MANAGER'],
+    workshop: ['ROLE_ADMIN', 'ROLE_WORKSHOP'],
+    dispatcher: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+    engineer: ['ROLE_ADMIN', 'ROLE_ENGINEER'],
+  };
 
   const getUpdateLogList = () => {
     return axios
@@ -20,7 +38,9 @@ const UpdateLogWidget = () => {
         const sortedByDate = sortByField(
           documents.filter(
             (document) =>
-              document?.fields?.isVisible?.booleanValue &&
+              userHasAccess(
+                visibilityItems[document?.fields?.visibility?.stringValue],
+              ) &&
               dateDiffInDays(new Date(document?.createTime), new Date()) <= 3,
           ),
           {
