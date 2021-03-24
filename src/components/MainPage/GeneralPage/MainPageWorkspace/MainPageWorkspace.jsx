@@ -110,11 +110,11 @@ const MainPageWorkspace = (props) => {
       <div className="main-page-workspace__columns">
         <div className="main-page-workspace__row main-page-workspace__row--horizontal">
           <TasksWidget />
-          {props.userHasAccess(['ROLE_ADMIN']) && <StatisticsWidget />}
+          <WorkManagement />
         </div>
         <div className="main-page-workspace__row main-page-workspace__row--horizontal">
-          <WorkManagement />
           {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
+          {props.userHasAccess(['ROLE_ADMIN']) && <StatisticsWidget />}
         </div>
         <div className="main-page-workspace__row main-page-workspace__row--vertical">
           {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
