@@ -78,10 +78,6 @@
             }
         }
         .main-window__mobile-text {
-            // font-size: 125%;
-            // margin-bottom: 15px;
-            // margin-right: auto;
-            // margin-left: 5px;
             display: none;
         }
     }
@@ -105,7 +101,10 @@
             font-size: 120%;
             flex-wrap: wrap;
             margin-bottom: 5px;
-            // margin-left: 15px !important;
+            font-weight: 500;
+            span {
+                font-weight: normal;
+            }
         }
         &__chart-wrapper {
             width: 100%;

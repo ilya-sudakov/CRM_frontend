@@ -54,6 +54,20 @@ const Button = styled.div`
   }
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  div {
+    width: 50%;
+    margin-bottom: 0 !important;
+    text-align: center;
+
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+`;
+
 const TextInput = styled.textarea`
   width: 100%;
   resize: none;
@@ -160,6 +174,10 @@ const FormPage = ({ setCurPage, formInputs, setFormInputs }) => {
     });
   };
 
+  const StyledButton = styled(Button)`
+    justify-content: center;
+  `;
+
   return (
     <>
       <TextInput
@@ -168,9 +186,14 @@ const FormPage = ({ setCurPage, formInputs, setFormInputs }) => {
         placeholder="Текст вашего сообщения..."
         autoComplete="off"
       />
-      <Button onClick={handleSubmit} submit>
-        <span>Отправить</span>
-      </Button>
+      <ButtonWrapper>
+        <StyledButton onClick={() => setCurPage('startPage')} inverted>
+          <span>Вернуться назад</span>
+        </StyledButton>
+        <Button onClick={handleSubmit} submit>
+          <span>Отправить</span>
+        </Button>
+      </ButtonWrapper>
     </>
   );
 };

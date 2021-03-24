@@ -22,7 +22,7 @@
     &--mini {
         max-width: none;
         height: fit-content;
-        max-height: calc(33.33vh - 62px);
+        max-height: Max(calc(33.33vh - 62px), 120px);
 
         .widget__content {
             height: fit-content;
