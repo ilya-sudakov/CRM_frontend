@@ -29,7 +29,6 @@ const WorkList = ({
               </div>
               {sortEmployeesObject(filteredEmployees).map((employee) => {
                 const item = employee[1];
-                console.log(item, employee);
                 return (
                   <ListItem
                     date={date}

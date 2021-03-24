@@ -75,3 +75,36 @@ export const checkRequestsForSelectedMonth = (requests, selectedDate) => {
     return false;
   });
 };
+
+export const getRequestQuantityStats = (requests, currDate, prevData) => {
+  let curMonthQuantity = 0;
+  let prevMonthQuantity = 0;
+  //check prev period
+  let temp = requests.filter((request) => {
+    const date = new Date(request.date);
+    if (checkIfDateIsInRange(date, prevData.startDate, prevData.endDate)) {
+      prevMonthQuantity++;
+      return false;
+    }
+    return true;
+  });
+  //check cur period
+  const filteredRequests = temp.filter((request) => {
+    const date = new Date(request.date);
+    if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
+      curMonthQuantity++;
+      return true;
+    }
+    return false;
+  });
+
+  return [prevMonthQuantity, curMonthQuantity, filteredRequests];
+};
+
+export const getDifferenceInPercentages = (prevData, curData) => {
+  return (
+    Math.floor(
+      ((curData - prevData) / (prevData === 0 ? 1 : prevData)) * 100 * 100,
+    ) / 100
+  );
+};

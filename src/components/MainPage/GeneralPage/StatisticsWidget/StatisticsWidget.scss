@@ -1,0 +1,77 @@
+.statistics-widget {
+    font-size: 1rem;
+    .widget__content {
+        padding-right: 0;
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        padding-right: 4px;
+        padding-bottom: 5px;
+
+        .statistics-widget__item {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.9rem;
+            color: #555;
+
+            &:not(:last-child) {
+                margin-bottom: 5px;
+            }
+
+            .list__item {
+                flex: 0 1 17.5%;
+                text-align: center;
+                &:not(:last-child) {
+                    margin-right: 10px;
+                }
+                &--name {
+                    text-align: left;
+                }
+                &--period {
+                    flex: 30%;
+                    white-space: nowrap;
+                    span {
+                        &:not(:last-child) {
+                            margin-right: 5px;
+                        }
+                        &:not(:nth-child(2)) {
+                            color: #266bf5;
+                        }
+                    }
+                }
+                &--value {
+                    white-space: nowrap;
+                }
+                &--difference {
+                    position: relative;
+                    padding-left: 18px;
+                    text-align: left;
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: calc(50% - 4px);
+                        border: 8px solid transparent;
+                        border-top-color: #ccc;
+                        // width: 8px;
+                        // height: 8px;
+                    }
+                }
+                &--positive {
+                    &::before {
+                        border-top-color: transparent;
+                        border-bottom-color: green;
+                        top: calc(50% - 12px);
+                    }
+                }
+                &--negative {
+                    &::before {
+                        border-top-color: red;
+                    }
+                }
+            }
+        }
+    }
+}

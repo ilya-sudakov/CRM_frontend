@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import SmallPanel from 'Components/MainPage/StatisticsPage/Panels/SmallPanel.jsx';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
+import { getDifferenceInPercentages } from '../../../components/MainPage/StatisticsPage/functions';
 
 const useSmallStatPanel = (
   defaultStats = {},
@@ -41,13 +42,7 @@ const useSmallStatPanel = (
       isLoading: false,
       value: addSpaceDelimiter(Math.floor(curMonthData * 100) / 100),
       difference: curMonthData - prevMonthData,
-      percentage:
-        Math.floor(
-          ((curMonthData - prevMonthData) /
-            (prevMonthData === 0 ? 1 : prevMonthData)) *
-            100 *
-            100,
-        ) / 100,
+      percentage: getDifferenceInPercentages(prevMonthData, curMonthData),
     }));
   };
 

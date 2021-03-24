@@ -4,6 +4,7 @@ import TasksWidget from '../TasksWidget/TasksWidget.jsx';
 import GraphWidget from '../GraphWidget/GraphWidget.jsx';
 import Notifications from '../Notifications/NotificationsWidget.jsx';
 import UpdateLogWidget from '../UpdateLogWidget/UpdateLogWidget.jsx';
+import StatisticsWidget from '../StatisticsWidget/StatisticsWidget.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
@@ -109,6 +110,7 @@ const MainPageWorkspace = (props) => {
       <div className="main-page-workspace__columns">
         <div className="main-page-workspace__row main-page-workspace__row--horizontal main-page-workspace__row--all-height">
           <TasksWidget />
+          <StatisticsWidget />
         </div>
         <div className="main-page-workspace__row main-page-workspace__row--horizontal">
           <WorkManagement />

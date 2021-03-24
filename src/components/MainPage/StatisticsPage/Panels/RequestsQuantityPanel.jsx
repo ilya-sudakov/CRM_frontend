@@ -1,7 +1,7 @@
 import PlaylistIcon from 'Assets/sidemenu/play_list.inline.svg';
-import { checkIfDateIsInRange } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import useSmallStatPanel from 'Utils/hooks/statistics/useSmallStatPanel.js';
+import { getRequestQuantityStats } from '../functions';
 
 const RequestsQuantityPanel = ({
   requests,
@@ -17,49 +17,30 @@ const RequestsQuantityPanel = ({
       renderIcon: <PlaylistIcon className="panel__img panel__img--requests" />,
     },
     requests,
-    (requests) => getRequestQuantityStats(requests),
+    (requests) => getRequests(requests),
     timeText,
     [currDate],
   );
 
-  const getRequestQuantityStats = (requests) => {
+  const getRequests = (requests) => {
     setStats((stats) => ({
       ...stats,
       isLoading: true,
       isLoaded: false,
     }));
-
-    let curMonthQuantity = 0;
-    let prevMonthQuantity = 0;
-
-    //check prev month
-    let temp = requests.filter((request) => {
-      const date = new Date(request.date);
-      const prevMonth = getPrevData(currDate.startDate);
-      if (checkIfDateIsInRange(date, prevMonth.startDate, prevMonth.endDate)) {
-        prevMonthQuantity++;
-        return false;
-      }
-      return true;
-    });
-
-    //check cur month
-    const filteredRequests = temp.filter((request) => {
-      const date = new Date(request.date);
-      if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
-        curMonthQuantity++;
-        return true;
-      }
-      return false;
-    });
-
+    const prevMonth = getPrevData(currDate.startDate);
+    const [prevMonthQuantity, curMonthQuantity, data] = getRequestQuantityStats(
+      requests,
+      currDate,
+      prevMonth,
+    );
     updateStats(prevMonthQuantity, curMonthQuantity);
     setStats((stats) => ({
       ...stats,
       windowContent: (
         <RequestsList
           title="Заявки за выбранный период"
-          data={filteredRequests}
+          data={data}
           sortBy={{ curSort: 'sum', sum: 'desc' }}
         />
       ),

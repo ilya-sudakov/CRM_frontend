@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import openWidget from 'Assets/tableview/bx-window-open.svg';
 import './NotificationsWidget.scss';
 import Widget from '../Widget/Widget.jsx';
 import NotificationsList from './NotificationsList/NotificationsList.jsx';
@@ -30,7 +29,6 @@ const NotificationsWidget = ({ type = 'birthday' }) => {
       linkTo={{
         address: '/dispatcher/employees',
         text: 'Перейти',
-        img: openWidget,
       }}
       miniWidget
       content={
