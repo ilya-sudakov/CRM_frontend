@@ -92,6 +92,10 @@
       max-width: Min(calc(50% - 15px), 800px);
       margin-bottom: 0;
     }
+
+    .graph-widget {
+      max-height: 380px;
+    }
     &--horizontal {
       flex-direction: column;
       width: 100%;
@@ -125,12 +129,12 @@
     &__columns {
       grid-template-columns: repeat(2, calc(50% - 7.5px));
       grid-template-areas:
-        "left middle"
-        "right right";
+        "left right"
+        "middle middle";
     }
 
     &__row {
-      &--vertical {
+      &--horizontal:nth-child(2) {
         max-width: Min(100%, 700px);
       }
     }
@@ -184,7 +188,8 @@
       &--horizontal {
         display: flex;
         flex-direction: column;
-        min-width: 0;
+        min-width: 0 !important;
+        max-width: none !important;
 
         .widget {
           min-width: 300px;
