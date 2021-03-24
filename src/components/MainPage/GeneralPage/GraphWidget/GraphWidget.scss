@@ -41,6 +41,11 @@
             margin-right: auto;
             width: fit-content;
             transition: 100ms ease-in-out;
+            font-weight: 500;
+
+            span {
+                font-weight: 400;
+            }
         }
     }
 

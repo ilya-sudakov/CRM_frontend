@@ -65,10 +65,15 @@
   }
 
   &__columns {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: flex-start;
+    // align-items: flex-start;
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(2, calc(35% - 10px)) calc(30% - 10px);
+    grid-template-areas: "left middle right";
+    grid-auto-rows: minmax(min-content, max-content);
     flex-wrap: wrap;
     width: 100%;
     column-gap: 15px;
@@ -91,16 +96,24 @@
       flex-direction: column;
       width: 100%;
       min-width: 500px;
-      max-width: calc(35% - 15px);
+      // max-width: calc(35% - 15px);
       .widget {
         width: 100%;
         margin-right: 0;
         max-width: Min(100%, 700px);
       }
+
+      &:nth-child(1) {
+        grid-area: left;
+      }
+      &:nth-child(2) {
+        grid-area: middle;
+      }
     }
     &--vertical {
       flex-direction: column;
-      max-width: 30%;
+      grid-area: right;
+      // max-width: 30%;
       .widget {
         margin-right: 0;
         max-width: none;
@@ -108,7 +121,30 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1800px) {
+    &__columns {
+      grid-template-columns: repeat(2, calc(50% - 7.5px));
+      grid-template-areas:
+        "left middle"
+        "right right";
+    }
+
+    &__row {
+      &--vertical {
+        max-width: Min(100%, 700px);
+      }
+    }
+  }
+
+  @media (max-width: 1366px) {
+    &__columns {
+      grid-template-areas:
+        "left right"
+        "middle middle";
+    }
+  }
+
+  @media (max-width: 1200px) {
     &__columns {
       flex-direction: column;
     }
@@ -124,6 +160,35 @@
         .widget {
           min-width: 300px;
           max-width: Max(100%, 280px);
+          margin-bottom: 0px;
+        }
+
+        &:nth-child(2) {
+          .widget {
+            max-width: Min(100%, 700px);
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__columns {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__row {
+      width: 100%;
+      max-width: none;
+      &--horizontal {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+
+        .widget {
+          min-width: 300px;
+          max-width: Max(100%, 280px) !important;
           margin-bottom: 0px;
         }
       }

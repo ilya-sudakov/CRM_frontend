@@ -89,20 +89,20 @@ const StatisticsWidget = () => {
     const prevDateMonth = getPreviousMonthDates(new Date());
     statsList.push(
       getRequestsQuantity(prevDateWeek, curDateWeek, {
-        prevPeriod: 'Прошлая неделя',
-        curPeriod: 'Эта неделя',
+        prevPeriod: 'Пред. неделя',
+        curPeriod: 'Тек. неделя',
       }),
     );
     statsList.push(
       getRequestsQuantity(prevDateMonth, curDateMonth, {
-        prevPeriod: 'Прошлый месяц',
-        curPeriod: 'Этот месяц',
+        prevPeriod: 'Пред. месяц',
+        curPeriod: 'Тек. месяц',
       }),
     );
     statsList.push(
       getRequestsIncome(prevDateMonth, curDateMonth, {
-        prevPeriod: 'Прошлый месяц',
-        curPeriod: 'Этот месяц',
+        prevPeriod: 'Пред. месяц',
+        curPeriod: 'Тек. месяц',
       }),
     );
     setStatistics((statistics) => [

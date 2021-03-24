@@ -54,6 +54,7 @@
             color: #333;
             margin-right: auto;
             transition: 100ms ease-in-out;
+            font-weight: 500;
 
             &:hover {
                 color: #bbb;
@@ -64,6 +65,7 @@
             display: flex;
             align-items: center;
             margin-right: auto;
+            font-weight: 500;
             .main-window__img {
                 filter: none !important;
             }
