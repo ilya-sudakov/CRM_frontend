@@ -3,7 +3,7 @@ import Widget from '../Widget/Widget.jsx';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { sortByField } from 'Utils/sorting/sorting.js';
-import { formatDateString } from 'Utils/functions.jsx';
+import { formatDateString, dateDiffInDays } from 'Utils/functions.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const UpdateLogWidget = () => {
@@ -19,7 +19,9 @@ const UpdateLogWidget = () => {
         const { documents } = data;
         const sortedByDate = sortByField(
           documents.filter(
-            (document) => document?.fields?.isVisible?.booleanValue,
+            (document) =>
+              document?.fields?.isVisible?.booleanValue &&
+              dateDiffInDays(new Date(document?.createTime), new Date()) <= 3,
           ),
           {
             fieldName: 'createTime',
