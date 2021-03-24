@@ -148,6 +148,14 @@
     }
   }
 
+  @media (max-width: 1300px) {
+    &__row {
+      &--horizontal {
+        min-width: 0;
+      }
+    }
+  }
+
   @media (max-width: 1200px) {
     &__columns {
       flex-direction: column;
