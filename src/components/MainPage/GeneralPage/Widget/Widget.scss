@@ -15,16 +15,14 @@
     padding-top: 15px;
     min-width: 300px;
     max-width: 600px;
-    min-height: 298px;
     max-height: 360px;
     margin-bottom: 15px;
     margin-right: 15px;
 
     &--mini {
         max-width: none;
-        min-height: auto;
         height: fit-content;
-        max-height: calc(33.33vh - 61px);
+        max-height: calc(33.33vh - 62px);
 
         .widget__content {
             height: fit-content;

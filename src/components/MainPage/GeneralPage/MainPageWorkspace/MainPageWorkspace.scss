@@ -11,7 +11,6 @@
   padding: 0 10px;
   padding-top: 5px;
   padding-left: 12px;
-  padding-bottom: 15px;
   box-sizing: border-box;
   display: flex;
 
@@ -65,10 +64,6 @@
   }
 
   &__columns {
-    // display: flex;
-    // flex-direction: row;
-    // justify-content: flex-start;
-    // align-items: flex-start;
     display: grid;
     box-sizing: border-box;
     grid-template-columns: repeat(2, calc(35% - 10px)) calc(30% - 10px);
@@ -100,7 +95,6 @@
       flex-direction: column;
       width: 100%;
       min-width: 500px;
-      // max-width: calc(35% - 15px);
       .widget {
         width: 100%;
         margin-right: 0;
@@ -117,7 +111,6 @@
     &--vertical {
       flex-direction: column;
       grid-area: right;
-      // max-width: 30%;
       .widget {
         margin-right: 0;
         max-width: none;
@@ -129,7 +122,7 @@
     &__columns {
       grid-template-columns: repeat(2, calc(50% - 7.5px));
       grid-template-areas:
-        "left right"
+        "right left"
         "middle middle";
     }
 
@@ -143,7 +136,7 @@
   @media (max-width: 1366px) {
     &__columns {
       grid-template-areas:
-        "left right"
+        "right left"
         "middle middle";
     }
   }
