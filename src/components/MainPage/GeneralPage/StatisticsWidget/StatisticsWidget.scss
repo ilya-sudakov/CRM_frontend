@@ -68,15 +68,17 @@
                     }
                 }
                 &--positive {
+                    color: #0acf97;
                     &::before {
                         border-top-color: transparent;
-                        border-bottom-color: green;
+                        border-bottom-color: #0acf97;
                         top: calc(50% - 9px);
                     }
                 }
                 &--negative {
+                    color: #fa5c7c;
                     &::before {
-                        border-top-color: red;
+                        border-top-color: #fa5c7c;
                     }
                 }
             }
