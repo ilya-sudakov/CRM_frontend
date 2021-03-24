@@ -106,19 +106,23 @@ const MainPageWorkspace = (props) => {
           onClick={downloadTableReport}
         />
       </div>
-      <div className="main-page-workspace__row main-page-workspace__row--horizontal">
-        <TasksWidget />
-        <WorkManagement />
-        {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
-      </div>
-      <div className="main-page-workspace__row main-page-workspace__row--vertical">
-        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-          <Notifications type="birthday" />
-        )}
-        {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-          <Notifications type="documents" />
-        )}
-        <UpdateLogWidget />
+      <div className="main-page-workspace__columns">
+        <div className="main-page-workspace__row main-page-workspace__row--horizontal main-page-workspace__row--all-height">
+          <TasksWidget />
+        </div>
+        <div className="main-page-workspace__row main-page-workspace__row--horizontal">
+          <WorkManagement />
+          {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
+        </div>
+        <div className="main-page-workspace__row main-page-workspace__row--vertical">
+          {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
+            <Notifications type="birthday" />
+          )}
+          {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
+            <Notifications type="documents" />
+          )}
+          <UpdateLogWidget />
+        </div>
       </div>
     </div>
   );
