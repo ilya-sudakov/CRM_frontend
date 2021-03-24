@@ -40,7 +40,8 @@
                             margin-right: 5px;
                         }
                         &:not(:nth-child(2)) {
-                            color: #266bf5;
+                            // color: #266bf5;
+                            color: #3665c4;
                         }
                     }
                 }
@@ -56,6 +57,7 @@
                     padding-left: 15px;
                     text-align: left;
                     min-width: 50px;
+                    max-width: 70px;
                     &::before {
                         content: "";
                         position: absolute;
