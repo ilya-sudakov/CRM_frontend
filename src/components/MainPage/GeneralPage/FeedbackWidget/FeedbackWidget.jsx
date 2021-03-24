@@ -93,7 +93,7 @@ const FeedbackWidget = () => {
       className="feedback-widget"
       title="Обратная связь"
       linkTo={{
-        address: '/statistics',
+        address: '/feedback',
         text: 'Перейти',
       }}
       content={
@@ -182,12 +182,15 @@ const MessagePage = ({ setCurPage, formInputs }) => {
   }, [formInputs]);
 
   const StyledButton = styled(Button)`
-    border-color: #6bdc59;
-    color: #1e9e09;
+    border-color: ${(props) => (props.isLoading ? '#ccc' : '#6bdc59')};
+    color: ${(props) => (props.isLoading ? '#555' : '#1e9e09')};
   `;
 
   return (
-    <StyledButton onClick={() => setCurPage('startPage')}>
+    <StyledButton
+      onClick={() => setCurPage('startPage')}
+      isLoading={formInputs.isLoading}
+    >
       <span>
         {formInputs.isLoading
           ? 'Отправляем сообщение...'
