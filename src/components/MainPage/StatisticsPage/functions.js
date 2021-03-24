@@ -106,8 +106,12 @@ export const getRequestIncomeStats = (requests, currDate, prevData) => {
   let prevMonthIncome = 0;
   //check prev period
   let temp = requests.filter((request) => {
-    const date = new Date(request.date);
-    if (checkIfDateIsInRange(date, prevData.startDate, prevData.endDate)) {
+    const date = new Date(request.shippingDate);
+    if (
+      request.status === 'Завершено' &&
+      checkIfDateIsInRange(date, prevData.startDate, prevData.endDate)
+    ) {
+      console.log('prev:', request.id, request.sum);
       prevMonthIncome += Number.parseFloat(request.sum);
       return false;
     }
@@ -115,8 +119,12 @@ export const getRequestIncomeStats = (requests, currDate, prevData) => {
   });
   //check cur period
   const filteredRequests = temp.filter((request) => {
-    const date = new Date(request.date);
-    if (checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)) {
+    const date = new Date(request.shippingDate);
+    if (
+      request.status === 'Завершено' &&
+      checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)
+    ) {
+      console.log('cur:', request.id, request.sum);
       curMonthIncome += Number.parseFloat(request.sum);
       return true;
     }
