@@ -137,7 +137,7 @@ export default StatisticsWidget;
 const StatisticsList = ({ statistics, isLoading }) => {
   return (
     <div className="statistics-widget__list">
-      {isLoading ? (
+      {isLoading || statistics.length === 0 ? (
         <PlaceholderLoading />
       ) : (
         statistics.map(({ name, prevPeriod, curPeriod, difference }) => (
