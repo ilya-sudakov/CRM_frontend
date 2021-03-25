@@ -139,7 +139,7 @@ const StartPage = ({ setCurPage, setFormInputs }) => {
         <ReportIcon fill="#777" width={24} height={24} viewBox="0 0 24 24" />
         <span>Сообщить об ошибке</span>
       </Button>
-      <Button onClick={() => handleClick('Предложение')}>
+      <Button onClick={() => handleClick('Предложение по улучшению')}>
         <SuggestIcon fill="#777" />
         <span>У вас есть предложение по улучшению</span>
       </Button>
