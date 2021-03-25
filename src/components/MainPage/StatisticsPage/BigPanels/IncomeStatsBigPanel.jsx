@@ -200,8 +200,6 @@ const IncomeStatsBigPanel = ({
       false,
     );
 
-    console.log(temp, requests);
-
     const monthsIncome = getFullYearData(requests, currDate);
     const monthsAccumilationIncome = getFullYearAccumilationData(
       requests,
