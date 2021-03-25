@@ -40,7 +40,7 @@ const Notifications = lazy(() =>
   import('./GeneralPage/Notifications/NotificationsWidget.jsx'),
 );
 
-const WorkManagement = lazy(() =>
+const WorkListWidget = lazy(() =>
   import('./GeneralPage/WorkManagement/WorkListWidget/WorkListWidget.jsx'),
 );
 
@@ -218,7 +218,40 @@ const StatisticsPage = lazy(() =>
   import('./StatisticsPage/StatisticsPage.jsx'),
 );
 
+// --- WIDGETS --- //
+
+const StatisticsWidget = lazy(() =>
+  import('./GeneralPage/StatisticsWidget/StatisticsWidget.jsx'),
+);
+
+const UpdateLogWidget = lazy(() =>
+  import('./GeneralPage/UpdateLogWidget/UpdateLogWidget.jsx'),
+);
+
+const FeedbackWidget = lazy(() =>
+  import('./GeneralPage/FeedbackWidget/FeedbackWidget.jsx'),
+);
+
+const TasksWidget = lazy(() =>
+  import('./GeneralPage/TasksWidget/TasksWidget.jsx'),
+);
+
+const GraphWidget = lazy(() =>
+  import('./GeneralPage/GraphWidget/GraphWidget.jsx'),
+);
+
+const NotificationsWidget = lazy(() =>
+  import('./GeneralPage/Notifications/NotificationsWidget.jsx'),
+);
+
 export {
+  StatisticsWidget,
+  UpdateLogWidget,
+  WorkListWidget,
+  FeedbackWidget,
+  TasksWidget,
+  GraphWidget,
+  NotificationsWidget,
   Clients,
   newClient,
   EditClient,
@@ -230,7 +263,6 @@ export {
   RiggingWorkshop,
   MainPageWorkspace,
   Notifications,
-  WorkManagement,
   RecordWork,
   ProductionJournalNew,
   WorkManagementPage,

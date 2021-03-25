@@ -1,11 +1,13 @@
 import './MainPageWorkspace.scss';
-import { WorkManagement } from '../../lazyImports.jsx';
-import TasksWidget from '../TasksWidget/TasksWidget.jsx';
-import GraphWidget from '../GraphWidget/GraphWidget.jsx';
-import Notifications from '../Notifications/NotificationsWidget.jsx';
-import UpdateLogWidget from '../UpdateLogWidget/UpdateLogWidget.jsx';
-import StatisticsWidget from '../StatisticsWidget/StatisticsWidget.jsx';
-import FeedbackWidget from '../FeedbackWidget/FeedbackWidget.jsx';
+import {
+  WorkListWidget,
+  StatisticsWidget,
+  UpdateLogWidget,
+  NotificationsWidget,
+  TasksWidget,
+  GraphWidget,
+  FeedbackWidget,
+} from '../../lazyImports.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
@@ -111,7 +113,7 @@ const MainPageWorkspace = (props) => {
       <div className="main-page-workspace__columns">
         <div className="main-page-workspace__row main-page-workspace__row--horizontal">
           <TasksWidget />
-          <WorkManagement />
+          <WorkListWidget />
         </div>
         <div className="main-page-workspace__row main-page-workspace__row--horizontal">
           {props.userHasAccess(['ROLE_ADMIN']) && <GraphWidget />}
@@ -120,10 +122,10 @@ const MainPageWorkspace = (props) => {
         </div>
         <div className="main-page-workspace__row main-page-workspace__row--vertical">
           {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-            <Notifications type="birthday" />
+            <NotificationsWidget type="birthday" />
           )}
           {props.userHasAccess(['ROLE_ADMIN', 'ROLE_DISPATCHER']) && (
-            <Notifications type="documents" />
+            <NotificationsWidget type="documents" />
           )}
           <UpdateLogWidget />
         </div>
