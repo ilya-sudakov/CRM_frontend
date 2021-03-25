@@ -468,7 +468,7 @@
                         &--current {
                             div {
                                 &::before {
-                                    background-color: #b74f3b;
+                                    background-color: $accent-color--contrast;
                                 }
                             }
                         }
@@ -476,7 +476,7 @@
                         &--previous {
                             div {
                                 &::before {
-                                    background-color: #3bb7b6;
+                                    background-color: $main-color;
                                 }
                             }
                         }

@@ -7,16 +7,21 @@ $light40-grey: #d2d2d4;
 $light20-grey: #eaeaec;
 $black: #000000;
 $bright-blue: #00a3a2;
+$less-bright-blue: #478888;
 $brand-color: #e30235;
 $dark-blue: #000034;
 $new-palette-color: #aa3186;
-
-$less-bright-blue: #478888;
+$test-color: #247fa7;
 
 $lemzColor: #1b4e6b;
 $lepsariColor: #5c63a2;
 $ligovskiyColor: #c068a8;
 $officeColor: #ec7176;
+
+$accent-color--light: #f8f1f1;
+$accent-color--contrast: #16c79a;
+$main-color: #247fa7;
+$main-color--dark: #19456b;
 
 $primary-text-color: $black;
 $secondary-text-color: $white;
@@ -30,8 +35,8 @@ $primary-background-color: $white;
 $table-border: $white;
 $table-border__header: #ccc;
 $button__background: $white;
-$button__background--inverted: $bright-blue;
-$button__background--hover: $bright-blue;
+$button__background--inverted: $test-color;
+$button__background--hover: $test-color;
 
 // $button__background--inverted: $brand-color;
 // $button__background--hover: $brand-color;

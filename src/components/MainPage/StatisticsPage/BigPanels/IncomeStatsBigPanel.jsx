@@ -67,7 +67,7 @@ const IncomeStatsBigPanel = ({
         0,
       );
       const color =
-        curMonth === i ? '#B74F3B' : curMonth - 1 === i ? '#3BB7B6' : '#cccccc';
+        curMonth === i ? '#16c79a' : curMonth - 1 === i ? '#247fa7' : '#cccccc';
       monthsIncome.push({
         value: totalIncome,
         label: months[i],

@@ -988,12 +988,12 @@
     }
     .main-window__page-number--active {
       color: #eeeeee;
-      background-color: #12abca;
+      background-color: $main-color;
       border-color: transparent;
 
       &:hover {
         color: #eeeeee;
-        background-color: darken(#12abca, 5%);
+        background-color: darken($main-color, 5%);
       }
     }
 

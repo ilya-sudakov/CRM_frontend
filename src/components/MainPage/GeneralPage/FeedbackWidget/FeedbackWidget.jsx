@@ -33,13 +33,13 @@ const Button = styled.div`
   border-radius: 5px;
   width: 100%;
   padding: 8px 15px;
-  background-color: ${(props) => (props.submit ? '#00A3A2' : '#fff')};
+  background-color: ${(props) => (props.submit ? '#247fa7' : '#fff')};
   color: ${(props) => (props.submit ? '#fff' : '#555')};
   transition: 100ms ease-in-out;
   cursor: pointer;
 
   &:hover {
-    background-color: ${(props) => (props.submit ? '#00BDBB' : '#eee')};
+    background-color: ${(props) => (props.submit ? '#298FBC' : '#eee')};
   }
 
   svg {
