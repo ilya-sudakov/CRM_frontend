@@ -27,19 +27,16 @@ const Button = styled.div`
   align-items: center;
   justify-content: ${(props) => (props.submit ? 'center' : 'flex-start')};
   box-sizing: border-box;
+  margin-bottom: 10px;
   border: ${(props) =>
     props.submit ? '1px solid transparent' : '1px solid #ccc'};
   border-radius: 5px;
   width: 100%;
-  padding: 10px 20px;
+  padding: 8px 15px;
   background-color: ${(props) => (props.submit ? '#00A3A2' : '#fff')};
   color: ${(props) => (props.submit ? '#fff' : '#555')};
   transition: 100ms ease-in-out;
   cursor: pointer;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
 
   &:hover {
     background-color: ${(props) => (props.submit ? '#00BDBB' : '#eee')};
