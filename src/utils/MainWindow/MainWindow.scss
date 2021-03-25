@@ -17,7 +17,7 @@
 
   .main-window__link {
     transition: 100ms ease-in-out;
-    color: darken($button__background--inverted, 8%) !important;
+    color: $button__background--inverted !important;
     cursor: pointer;
     // text-decoration: underline;
   }
