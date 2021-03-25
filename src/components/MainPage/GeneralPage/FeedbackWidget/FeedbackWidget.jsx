@@ -18,7 +18,7 @@ const StyledWidget = styled(Widget)`
 
 const Title = styled.div`
   margin-top: 5px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   color: #555;
 `;
 
@@ -32,19 +32,20 @@ const Button = styled.div`
     props.submit ? '1px solid transparent' : '1px solid #ccc'};
   border-radius: 5px;
   width: 100%;
-  padding: 8px 15px;
+  padding: 8px 12px;
   background-color: ${(props) => (props.submit ? '#247fa7' : '#fff')};
-  color: ${(props) => (props.submit ? '#fff' : '#555')};
   transition: 100ms ease-in-out;
   cursor: pointer;
+  font-size: 0.85rem;
+  color: ${(props) => (props.submit ? '#fff' : '#555')};
 
   &:hover {
     background-color: ${(props) => (props.submit ? '#298FBC' : '#eee')};
   }
 
   svg {
-    margin-right: 10px;
-    min-width: 24px;
+    margin-right: 8px;
+    min-width: 20px;
   }
 
   @media (max-width: 768px) {
@@ -133,15 +134,15 @@ const StartPage = ({ setCurPage, setFormInputs }) => {
   return (
     <>
       <Button onClick={() => handleClick('Сообщение об ошибке')}>
-        <ReportIcon fill="#777" width={24} height={24} viewBox="0 0 24 24" />
+        <ReportIcon fill="#777" width={20} height={20} viewBox="0 0 24 24" />
         <span>Сообщить об ошибке</span>
       </Button>
       <Button onClick={() => handleClick('Предложение по улучшению')}>
-        <SuggestIcon fill="#777" />
+        <SuggestIcon fill="#777" width={20} height={20} />
         <span>У вас есть предложение по улучшению</span>
       </Button>
       <Button onClick={() => handleClick('Вопрос')}>
-        <QuestionIcon fill="#777" />
+        <QuestionIcon fill="#777" width={20} height={20} />
         <span>Задать вопрос</span>
       </Button>
     </>
