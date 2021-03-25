@@ -57,7 +57,7 @@
         .react-datepicker {
           z-index: 999;
           .react-datepicker__day--selected {
-            background-color: $button__background--inverted !important;
+            background-color: $main-color !important;
           }
         }
       }
@@ -80,7 +80,7 @@
         }
 
         &:focus {
-          border: 1px solid $button__background--inverted;
+          border: 1px solid$main-color;
         }
       }
 
@@ -92,7 +92,7 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
     }
   }

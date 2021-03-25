@@ -58,7 +58,7 @@
     .header__name {
       margin-left: 5px;
       margin-bottom: 2.5px;
-      // color: $button__background--inverted;
+      // color:$main-color;
       color: #555555;
       // color: $secondary-text-color;
       // margin-right: 10px;
@@ -201,7 +201,7 @@
         &::after {
           content: attr(data-notifications);
           // background-color: $secondary-text-color;
-          background-color: $button__background--inverted;
+          background-color: $main-color;
           border-radius: 999px;
           color: $secondary-text-color;
           padding: 3px 7px;
@@ -354,7 +354,7 @@
             &--active {
               background-color: #eeeeee;
               &::before {
-                background-color: $button__background--inverted;
+                background-color: $main-color;
               }
               color: #eeeeee;
 
@@ -375,7 +375,7 @@
       &--button {
         padding: 10px 20px;
         border-radius: 10px;
-        background-color: $button__background--inverted;
+        background-color: $main-color;
         color: $secondary-text-color;
         transition: 0.2s ease-in-out;
 

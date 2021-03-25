@@ -78,7 +78,7 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
 
       &--error {
@@ -89,7 +89,7 @@
     .select-client__search_button {
       border: 0;
       flex: 0 1 15%;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: $secondary-text-color;
       border-radius: 5px;
       outline: none;

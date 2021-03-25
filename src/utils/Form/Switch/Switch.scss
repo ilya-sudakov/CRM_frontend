@@ -66,11 +66,11 @@
     }
 
     input:checked + .slider {
-        background-color: $button__background--inverted;
+        background-color: $main-color;
     }
 
     input:focus + .slider {
-        box-shadow: 0 0 1px $button__background--inverted;
+        box-shadow: 0 0 1px$main-color;
     }
 
     input:checked + .slider:before {

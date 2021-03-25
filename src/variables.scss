@@ -1,17 +1,13 @@
 //white color pallete
 $white: #ffffff;
-$light100-grey: #bbbbbb;
-$light80-grey: #c5c5c5;
-$light60-grey: #d8d8d8;
-$light40-grey: #d2d2d4;
 $light20-grey: #eaeaec;
+$light40-grey: #d2d2d4;
+$light60-grey: #d8d8d8;
+$light80-grey: #c5c5c5;
+$light100-grey: #bbbbbb;
 $black: #000000;
-$bright-blue: #00a3a2;
-$less-bright-blue: #478888;
+
 $brand-color: #e30235;
-$dark-blue: #000034;
-$new-palette-color: #aa3186;
-$test-color: #247fa7;
 
 $lemzColor: #1b4e6b;
 $lepsariColor: #5c63a2;
@@ -27,18 +23,7 @@ $primary-text-color: $black;
 $secondary-text-color: $white;
 $secondary-background-color: $light20-grey;
 $side_menu__background: #313a46;
-$product_view__background: $light100-grey;
-$message_panel__background_color: $light40-grey;
-$landing-page__background_color: $light20-grey;
 $table-primary__background: $light40-grey;
 $primary-background-color: $white;
-$table-border: $white;
-$table-border__header: #ccc;
 $button__background: $white;
-$button__background--inverted: $test-color;
-$button__background--hover: $test-color;
-
-// $button__background--inverted: $brand-color;
-// $button__background--hover: $brand-color;
-// $button__background--inverted: $new-palette-color;
-// $button__background--hover: $new-palette-color;
+$button__background--inverted: $main-color;

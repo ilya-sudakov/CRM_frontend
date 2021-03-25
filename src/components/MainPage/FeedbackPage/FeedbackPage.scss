@@ -81,7 +81,7 @@
           margin-right: -20px;
           color: #ffffffee;
 
-          // background: $button__background--inverted;
+          // background:$main-color;
           // gradient
           background: rgb(0, 163, 162);
           background: linear-gradient(139deg, rgba(0, 163, 162, 1) 0%, rgba(40, 194, 194, 1) 67%);
@@ -177,7 +177,7 @@
     top: calc(50%);
     right: 80px;
     // left: 200px;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     // color: #ffffff;
     border-radius: 25px;
 
@@ -189,7 +189,7 @@
     transition: 100ms ease-in-out;
 
     background-color: transparent;
-    border: 1px solid $button__background--inverted;
+    border: 1px solid$main-color;
 
     .main-window__img {
       // filter: brightness(3);

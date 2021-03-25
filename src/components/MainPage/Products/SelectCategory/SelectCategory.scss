@@ -50,7 +50,7 @@
     font-size: 70%;
     padding: 10px 10px;
     border-radius: 3px;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     color: #ffffff;
     transition: 0.2s ease-in-out;
 
@@ -79,7 +79,7 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
 
       &--error {
@@ -90,7 +90,7 @@
     .select-category__search_button {
       border: 0;
       flex: 0 1 15%;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: $secondary-text-color;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -105,7 +105,7 @@
       }
     }
   }
-  
+
   .form-window {
     &__content {
       .searchbar {

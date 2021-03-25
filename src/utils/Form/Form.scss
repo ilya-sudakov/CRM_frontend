@@ -320,7 +320,7 @@
 
           .react-datepicker {
             .react-datepicker__day--selected {
-              background-color: $button__background--inverted !important;
+              background-color: $main-color !important;
             }
           }
         }
@@ -374,7 +374,7 @@
         }
 
         &:focus {
-          border: 1px solid $button__background--inverted;
+          border: 1px solid$main-color;
         }
       }
 
@@ -402,7 +402,7 @@
         }
 
         &:focus {
-          border: 1px solid $button__background--inverted;
+          border: 1px solid$main-color;
         }
       }
     }
@@ -428,7 +428,7 @@
     }
 
     .main-form__button {
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: transparentize($secondary-text-color, 0.05);
       border-radius: 3px;
       padding: 10px 10px;
@@ -489,7 +489,7 @@
 
       .main-form__label {
         padding: 5px 10px;
-        border: 1.5px solid $button__background--hover;
+        border: 1.5px solid $main-color;
         border-radius: 5px;
         display: flex;
         justify-content: center;
@@ -498,7 +498,7 @@
         transition: 0.2s ease-in-out;
 
         &:hover {
-          background-color: $button__background--hover;
+          background-color: $main-color;
           color: $secondary-text-color;
         }
 
@@ -532,7 +532,7 @@
       padding: 10px 15px;
       border-radius: 3px;
       font-size: 80%;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: transparentize($secondary-text-color, 0.05);
       transition: 100ms ease-in-out;
       margin-right: 10px;

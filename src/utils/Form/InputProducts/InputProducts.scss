@@ -63,7 +63,7 @@
         }
 
         &:focus {
-          border: 1px solid $button__background--inverted;
+          border: 1px solid$main-color;
         }
       }
 
@@ -75,7 +75,7 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
     }
   }

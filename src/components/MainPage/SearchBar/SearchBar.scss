@@ -71,7 +71,7 @@
         }
 
         &:focus {
-          border: 1px solid $button__background--inverted;
+          border: 1px solid$main-color;
         }
       }
 
@@ -126,7 +126,7 @@
       padding: 5px 25px;
       border-radius: var(--border-radius);
       color: $secondary-text-color;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
 
       //test
       // background-color: #ffffff;
@@ -154,7 +154,7 @@
       align-items: center;
       padding: 5px 25px;
       border-radius: 15px;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: $secondary-text-color;
       transition: 0.2s ease-in-out;
       cursor: pointer;

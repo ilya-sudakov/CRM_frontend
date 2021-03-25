@@ -5,7 +5,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     flex-wrap: wrap;
-    
+
     .checkbox {
       margin-right: auto;
       margin-left: 15px;
@@ -15,7 +15,7 @@
       padding-left: 30px;
     }
     .checkbox__container input:checked ~ .checkbox__checkmark {
-      background-color: $button__background--inverted;
+      background-color: $main-color;
     }
   }
   .transportation__container {

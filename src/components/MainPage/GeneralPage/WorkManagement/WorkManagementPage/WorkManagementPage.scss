@@ -146,7 +146,7 @@
   .main-window__line {
     content: "";
     width: 2px;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     // height: calc(100% - 30px);
     height: calc(100% - 25px);
     // height: 15px;
@@ -190,7 +190,7 @@
     &::after {
       content: "";
       width: 10px;
-      // background-color: $button__background--inverted;
+      // background-color:$main-color;
       background-color: #dddddd;
       // background-color: red;
       height: 22px;
@@ -246,15 +246,15 @@
         content: "";
         width: 20px;
         height: 20px;
-        border: 2px solid $button__background--inverted;
-        border-color: transparent transparent transparent $button__background--inverted;
+        border: 2px solid$main-color;
+        border-color: transparent transparent transparent$main-color;
         position: absolute;
         // top: 0px;
         left: -85px;
         border-radius: 999px;
         // transform: rotate(-45deg);
         //line
-        background-color: $button__background--inverted;
+        background-color: $main-color;
         border: 0;
         border-radius: 0;
         width: 10px;
@@ -270,10 +270,10 @@
         width: 25px;
         padding: 0 10px;
         width: fit-content;
-        border: 2px solid $button__background--inverted;
-        background-color: $button__background--inverted;
+        border: 2px solid$main-color;
+        background-color: $main-color;
         color: $secondary-text-color;
-        // border-color: $button__background--inverted;
+        // border-color:$main-color;
         height: 25px;
         font-size: 90%;
         position: absolute;
@@ -305,17 +305,17 @@
       &::before {
         content: "";
         width: 35px;
-        // background-color: $button__background--inverted;
+        // background-color:$main-color;
         height: 20px;
-        border: 2px solid $button__background--inverted;
-        border-color: transparent transparent transparent $button__background--inverted;
+        border: 2px solid$main-color;
+        border-color: transparent transparent transparent$main-color;
         position: absolute;
         top: 0px;
         left: -50px;
         border-radius: 999px;
         // transform: rotate(-45deg);
         //line
-        background-color: $button__background--inverted;
+        background-color: $main-color;
         border: 0;
         border-radius: 0;
         width: 50px;
@@ -327,7 +327,7 @@
         &::after {
           content: "";
           width: 10px;
-          // background-color: $button__background--inverted;
+          // background-color:$main-color;
           background-color: #dddddd;
           // background-color: red;
           height: 20.5px;
@@ -380,7 +380,7 @@
     .react-datepicker {
       width: 100%;
       .react-datepicker__day--selected {
-        background-color: $button__background--inverted !important;
+        background-color: $main-color !important;
       }
     }
   }
@@ -521,8 +521,8 @@
         }
         > div:nth-child(2) {
           padding: 0 7.5px;
-          border: 2px solid $button__background--inverted;
-          background-color: $button__background--inverted;
+          border: 2px solid$main-color;
+          background-color: $main-color;
           color: $secondary-text-color;
           border-radius: 999px;
           font-size: 90%;

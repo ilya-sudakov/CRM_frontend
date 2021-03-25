@@ -40,7 +40,7 @@
         text-align: center;
         border-radius: 50%;
         // background: plum;
-        background-color: $button__background--inverted;
+        background-color: $main-color;
         vertical-align: middle;
         margin-right: 1em;
         color: white;
@@ -105,14 +105,14 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
     }
 
     .feedback-chat__button {
       flex: 0 1 20%;
       max-width: 150px;
-      background-color: $button__background--inverted;
+      background-color: $main-color;
       color: $secondary-text-color;
       border-radius: 5px;
       // padding: 10px 10px;
@@ -157,7 +157,7 @@
     border-radius: 999px;
     color: $secondary-text-color;
     font-size: 90%;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     cursor: pointer;
 
     .feedback-chat__img {
@@ -167,12 +167,11 @@
       max-height: 35px;
       filter: brightness(3);
     }
-    
-    
+
     //alternative design
     // width: 100%;
     // &:before {
-    //   border-top: 1.5px solid $button__background--inverted;
+    //   border-top: 1.5px solid$main-color;
     //   content: "";
     //   margin: 0 auto;
     //   position: absolute;
@@ -187,7 +186,7 @@
     //   background: #fafafa;
     //   padding: 0 15px;
     //   font-size: 90%;
-    //   color: $button__background--inverted;
+    //   color:$main-color;
     // }
   }
   .feedback-chat__divider--hidden {

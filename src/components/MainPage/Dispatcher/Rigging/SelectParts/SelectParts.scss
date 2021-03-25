@@ -121,7 +121,7 @@
     font-size: 70%;
     padding: 10px 10px;
     border-radius: 5px;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     color: #ffffff;
     transition: 0.2s ease-in-out;
 
@@ -139,7 +139,7 @@
     z-index: 2;
 
     &:focus {
-      border: 1px solid $button__background--inverted;
+      border: 1px solid$main-color;
     }
   }
 

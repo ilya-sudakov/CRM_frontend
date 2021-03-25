@@ -70,7 +70,7 @@
     margin: 0 auto;
     width: 15%;
     height: 15%;
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     border-radius: 100%;
     -webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
     animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
@@ -217,7 +217,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: $button__background--inverted;
+    background: $main-color;
     margin: -4px 0 0 -4px;
   }
   .lds-roller div:nth-child(1) {

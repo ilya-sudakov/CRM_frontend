@@ -17,7 +17,7 @@
 
   .main-window__link {
     transition: 100ms ease-in-out;
-    color: $button__background--inverted !important;
+    color: $main-color !important;
     cursor: pointer;
     // text-decoration: underline;
   }
@@ -445,7 +445,7 @@
   // BUTTONS
 
   &__button {
-    background-color: $button__background--inverted;
+    background-color: $main-color;
     color: transparentize($secondary-text-color, 0.05);
     border-radius: 3px;
     padding: 10px 10px;
@@ -510,7 +510,7 @@
     &.main-window__button--recent {
       &::after {
         color: #eeeeee;
-        background-color: $button__background--inverted;
+        background-color: $main-color;
       }
     }
 
@@ -575,7 +575,7 @@
       }
 
       &:focus {
-        border: 1px solid $button__background--inverted;
+        border: 1px solid$main-color;
       }
     }
 
@@ -611,7 +611,7 @@
   &__list-item,
   &__list-options {
     padding: 5px 10px;
-    border: 1px solid $button__background--inverted;
+    border: 1px solid$main-color;
     margin-top: 5px;
     display: flex;
     justify-content: space-between;
@@ -760,7 +760,7 @@
     background-color: transparent;
     border: 0;
     transform: scale(1);
-    // color: $button__background--inverted;
+    // color:$main-color;
 
     .main-window__img {
       width: 22.5px !important;
@@ -799,7 +799,7 @@
         text-align: center !important;
         // background-color: rgba($button__background--inverted, 0.9);
         // background-color: $secondary-text-color;
-        // border: 1px solid $button__background--inverted;
+        // border: 1px solid$main-color;
         // border: 1px solid #999999;
         color: #444444;
         // color: $secondary-text-color;
