@@ -27,10 +27,10 @@ export const customSelectStyles = {
   container: (provided) => ({
     ...provided,
     width: '100%',
-    borderColor: '1px solid #00a3a2',
+    borderColor: '1px solid #247fa7',
   }),
   option: (provided) => ({
     ...provided,
-    borderColor: '1px solid #00a3a2',
+    borderColor: '1px solid #247fa7',
   }),
 };

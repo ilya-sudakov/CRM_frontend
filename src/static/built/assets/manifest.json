@@ -5,7 +5,7 @@
   "description": "Система управления предприятием",
   "short_name": "ERP - система",
   "background_color": "white",
-  "theme_color": "#00A3A2",
+  "theme_color": "#247fa7",
   "display": "standalone",
   "scope": "/",
   "icons": [

@@ -14,7 +14,7 @@ const PartsStatistic = (props) => {
   const [isVisible, setIsVisible] = useState(true);
   // const originalColor = '029b09' // ? green color, but works for big amount of elements
   const userContext = useContext(UserContext);
-  const originalColor = '00a3a2';
+  const originalColor = '247fa7';
   const [curPage, setCurPage] = useState('Продукция');
   const workshopsSwitch = {
     ЦехЛЭМЗ: 'ROLE_LEMZ',
