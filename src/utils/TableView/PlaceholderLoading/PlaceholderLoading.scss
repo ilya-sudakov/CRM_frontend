@@ -20,12 +20,11 @@
 
     &__item {
         height: 1rem;
-        background-color: #dddddd;
+        background-color: #ddd;
         animation: pulse-placeholder-loading 1s infinite ease-in-out;
-        // margin-bottom: 3px;
         position: relative;
         overflow: hidden;
-        border-bottom: 1px solid #bbbbbb;
+        border-bottom: 1px solid #bbb;
 
         &::after {
             content: "";

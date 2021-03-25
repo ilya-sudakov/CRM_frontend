@@ -9,6 +9,24 @@
         padding-right: 4px;
         padding-bottom: 5px;
 
+        .placeholder-loading__item {
+            border: 1px solid #bbb;
+
+            &:not(:last-child) {
+                border-bottom-color: transparent;
+            }
+
+            &:first-child {
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+            }
+
+            &:last-child {
+                border-bottom-left-radius: 3px;
+                border-bottom-right-radius: 3px;
+            }
+        }
+
         .statistics-widget__item {
             display: flex;
             justify-content: flex-start;
