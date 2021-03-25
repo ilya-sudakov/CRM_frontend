@@ -36,7 +36,7 @@ const IncomeStatsBigPanel = ({
   const filterRequests = (requests, currDate, keepOld = true) => {
     let monthIncome = 0;
     const data = requests.filter((request) => {
-      const date = new Date(request.date);
+      const date = new Date(request.shippingDate);
       if (
         checkIfDateIsInRange(date, currDate.startDate, currDate.endDate) &&
         request.status === 'Завершено'
@@ -199,6 +199,8 @@ const IncomeStatsBigPanel = ({
       currDate,
       false,
     );
+
+    console.log(temp, requests);
 
     const monthsIncome = getFullYearData(requests, currDate);
     const monthsAccumilationIncome = getFullYearAccumilationData(
