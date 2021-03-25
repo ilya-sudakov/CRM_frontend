@@ -7,6 +7,7 @@ import QuestionIcon from 'Assets/widgets/question-circle-outlined.inline.svg';
 import SuggestIcon from 'Assets/widgets/talk-bubbles-line.inline.svg';
 import { addFeedback } from 'Utils/RequestsAPI/Feedback/feedback.js';
 import UserContext from '../../../../App.js';
+import { Link } from 'react-router-dom';
 
 const StyledWidget = styled(Widget)`
   font-size: 0.9rem;
@@ -161,17 +162,20 @@ const FormPage = ({ setCurPage, formInputs, setFormInputs }) => {
     }));
     addFeedback({
       date: Math.ceil(new Date().getTime() / 1000),
-      subject: `${formInputs.type} - виджет обратной связи`,
+      subject: `${formInputs.type} - из виджета`,
       text: message,
       author: userData.username,
       status: 'in-progress',
-    }).then(() => {
-      setFormInputs((formInputs) => ({
-        ...formInputs,
-        isLoading: false,
-      }));
-      setCurPage('messagePage');
-    });
+    })
+      .then((res) => res.json())
+      .then(({ id }) => {
+        setFormInputs((formInputs) => ({
+          ...formInputs,
+          id: id,
+          isLoading: false,
+        }));
+        setCurPage('messagePage');
+      });
   };
 
   const StyledButton = styled(Button)`
@@ -201,7 +205,7 @@ const FormPage = ({ setCurPage, formInputs, setFormInputs }) => {
 const MessagePage = ({ setCurPage, formInputs }) => {
   useEffect(() => {
     if (formInputs.isLoading) return;
-    const timeout = setTimeout(() => setCurPage('startPage'), 4000);
+    const timeout = setTimeout(() => setCurPage('startPage'), 6000);
     return () => {
       timeout && clearTimeout(timeout);
     };
@@ -213,15 +217,24 @@ const MessagePage = ({ setCurPage, formInputs }) => {
   `;
 
   return (
-    <StyledButton
-      onClick={() => setCurPage('startPage')}
-      isLoading={formInputs.isLoading}
-    >
-      <span>
-        {formInputs.isLoading
-          ? 'Отправляем сообщение...'
-          : 'Успешно отправлено, спасибо за отзыв!'}
-      </span>
-    </StyledButton>
+    <>
+      <StyledButton
+        onClick={() => setCurPage('startPage')}
+        isLoading={formInputs.isLoading}
+      >
+        <span>
+          {formInputs.isLoading
+            ? 'Отправляем сообщение...'
+            : 'Успешно отправлено, спасибо за отзыв!'}
+        </span>
+      </StyledButton>
+      {!formInputs.isLoading && (
+        <Link to={`/feedback/view/${formInputs.id}`} target="_blank">
+          <Button>
+            <span>Просмотреть ваше сообщение</span>
+          </Button>
+        </Link>
+      )}
+    </>
   );
 };
