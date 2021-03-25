@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { sortByField } from 'Utils/sorting/sorting';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const NotificationsList = ({ notifications, isLoading, type }) => {
@@ -29,7 +30,10 @@ const NotificationsList = ({ notifications, isLoading, type }) => {
           return (
             <>
               <div className="notifications__category">{typeItem}</div>
-              {filteredNotifications.map((notification) => (
+              {sortByField(filteredNotifications, {
+                fieldName: 'name',
+                direction: 'asc',
+              }).map((notification) => (
                 <ListItem item={notification} key={notification.id} />
               ))}
             </>
