@@ -40,7 +40,7 @@
     flex-direction: row;
     align-items: center;
     padding: 0px 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     width: 90%;
     font-size: 0.8rem;
     white-space: nowrap;
@@ -60,7 +60,7 @@
       min-width: 25px;
       filter: brightness(1.8);
       // --icon-fill: #555555; //light-theme
-      --icon-fill: #7d94b1dd; //dark-theme
+      --icon-fill: #98abc7; //dark-theme
       filter: none;
 
       path:first-child {
@@ -101,7 +101,7 @@
 
     &--active {
       // background-color: #eeeeee; //light-theme
-      background-color: lighten($main-color--dark, 5%); //dark-theme
+      background-color: lighten($main-color--dark, 1%); //dark-theme
 
       &::before {
         background-color: darken($button__background--inverted, 5%); //light-theme
@@ -166,10 +166,10 @@
       .sidemenu__dropdown-menu {
         .sidemenu__item {
           .sidemenu__link {
-            color: #555555 !important; //light theme
-            color: #bbbbbb !important; //dark theme
+            // color: #555555 !important; //light theme
+            color: #98abc7 !important; //dark theme
             .sidemenu__img {
-              --active-icon-fill: #555555; //light theme
+              // --active-icon-fill: #555555; //light theme
               --active-icon-fill: #7d94b1dd; //dark theme
               path:first-child {
                 fill: var(--active-icon-fill);
@@ -254,7 +254,7 @@
       font-size: 100%;
       width: calc(100% - 25px);
       // color: #6f6f6f; //light-theme
-      color: #8a9cad; //dark-theme
+      color: #98abc7; //dark-theme
       font-weight: 500;
 
       .sidemenu__img {
@@ -363,7 +363,6 @@
   }
 
   &--hidden {
-    // width: fit-content;
     width: 60px;
     align-items: flex-start;
 

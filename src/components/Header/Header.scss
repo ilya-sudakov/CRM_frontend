@@ -90,20 +90,18 @@
       transition: 0.2s ease-in-out;
 
       .line {
-        height: 2.5px;
+        height: 3px;
         margin-bottom: 4px;
         width: 25px;
         border-radius: 3px;
         background-color: #888888;
         transform-origin: 3px 0px;
         transition: 0.2s ease-in-out;
-        //dark-theme
-        // background-color: #eeeeee;
+        // background-color: #eeeeee; //dark-theme
 
         &:first-child {
           transform-origin: 0 0;
         }
-
         &:nth-child(2) {
           transform-origin: 0 100%;
         }

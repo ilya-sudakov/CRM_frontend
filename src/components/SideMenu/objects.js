@@ -35,7 +35,7 @@ export const mainPage = {
 
 export const generalTasks = {
   pathname: '/dispatcher/general-tasks',
-  name: 'Основные задачи',
+  name: 'Задачи',
   mainRoles: allRoles,
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonName: 'Добавить задачу',
@@ -93,7 +93,7 @@ export const products = {
 
 export const priceList = {
   pathname: '/price-list',
-  name: 'Каталог продукции',
+  name: 'Прайс-лист',
   mainRoles: ['ROLE_ADMIN', 'ROLE_MANAGER'],
   renderIcon: <PriceListImg className="sidemenu__img sidemenu__img--price" />,
 };
@@ -286,7 +286,7 @@ export const employees = {
 
 export const transportation = {
   pathname: '/dispatcher/transportation',
-  name: 'Реестр транспортировок',
+  name: 'Транспортировка',
   mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
   addButtonName: 'Добавить запись',
@@ -295,7 +295,7 @@ export const transportation = {
 
 export const feedback = {
   pathname: '/feedback',
-  name: 'Сообщить об ошибке',
+  name: 'Обратная связь',
   mainRoles: allRoles,
   addButtonRoles: allRoles,
   addButtonName: 'Оставить сообщение',
