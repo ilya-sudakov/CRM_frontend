@@ -28,7 +28,7 @@
     }
 
     .main_page__activity_panel {
-      --sidemenu-width: 241px;
+      --sidemenu-width: 240px;
       --header-height: 60px;
       margin-left: var(--sidemenu-width);
       margin-top: var(--header-height);
@@ -40,9 +40,9 @@
       background-color: #fff;
 
       &--minimized {
-        --sidemenu-width--hidden: 71px;
-        margin-left: var(--sidemenu-width--hidden);
-        max-width: calc(100vw - var(--sidemenu-width--hidden));
+        --sidemenu-width: 70px;
+        margin-left: var(--sidemenu-width);
+        max-width: calc(100vw - var(--sidemenu-width));
       }
 
       > .main-window {
