@@ -26,12 +26,14 @@ import SelectClientCategory from '../ClientCategories/SelectClientCategory/Selec
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 import { clientsDefaultInputs } from '../objects';
 import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
+import { format } from 'date-fns';
 
 const EditClient = (props) => {
   const {
@@ -94,7 +96,7 @@ const EditClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextDateContact: new Date(formInputs.nextContactDate).getTime() / 1000,
+        nextDateContact: format(formInputs.nextContactDate, 'yyyy-MM-dd'),
         categoryId: formInputs.categoryId,
         favorite: formInputs.favorite,
         type: formInputs.type,
@@ -402,6 +404,18 @@ const EditClient = (props) => {
                   handleInputChange('price', target.value)
                 }
               />
+              <div className="main-form__item">
+                <div className="main-form__input_name">Прайс (.xlsx файл)</div>
+                <FileUploader
+                  onChange={(result) => handleInputChange('priceFile', result)}
+                  regex={/.+\.(xlsx|csv)/}
+                  defaultValue={formInputs.priceFile}
+                  error={formErrors.priceFile}
+                  hideError={() =>
+                    setFormErrors({ ...formErrors, priceFile: false })
+                  }
+                />
+              </div>
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Юридические данные</div>
                 <InputText

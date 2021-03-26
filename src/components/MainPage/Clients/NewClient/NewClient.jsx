@@ -12,6 +12,7 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
+import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
@@ -20,6 +21,7 @@ import useForm from 'Utils/hooks/useForm.js';
 import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
+import { format } from 'date-fns';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -101,7 +103,7 @@ const newClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextDateContact: formInputs.nextContactDate.getTime() / 1000,
+        nextDateContact: format(formInputs.nextContactDate, 'yyyy-MM-dd'),
         categoryId: formInputs.categoryId,
       })
       .then((res) => res.json())
@@ -325,6 +327,18 @@ const newClient = (props) => {
                   handleInputChange('price', target.value)
                 }
               />
+              <div className="main-form__item">
+                <div className="main-form__input_name">Прайс (.xlsx файл)</div>
+                <FileUploader
+                  onChange={(result) => handleInputChange('priceFile', result)}
+                  regex={/.+\.(xlsx|csv)/}
+                  defaultValue={formInputs.priceFile}
+                  error={formErrors.priceFile}
+                  hideError={() =>
+                    setFormErrors({ ...formErrors, priceFile: false })
+                  }
+                />
+              </div>
               <InputUser
                 inputName="Ответственный менеджер"
                 userData={userContext.userData}

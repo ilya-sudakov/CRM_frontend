@@ -263,7 +263,7 @@ const FileUploader = ({
                 <li key={item.name}>
                   <ImageView file={item} />
                   <div>{getFileName(item)}</div>
-                  {isImage && (
+                  {(item?.url || isImage || item instanceof File) && (
                     <DownloadIcon
                       width={30}
                       height={30}

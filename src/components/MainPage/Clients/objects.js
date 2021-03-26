@@ -74,11 +74,15 @@ export const clientsDefaultInputs = [
     defaultValue: true,
   },
   {
+    name: 'nextContactDate',
+    defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
+  },
+  {
     name: 'taxes',
     defaultValue: false,
   },
   {
-    name: 'nextContactDate',
-    defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
+    name: 'priceFile',
+    defaultValue: [],
   },
 ];
