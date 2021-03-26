@@ -29,6 +29,7 @@ import {
   feedback,
   etcetera,
   packaging,
+  sidemenuImageSize,
 } from './objects.js';
 
 export const getDefaultItems = (userContext) => {
@@ -49,7 +50,11 @@ export const getDefaultItems = (userContext) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEMZ', 'ROLE_DISPATCHER'],
       name: 'ЦехЛЭМЗ',
       renderIcon: (
-        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+        <FactoryIcon
+          width={sidemenuImageSize}
+          height={sidemenuImageSize}
+          className="sidemenu__img sidemenu__img--factory"
+        />
       ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: lemzDropdown,
@@ -64,7 +69,11 @@ export const getDefaultItems = (userContext) => {
       mainRoles: ['ROLE_ADMIN', 'ROLE_LEPSARI', 'ROLE_DISPATCHER'],
       name: 'ЦехЛепсари',
       renderIcon: (
-        <FactoryIcon className="sidemenu__img sidemenu__img--factory" />
+        <FactoryIcon
+          width={sidemenuImageSize}
+          height={sidemenuImageSize}
+          className="sidemenu__img sidemenu__img--factory"
+        />
       ),
       iconClassName: 'sidemenu__img',
       dropdownMenu: lepsariDropdown,
