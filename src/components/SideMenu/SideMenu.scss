@@ -109,11 +109,9 @@
     }
 
     &--active {
-      background-color: #eee; //light-theme1
-      background-color: $main-color; //light-theme2
+      background-color: $main-color; //light-theme
       // background-color: lighten($main-color--dark, 2%); //dark-theme
       // background-color: darken($main-color, 5%); //dark-theme2
-      // background-color: $main-color; //dark-theme3
 
       & .sidemenu__img {
         --active-icon-fill: #6e7b8cff;
@@ -226,7 +224,7 @@
     &--add {
       justify-content: center;
       margin-bottom: 0;
-      max-width: calc(100% - 43px);
+      max-width: calc(100% - 42px);
       width: 100%;
       padding: 9px 10px;
       border: 1px solid rgba(#bbb, 0.9);
