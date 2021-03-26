@@ -33,6 +33,7 @@ import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
 import { format } from 'date-fns';
+import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
 
 const EditClient = (props) => {
   const {
@@ -95,10 +96,16 @@ const EditClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextDateContact: format(formInputs.nextContactDate, 'yyyy-MM-dd'),
+        nextDateContact: format(
+          new Date(formInputs.nextContactDate),
+          'yyyy-MM-dd',
+        ),
         categoryId: formInputs.categoryId,
         favorite: formInputs.favorite,
         type: formInputs.type,
+        priceId: formInputs.priceId !== 0 ? formInputs.priceId : null,
+        prices: formInputs.priceId !== 0 ? formInputs.priceId : null,
+        taxes: formInputs.taxes,
       },
       clientId,
     )
@@ -280,6 +287,7 @@ const EditClient = (props) => {
             type: res.type,
             taxes: res.taxes ?? false,
             categoryName: res.category.name,
+            priceId: res.prices,
           });
         });
     }
@@ -402,6 +410,9 @@ const EditClient = (props) => {
                 handleInputChange={({ target }) =>
                   handleInputChange('price', target.value)
                 }
+              />
+              <SelectPricelistFile
+                onChange={({ id }) => handleInputChange('priceId', id)}
               />
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Юридические данные</div>

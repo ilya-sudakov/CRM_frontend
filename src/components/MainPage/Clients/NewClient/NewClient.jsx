@@ -102,8 +102,12 @@ const newClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextDateContact: format(formInputs.nextContactDate, 'yyyy-MM-dd'),
+        nextDateContact: format(
+          new Date(formInputs.nextContactDate),
+          'yyyy-MM-dd',
+        ),
         categoryId: formInputs.categoryId,
+        priceId: formInputs.priceId !== 0 ? formInputs.priceId : null,
       })
       .then((res) => res.json())
       .then((res) => {

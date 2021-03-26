@@ -1,0 +1,44 @@
+.select-pricefile {
+    width: calc(100% - 20px);
+    margin-bottom: 20px;
+
+    .form-window {
+        &__body {
+            padding: 0;
+
+            .main-window {
+                &__list {
+                    &-item {
+                        cursor: pointer;
+
+                        &:not(.main-window__list-item--header) {
+                            min-height: 40px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .main-form__input_field {
+        p {
+            border: 1px solid #cccccc;
+            padding: 10px 15px;
+            border-radius: 3px;
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 300px;
+            color: #555;
+            font-size: 0.9rem;
+            margin-right: auto;
+        }
+        > span {
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
+            color: #666666;
+            font-size: 0.9rem;
+        }
+    }
+}
