@@ -65,6 +65,8 @@ const TableView = ({
                   to={`/price-list?filename=${
                     item.uri.split('downloadFile/')[1]
                   }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="main-window__link"
                 >
                   Просмотр прайс-листа

@@ -5,6 +5,7 @@ import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectPricelistFile.scss';
 import { getPriceLists } from 'Utils/RequestsAPI/Clients/price_list.js';
+import { Link } from 'react-router-dom';
 
 const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -26,10 +27,12 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
   };
 
   useEffect(() => {
+    console.log(defaultValue);
     if (defaultValue) setSelectedItem(defaultValue);
     if (data) return setLtdData(data);
+    if (ltdData.length > 0) return;
     loadLtd();
-  }, []);
+  }, [defaultValue]);
 
   return (
     <div className="select-pricefile">
@@ -63,9 +66,18 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
             setShowWindow={setShowWindow}
           />
           {selectedItem ? (
-            <p>{`ID #${selectedItem.id} | ${
-              selectedItem.uri.split('downloadFile/')[1]
-            }`}</p>
+            <p>
+              <div>{`${selectedItem.uri.split('downloadFile/')[1]}`}</div>
+              <Link
+                to={`/price-list?filename=${
+                  selectedItem.uri.split('downloadFile/')[1]
+                }`}
+                className="main-window__link"
+                target="_blank"
+              >
+                Просмотреть прайс
+              </Link>
+            </p>
           ) : (
             <span>Вы можете закрепить .xlsx прайс-лист к данному клиенту</span>
           )}

@@ -32,7 +32,7 @@ import { clientsDefaultInputs } from '../objects';
 import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
 
 const EditClient = (props) => {
@@ -84,31 +84,32 @@ const EditClient = (props) => {
     if (!formIsValid()) return;
     setIsLoading(true);
     console.log(formInputs);
-    editClient(
-      {
-        clientType: formInputs.clientType,
-        comment: formInputs.comment,
-        manager: formInputs.manager,
-        name: formInputs.name,
-        price: formInputs.price,
-        site: formInputs.site,
-        city: formInputs.city,
-        storageAddress: formInputs.storageAddress,
-        workCondition: formInputs.workCondition,
-        check: formInputs.check,
-        nextDateContact: format(
-          new Date(formInputs.nextContactDate),
-          'yyyy-MM-dd',
-        ),
-        categoryId: formInputs.categoryId,
-        favorite: formInputs.favorite,
-        type: formInputs.type,
-        priceId: formInputs.priceId !== 0 ? formInputs.priceId : null,
-        prices: formInputs.priceId !== 0 ? formInputs.priceId : null,
-        taxes: formInputs.taxes,
-      },
-      clientId,
-    )
+    const formData = {
+      clientType: formInputs.clientType,
+      comment: formInputs.comment,
+      manager: formInputs.manager,
+      name: formInputs.name,
+      price: formInputs.price,
+      site: formInputs.site,
+      city: formInputs.city,
+      storageAddress: formInputs.storageAddress,
+      workCondition: formInputs.workCondition,
+      check: formInputs.check,
+      // nextDateContact: format(
+      //   new Date(formInputs.nextContactDate),
+      //   'yyyy-MM-dd',
+      // ),
+      nextContactDate: new Date(formInputs.nextContactDate).getTime() / 1000,
+      categoryId: formInputs.categoryId,
+      favorite: formInputs.favorite,
+      type: formInputs.type,
+      priceId:
+        formInputs.priceId !== 0 && formInputs.priceId
+          ? formInputs.priceId?.id ?? formInputs.priceId
+          : undefined,
+      taxes: formInputs.taxes,
+    };
+    editClient(formData, clientId)
       .then(() => {
         //PUT if edited, POST if item is new
         return Promise.all(
@@ -412,7 +413,8 @@ const EditClient = (props) => {
                 }
               />
               <SelectPricelistFile
-                onChange={({ id }) => handleInputChange('priceId', id)}
+                onChange={(item) => handleInputChange('priceId', item)}
+                defaultValue={formInputs.priceId}
               />
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Юридические данные</div>

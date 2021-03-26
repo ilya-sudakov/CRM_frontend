@@ -20,7 +20,7 @@ import useForm from 'Utils/hooks/useForm.js';
 import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
-import { format } from 'date-fns';
+import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -102,16 +102,16 @@ const newClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextDateContact: format(
-          new Date(formInputs.nextContactDate),
-          'yyyy-MM-dd',
-        ),
+        nextContactDate: new Date(formInputs.nextContactDate).getTime() / 1000,
         categoryId: formInputs.categoryId,
-        priceId: formInputs.priceId !== 0 ? formInputs.priceId : null,
+        taxes: formInputs.taxes,
+        priceId:
+          formInputs.priceId !== 0 && formInputs.priceId
+            ? formInputs.priceId?.id ?? formInputs.priceId
+            : undefined,
       })
-      .then((res) => res.json())
-      .then((res) => {
-        clientId = res.id;
+      .then(({ data }) => {
+        clientId = data.id;
         return Promise.all(
           formInputs.legalEntity.map((item) => {
             return clientTypes[props.type].addLegalEntityFunction({
@@ -124,7 +124,7 @@ const newClient = (props) => {
               legalAddress: item.legalAddress,
               factualAddress: item.factualAddress,
               legalEntity: item.legalEntity,
-              clientId: res.id,
+              clientId: data.id,
             });
           }),
         );
@@ -329,6 +329,10 @@ const newClient = (props) => {
                 handleInputChange={({ target }) =>
                   handleInputChange('price', target.value)
                 }
+              />
+              <SelectPricelistFile
+                onChange={(item) => handleInputChange('priceId', item)}
+                defaultValue={formInputs.priceId}
               />
               <InputUser
                 inputName="Ответственный менеджер"

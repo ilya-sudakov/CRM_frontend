@@ -9,10 +9,17 @@
   position: relative;
 
   .main-window__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 10px;
     font-size: 24px;
     text-align: center;
     padding: 0 15px;
+
+    .main-window__button {
+      margin-left: 15px !important;
+    }
   }
 
   .main-window__link {

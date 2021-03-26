@@ -22,7 +22,8 @@
 
     .main-form__input_field {
         p {
-            border: 1px solid #cccccc;
+            display: flex;
+            border: 1px solid #ddd;
             padding: 10px 15px;
             border-radius: 3px;
             margin: 0;
@@ -32,6 +33,10 @@
             color: #555;
             font-size: 0.9rem;
             margin-right: auto;
+
+            .main-window__link {
+                margin-left: auto;
+            }
         }
         > span {
             margin: 0;

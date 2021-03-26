@@ -11,6 +11,7 @@ import {
 import styled from 'styled-components';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import TableView from './TableView/TableView.jsx';
+import { Link } from 'react-router-dom';
 
 const PricesListPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -77,7 +78,15 @@ const PricesListPage = () => {
     <Wrapper>
       <div className="main-window">
         <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">Прайс-листы</div>
+          <div className="main-window__title">
+            Прайс-листы
+            <Link
+              className="main-window__button main-window__button--inverted"
+              to="/price-list/prices/upload"
+            >
+              Загрузить файл
+            </Link>
+          </div>
         </div>
         <SearchBar
           fullSize

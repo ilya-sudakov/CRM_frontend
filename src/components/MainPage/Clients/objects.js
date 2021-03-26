@@ -83,6 +83,6 @@ export const clientsDefaultInputs = [
   },
   {
     name: 'priceId',
-    defaultValue: 1,
+    defaultValue: 0,
   },
 ];
