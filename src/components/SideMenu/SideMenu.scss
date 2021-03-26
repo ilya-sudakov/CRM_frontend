@@ -2,6 +2,8 @@
 
 .sidemenu {
   --sidemenu__background-color: #305779;
+  --buttons__border-radius: 3px;
+
   font-size: 82%;
   width: 240px;
   max-height: calc(100vh - 70px);
@@ -10,8 +12,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // background-color: #ffffff; //light-theme
-  background-color: var(--sidemenu__background-color); //dark-theme
+  border-right: 1px solid #ccc; //light-theme
+  background-color: #fff; //light-theme
+  // background-color: var(--sidemenu__background-color); //dark-theme
   color: $primary-text-color;
   z-index: 999;
   position: fixed;
@@ -40,7 +43,7 @@
     align-items: center;
     margin: 0 10px;
     margin-bottom: 8px;
-    border-radius: 6px;
+    border-radius: var(--buttons__border-radius);
     width: 90%;
     font-size: 0.8rem;
     white-space: nowrap;
@@ -59,8 +62,8 @@
     .sidemenu__img {
       min-width: 20px;
       filter: brightness(1.8);
-      // --icon-fill: #555555; //light-theme
-      --icon-fill: #aebcd3; //dark-theme
+      --icon-fill: #777; //light-theme
+      // --icon-fill: #aebcd3; //dark-theme
       filter: none;
 
       path:first-child {
@@ -106,16 +109,17 @@
     }
 
     &--active {
-      // background-color: #eeeeee; //light-theme
+      background-color: #eee; //light-theme1
+      background-color: $main-color; //light-theme2
       // background-color: lighten($main-color--dark, 2%); //dark-theme
-      background-color: darken($main-color, 5%); //dark-theme2
-      background-color: $main-color; //dark-theme3
+      // background-color: darken($main-color, 5%); //dark-theme2
+      // background-color: $main-color; //dark-theme3
 
       & .sidemenu__img {
         --active-icon-fill: #6e7b8cff;
 
         filter: none;
-        // --active-icon-fill: #247fa7; //light-theme
+        --active-icon-fill: #247fa7; //light-theme
         --active-icon-fill: #fff; //dark-theme
 
         path:first-child {
@@ -161,18 +165,34 @@
       }
 
       .sidemenu__link {
-        // color: darken($button__background--inverted, 5%) !important; //light-theme
+        color: darken($button__background--inverted, 5%) !important; //light-theme
         color: $secondary-text-color !important; //dark-theme
+      }
+
+      .sidemenu__addButton {
+        .sidemenu__img {
+          path:first-child {
+            fill: #ddd !important;
+          }
+        }
+
+        &:hover {
+          .sidemenu__img {
+            path:first-child {
+              fill: #fff !important;
+            }
+          }
+        }
       }
 
       .sidemenu__dropdown-menu {
         .sidemenu__item {
           .sidemenu__link {
-            // color: #555555 !important; //light theme
-            color: #98abc7 !important; //dark theme
+            color: #777 !important; //light theme
+            // color: #98abc7 !important; //dark theme
             .sidemenu__img {
-              // --active-icon-fill: #555555; //light theme
-              --active-icon-fill: #7d94b1dd; //dark theme
+              --active-icon-fill: #aaa; //light theme
+              // --active-icon-fill: #7d94b1dd; //dark theme
               path:first-child {
                 fill: var(--active-icon-fill);
               }
@@ -187,18 +207,9 @@
                   fill: var(--active-icon-fill);
                 }
               }
-              // color: darken($button__background--inverted, 5%) !important; //light-theme
+              color: darken($button__background--inverted, 5%) !important; //light-theme
               color: #fff !important; //dark-theme
             }
-          }
-        }
-      }
-
-      &:hover {
-        .sidemenu__link {
-          span {
-            // color: darken($button__background--inverted, 5%) !important; //light-theme
-            // color: #ffffff !important; //dark-theme
           }
         }
       }
@@ -218,12 +229,13 @@
       max-width: calc(100% - 43px);
       width: 100%;
       padding: 9px 10px;
-      border: 1px solid rgba(#bbb, 0.7);
-      border-radius: 6px;
+      border: 1px solid rgba(#bbb, 0.9);
+      border-radius: var(--buttons__border-radius);
       transform-origin: 0 0;
       text-align: center;
       font-size: 90%;
-      color: #fff;
+      color: #6f6f6f; //light-theme
+      // color: #fff; //dark-theme
       font-weight: 500;
       cursor: pointer;
       transition: border-color 100ms ease-in-out, color 100ms ease-in-out;
@@ -232,7 +244,7 @@
       }
 
       &:hover {
-        border-color: rgba(#bbb, 0.9);
+        border-color: rgba(#aaa, 0.9);
       }
     }
 
@@ -254,8 +266,8 @@
       padding-left: 0;
       font-size: 100%;
       width: calc(100% - 25px);
-      // color: #6f6f6f; //light-theme
-      color: #aebcd3; //dark-theme
+      color: #999; //light-theme
+      // color: #aebcd3; //dark-theme
       font-weight: 500;
 
       .sidemenu__img {
@@ -273,7 +285,6 @@
       color: $secondary-text-color;
       font-size: 25px;
       padding: 1px;
-      border-radius: 3px;
       display: flex;
       align-items: center;
       transition: filter 0.5s ease-in-out;
@@ -284,8 +295,8 @@
         min-width: 20px;
         max-width: 20px;
         path:first-child {
-          // fill: #999; //light-theme
-          fill: var(--icon-fill); //dark-theme
+          fill: #999; //light-theme
+          // fill: var(--icon-fill); //dark-theme
           transition: 100ms ease-in-out;
         }
       }
@@ -295,8 +306,8 @@
           margin: 0;
           padding: 0;
           path:first-child {
-            // fill: darken($button__background--inverted, 5%); //light-theme
-            fill: #fff; //dark-theme
+            fill: darken($button__background--inverted, 5%); //light-theme
+            // fill: #fff; //dark-theme
           }
         }
       }
@@ -322,15 +333,15 @@
     transform: scaleY(0);
     transform-origin: 0 0%;
     box-sizing: border-box;
-    border-radius: 6px;
-    // border: 1px solid #cccccc; //light-theme
-    border: 1px solid rgba(#bbb, 0.3); //dark-theme
+    border-radius: var(--buttons__border-radius);
+    border: 1px solid #cccccc; //light-theme
+    // border: 1px solid rgba(#bbb, 0.3); //dark-theme
     width: fit-content;
     min-width: calc(100% - 10px);
     padding: 5px;
     transition: 100ms ease-in-out;
-    // background-color: #ffffff; //light-theme
-    background-color: var(--sidemenu__background-color); //dark-theme
+    background-color: #ffffff; //light-theme
+    // background-color: var(--sidemenu__background-color); //dark-theme
 
     .sidemenu__item {
       max-width: 100% !important;
