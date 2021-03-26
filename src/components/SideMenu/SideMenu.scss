@@ -1,7 +1,7 @@
 @import "../../variables.scss";
 
 .sidemenu {
-  --sidemenu__background-color: #19344d;
+  --sidemenu__background-color: #305779;
   font-size: 82%;
   width: 240px;
   max-height: calc(100vh - 70px);
@@ -61,7 +61,7 @@
       min-width: 20px;
       filter: brightness(1.8);
       // --icon-fill: #555555; //light-theme
-      --icon-fill: #98abc7; //dark-theme
+      --icon-fill: #aebcd3; //dark-theme
       filter: none;
 
       path:first-child {
@@ -248,7 +248,7 @@
       font-size: 100%;
       width: calc(100% - 25px);
       // color: #6f6f6f; //light-theme
-      color: #98abc7; //dark-theme
+      color: #aebcd3; //dark-theme
       font-weight: 500;
 
       .sidemenu__img {

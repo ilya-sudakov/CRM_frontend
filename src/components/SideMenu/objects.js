@@ -204,6 +204,7 @@ export const lepsariDropdown = [
       <PlayListImg
         width={sidemenuImageSize}
         height={sidemenuImageSize}
+        viewBox="0 0 20 20"
         className="sidemenu__img sidemenu__img--request"
       />
     ),
@@ -259,6 +260,7 @@ export const lemzDropdown = [
       <PlayListImg
         width={sidemenuImageSize}
         height={sidemenuImageSize}
+        viewBox="0 0 20 20"
         className="sidemenu__img sidemenu__img--request"
       />
     ),
