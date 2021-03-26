@@ -40,7 +40,7 @@
     flex-direction: row;
     align-items: center;
     padding: 0px 10px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     width: 90%;
     font-size: 0.8rem;
     white-space: nowrap;
@@ -248,7 +248,7 @@
       flex-direction: row;
       align-items: center;
       color: $primary-text-color;
-      padding: 6px 5px;
+      padding: 10px 5px;
       overflow: hidden;
       padding-left: 0;
       font-size: 100%;
@@ -321,7 +321,7 @@
     border-radius: 3px;
     // border: 1px solid #cccccc; //light-theme
     border: 1px solid rgba(#bbb, 0.3); //dark-theme
-    width: calc(100% - 10px);
+    min-width: calc(100% - 10px);
     padding: 5px;
     padding-left: 0;
     transition: 100ms ease-in-out;
@@ -350,7 +350,9 @@
     .sidemenu__item {
       .sidemenu__link {
         padding-left: 10px;
-        width: calc(100%);
+        padding-right: 15px;
+        width: 100%;
+        white-space: nowrap;
       }
     }
   }
