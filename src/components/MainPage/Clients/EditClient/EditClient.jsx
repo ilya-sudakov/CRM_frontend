@@ -20,6 +20,7 @@ import {
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
@@ -276,6 +277,7 @@ const EditClient = (props) => {
             categoryId: res.category.id,
             favorite: res.favorite,
             type: res.type,
+            taxes: res.taxes ?? false,
             categoryName: res.category.name,
           });
         });
@@ -400,14 +402,28 @@ const EditClient = (props) => {
                   handleInputChange('price', target.value)
                 }
               />
-              <InputText
-                inputName="Акт сверки"
-                name="check"
-                handleInputChange={({ target }) =>
-                  handleInputChange('check', target.value)
-                }
-                defaultValue={formInputs.check}
-              />
+              <div className="main-form__fieldset">
+                <div className="main-form__group-name">Юридические данные</div>
+                <InputText
+                  inputName="Акт сверки"
+                  name="check"
+                  handleInputChange={({ target }) =>
+                    handleInputChange('check', target.value)
+                  }
+                  defaultValue={formInputs.check}
+                />
+                <div className="main-form__item">
+                  <div className="main-form__input_name">Налогообложение</div>
+                  <div className="main-form__input_field">
+                    <CheckBox
+                      text="Подлежит налогообложению"
+                      checked={formInputs.taxes}
+                      disabled={!props.userHasAccess(['ROLE_ADMIN'])}
+                      onChange={(value) => handleInputChange('taxes', value)}
+                    />
+                  </div>
+                </div>
+              </div>
               <InputUser
                 inputName="Ответственный менеджер"
                 userData={props.userData}

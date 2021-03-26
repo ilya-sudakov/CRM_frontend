@@ -170,7 +170,7 @@
       .sidemenu__addButton {
         .sidemenu__img {
           path:first-child {
-            fill: #ddd !important;
+            fill: #eee !important;
           }
         }
 
@@ -236,12 +236,13 @@
       // color: #fff; //dark-theme
       font-weight: 500;
       cursor: pointer;
-      transition: border-color 100ms ease-in-out, color 100ms ease-in-out;
+      transition: border-color 100ms ease-in-out, background-color 100ms ease-in-out;
       span {
         width: 100%;
       }
 
       &:hover {
+        background-color: #efefef;
         border-color: rgba(#aaa, 0.9);
       }
     }

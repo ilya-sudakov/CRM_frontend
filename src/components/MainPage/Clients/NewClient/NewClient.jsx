@@ -338,14 +338,29 @@ const newClient = (props) => {
                 defaultValue={formInputs.manager}
                 searchPlaceholder="Введите имя менеджера для поиска..."
               />
-              <InputText
-                inputName="Акт сверки"
-                name="check"
-                handleInputChange={({ target }) =>
-                  handleInputChange('check', target.value)
-                }
-                defaultValue={formInputs.check}
-              />
+              <div className="main-form__fieldset">
+                <div className="main-form__group-name">Юридические данные</div>
+                <InputText
+                  inputName="Акт сверки"
+                  name="check"
+                  handleInputChange={({ target }) =>
+                    handleInputChange('check', target.value)
+                  }
+                  defaultValue={formInputs.check}
+                />
+                <div className="main-form__item">
+                  <div className="main-form__input_name">Налогообложение</div>
+                  <div className="main-form__input_field">
+                    <CheckBox
+                      text="Подлежит налогообложению"
+                      id="taxes"
+                      checked={formInputs.taxes}
+                      disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
+                      onChange={(value) => handleInputChange('taxes', value)}
+                    />
+                  </div>
+                </div>
+              </div>
               {/* Выбор конкретных пользователей */}
               {/* {userContext.userHasAccess(['ROLE_ADMIN']) && (
                 <UsersVisibility
@@ -365,7 +380,7 @@ const newClient = (props) => {
                 <div className="main-form__input_field">
                   <CheckBox
                     text="Запись видна всем пользователям"
-                    name="visibility"
+                    id="visibility"
                     checked={formInputs.visibility}
                     disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}
                     onChange={(value) => handleInputChange('visibility', value)}
