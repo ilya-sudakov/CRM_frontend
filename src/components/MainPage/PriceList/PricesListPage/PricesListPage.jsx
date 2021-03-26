@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import { getExcelFileBlob } from '../PriceList/functions.js';
 import { downloadImage } from 'Utils/Form/ImageView/functions.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import { Link } from 'react-router-dom';
 
 const PricesListPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -131,7 +132,7 @@ const TableView = ({
   `;
 
   const FilenameColumn = styled.span`
-    flex: 0 1 90% !important;
+    flex: 0 1 40% !important;
   `;
 
   return (
@@ -140,6 +141,7 @@ const TableView = ({
         <div className="main-window__list-item main-window__list-item--header">
           <IdColumn>ID</IdColumn>
           <FilenameColumn>Имя файла</FilenameColumn>
+          <FilenameColumn>Ссылка на прайс-лист</FilenameColumn>
           <div className="main-window__table-actions"></div>
         </div>
         {isLoading ? (
@@ -158,6 +160,16 @@ const TableView = ({
               <IdColumn>{item.id}</IdColumn>
               <FilenameColumn>
                 {item.uri.split('downloadFile/')[1]}
+              </FilenameColumn>
+              <FilenameColumn>
+                <Link
+                  to={`/price-list?filename=${
+                    item.uri.split('downloadFile/')[1]
+                  }`}
+                  className="main-window__link"
+                >
+                  Просмотр прайс-листа
+                </Link>
               </FilenameColumn>
               {onSelect ? (
                 <div className="main-window__table-actions"></div>

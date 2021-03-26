@@ -120,7 +120,7 @@ export const parseExcelData = (result) => {
   return { parsedData, disclaimer, titlePage };
 };
 
-export const getExcelFileBlob = async (url, filename) => {
+export const getExcelFileBlob = async (url, filename, type = 'blob') => {
   let headers = {
     'Content-Disposition': `attachment; filename=${encodeURIComponent(
       filename,
@@ -133,11 +133,12 @@ export const getExcelFileBlob = async (url, filename) => {
       headers: headers,
       responseType: 'arraybuffer',
     })
-    .then(
-      ({ data }) =>
-        new Blob([data], {
-          type:
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
-        }),
+    .then(({ data }) =>
+      type === 'blob'
+        ? new Blob([data], {
+            type:
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
+          })
+        : data,
     );
 };

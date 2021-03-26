@@ -19,7 +19,8 @@ import { getPriceListExcel } from './getPriceListExcel.js';
 import { Link } from 'react-router-dom';
 import SelectLtd from '../LtdListPage/SelectLtd/SelectLtd.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
-import { parseExcelData } from './functions.js';
+import useQuery from 'Utils/hooks/useQuery';
+import { getExcelFileBlob, parseExcelData } from './functions.js';
 import GroupTitlePage from './components/GroupTitlePage.jsx';
 import CategoryHeader from './components/CategoryHeader.jsx';
 import GroupOfProducts from './components/GroupOfProducts.jsx';
@@ -34,6 +35,7 @@ const PriceList = () => {
   const [disclaimer, setDisclaimer] = useState('');
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
   const [selectedLtd, setSelectedLtd] = useState(null);
+  const { query } = useQuery();
 
   const loadTitlePageImages = (_titlePage) => {
     setIsLoading(true);
@@ -107,9 +109,37 @@ const PriceList = () => {
       });
   };
 
+  const processFileBlob = (file) => {
+    console.log(file);
+    const { parsedData, disclaimer, titlePage } = parseExcelData(file);
+    setDisclaimer(disclaimer);
+    setTitlePage(titlePage);
+    setPriceList(parsedData);
+    loadImages(parsedData, titlePage);
+  };
+
+  const loadFile = async (uri) => {
+    const file = await getExcelFileBlob(
+      uri,
+      uri.split('downloadFile/')[1],
+      'arraybuffer',
+    );
+    console.log('123', file);
+    processFileBlob(file);
+  };
+
   useEffect(() => {
     document.title = 'Прайс-лист';
   }, [priceList]);
+
+  useEffect(() => {
+    const filename = query.get('filename');
+    if (filename) {
+      loadFile(
+        `${process.env.API_BASE_URL}/api/v1/fileWithoutDB/downloadFile/${filename}`,
+      );
+    }
+  }, []);
 
   const sortPriceList = (priceList) => {
     return sortByField(priceList, { fieldName: 'id', direction: 'asc' });
@@ -196,21 +226,29 @@ const PriceList = () => {
             <div className="main-form__input_name">
               Excel-таблица для парсинга
             </div>
-            <FileUploader
-              regex={/.+\.(xlsx|csv)/}
-              uniqueId="excel-reader"
-              type="readAsArrayBuffer"
-              onChange={(result) => {
-                console.log(result);
-                const { parsedData, disclaimer, titlePage } = parseExcelData(
-                  result[0],
-                );
-                setDisclaimer(disclaimer);
-                setTitlePage(titlePage);
-                setPriceList(parsedData);
-                loadImages(parsedData, titlePage);
-              }}
-            />
+            {query.get('filename') && isLoading ? (
+              'Идет загрузка...'
+            ) : (
+              <FileUploader
+                regex={/.+\.(xlsx|csv)/}
+                uniqueId="excel-reader"
+                type="readAsArrayBuffer"
+                defaultValue={
+                  query.get('filename')
+                    ? [
+                        {
+                          url: `${
+                            process.env.API_BASE_URL
+                          }/api/v1/fileWithoutDB/downloadFile/${query.get(
+                            'filename',
+                          )}`,
+                        },
+                      ]
+                    : undefined
+                }
+                onChange={(result) => processFileBlob(result[0])}
+              />
+            )}
           </div>
           {priceList.length > 0 && (
             <div className="main-form__buttons main-form__buttons--full">
