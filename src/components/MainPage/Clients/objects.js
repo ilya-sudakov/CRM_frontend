@@ -82,7 +82,7 @@ export const clientsDefaultInputs = [
     defaultValue: false,
   },
   {
-    name: 'priceFile',
-    defaultValue: [],
+    name: 'priceId',
+    defaultValue: 0,
   },
 ];

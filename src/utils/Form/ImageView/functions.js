@@ -21,7 +21,9 @@ export const getFileName = (item) => {
     (typeof item === 'string' && item.length === 0);
   const isLocalPath = typeof item === 'string' && item.length <= 200;
   const isRemoteFile =
-    typeof item === 'object' && item?.url !== undefined && item?.url !== null;
+    typeof item === 'object' &&
+    ((item?.url !== undefined && item?.url !== null) ||
+      (item?.uri !== undefined && item?.uri !== null));
   const isRawFile =
     typeof item === 'object' &&
     item?.name !== undefined &&
@@ -29,16 +31,22 @@ export const getFileName = (item) => {
     item?.size !== undefined &&
     item?.size !== null;
   if (isRemoteFile)
-    return item?.url?.split(/\/fileWithoutDB\/downloadFile\//)[1];
+    return (item?.uri || item?.url).split(/\/fileWithoutDB\/downloadFile\//)[1];
   if (isLocalPath) return item.split('assets/')[1];
   if (isBase64) return 'Просмотр';
   if (isRawFile) return item?.name;
   return item?.type?.split('/')[1] ?? 'file';
 };
 
-export const downloadImage = (_file) => {
+export const downloadImage = (
+  _file,
+  responseType = 'blob',
+  headers = null,
+  type,
+) => {
   const fileName = getFileName(_file);
   const isLocalPath = typeof _file === 'string' && _file.length <= 200;
+  const url = _file?.url || _file?.uri;
   if (_file instanceof File) {
     let url = window.URL.createObjectURL(new Blob([_file]));
     let a = document.createElement('a');
@@ -47,13 +55,18 @@ export const downloadImage = (_file) => {
     a.click();
     return;
   }
-  if (_file?.url || isLocalPath) {
+  console.log(fileName, _file);
+  if (url || isLocalPath) {
     return axios
-      .get(_file?.url ?? _file, {
-        responseType: 'blob',
+      .get(url ?? _file, {
+        headers: headers ?? undefined,
+        responseType: responseType,
       })
       .then(({ data }) => {
-        let url = window.URL.createObjectURL(new Blob([data]));
+        console.log(data);
+        let url = window.URL.createObjectURL(
+          new Blob([data], type ?? undefined),
+        );
         let a = document.createElement('a');
         a.href = url;
         a.download = fileName;

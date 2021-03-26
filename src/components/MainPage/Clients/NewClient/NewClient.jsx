@@ -12,7 +12,6 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
@@ -327,18 +326,6 @@ const newClient = (props) => {
                   handleInputChange('price', target.value)
                 }
               />
-              <div className="main-form__item">
-                <div className="main-form__input_name">Прайс (.xlsx файл)</div>
-                <FileUploader
-                  onChange={(result) => handleInputChange('priceFile', result)}
-                  regex={/.+\.(xlsx|csv)/}
-                  defaultValue={formInputs.priceFile}
-                  error={formErrors.priceFile}
-                  hideError={() =>
-                    setFormErrors({ ...formErrors, priceFile: false })
-                  }
-                />
-              </div>
               <InputUser
                 inputName="Ответственный менеджер"
                 userData={userContext.userData}

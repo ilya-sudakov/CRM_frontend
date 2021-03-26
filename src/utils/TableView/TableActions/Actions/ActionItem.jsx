@@ -29,7 +29,9 @@ const ActionItem = ({ item = defaultItem }) => {
       title={item.title}
     >
       {item.text}
-      <img className="main-window__img" src={item.imgSrc} />
+      {item.imgSrc ? (
+        <img className="main-window__img" src={item.imgSrc} />
+      ) : null}
     </div>
   );
 };

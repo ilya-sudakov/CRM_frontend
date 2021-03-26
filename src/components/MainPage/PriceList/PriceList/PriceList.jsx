@@ -185,6 +185,9 @@ const PriceList = () => {
             <Link className="main-window__button" to="/ltd-list">
               Список ООО
             </Link>
+            <Link className="main-window__button" to="/price-list/prices">
+              Прайс-листы
+            </Link>
           </div>
         </div>
         <form className="main-form__form">

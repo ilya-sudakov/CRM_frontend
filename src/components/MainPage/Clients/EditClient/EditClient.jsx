@@ -26,7 +26,6 @@ import SelectClientCategory from '../ClientCategories/SelectClientCategory/Selec
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 import { clientsDefaultInputs } from '../objects';
@@ -404,18 +403,6 @@ const EditClient = (props) => {
                   handleInputChange('price', target.value)
                 }
               />
-              <div className="main-form__item">
-                <div className="main-form__input_name">Прайс (.xlsx файл)</div>
-                <FileUploader
-                  onChange={(result) => handleInputChange('priceFile', result)}
-                  regex={/.+\.(xlsx|csv)/}
-                  defaultValue={formInputs.priceFile}
-                  error={formErrors.priceFile}
-                  hideError={() =>
-                    setFormErrors({ ...formErrors, priceFile: false })
-                  }
-                />
-              </div>
               <div className="main-form__fieldset">
                 <div className="main-form__group-name">Юридические данные</div>
                 <InputText
