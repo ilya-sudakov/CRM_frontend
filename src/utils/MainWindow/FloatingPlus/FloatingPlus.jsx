@@ -8,7 +8,10 @@ const FloatingPlus = (props) => {
   const userContext = useContext(UserContext);
   const [showButton, setShowButton] = useState(true);
 
-  if (userContext.userHasAccess(props.visibility) && showButton) {
+  if (
+    (!props.visibility || userContext.userHasAccess(props.visibility)) &&
+    showButton
+  ) {
     return (
       <Link
         className="floating-plus"
@@ -42,7 +45,7 @@ const FloatingPlus = (props) => {
       </Link>
     );
   } else {
-    return '';
+    return null;
   }
 };
 

@@ -6,10 +6,10 @@ export function getPriceLists() {
   return axios.get(`${process.env.API_BASE_URL}/api/v1/priceList/`, headers);
 }
 
-export function addPriceToClient(priceList) {
+export function createPricelist(priceList) {
   const headers = getAuthHeaders('multipart/form-data');
   return axios.post(
-    `${process.env.API_BASE_URL}/api/v1/priceList/`,
+    `${process.env.API_BASE_URL}/api/v1/fileWithoutDB/uploadMultipleFiles/priceList/`,
     priceList,
     headers,
   );

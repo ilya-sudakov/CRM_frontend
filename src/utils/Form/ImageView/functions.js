@@ -40,13 +40,23 @@ export const getFileName = (item) => {
 
 export const downloadImage = (
   _file,
+  filename,
   responseType = 'blob',
   headers = null,
   type,
 ) => {
-  const fileName = getFileName(_file);
+  const fileName = filename ?? getFileName(_file);
   const isLocalPath = typeof _file === 'string' && _file.length <= 200;
   const url = _file?.url || _file?.uri;
+  console.log(_file, fileName);
+  if (_file instanceof Blob) {
+    let url = window.URL.createObjectURL(_file);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    return;
+  }
   if (_file instanceof File) {
     let url = window.URL.createObjectURL(new Blob([_file]));
     let a = document.createElement('a');
@@ -55,25 +65,20 @@ export const downloadImage = (
     a.click();
     return;
   }
-  console.log(fileName, _file);
-  if (url || isLocalPath) {
-    return axios
-      .get(url ?? _file, {
-        headers: headers ?? undefined,
-        responseType: responseType,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        let url = window.URL.createObjectURL(
-          new Blob([data], type ?? undefined),
-        );
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        a.click();
-      });
-  }
-  return imgToBlobDownload(_file, fileName);
+  if (!url && !isLocalPath) return imgToBlobDownload(_file, fileName);
+  return axios
+    .get(url ?? _file, {
+      headers: headers ?? undefined,
+      responseType: responseType,
+    })
+    .then(({ data }) => {
+      console.log(data);
+      let url = window.URL.createObjectURL(new Blob([data], type ?? undefined));
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      a.click();
+    });
 };
 
 export const getLink = (_file) => {

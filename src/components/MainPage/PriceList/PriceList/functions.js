@@ -1,3 +1,4 @@
+import axios from 'axios';
 import XLSX from 'xlsx';
 
 export const getPriceListColumnValue = (column, item) => {
@@ -117,4 +118,26 @@ export const parseExcelData = (result) => {
   }
   console.log(parsedData);
   return { parsedData, disclaimer, titlePage };
+};
+
+export const getExcelFileBlob = async (url, filename) => {
+  let headers = {
+    'Content-Disposition': `attachment; filename=${encodeURIComponent(
+      filename,
+    )}`,
+    'Content-Type':
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  };
+  return await axios
+    .get(url, {
+      headers: headers,
+      responseType: 'arraybuffer',
+    })
+    .then(
+      ({ data }) =>
+        new Blob([data], {
+          type:
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
+        }),
+    );
 };

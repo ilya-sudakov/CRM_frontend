@@ -66,6 +66,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx';
 import PageLoading from './PageLoading/PageLoading.jsx';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary.jsx';
 import UserContext from '../../App.js';
+import UploadPricelistFile from './PriceList/PricesListPage/UploadPricelistFile/UploadPricelistFile.jsx';
 
 const MainPage = () => {
   const [sidemenuHidden, setSidemenuHidden] = useState(true);
@@ -266,10 +267,17 @@ const MainPage = () => {
                     userData={userContext.userData}
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
+
                   <PrivateRoute
                     exact
                     path="/price-list/prices"
                     component={PricesListPage}
+                    allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/price-list/prices/upload"
+                    component={UploadPricelistFile}
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
                   <PrivateRoute

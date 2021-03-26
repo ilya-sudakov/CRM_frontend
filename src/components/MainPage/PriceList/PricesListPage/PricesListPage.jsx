@@ -7,12 +7,14 @@ import UserContext from '../../../../App.js';
 import {
   deletePriceList,
   getPriceLists,
-} from '../../../../utils/RequestsAPI/Clients/price_list.js';
+} from 'Utils/RequestsAPI/Clients/price_list.js';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import styled from 'styled-components';
-import { downloadImage } from '../../../../utils/Form/ImageView/functions.js';
+import { getExcelFileBlob } from '../PriceList/functions.js';
+import { downloadImage } from 'Utils/Form/ImageView/functions.js';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 
 const PricesListPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,6 +42,18 @@ const PricesListPage = () => {
     'static',
   );
 
+  const loadLTDList = () => {
+    getPriceLists()
+      .then(({ data }) => {
+        setLtdData([...data]);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
+  };
+
   const filterSearchQuery = (data) => {
     const query = searchQuery.toLowerCase();
     return data.filter(
@@ -53,18 +67,6 @@ const PricesListPage = () => {
     document.title = 'Прайс-листы';
     loadLTDList();
   }, []);
-
-  const loadLTDList = () => {
-    getPriceLists()
-      .then(({ data }) => {
-        setLtdData([...data]);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
-      });
-  };
 
   const deleteItem = (id) => {
     deletePriceList(id).then(() => loadLTDList());
@@ -97,6 +99,7 @@ const PricesListPage = () => {
           isLoading={isLoading}
         />
         {pagination}
+        <FloatingPlus linkTo="/price-list/prices/upload" />
       </div>
     </Wrapper>
   );
@@ -162,19 +165,14 @@ const TableView = ({
                 <TableActions
                   actionsList={[
                     {
-                      onClick: () => {
-                        let headers = {
-                          'Content-Disposition': `attachment; filename=${
-                            item.uri.split('downloadFile/')[1]
-                          }`,
-                          'Content-Type':
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                        };
-                        downloadImage(item, 'arraybuffer', headers, {
-                          type:
-                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
-                        });
-                      },
+                      onClick: async () =>
+                        downloadImage(
+                          await getExcelFileBlob(
+                            item.uri,
+                            item.uri.split('downloadFile/')[1],
+                          ),
+                          item.uri.split('downloadFile/')[1],
+                        ),
                       text: 'Скачать',
                     },
                     {
