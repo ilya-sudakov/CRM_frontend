@@ -40,7 +40,7 @@
       background-color: #fff;
 
       &--minimized {
-        --sidemenu-width--hidden: 61px;
+        --sidemenu-width--hidden: 71px;
         margin-left: var(--sidemenu-width--hidden);
         max-width: calc(100vw - var(--sidemenu-width--hidden));
       }
