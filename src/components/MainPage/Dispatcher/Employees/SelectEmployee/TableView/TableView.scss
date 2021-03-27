@@ -8,6 +8,8 @@
 
   .main-window__list-item {
     cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
     span {
       &:nth-child(1) {
         flex: 0 1 35%;

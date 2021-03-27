@@ -153,17 +153,19 @@ const TableView = (props) => {
                           {product.comment}
                         </span>
                         <div className="main-window__actions">
-                          <div
-                            className="main-window__action"
-                            title="Просмотр продукции"
-                            onClick={() => {
-                              return props.history.push(
-                                '/products/view/' + product.id,
-                              );
-                            }}
-                          >
-                            <img className="main-window__img" src={viewSVG} />
-                          </div>
+                          {!props.selectProduct ? (
+                            <div
+                              className="main-window__action"
+                              title="Просмотр продукции"
+                              onClick={() => {
+                                return props.history.push(
+                                  '/products/view/' + product.id,
+                                );
+                              }}
+                            >
+                              <img className="main-window__img" src={viewSVG} />
+                            </div>
+                          ) : null}
                           {props.userHasAccess &&
                             props.userHasAccess([
                               'ROLE_ADMIN',

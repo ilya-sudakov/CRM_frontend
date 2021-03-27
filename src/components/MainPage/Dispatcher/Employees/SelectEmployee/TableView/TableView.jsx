@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import { formatDateString } from 'Utils/functions.jsx';
-import okSVG from 'Assets/tableview/ok.svg';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
@@ -19,7 +18,6 @@ const TableView = (props) => {
             <span>Дата рождения</span>
             <span>Подразделение</span>
             <span>Должность</span>
-            <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading ? (
             <PlaceholderLoading
@@ -73,26 +71,6 @@ const TableView = (props) => {
                       <div className="main-window__mobile-text">Должность:</div>
                       {employee?.position}
                     </span>
-                    <div className="main-window__actions">
-                      <div
-                        className="main-window__action"
-                        title="Выбрать сотрудника"
-                        onClick={() => {
-                          props.selectEmployee(
-                            employee?.lastName +
-                              ' ' +
-                              employee?.name +
-                              ' ' +
-                              employee?.middleName,
-                            employee?.id,
-                            employee,
-                          );
-                          props.setCloseWindow(!props.closeWindow);
-                        }}
-                      >
-                        <img className="main-window__img" src={okSVG} />
-                      </div>
-                    </div>
                   </div>
                 ),
             )

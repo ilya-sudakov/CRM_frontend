@@ -167,7 +167,6 @@ const TableView = (props) => {
               <span>Сайт</span>
               <span>Контакты</span>
               <span>Комментарий</span>
-              <div className="main-window__actions">Действия</div>
             </div>
             {props.clients.map((client, index) => (
               <div
@@ -212,9 +211,6 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Комментарий:</div>
                   {client.comment}
                 </span>
-                <div className="main-window__actions">
-                  <div className="main-window__action">Выбрать</div>
-                </div>
               </div>
             ))}
           </>
