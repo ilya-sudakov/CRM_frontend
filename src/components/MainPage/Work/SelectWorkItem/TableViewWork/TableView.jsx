@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import okSVG from 'Assets/tableview/ok.svg';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
@@ -33,7 +32,6 @@ const TableView = (props) => {
           <div className="main-window__list-item main-window__list-item--header">
             <span>Название</span>
             <span>Тип</span>
-            <div className="main-window__actions">Действия</div>
           </div>
           {props.isLoading ? (
             <PlaceholderLoading
@@ -58,19 +56,6 @@ const TableView = (props) => {
                   <div className="main-window__mobile-text">Тип:</div>
                   {work.typeOfWork}
                 </span>
-                <div className="main-window__actions">
-                  <div
-                    data-id={work.id}
-                    className="main-window__action"
-                    title="Выбрать"
-                    onClick={() => {
-                      props.selectWork(work.work, work.id, work.typeOfWork);
-                    }}
-                  >
-                    {/* Выбрать */}
-                    <img className="main-window__img" src={okSVG} />
-                  </div>
-                </div>
               </div>
             ))
           )}

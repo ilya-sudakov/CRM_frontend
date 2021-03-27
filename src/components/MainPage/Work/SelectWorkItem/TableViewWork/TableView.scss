@@ -7,6 +7,8 @@
   margin-left: -15px;
 
   .main-window__list-item {
+    padding-bottom: 10px;
+    padding-top: 10px;
     cursor: pointer;
     span {
       &:nth-child(1) {
