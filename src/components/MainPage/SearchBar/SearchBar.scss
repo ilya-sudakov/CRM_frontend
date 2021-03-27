@@ -127,40 +127,14 @@
       border-radius: var(--border-radius);
       color: $secondary-text-color;
       background-color: $main-color;
-
-      //test
-      // background-color: #ffffff;
-      // border: 1px solid #bbbbbb;
-      // color: #444444;
-
       transition: 0.2s ease-in-out;
       cursor: pointer;
-      //для кнопки внутри searchbar input
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
 
       &:hover {
         background-color: lighten($button__background--inverted, 5%);
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
-      }
-    }
-
-    .searchbar__addItem {
-      // flex: 0 1 12.5%;
-      font-size: 80%;
-      display: flex;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-      padding: 5px 25px;
-      border-radius: 15px;
-      background-color: $main-color;
-      color: $secondary-text-color;
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       }
     }
   }
@@ -197,20 +171,21 @@
           box-sizing: border-box;
           padding-top: 10px;
           padding-bottom: 10px;
-          padding-left: calc(45px + 120px);
+          padding-left: calc(0px + 120px);
         }
         select {
           position: absolute;
+          z-index: 1;
           top: 5px;
-          left: 45px;
+          left: 5px;
           transition: 100ms ease-in-out;
           outline: none;
-          border: 1px solid #bbb;
-          border-radius: 5px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
           padding: 5px 4px;
           width: 100%;
           max-width: 110px;
-          background-color: #eee;
+          background-color: #f4f4f4;
           font-size: 0.75rem;
           text-align: left;
           height: 30px;
