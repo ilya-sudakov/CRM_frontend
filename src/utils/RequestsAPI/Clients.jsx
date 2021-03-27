@@ -9,9 +9,11 @@ export function getClients(elements) {
   });
 }
 
-export function searchClients(query) {
+export function searchClients(query, field) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/search/',
+    url: `${process.env.API_BASE_URL}/api/v1/client/search/${
+      field && field !== '' ? `${field}/` : ''
+    }`,
     method: 'POST',
     body: JSON.stringify(query),
   });
@@ -61,9 +63,11 @@ export function getClientsByCategoryAndType(
   });
 }
 
-export function searchClientsByCategoryAndType(query, signal) {
+export function searchClientsByCategoryAndType(query, field, signal) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/category_type/search/',
+    url: `${process.env.API_BASE_URL}/api/v1/client/category_type/search/${
+      field && field !== '' ? `${field}/` : ''
+    }`,
     method: 'POST',
     body: JSON.stringify(query),
     signal: signal,

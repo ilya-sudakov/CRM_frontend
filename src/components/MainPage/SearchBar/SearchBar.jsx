@@ -1,13 +1,22 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import searchImg from 'Assets/searchbar/search.svg';
 import './SearchBar.scss';
 
-const SearchBar = (props) => {
+const SearchBar = ({
+  onButtonClick,
+  searchQuery,
+  setSearchQuery,
+  fullSize = true,
+  placeholder,
+  searchOptions,
+  onOptionChange,
+}) => {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    props.setSearchQuery(query);
-    props.onButtonClick && props.onButtonClick(query);
+    setSearchQuery(query);
+    onButtonClick && onButtonClick(query);
   };
 
   const handleEnterPress = (e) => {
@@ -21,25 +30,34 @@ const SearchBar = (props) => {
     const emptyField = '';
     if (query !== '') {
       setQuery(emptyField);
-      props.setSearchQuery(emptyField);
-      props.onButtonClick && props.onButtonClick(emptyField);
+      setSearchQuery(emptyField);
+      onButtonClick && onButtonClick(emptyField);
     }
   };
 
-  useEffect(() => {
-    // console.log(props.searchQuery);
-  }, [props.searchQuery]);
+  useEffect(() => {}, [searchQuery]);
 
   return (
     <div
-      className={`searchbar ${props.fullSize ? 'searchbar--full-size' : ''}`}
+      className={`searchbar ${fullSize && 'searchbar--full-size'} ${
+        searchOptions ? 'searchbar--has-select' : null
+      }`}
     >
-      <div className="searchbar__title">{props.title}</div>
+      <div className="searchbar__title">{fullSize}</div>
       <div className="searchbar__panel">
         <div className="searchbar__input">
+          {searchOptions ? (
+            <select onChange={({ target }) => onOptionChange(target.value)}>
+              {searchOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
+            </select>
+          ) : null}
           <input
             type="text"
-            placeholder={props.placeholder}
+            placeholder={placeholder}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleEnterPress}
             value={query}
@@ -66,3 +84,11 @@ const SearchBar = (props) => {
 };
 
 export default SearchBar;
+
+SearchBar.propTypes = {
+  onButtonClick: PropTypes.func,
+  searchQuery: PropTypes.string,
+  setSearchQuery: PropTypes.func,
+  fullSize: PropTypes.bool,
+  placeholder: PropTypes.string,
+};

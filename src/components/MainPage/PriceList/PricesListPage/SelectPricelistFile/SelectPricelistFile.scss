@@ -16,6 +16,15 @@
                         }
                     }
                 }
+
+                .control-panel {
+                    width: 100%;
+                    margin-top: 0px;
+
+                    .main-window__button {
+                        margin-left: 15px;
+                    }
+                }
             }
         }
     }

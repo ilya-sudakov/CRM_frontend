@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
+import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectPricelistFile.scss';
 import { getPriceLists } from 'Utils/RequestsAPI/Clients/price_list.js';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -13,6 +15,7 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
   const [ltdData, setLtdData] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
   const userContext = useContext(UserContext);
+  const history = useHistory();
 
   const loadLtd = () => {
     getPriceLists()
@@ -48,19 +51,31 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
           <FormWindow
             title="Выбор файла прайс-листа"
             content={
-              <TableView
-                data={ltdData}
-                userHasAccess={userContext.userHasAccess}
-                onSelect={(item) => {
-                  setSelectedItem(item);
-                  onChange(item);
-                  setShowWindow(false);
-                }}
-                selectedItem={selectedItem}
-                isLoading={isLoading}
-                showWindow={showWindow}
-                setShowWindow={setShowWindow}
-              />
+              <>
+                <ControlPanel
+                  buttons={
+                    <Button
+                      text="Добавить прайс-лист файл"
+                      onClick={() => history.push('/price-list/prices/upload')}
+                      className="main-window__button main-window__button--inverted"
+                      inverted
+                    />
+                  }
+                />
+                <TableView
+                  data={ltdData}
+                  userHasAccess={userContext.userHasAccess}
+                  onSelect={(item) => {
+                    setSelectedItem(item);
+                    onChange(item);
+                    setShowWindow(false);
+                  }}
+                  selectedItem={selectedItem}
+                  isLoading={isLoading}
+                  showWindow={showWindow}
+                  setShowWindow={setShowWindow}
+                />
+              </>
             }
             showWindow={showWindow}
             setShowWindow={setShowWindow}

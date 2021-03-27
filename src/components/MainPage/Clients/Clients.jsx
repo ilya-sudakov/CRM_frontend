@@ -3,7 +3,6 @@ import './Clients.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import 'Utils/Form/Form.scss';
 import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
-import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
@@ -17,12 +16,12 @@ import { getEmailsExcel } from './MainComponents/functions.js';
 import { changeSortOrder } from 'Utils/functions.jsx';
 import { clientTypes } from './MainComponents/objects.js';
 import usePagination from 'Utils/hooks/usePagination/usePagination';
+import useSearchBar from 'Utils/hooks/useSearchBar';
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);
   const [curCategory, setCurCategory] = useState('');
   const [curClientType, setCurClientType] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
   const {
     pagination,
     curPage,
@@ -162,6 +161,54 @@ const Clients = (props) => {
     );
   };
 
+  const {
+    searchQuery,
+    setSearchQuery,
+    searchBar,
+    selectedOption,
+  } = useSearchBar(
+    undefined,
+    [],
+    (query) => {
+      setIsLoadingClients(true);
+      if (query === '') {
+        setIsLoadingClients(false);
+        loadData(curCategory, curClientType);
+      } else {
+        searchClients(
+          {
+            name: query,
+            type: clientTypes[props.type].type,
+          },
+          selectedOption,
+        )
+          .then((res) => res.json())
+          .then((res) => {
+            setClients(res);
+            setIsLoadingClients(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setIsLoadingClients(false);
+          });
+      }
+    },
+    [
+      {
+        text: 'Везде',
+        value: '',
+      },
+      {
+        text: 'Город',
+        value: 'city',
+      },
+      {
+        text: 'Город&Налогообложение',
+        value: 'city&taxes',
+      },
+    ],
+  );
+
   const initialLoad = () => {
     const curCategoryTemp = props.location.pathname
       .split('/category/')[1]
@@ -220,33 +267,7 @@ const Clients = (props) => {
             ))}
           </div>
         </div>
-        <SearchBar
-          fullSize
-          placeholder="Введите запрос для поиска..."
-          setSearchQuery={setSearchQuery}
-          searchQuery={searchQuery}
-          onButtonClick={(query) => {
-            setIsLoadingClients(true);
-            if (query === '') {
-              setIsLoadingClients(false);
-              loadData(curCategory, curClientType);
-            } else {
-              searchClients({
-                name: query,
-                type: clientTypes[props.type].type,
-              })
-                .then((res) => res.json())
-                .then((res) => {
-                  setClients(res);
-                  setIsLoadingClients(false);
-                })
-                .catch((error) => {
-                  console.log(error);
-                  setIsLoadingClients(false);
-                });
-            }
-          }}
-        />
+        {searchBar}
         <FormWindow
           title={
             curForm === 'nextContactDate'

@@ -95,11 +95,9 @@ const EditClient = (props) => {
       storageAddress: formInputs.storageAddress,
       workCondition: formInputs.workCondition,
       check: formInputs.check,
-      // nextDateContact: format(
-      //   new Date(formInputs.nextContactDate),
-      //   'yyyy-MM-dd',
-      // ),
-      nextContactDate: new Date(formInputs.nextContactDate).getTime() / 1000,
+      nextContactDate: Math.ceil(
+        new Date(formInputs.nextContactDate).getTime() / 1000,
+      ),
       categoryId: formInputs.categoryId,
       favorite: formInputs.favorite,
       type: formInputs.type,

@@ -215,15 +215,15 @@ const ListItem = ({
           className="main-window__link"
           title={item.site}
           href={
-            item.site.split('//').length > 1
+            item?.site && item?.site?.split('//')?.length > 1
               ? item.site
               : 'https://' + item.site
           }
           target="_blank"
           rel="noreferrer"
         >
-          {item.site.split('//').length > 1
-            ? item.site.split('//')[1]
+          {item?.site && item?.site?.split('//')?.length > 1
+            ? item?.site?.split('//')[1]
             : item.site}
         </a>
       </span>

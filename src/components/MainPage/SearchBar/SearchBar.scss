@@ -47,11 +47,11 @@
         position: absolute;
         top: 6px;
         left: 35px;
+        transition: 200ms ease-in-out;
+        border-radius: 999px;
         width: 1.5px;
         height: calc(100% - 12px);
         background-color: #cccccc;
-        transition: 200ms ease-in-out;
-        border-radius: 999px;
       }
 
       input[type="text"] {
@@ -184,6 +184,49 @@
     }
   }
 
+  &--has-select {
+    .searchbar__panel {
+      .searchbar__input {
+        &::before {
+          top: 10px;
+          height: 20px;
+        }
+        input[type="text"] {
+          width: 100%;
+          height: 40px;
+          box-sizing: border-box;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: calc(45px + 120px);
+        }
+        select {
+          position: absolute;
+          top: 5px;
+          left: 45px;
+          transition: 100ms ease-in-out;
+          outline: none;
+          border: 1px solid #bbb;
+          border-radius: 5px;
+          padding: 5px 4px;
+          width: 100%;
+          max-width: 110px;
+          background-color: #eee;
+          font-size: 0.75rem;
+          text-align: left;
+          height: 30px;
+
+          &:hover {
+            background-color: #ddd;
+          }
+
+          option {
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+
   @media (max-width: 1024px) {
     .searchbar__panel {
       .searchbar__addItem {
@@ -253,6 +296,24 @@
 
       .searchbar__panel {
         padding: 0 15px !important;
+      }
+    }
+
+    &--has-select {
+      .searchbar__panel {
+        padding: 0 15px !important;
+        .searchbar__input {
+          input[type="text"] {
+            width: 100% !important;
+            box-sizing: border-box;
+            padding-left: calc(20px + 80px) !important;
+          }
+
+          select {
+            left: 5px;
+            max-width: 90px;
+          }
+        }
       }
     }
   }
