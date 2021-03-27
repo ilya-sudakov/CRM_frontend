@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './SelectClients.scss';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import useSearchBar from 'Utils/hooks/useSearchBar';
 
 const SelectClient = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -18,10 +18,14 @@ const SelectClient = (props) => {
 
   const loadClients = (query) => {
     setIsLoading(true);
-    searchClients({
-      name: query,
-      type: null,
-    })
+    searchClients(
+      {
+        name: query,
+        city: query,
+        type: null,
+      },
+      selectedOption,
+    )
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
@@ -33,6 +37,29 @@ const SelectClient = (props) => {
         console.log(error);
       });
   };
+
+  const { searchBar, selectedOption } = useSearchBar(
+    undefined,
+    [],
+    (query) => {
+      if (query === '') setClients([]);
+      if (query.length > 2) loadClients(query);
+    },
+    [
+      {
+        text: 'Везде',
+        value: '',
+      },
+      {
+        text: 'Город',
+        value: 'city',
+      },
+      // {
+      //   text: 'Город&Налогообложение',
+      //   value: 'city&taxes',
+      // },
+    ],
+  );
 
   const clickClient = (clientId, clientName) => {
     setId(clientId);
@@ -94,19 +121,7 @@ const SelectClient = (props) => {
         title="Клиенты"
         content={
           <>
-            <SearchBar
-              fullSize
-              setSearchQuery={() => {}}
-              placeholder="Введите название для поиска..."
-              onButtonClick={(query) => {
-                if (query === '') {
-                  setClients([]);
-                }
-                if (query.length > 2) {
-                  loadClients(query);
-                }
-              }}
-            />
+            {searchBar}
             <TableView
               clients={clients}
               clickClient={clickClient}
@@ -173,14 +188,14 @@ const TableView = (props) => {
                     className="main-window__link"
                     title={client.site}
                     href={
-                      client.site.split('//').length > 1
+                      client.site && client.site.split('//').length > 1
                         ? client.site
                         : 'https://' + client.site
                     }
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {client.site.split('//').length > 1
+                    {client.site && client.site.split('//').length > 1
                       ? client.site.split('//')[1]
                       : client.site}
                   </a>

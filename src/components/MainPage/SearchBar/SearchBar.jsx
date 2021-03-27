@@ -75,7 +75,9 @@ const SearchBar = ({
           </div>
         </div>
         <div className="searchbar__searchbutton" onClick={handleSearch}>
-          <img className="searchbar__img" src={searchImg} />
+          {searchOptions ? null : (
+            <img className="searchbar__img" src={searchImg} />
+          )}
           <span>Поиск</span>
         </div>
       </div>

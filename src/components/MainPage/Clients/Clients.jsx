@@ -5,14 +5,12 @@ import 'Utils/Form/Form.scss';
 import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
 import { Link } from 'react-router-dom';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';
 import EditNextContactDate from './MainComponents/EditContactDay.jsx';
 import ClientsList from './MainComponents/ClientsList.jsx';
 import UserContext from '../../../App.js';
-import { getEmailsExcel } from './MainComponents/functions.js';
 import { changeSortOrder } from 'Utils/functions.jsx';
 import { clientTypes } from './MainComponents/objects.js';
 import usePagination from 'Utils/hooks/usePagination/usePagination';
@@ -178,6 +176,7 @@ const Clients = (props) => {
         searchClients(
           {
             name: query,
+            city: query,
             type: clientTypes[props.type].type,
           },
           selectedOption,
@@ -202,10 +201,10 @@ const Clients = (props) => {
         text: 'Город',
         value: 'city',
       },
-      {
-        text: 'Город&Налогообложение',
-        value: 'city&taxes',
-      },
+      // {
+      //   text: 'Город&Налогообложение',
+      //   value: 'city&taxes',
+      // },
     ],
   );
 
@@ -247,13 +246,6 @@ const Clients = (props) => {
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">
             <span>{curCategory}</span>
-            <Button
-              text="Выгрузить эл. почты"
-              isLoading={isLoading}
-              className="main-window__button main-window__button--inverted"
-              inverted
-              onClick={() => getEmailsExcel()}
-            />
           </div>
           <div className="main-window__menu">
             {menuItems.map((menuItem, index) => (

@@ -33,7 +33,7 @@ export const getFileName = (item) => {
   if (isRemoteFile)
     return (item?.uri || item?.url).split(/\/fileWithoutDB\/downloadFile\//)[1];
   if (isLocalPath) return item.split('assets/')[1];
-  if (isBase64) return 'Просмотр';
+  if (isBase64) return 'файл_без_имени.jpeg';
   if (isRawFile) return item?.name;
   return item?.type?.split('/')[1] ?? 'file';
 };
