@@ -24,6 +24,7 @@ import { getExcelFileBlob, parseExcelData } from './functions.js';
 import GroupTitlePage from './components/GroupTitlePage.jsx';
 import CategoryHeader from './components/CategoryHeader.jsx';
 import GroupOfProducts from './components/GroupOfProducts.jsx';
+import { PricesListPage } from '../../lazyImports.jsx';
 
 const PriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);
@@ -55,9 +56,9 @@ const PriceList = () => {
       });
   };
 
-  const loadImages = (data, _titlePage) => {
+  const loadImages = async (data, _titlePage) => {
     setIsLoading(true);
-    return Promise.all(
+    return await Promise.all(
       data.map((item, index) => {
         return getPriceGroupImageByName(item.number)
           .then((res) => res.json())
@@ -109,28 +110,30 @@ const PriceList = () => {
       });
   };
 
-  const processFileBlob = (file) => {
+  const processFileBlob = async (file) => {
     console.log(file);
     const { parsedData, disclaimer, titlePage } = parseExcelData(file);
     setDisclaimer(disclaimer);
     setTitlePage(titlePage);
     setPriceList(parsedData);
-    loadImages(parsedData, titlePage);
+    await loadImages(parsedData, titlePage);
+    return [parsedData, disclaimer, titlePage];
   };
 
   const loadFile = async (uri) => {
+    setIsLoading(true);
     const file = await getExcelFileBlob(
       uri,
       uri.split('downloadFile/')[1],
       'arraybuffer',
     );
-    console.log('123', file);
-    processFileBlob(file);
+    const [parsedData] = await processFileBlob(file);
+    handleOpenPDF(true, parsedData);
   };
 
   useEffect(() => {
     document.title = 'Прайс-лист';
-  }, [priceList]);
+  }, [priceList, disclaimer, titlePage, priceList]);
 
   useEffect(() => {
     const filename = query.get('filename');
@@ -145,11 +148,12 @@ const PriceList = () => {
     return sortByField(priceList, { fieldName: 'id', direction: 'asc' });
   };
 
-  const handleOpenPDF = (newPDF = false) => {
+  const handleOpenPDF = (newPDF = false, _priceList) => {
     setIsLoading(true);
+    console.log(categories, priceList, 123);
     getPriceListPdf(
       categories,
-      priceList.filter((item) => item.active),
+      (_priceList ?? priceList).filter((item) => item.active),
       {
         optionalCols: sortPriceList(
           optionalCols.filter((item) => item.active && item),
@@ -215,18 +219,22 @@ const PriceList = () => {
             <Link className="main-window__button" to="/ltd-list">
               Список ООО
             </Link>
-            <Link className="main-window__button" to="/price-list/prices">
-              Прайс-листы
+            <Link
+              className="main-window__button main-window__button--inverted"
+              to="/price-list/prices/upload"
+            >
+              Загрузить прайс-лист
             </Link>
           </div>
         </div>
         <form className="main-form__form">
           <SelectLtd onChange={(item) => setSelectedLtd(item)} />
+          <PricesListPage onSelect={(result) => loadFile(result.uri)} />
           <div className="main-form__item">
             <div className="main-form__input_name">
               Excel-таблица для парсинга
             </div>
-            {query.get('filename') && isLoading ? (
+            {(query.get('filename') && isLoading) || isLoading ? (
               'Идет загрузка...'
             ) : (
               <FileUploader

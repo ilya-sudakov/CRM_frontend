@@ -22,6 +22,7 @@ const DeleteItemAction = ({ onClick, title = 'Удаление элемента'
         title={title}
         onClick={(event) => {
           event.preventDefault();
+          event.stopPropagation();
           setShowMessage(true);
         }}
       >

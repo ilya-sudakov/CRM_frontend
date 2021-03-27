@@ -1,44 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
-import usePagination from 'Utils/hooks/usePagination/usePagination.js';
-import useSort from 'Utils/hooks/useSort/useSort.js';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import SearchBar from '../../SearchBar/SearchBar.jsx';
 import UserContext from '../../../../App.js';
 import {
   deletePriceList,
   getPriceLists,
 } from 'Utils/RequestsAPI/Clients/price_list.js';
 import styled from 'styled-components';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
-import TableView from './TableView/TableView.jsx';
-import { Link } from 'react-router-dom';
+import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
-const PricesListPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+const PricesListPage = ({ onSelect }) => {
   const [ltdData, setLtdData] = useState([]);
   const userContext = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
-  const { sortPanel, sortedData, sortOrder } = useSort(
-    ltdData,
-    {
-      sortOrder: {
-        curSort: 'uri',
-        uri: 'asc',
-      },
-      sortOptions: [
-        { value: 'uri asc', text: 'По названию (А-Я)' },
-        { value: 'uri desc', text: 'По названию (Я-А)' },
-      ],
-      ignoreURL: false,
-    },
-    [ltdData],
-  );
-  const { pagination, data } = usePagination(
-    () => filterSearchQuery(sortedData),
-    [searchQuery, sortOrder, sortedData],
-    'static',
-  );
-
   const loadLTDList = () => {
     getPriceLists()
       .then(({ data }) => {
@@ -51,17 +24,7 @@ const PricesListPage = () => {
       });
   };
 
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter(
-      (item) =>
-        item.uri?.toLowerCase().includes(query) ||
-        item.id.toString().includes(query),
-    );
-  };
-
   useEffect(() => {
-    document.title = 'Прайс-листы';
     loadLTDList();
   }, []);
 
@@ -71,43 +34,110 @@ const PricesListPage = () => {
 
   const Wrapper = styled.div`
     display: flex;
+    flex-direction: column;
     width: 100%;
+  `;
+
+  const Text = styled.div`
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #777;
   `;
 
   return (
     <Wrapper>
-      <div className="main-window">
-        <div className="main-window__header main-window__header--full">
-          <div className="main-window__title">
-            Прайс-листы
-            <Link
-              className="main-window__button main-window__button--inverted"
-              to="/price-list/prices/upload"
-            >
-              Загрузить файл
-            </Link>
-          </div>
-        </div>
-        <SearchBar
-          fullSize
-          placeholder="Введите название продукции для поиска..."
-          setSearchQuery={setSearchQuery}
-        />
-        <ControlPanel
-          sorting={sortPanel}
-          itemsCount={`Всего: ${ltdData.length} записей`}
-        />
-        <TableView
-          data={data}
-          deleteItem={deleteItem}
-          userHasAccess={userContext.userHasAccess}
-          isLoading={isLoading}
-        />
-        {pagination}
-        <FloatingPlus linkTo="/price-list/prices/upload" />
-      </div>
+      <Text>Вы можете выбрать загруженные прайсы</Text>
+      <TableView
+        data={ltdData}
+        deleteItem={deleteItem}
+        userHasAccess={userContext.userHasAccess}
+        isLoading={isLoading}
+        onSelect={onSelect}
+      />
     </Wrapper>
   );
 };
 
 export default PricesListPage;
+
+const TableView = ({
+  data,
+  deleteItem,
+  // userHasAccess,
+  isLoading,
+  setShowWindow,
+  selectedItem,
+  onSelect,
+}) => {
+  useEffect(() => {
+    if (!setShowWindow) return;
+    setShowWindow(false);
+  }, [selectedItem]);
+
+  const List = styled.div`
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+  `;
+
+  const ListItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: 100ms ease-in-out;
+
+    &:hover {
+      background-color: #eee;
+    }
+  `;
+
+  const ItemBar = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 5px 20px;
+    font-size: 0.9rem;
+    color: #777;
+  `;
+
+  const FilenameColumn = styled.span`
+    margin-right: 50px;
+  `;
+
+  const StyledDeleteItemAction = styled(DeleteItemAction)`
+    margin-left: 10px;
+  `;
+
+  return (
+    <List className="prices__tableview">
+      {isLoading ? (
+        <PlaceholderLoading
+          itemClassName="prices__item"
+          minHeight="30px"
+          items={3}
+        />
+      ) : (
+        data.map((item) => (
+          <ListItem
+            onClick={onSelect ? () => onSelect(item) : null}
+            key={item.id}
+          >
+            <ItemBar>
+              <FilenameColumn>
+                {item.uri.split('downloadFile/')[1]}
+              </FilenameColumn>
+              <StyledDeleteItemAction
+                title="Удаление прайса"
+                onClick={() => deleteItem(item.id)}
+              />
+            </ItemBar>
+          </ListItem>
+        ))
+      )}
+    </List>
+  );
+};

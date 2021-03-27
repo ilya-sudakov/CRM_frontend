@@ -38,10 +38,14 @@
             margin: 0;
             width: 100%;
             box-sizing: border-box;
-            max-width: 300px;
+            max-width: fit-content;
             color: #555;
             font-size: 0.9rem;
             margin-right: auto;
+
+            div {
+                margin-right: 20px;
+            }
 
             .main-window__link {
                 margin-left: auto;
