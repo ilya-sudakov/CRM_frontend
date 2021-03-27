@@ -49,6 +49,12 @@ const UploadPricelistFile = () => {
           </div>
           <div className="main-form__buttons main-form__buttons--full">
             <Button
+              text="Вернуться назад"
+              inverted
+              className="main-form__submit main-form__submit--inverted"
+              onClick={() => history.push('/price-list/prices')}
+            />
+            <Button
               text="Сохранить файл"
               isLoading={isLoading}
               className="main-form__submit"

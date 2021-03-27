@@ -8,7 +8,7 @@
   --padding-top: 130px;
   padding-top: var(--padding-top);
   height: calc(100vh - var(--padding-top));
-  background: linear-gradient(180deg, #edeec0 0%, #247fa7 40%, #87a3a2 100%);
+  background: linear-gradient(180deg, #edeec0 0%, $main-color 40%, #87a3a2 100%);
 
   &__background {
     width: 100vw;
@@ -30,7 +30,7 @@
         left: -10%;
         top: -80%;
         clip-path: circle();
-        background: linear-gradient(0deg, #edeec0 0%, #247fa7 100%);
+        background: linear-gradient(0deg, #edeec0 0%, $main-color 100%);
       }
 
       &--2 {
@@ -38,7 +38,7 @@
         left: -30vw;
         top: 20vh;
         clip-path: circle();
-        background: linear-gradient(180deg, #edeec0 0%, #247fa7 100%);
+        background: linear-gradient(180deg, #edeec0 0%, $main-color 100%);
       }
 
       &--3 {
@@ -46,7 +46,7 @@
         left: 60%;
         top: 40%;
         clip-path: circle();
-        background: linear-gradient(120deg, #ffffff 0%, #edeec0 10%, #247fa7 90%);
+        background: linear-gradient(120deg, #ffffff 0%, #edeec0 10%, $main-color 90%);
       }
     }
   }

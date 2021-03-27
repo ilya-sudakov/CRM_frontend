@@ -41,7 +41,7 @@ const UpdateLogWidget = () => {
               userHasAccess(
                 visibilityItems[document?.fields?.visibility?.stringValue],
               ) &&
-              dateDiffInDays(new Date(document?.createTime), new Date()) <= 3,
+              dateDiffInDays(new Date(document?.createTime), new Date()) <= 5,
           ),
           {
             fieldName: 'createTime',
