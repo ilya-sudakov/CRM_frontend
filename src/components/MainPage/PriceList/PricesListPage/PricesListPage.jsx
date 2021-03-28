@@ -83,10 +83,13 @@ const TableView = ({
   const ListItem = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     margin-right: 10px;
     margin-bottom: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    min-height: 80px;
     cursor: pointer;
     background-color: #fff;
     transition: 100ms ease-in-out;
@@ -98,19 +101,19 @@ const TableView = ({
 
   const ItemBar = styled.div`
     display: flex;
-    align-items: center;
-    padding: 5px 20px;
-    padding-right: 3px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    min-width: 200px;
+    height: 100%;
+    padding: 8px 20px;
+    padding-right: 10px;
     font-size: 0.9rem;
     color: #777;
   `;
 
   const FilenameColumn = styled.span`
-    margin-right: 50px;
-  `;
-
-  const StyledDeleteItemAction = styled(DeleteItemAction)`
-    margin-left: 10px;
+    align-self: flex-start;
   `;
 
   return (
@@ -131,7 +134,7 @@ const TableView = ({
               <FilenameColumn>
                 {item.uri.split('downloadFile/')[1]}
               </FilenameColumn>
-              <StyledDeleteItemAction
+              <DeleteItemAction
                 title="Удаление прайса"
                 onClick={() => deleteItem(item.id)}
               />
