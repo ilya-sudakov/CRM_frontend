@@ -40,12 +40,12 @@
                 &--more {
                     margin-left: 8px;
                     path:first-child {
-                        fill: lighten($button__background--inverted, 6%);
+                        fill: lighten($main-color, 6%);
                     }
                 }
                 &--plus {
                     path:first-child {
-                        fill: lighten($button__background--inverted, 6%);
+                        fill: lighten($main-color, 6%);
                     }
                 }
             }

@@ -163,7 +163,7 @@
       }
 
       .sidemenu__link {
-        color: darken($button__background--inverted, 5%) !important; //light-theme
+        color: darken($main-color, 5%) !important; //light-theme
         color: $secondary-text-color !important; //dark-theme
       }
 
@@ -205,7 +205,7 @@
                   fill: var(--active-icon-fill);
                 }
               }
-              color: darken($button__background--inverted, 5%) !important; //light-theme
+              color: darken($main-color, 5%) !important; //light-theme
               color: #fff !important; //dark-theme
             }
           }
@@ -303,7 +303,7 @@
           margin: 0;
           padding: 0;
           path:first-child {
-            fill: darken($button__background--inverted, 5%); //light-theme
+            fill: darken($main-color, 5%); //light-theme
             // fill: #fff; //dark-theme
           }
         }

@@ -112,7 +112,7 @@
       transition: 0.2s ease-in-out;
 
       &:hover {
-        background-color: lighten($button__background--inverted, 5%);
+        background-color: lighten($main-color, 5%);
       }
     }
   }

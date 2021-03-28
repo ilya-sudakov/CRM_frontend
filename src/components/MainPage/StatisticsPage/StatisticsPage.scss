@@ -168,53 +168,53 @@
 
                 &--requests {
                     g {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--money {
                     path:nth-child(1) {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--employee {
                     g {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--list {
                     path:nth-child(1) {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--default {
                     path:nth-child(1) {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--wrench {
                     path:nth-child(1),
                     circle {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
 
                 &--time {
                     path:nth-child(1) {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                     path:nth-child(2) {
-                        fill: rgba($button__background--inverted, 0.7);
+                        fill: rgba($main-color, 0.7);
                     }
                 }
             }
 
             &__icon {
-                background-color: rgba($button__background--inverted, 0.2);
+                background-color: rgba($main-color, 0.2);
                 padding: 8px;
                 border-radius: 5px;
                 max-width: 25px;

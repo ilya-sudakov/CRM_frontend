@@ -104,18 +104,18 @@
 
       &--active {
         color: $primary-text-color;
-        // color: darken($button__background--inverted, 5%);
+        // color: darken($main-color, 5%);
 
         &:hover {
           color: lighten($primary-text-color, 30%);
 
           &::after {
-            background-color: lighten($button__background--inverted, 10%);
+            background-color: lighten($main-color, 10%);
           }
         }
 
         &::after {
-          background-color: lighten($button__background--inverted, 5%);
+          background-color: lighten($main-color, 5%);
         }
       }
     }
@@ -449,7 +449,7 @@
       width: fit-content;
 
       &:hover {
-        background-color: lighten($button__background--inverted, 5%);
+        background-color: lighten($main-color, 5%);
         color: #ffffff;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
       }
@@ -543,7 +543,7 @@
       border: 1px solid transparent;
 
       &:hover {
-        background-color: lighten($button__background--inverted, 5%);
+        background-color: lighten($main-color, 5%);
         color: #ffffff;
         // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
       }

@@ -63,7 +63,7 @@
           // }
           margin-right: 10px;
           line-height: 1rem;
-          color: darken($button__background--inverted, 10%);
+          color: darken($main-color, 10%);
         }
         .feedback-chat__date {
           // position: absolute;
@@ -128,7 +128,7 @@
       border-bottom-left-radius: 0;
 
       &:hover {
-        background-color: lighten($button__background--inverted, 5%);
+        background-color: lighten($main-color, 5%);
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
       }
 

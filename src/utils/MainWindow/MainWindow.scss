@@ -111,12 +111,12 @@
             color: lighten($primary-text-color, 15%);
 
             &::after {
-              background-color: lighten($button__background--inverted, 10%);
+              background-color: lighten($main-color, 10%);
             }
           }
 
           &::after {
-            background-color: lighten($button__background--inverted, 5%);
+            background-color: lighten($main-color, 5%);
           }
         }
       }
@@ -473,7 +473,7 @@
     user-select: none;
 
     &:hover {
-      background-color: lighten($button__background--inverted, 5%);
+      background-color: lighten($main-color, 5%);
       color: #ffffff !important;
       // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 0px 5px rgba(0, 0, 0, 0.15);
     }
@@ -804,7 +804,7 @@
         flex-direction: row;
         max-width: fit-content;
         text-align: center !important;
-        // background-color: rgba($button__background--inverted, 0.9);
+        // background-color: rgba($main-color, 0.9);
         // background-color: $secondary-text-color;
         // border: 1px solid$main-color;
         // border: 1px solid #999999;
@@ -913,7 +913,7 @@
       max-width: fit-content;
       text-align: center !important;
       // background-color: rgba(255, 255, 255, 0.85);
-      background-color: rgba($button__background--inverted, 0.9);
+      background-color: rgba($main-color, 0.9);
       color: $secondary-text-color;
       border-radius: 5px;
       padding: 5px 10px;

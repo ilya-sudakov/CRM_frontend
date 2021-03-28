@@ -188,8 +188,9 @@ const LoginPage = (props) => {
               onClick={handleSignOut}
             />
             <div className="authorization__link">
-              Нажмите
-              <Link to="/">здесь</Link>
+              <Link className="main-window__link" to="/">
+                Нажмите здесь
+              </Link>
               чтобы вернуться на главную страницу
             </div>
           </div>

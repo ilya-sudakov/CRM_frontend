@@ -279,54 +279,37 @@
 
         &:hover {
           background-color: #efefef;
-          border: 1px solid #dddddd;
+          border: 1px solid #ddd;
         }
 
         .header__profile_menu {
-          background-color: $side_menu__background;
-          border-radius: 3px;
-          font-size: 80%;
           position: absolute;
+          z-index: 999;
           top: 45px;
           right: 0;
+          border: 1px solid #bbb;
+          border-radius: 3px;
           width: calc(100% + 25px);
           min-width: 180px;
           padding: 5px 5px;
           transition: 0.2s ease-in-out;
           transform-origin: 80% 0%;
-          z-index: 999;
-
-          //light theme
-          background-color: #ffffff;
-          border: 1px solid #dddddd;
+          background-color: #fff;
+          font-size: 80%;
 
           .header__profile_item {
             display: flex;
             align-items: center;
-            color: #555555;
+            color: #555;
             padding: 10px 0px;
             padding-right: 5px;
             transition: 100ms ease-in-out;
             margin-bottom: 5px;
             text-align: left;
             position: relative;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
+            border-radius: 3px;
             font-family: "Montserrat", sans-serif;
             font-weight: 500;
-
-            &::before {
-              content: "";
-              position: absolute;
-              top: 0px;
-              left: -5px;
-              height: 100%;
-              border-radius: 1px;
-              border-top-left-radius: 0;
-              border-bottom-left-radius: 0;
-              background-color: transparent;
-              width: 5px;
-            }
 
             & span {
               width: calc(100% - 30px);
@@ -350,17 +333,11 @@
               margin: 0;
             }
             &--active {
-              background-color: #eeeeee;
-              &::before {
-                background-color: $main-color;
-              }
-              color: #eeeeee;
-
-              //light theme
-              color: darken($button__background--inverted, 10%);
+              background-color: $main-color;
+              color: #fff;
 
               & .header__img {
-                filter: brightness(1);
+                filter: brightness(3);
               }
             }
           }
@@ -378,7 +355,7 @@
         transition: 0.2s ease-in-out;
 
         &:hover {
-          background-color: lighten($button__background--inverted, 5%);
+          background-color: lighten($main-color, 5%);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 0px 5px rgba(0, 0, 0, 0.24);
         }
       }
