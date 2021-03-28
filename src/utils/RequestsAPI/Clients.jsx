@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getAuthHeaders, request, requestINN } from '../utilsAPI.jsx';
-import { createFormDataFromObject } from 'Utils/functions.jsx';
 
 export function getClients(elements) {
   return request({
@@ -82,21 +81,19 @@ export function getClientById(id) {
 }
 
 export function addClient(newClient) {
-  const headers = getAuthHeaders('multipart/form-data');
-  const client = createFormDataFromObject(newClient);
+  const headers = getAuthHeaders();
   return axios.post(
     `${process.env.API_BASE_URL}/api/v1/client`,
-    client,
+    newClient,
     headers,
   );
 }
 
 export function editClient(newClient, id) {
-  const headers = getAuthHeaders('multipart/form-data');
-  const client = createFormDataFromObject(newClient);
+  const headers = getAuthHeaders();
   return axios.put(
     `${process.env.API_BASE_URL}/api/v1/client/${id}`,
-    client,
+    newClient,
     headers,
   );
 }

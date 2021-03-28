@@ -21,7 +21,6 @@ import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
-import { format } from 'date-fns';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -103,19 +102,15 @@ const newClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        // nextContactDate: Math.ceil(
-        //   new Date(formInputs.nextContactDate).getTime() / 1000,
-        // ),
-        nextContactDate: format(
-          new Date(formInputs.nextContactDate),
-          'yyyy-MM-dd',
+        nextContactDate: Math.ceil(
+          new Date(formInputs.nextContactDate).getTime() / 1000,
         ),
         categoryId: formInputs.categoryId,
         taxes: formInputs.taxes,
         priceId:
           formInputs.priceId !== 0 && formInputs.priceId
             ? formInputs.priceId?.id ?? formInputs.priceId
-            : undefined,
+            : null,
       })
       .then(({ data }) => {
         clientId = data.id;
@@ -365,10 +360,12 @@ const newClient = (props) => {
                   defaultValue={formInputs.check}
                 />
                 <div className="main-form__item">
-                  <div className="main-form__input_name">Налогообложение</div>
+                  <div className="main-form__input_name">
+                    Тип Налогообложения
+                  </div>
                   <div className="main-form__input_field">
                     <CheckBox
-                      text="Подлежит налогообложению"
+                      text="УСН"
                       id="taxes"
                       checked={formInputs.taxes}
                       disabled={!userContext.userHasAccess(['ROLE_ADMIN'])}

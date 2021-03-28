@@ -32,7 +32,6 @@ import { clientsDefaultInputs } from '../objects';
 import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
-// import { format } from 'date-fns';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
 
 const EditClient = (props) => {
@@ -104,7 +103,7 @@ const EditClient = (props) => {
       priceId:
         formInputs.priceId !== 0 && formInputs.priceId
           ? formInputs.priceId?.id ?? formInputs.priceId
-          : undefined,
+          : null,
       taxes: formInputs.taxes,
     };
     editClient(formData, clientId)
@@ -425,10 +424,12 @@ const EditClient = (props) => {
                   defaultValue={formInputs.check}
                 />
                 <div className="main-form__item">
-                  <div className="main-form__input_name">Налогообложение</div>
+                  <div className="main-form__input_name">
+                    Тип Налогообложения
+                  </div>
                   <div className="main-form__input_field">
                     <CheckBox
-                      text="Подлежит налогообложению"
+                      text="УСН"
                       checked={formInputs.taxes}
                       disabled={!props.userHasAccess(['ROLE_ADMIN'])}
                       onChange={(value) => handleInputChange('taxes', value)}
