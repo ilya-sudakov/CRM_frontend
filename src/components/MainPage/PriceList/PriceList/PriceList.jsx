@@ -128,6 +128,8 @@ const PriceList = () => {
       uri.split('downloadFile/')[1],
       'arraybuffer',
     );
+    console.log(file);
+    if (!file) return setIsLoading(false);
     const [parsedData] = await processFileBlob(file);
     handleOpenPDF(true, parsedData);
   };

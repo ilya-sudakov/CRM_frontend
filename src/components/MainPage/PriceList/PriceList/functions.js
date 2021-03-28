@@ -140,5 +140,6 @@ export const getExcelFileBlob = async (url, filename, type = 'blob') => {
               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8',
           })
         : data,
-    );
+    )
+    .catch((error) => console.log(error));
 };
