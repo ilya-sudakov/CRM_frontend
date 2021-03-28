@@ -282,7 +282,7 @@ const EditClient = (props) => {
             contactsNew: res.contacts,
             categoryId: res.category.id,
             favorite: res.favorite,
-            type: res.type,
+            type: res.type === 'null' ? null : res.type,
             taxes: res.taxes ?? false,
             categoryName: res.category.name,
             priceId: res.prices,
