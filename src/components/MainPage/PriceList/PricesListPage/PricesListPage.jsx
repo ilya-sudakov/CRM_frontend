@@ -127,7 +127,7 @@ const TableView = ({
             onClick={onSelect ? () => onSelect(item) : null}
             key={item.id}
           >
-            <ItemBar>
+            <ItemBar title={`Выбрать ${item.uri.split('downloadFile/')[1]}`}>
               <FilenameColumn>
                 {item.uri.split('downloadFile/')[1]}
               </FilenameColumn>
