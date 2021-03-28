@@ -33,6 +33,7 @@ import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
+import { format } from 'date-fns';
 
 const EditClient = (props) => {
   const {
@@ -94,9 +95,13 @@ const EditClient = (props) => {
       storageAddress: formInputs.storageAddress,
       workCondition: formInputs.workCondition,
       check: formInputs.check,
-      nextContactDate: Math.ceil(
-        new Date(formInputs.nextContactDate).getTime() / 1000,
+      nextDateContact: Math.ceil(
+        new Date(formInputs.nextDateContact).getTime() / 1000,
       ),
+      // nextDateContact: format(
+      //   new Date(formInputs.nextDateContact),
+      //   'yyyy-MM-dd',
+      // ),
       categoryId: formInputs.categoryId,
       favorite: formInputs.favorite,
       type: formInputs.type,
@@ -273,7 +278,7 @@ const EditClient = (props) => {
             city: res.city,
             clientType: res.clientType,
             manager: res.manager,
-            nextContactDate: res.nextDateContact,
+            nextDateContact: res.nextDateContact,
             legalEntity: res.legalEntities,
             legalEntityNew: res.legalEntities,
             workHistory: res.histories,
@@ -375,10 +380,10 @@ const EditClient = (props) => {
               />
               <InputDate
                 inputName="Дата след. контакта"
-                name="nextContactDate"
-                selected={Date.parse(formInputs.nextContactDate)}
+                name="nextDateContact"
+                selected={Date.parse(formInputs.nextDateContact)}
                 handleDateChange={(date) =>
-                  handleInputChange('nextContactDate', date)
+                  handleInputChange('nextDateContact', date)
                 }
               />
               <InputText

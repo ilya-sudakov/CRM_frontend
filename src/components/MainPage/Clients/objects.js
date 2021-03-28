@@ -74,7 +74,7 @@ export const clientsDefaultInputs = [
     defaultValue: true,
   },
   {
-    name: 'nextContactDate',
+    name: 'nextDateContact',
     defaultValue: new Date(new Date().setDate(new Date().getDate() + 7)),
   },
   {

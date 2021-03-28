@@ -21,6 +21,7 @@ import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
+import { format } from 'date-fns';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -102,9 +103,13 @@ const newClient = (props) => {
         storageAddress: formInputs.storageAddress,
         workCondition: formInputs.workCondition,
         check: formInputs.check,
-        nextContactDate: Math.ceil(
-          new Date(formInputs.nextContactDate).getTime() / 1000,
+        nextDateContact: Math.ceil(
+          new Date(formInputs.nextDateContact).getTime() / 1000,
         ),
+        // nextDateContact: format(
+        //   new Date(formInputs.nextDateContact),
+        //   'yyyy-MM-dd',
+        // ),
         categoryId: formInputs.categoryId,
         taxes: formInputs.taxes,
         priceId:
@@ -298,10 +303,10 @@ const newClient = (props) => {
               />
               <InputDate
                 inputName="Дата след. контакта"
-                name="nextContactDate"
-                selected={Date.parse(formInputs.nextContactDate)}
+                name="nextDateContact"
+                selected={Date.parse(formInputs.nextDateContact)}
                 handleDateChange={(value) =>
-                  handleInputChange('nextContactDate', value)
+                  handleInputChange('nextDateContact', value)
                 }
               />
               <InputText
