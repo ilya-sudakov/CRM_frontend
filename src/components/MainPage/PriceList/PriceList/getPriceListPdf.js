@@ -892,7 +892,7 @@ export async function getPriceListPdf(categories, priceList, options) {
   } = options;
   let finalList = [];
   const testImgData = await getDataUri(testImg);
-  const temp = categories.map(async (category) => {
+  const temp = await categories.map(async (category) => {
     let fullGroup = [];
     return Promise.all(
       priceList.map(async (groupOfProducts) => {
@@ -931,7 +931,7 @@ export async function getPriceListPdf(categories, priceList, options) {
       );
     });
   });
-  Promise.all(temp).then(async () => {
+  return await Promise.all(temp).then(async () => {
     finalList = isMini ? finalList : sortFinalList(finalList);
     const contactsImgData = await getDataUri(contactsImg);
     const titlePageObject = await getTitlePage(titlePage);
@@ -963,6 +963,6 @@ export async function getPriceListPdf(categories, priceList, options) {
       ],
       styles: priceStyles,
     };
-    createPDF(dd);
+    return createPDF(dd);
   });
 }

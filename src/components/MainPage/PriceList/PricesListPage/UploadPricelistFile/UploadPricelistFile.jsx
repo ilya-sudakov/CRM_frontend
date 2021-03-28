@@ -22,7 +22,7 @@ const UploadPricelistFile = () => {
     if (!formIsValid()) return;
     setIsLoading(true);
     createPricelist(createFormDataFromObject({ files: formInputs.files }))
-      .then(() => history.push('/price-list/prices'))
+      .then(() => history.push('/price-list'))
       .catch((err) => console.log(err));
   };
 
@@ -52,7 +52,7 @@ const UploadPricelistFile = () => {
               text="Вернуться назад"
               inverted
               className="main-form__submit main-form__submit--inverted"
-              onClick={() => history.push('/price-list/prices')}
+              onClick={() => history.push('/price-list')}
             />
             <Button
               text="Сохранить файл"

@@ -58,7 +58,6 @@ import {
   EditLtd,
   ProductionJournalNew,
   WorkshopRequests,
-  PricesListPage,
 } from './lazyImports.jsx';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
@@ -265,13 +264,6 @@ const MainPage = () => {
                     component={PriceList}
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
-                    allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
-                  />
-
-                  <PrivateRoute
-                    exact
-                    path="/price-list/prices"
-                    component={PricesListPage}
                     allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
                   <PrivateRoute
