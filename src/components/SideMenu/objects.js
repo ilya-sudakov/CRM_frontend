@@ -385,8 +385,8 @@ export const ltdList = {
 export const employees = {
   pathname: '/dispatcher/employees',
   name: 'Сотрудники',
-  mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-  addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+  mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+  addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
   addButtonName: 'Добавить сотрудника',
   renderIcon: (
     <EmployeesImg
@@ -400,8 +400,8 @@ export const employees = {
 export const transportation = {
   pathname: '/dispatcher/transportation',
   name: 'Транспортировка',
-  mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
-  addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER'],
+  mainRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
+  addButtonRoles: ['ROLE_ADMIN', 'ROLE_DISPATCHER'],
   addButtonName: 'Добавить запись',
   renderIcon: (
     <TruckImg

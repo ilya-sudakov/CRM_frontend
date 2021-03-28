@@ -92,6 +92,15 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
               >
                 Просмотреть прайс
               </Link>
+              <span
+                onClick={() => {
+                  setSelectedItem(null);
+                  onChange(null);
+                  setShowWindow(false);
+                }}
+              >
+                Удалить
+              </span>
             </p>
           ) : (
             <span>Вы можете закрепить .xlsx прайс-лист к данному клиенту</span>

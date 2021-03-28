@@ -50,6 +50,14 @@
             .main-window__link {
                 margin-left: auto;
             }
+
+            span {
+                margin-left: 20px;
+                cursor: pointer;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
         }
         > span {
             margin: 0;
