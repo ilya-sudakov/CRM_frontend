@@ -100,6 +100,7 @@ const TableView = ({
     display: flex;
     align-items: center;
     padding: 5px 20px;
+    padding-right: 5px;
     font-size: 0.9rem;
     color: #777;
   `;

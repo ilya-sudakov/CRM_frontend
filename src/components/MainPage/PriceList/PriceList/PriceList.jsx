@@ -36,7 +36,7 @@ const PriceList = () => {
   const [disclaimer, setDisclaimer] = useState('');
   const [titlePage, setTitlePage] = useState(defaultTitlePage);
   const [selectedLtd, setSelectedLtd] = useState(null);
-  const { query } = useQuery();
+  const { query, pushParamToURL } = useQuery();
 
   const loadTitlePageImages = (_titlePage) => {
     setIsLoading(true);
@@ -122,6 +122,7 @@ const PriceList = () => {
 
   const loadFile = async (uri) => {
     setIsLoading(true);
+    pushParamToURL('filename', uri.split('downloadFile/')[1]);
     const file = await getExcelFileBlob(
       uri,
       uri.split('downloadFile/')[1],
