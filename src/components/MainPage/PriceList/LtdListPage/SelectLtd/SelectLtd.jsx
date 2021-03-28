@@ -64,7 +64,10 @@ const SelectLtd = ({ data, onChange }) => {
             setShowWindow={setShowWindow}
           />
           {selectedLtd ? (
-            <p>{`${selectedLtd.name} | ИНН: ${selectedLtd.inn}`}</p>
+            <p>
+              <span>{`${selectedLtd.name}`}</span>
+              <span>{`ИНН: ${selectedLtd.inn}`}</span>
+            </p>
           ) : (
             <span>По умолчанию используются данные Osfix</span>
           )}

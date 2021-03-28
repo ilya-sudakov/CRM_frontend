@@ -17,22 +17,33 @@
     }
 
     .main-form__input_field {
-        p {
-            border: 1px solid #cccccc;
-            padding: 5px 10px;
-            border-radius: 3px;
-            margin: 0;
-            width: 100%;
+        > p {
+            display: flex;
+            flex-direction: column;
             box-sizing: border-box;
+            margin: 5px 0;
+            border-left: 1px solid #bbb;
+            padding: 0 10px;
+            width: 100%;
             max-width: 300px;
-            color: #666666;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            color: #444;
+
+            span {
+                &:not(:last-child) {
+                    margin-bottom: 5px;
+                }
+                &:nth-child(2) {
+                    font-size: 0.9rem;
+                    color: #888;
+                }
+            }
         }
         > span {
             margin: 0;
             width: 100%;
             box-sizing: border-box;
-            color: #666666;
+            color: #666;
             font-size: 0.9rem;
         }
     }
