@@ -21,7 +21,6 @@ import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
-import { format } from 'date-fns';
 
 const newClient = (props) => {
   const userContext = useContext(UserContext);
@@ -106,10 +105,6 @@ const newClient = (props) => {
         nextDateContact: Math.ceil(
           new Date(formInputs.nextDateContact).getTime() / 1000,
         ),
-        // nextDateContact: format(
-        //   new Date(formInputs.nextDateContact),
-        //   'yyyy-MM-dd',
-        // ),
         categoryId: formInputs.categoryId,
         taxes: formInputs.taxes,
         priceId:

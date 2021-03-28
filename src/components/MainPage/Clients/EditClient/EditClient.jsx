@@ -33,7 +33,6 @@ import useForm from 'Utils/hooks/useForm.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';
-import { format } from 'date-fns';
 
 const EditClient = (props) => {
   const {
@@ -98,10 +97,6 @@ const EditClient = (props) => {
       nextDateContact: Math.ceil(
         new Date(formInputs.nextDateContact).getTime() / 1000,
       ),
-      // nextDateContact: format(
-      //   new Date(formInputs.nextDateContact),
-      //   'yyyy-MM-dd',
-      // ),
       categoryId: formInputs.categoryId,
       favorite: formInputs.favorite,
       type: formInputs.type,
