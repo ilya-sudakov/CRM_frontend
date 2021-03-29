@@ -71,11 +71,13 @@
 
   /* Style the checkmark/indicator */
   .checkbox__container .checkbox__checkmark:after {
-    left: 7px;
-    top: 2px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
+    --mark-width: 5px;
+    --mark-height: 10px;
+    left: calc(50% - var(--mark-width) / 2 - 1px);
+    top: calc(50% - (var(--mark-height) - 10%));
+    width: var(--mark-width);
+    height: var(--mark-height);
+    border: solid #fff;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);

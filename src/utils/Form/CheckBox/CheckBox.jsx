@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import './CheckBox.scss';
 
 const CheckBox = ({
@@ -16,6 +17,8 @@ const CheckBox = ({
     const id = target.id;
     onChange(value, name, id);
   };
+
+  useEffect(() => {}, [checked]);
 
   return (
     <div className="checkbox">

@@ -22,7 +22,7 @@ const FormWindow = ({
     return () => {
       document.removeEventListener('keydown', pressEscKey, false);
     };
-  }, [showWindow, setShowWindow]);
+  }, [showWindow, setShowWindow, content]);
 
   const clickOnSelectWindow = (e) => {
     e.preventDefault();

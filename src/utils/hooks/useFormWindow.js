@@ -9,7 +9,9 @@ const useFormWindow = (
 ) => {
   const [showWindow, setShowWindow] = useState(false);
 
-  useEffect(() => {}, [...updates, showWindow]);
+  useEffect(() => {
+    console.log('formWindow rerender');
+  }, [...updates, showWindow]);
 
   const toggleFormWindow = () => setShowWindow(!showWindow);
 

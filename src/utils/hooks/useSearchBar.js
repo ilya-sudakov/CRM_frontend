@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
 
 const useSearchBar = (
@@ -6,15 +6,16 @@ const useSearchBar = (
   updates = [],
   onButtonClick,
   searchOptions,
+  advancedOptions,
+  setAdvancedOptions,
 ) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOption, setSelectedOption] = useState(
     searchOptions ? searchOptions[0].value : null,
   );
+  useEffect(() => {}, [...updates, advancedOptions, setAdvancedOptions]);
 
-  useEffect(() => {}, [...updates]);
-
-  const searchBar = (
+  const searchBar = useCallback(
     <SearchBar
       placeholder={placeholder}
       setSearchQuery={setSearchQuery}
@@ -22,7 +23,10 @@ const useSearchBar = (
       searchOptions={searchOptions}
       onButtonClick={onButtonClick}
       onOptionChange={(value) => setSelectedOption(value)}
-    />
+      advancedOptions={advancedOptions}
+      setAdvancedOptions={(value) => setAdvancedOptions(value)}
+    />,
+    [...updates, advancedOptions, setAdvancedOptions],
   );
 
   return { searchBar, searchQuery, setSearchQuery, selectedOption };
