@@ -87,8 +87,10 @@ const SearchBar = ({
             }`}
           >
             <OptionsSVG
+              fill="#999999"
               className="searchbar__img searchbar__img--options"
               onClick={() => toggleFormWindow()}
+              title="Расширенные опции"
             />
             {advancedOptions ? formWindow : null}
           </div>
