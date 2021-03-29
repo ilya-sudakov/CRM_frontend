@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
+import useFormWindow from 'Utils/hooks/useFormWindow';
 import PropTypes from 'prop-types';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import searchImg from 'Assets/searchbar/search.svg';
 import OptionsSVG from 'Assets/searchbar/options-16-regular.inline.svg';
 import './SearchBar.scss';
-import styled from 'styled-components';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import AdvancedOptions from './AdvancedOptions/AdvancedOptions.jsx';
 
 const SearchBar = ({
   onButtonClick,
@@ -19,8 +18,16 @@ const SearchBar = ({
   setAdvancedOptions,
 }) => {
   const [query, setQuery] = useState('');
-  const [showWindow, setShowWindow] = useState(false);
-  const [advanced, setAdvanced] = useState(advancedOptions);
+
+  const { formWindow, toggleFormWindow } = useFormWindow(
+    'Выбор опций',
+    <AdvancedOptions
+      advancedOptions={advancedOptions}
+      setAdvancedOptions={setAdvancedOptions}
+    />,
+    [advancedOptions, setAdvancedOptions],
+  );
+
   const handleSearch = () => {
     setSearchQuery(query);
     onButtonClick && onButtonClick(query);
@@ -42,44 +49,12 @@ const SearchBar = ({
     }
   };
 
-  useEffect(() => {}, [searchQuery, advancedOptions, setAdvancedOptions]);
+  useEffect(() => {}, [searchQuery, advancedOptions]);
 
   const screenIsMobile =
     (window.innerWidth ||
       document.documentElement.clientWidth ||
       document.body.clientWidth) <= 425;
-
-  const changeOptions = (index, value, type = 'groupCheckbox', optional) => {
-    if (type === 'groupCheckbox') {
-      let temp = advanced;
-      temp.splice(index, 1, {
-        ...temp[index],
-        [optional.fieldName]: {
-          text: temp[index][optional.fieldName].text,
-          value: value,
-        },
-      });
-      setAdvanced([...temp]);
-    }
-  };
-
-  const options = (
-    <AdvancedOptions
-      advancedOptions={advanced}
-      setAdvancedOptions={(index, value, type, options) =>
-        changeOptions(index, value, type, options)
-      }
-    />
-  );
-
-  const formWindow = (
-    <FormWindow
-      title={'Выбор опций'}
-      content={options}
-      showWindow={showWindow}
-      setShowWindow={setShowWindow}
-    />
-  );
 
   return (
     <div
@@ -113,10 +88,9 @@ const SearchBar = ({
           >
             <OptionsSVG
               className="searchbar__img searchbar__img--options"
-              onClick={() => setShowWindow(!showWindow)}
+              onClick={() => toggleFormWindow()}
             />
             {advancedOptions ? formWindow : null}
-            {advancedOptions ? options : null}
           </div>
           <div
             className={
@@ -154,71 +128,4 @@ SearchBar.propTypes = {
   placeholder: PropTypes.string,
   searchOptions: PropTypes.array,
   advancedOptions: PropTypes.array,
-};
-
-const AdvancedOptions = ({ advancedOptions, setAdvancedOptions }) => {
-  const GroupOption = styled.div`
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid #ccc;
-    padding: 15px 20px;
-    padding-bottom: 0;
-  `;
-
-  const GroupCheckbox = styled(GroupOption)`
-    display: flex;
-    flex-direction: column;
-
-    .checkbox {
-      .checkbox__text {
-        color: #333;
-      }
-      &:not(:first-child) {
-        --checkbox__checkmark--size: 18px;
-        .checkbox__text {
-          font-size: 0.8rem;
-          color: #999;
-        }
-      }
-    }
-  `;
-
-  useEffect(() => {
-    console.log(123, advancedOptions);
-  }, [advancedOptions]);
-
-  return (
-    <div>
-      {advancedOptions.map((option, index) => {
-        if (option.type === 'groupCheckbox') {
-          return (
-            <GroupCheckbox key={index}>
-              <CheckBox
-                text={option.parentCheckbox.text}
-                id={option.parentCheckbox.text}
-                checked={option.parentCheckbox.value}
-                onChange={(value) =>
-                  setAdvancedOptions(index, value, 'groupCheckbox', {
-                    fieldName: 'parentCheckbox',
-                  })
-                }
-              />
-              {option.parentCheckbox.value && (
-                <CheckBox
-                  text={option.childCheckbox.text}
-                  id={option.childCheckbox.text}
-                  checked={option.childCheckbox.value}
-                  onChange={(value) =>
-                    setAdvancedOptions(index, value, 'groupCheckbox', {
-                      fieldName: 'childCheckbox',
-                    })
-                  }
-                />
-              )}
-            </GroupCheckbox>
-          );
-        }
-      })}
-    </div>
-  );
 };

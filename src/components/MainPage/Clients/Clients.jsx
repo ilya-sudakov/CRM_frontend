@@ -15,7 +15,6 @@ import { changeSortOrder } from 'Utils/functions.jsx';
 import { clientTypes } from './MainComponents/objects.js';
 import usePagination from 'Utils/hooks/usePagination/usePagination';
 import useSearchBar from 'Utils/hooks/useSearchBar';
-import SearchBar from '../SearchBar/SearchBar.jsx';
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);
@@ -52,15 +51,6 @@ const Clients = (props) => {
   const [closeWindow, setCloseWindow] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const userContext = useContext(UserContext);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
-  const [advancedOptions, setAdvancedOptions] = useState([
-    {
-      type: 'groupCheckbox',
-      parentCheckbox: { text: 'Поиск по налогообложению', value: false },
-      childCheckbox: { text: 'УСН', value: false },
-    },
-  ]);
 
   const menuItems = [
     {
@@ -170,10 +160,11 @@ const Clients = (props) => {
   };
 
   const {
-    // searchQuery,
-    // setSearchQuery,
-    // searchBar,
-    // selectedOption,
+    searchQuery,
+    setSearchQuery,
+    searchBar,
+    selectedOption,
+    advanced: advancedOptions,
   } = useSearchBar(
     undefined,
     [],
@@ -188,8 +179,14 @@ const Clients = (props) => {
             name: query,
             city: query,
             type: clientTypes[props.type].type,
+            ...(advancedOptions[0].parentCheckbox.value && {
+              taxes: advancedOptions[0].childCheckbox.value,
+            }),
           },
-          selectedOption,
+          [
+            selectedOption,
+            advancedOptions[0].parentCheckbox.value ? 'taxes' : null,
+          ],
         )
           .then((res) => res.json())
           .then((res) => {
@@ -212,8 +209,13 @@ const Clients = (props) => {
         value: 'city',
       },
     ],
-    advancedOptions,
-    setAdvancedOptions,
+    [
+      {
+        type: 'groupCheckbox',
+        parentCheckbox: { text: 'Поиск по налогообложению', value: false },
+        childCheckbox: { text: 'УСН', value: false },
+      },
+    ],
   );
 
   const initialLoad = () => {
@@ -267,49 +269,7 @@ const Clients = (props) => {
             ))}
           </div>
         </div>
-        {/* {searchBar} */}
-        <SearchBar
-          setSearchQuery={setSearchQuery}
-          searchQuery={searchQuery}
-          searchOptions={[
-            {
-              text: 'Везде',
-              value: '',
-            },
-            {
-              text: 'Город',
-              value: 'city',
-            },
-          ]}
-          onButtonClick={(query) => {
-            setIsLoadingClients(true);
-            if (query === '') {
-              setIsLoadingClients(false);
-              loadData(curCategory, curClientType);
-            } else {
-              searchClients(
-                {
-                  name: query,
-                  city: query,
-                  type: clientTypes[props.type].type,
-                },
-                selectedOption,
-              )
-                .then((res) => res.json())
-                .then((res) => {
-                  setClients(res);
-                  setIsLoadingClients(false);
-                })
-                .catch((error) => {
-                  console.log(error);
-                  setIsLoadingClients(false);
-                });
-            }
-          }}
-          onOptionChange={(value) => setSelectedOption(value)}
-          advancedOptions={advancedOptions}
-          setAdvancedOptions={setAdvancedOptions}
-        />
+        {searchBar}
         <FormWindow
           title={
             curForm === 'nextContactDate'

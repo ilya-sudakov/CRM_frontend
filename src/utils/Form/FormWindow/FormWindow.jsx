@@ -25,8 +25,14 @@ const FormWindow = ({
   }, [showWindow, setShowWindow, content]);
 
   const clickOnSelectWindow = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+    if (
+      e.target.classList.contains('form-window') ||
+      e.target.classList.contains('form-window__exit') ||
+      e.target.classList.contains('form-window__bar')
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (
       !(e.target.classList[0] === 'form-window') &&
       !e.target.classList.contains('form-window__exit') &&

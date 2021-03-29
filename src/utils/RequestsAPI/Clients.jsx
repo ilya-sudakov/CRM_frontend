@@ -8,10 +8,12 @@ export function getClients(elements) {
   });
 }
 
-export function searchClients(query, field) {
+export function searchClients(query, fields) {
+  const formattedFields = fields.filter((cur) => cur !== '' && cur).join('&');
+  console.log('formatted', formattedFields, fields);
   return request({
     url: `${process.env.API_BASE_URL}/api/v1/client/search/${
-      field && field !== '' ? `${field}/` : ''
+      formattedFields && formattedFields !== '' ? `${formattedFields}/` : ''
     }`,
     method: 'POST',
     body: JSON.stringify(query),

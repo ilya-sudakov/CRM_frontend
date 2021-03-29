@@ -12,6 +12,7 @@ const CheckBox = ({
   checked = false,
 }) => {
   const handleChange = ({ target }) => {
+    console.log('checkbox clicked');
     const name = target.name;
     const value = target.checked;
     const id = target.id;
