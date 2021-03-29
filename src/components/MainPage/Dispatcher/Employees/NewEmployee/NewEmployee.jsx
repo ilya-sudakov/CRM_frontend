@@ -24,6 +24,16 @@ const NewEmployee = (props) => {
 
   const handleSubmit = () => {
     if (!formIsValid()) return;
+    if (
+      (formInputs.patentExpirationDate === null &&
+        formInputs.registrationExpirationDate !== null) ||
+      (formInputs.registrationExpirationDate === null &&
+        formInputs.patentExpirationDate !== null)
+    ) {
+      return alert(
+        'Необходимо заполнить оба поля сроков патента и регистрации!',
+      );
+    }
     setIsLoading(true);
     const employeeData = {
       ...formInputs,
