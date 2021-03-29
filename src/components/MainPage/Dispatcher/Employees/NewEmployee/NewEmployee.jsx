@@ -31,7 +31,7 @@ const NewEmployee = (props) => {
         formInputs.patentExpirationDate !== null)
     ) {
       return alert(
-        'Необходимо заполнить оба поля сроков патента и регистрации!',
+        'Необходимо заполнить оба поля сроков патента и регистрации, либо оставить их пустыми!',
       );
     }
     setIsLoading(true);
