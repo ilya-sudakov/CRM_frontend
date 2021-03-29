@@ -39,7 +39,7 @@ const PriceList = () => {
   const { query, pushParamToURL } = useQuery();
 
   const loadTitlePageImages = (_titlePage) => {
-    setIsLoading(true);
+    setIsLoading('Загружаются данные...');
     return getPriceGroupImageByName('titlePage')
       .then((res) => res.json())
       .then((res) => {
@@ -57,7 +57,7 @@ const PriceList = () => {
   };
 
   const loadImages = async (data, _titlePage) => {
-    setIsLoading(true);
+    setIsLoading('Загружаются данные...');
     return await Promise.all(
       data.map((item, index) => {
         return getPriceGroupImageByName(item.number)
@@ -83,7 +83,7 @@ const PriceList = () => {
   };
 
   const saveImages = () => {
-    setIsLoading(true);
+    setIsLoading('Сохраняем данные...');
     Promise.all(
       priceList.map((item) =>
         updatePriceGroupByName(item.number, {
@@ -121,7 +121,7 @@ const PriceList = () => {
   };
 
   const loadFile = async (uri) => {
-    setIsLoading(true);
+    setIsLoading('Загружаются данные...');
     pushParamToURL('filename', uri.split('downloadFile/')[1]);
     const file = await getExcelFileBlob(
       uri,
@@ -152,7 +152,7 @@ const PriceList = () => {
   };
 
   const handleOpenPDF = (newPDF = false, _priceList) => {
-    setIsLoading(true);
+    setIsLoading('Создается pdf файл...');
     console.log(categories, priceList, 123);
     getPriceListPdf(
       categories,
@@ -173,7 +173,7 @@ const PriceList = () => {
   };
 
   const handleDownloadExcel = (newXLSX = false) => {
-    setIsLoading(true);
+    setIsLoading('Создается xlsx файл...');
     getPriceListExcel(
       categories,
       priceList.filter((item) => item.active),
@@ -237,8 +237,9 @@ const PriceList = () => {
             <div className="main-form__input_name">
               Excel-таблица для парсинга
             </div>
-            {(query.get('filename') && isLoading) || isLoading ? (
-              'Идет загрузка...'
+            {((query.get('filename') && isLoading) || isLoading) &&
+            isLoading !== 'Сохраняем...' ? (
+              isLoading
             ) : (
               <FileUploader
                 regex={/.+\.(xlsx|csv)/}
