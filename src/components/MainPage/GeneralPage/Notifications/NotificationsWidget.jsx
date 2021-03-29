@@ -21,7 +21,7 @@ const NotificationsWidget = ({ type = 'birthday' }) => {
     setNotifications(employees);
   }, [employees]);
 
-  return employees.length > 0 && !isLoadingEmployees ? (
+  return employees.length > 0 || isLoadingEmployees ? (
     <Widget
       className="notifications-widget"
       title={types[type].title}
