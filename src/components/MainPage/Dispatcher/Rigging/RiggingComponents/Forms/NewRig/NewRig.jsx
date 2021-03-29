@@ -3,7 +3,7 @@ import './NewRig.scss';
 import 'Utils/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { addStamp, addPartsToStamp } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 import { rigTypes } from '../../rigsVariables.js';

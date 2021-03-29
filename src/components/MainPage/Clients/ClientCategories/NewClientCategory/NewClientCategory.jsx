@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './NewClientCategory.scss';
 import 'Utils/Form/Form.scss';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { clientCategoriesDefaultInputs } from '../../objects';

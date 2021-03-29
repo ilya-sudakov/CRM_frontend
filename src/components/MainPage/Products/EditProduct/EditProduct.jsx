@@ -13,7 +13,7 @@ import {
   deletePackagingFromProduct,
   addPackagingToProduct,
 } from 'Utils/RequestsAPI/Products/packaging.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { productsDefaultInputs } from '../objects';
 
 const EditProduct = (props) => {

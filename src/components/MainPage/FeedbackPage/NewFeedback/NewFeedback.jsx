@@ -4,7 +4,7 @@ import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import { addFeedback } from 'Utils/RequestsAPI/Feedback/feedback';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 
 const NewFeedback = (props) => {
   const feedbackDefaultInputs = [

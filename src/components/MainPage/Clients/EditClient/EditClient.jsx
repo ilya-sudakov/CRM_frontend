@@ -29,7 +29,7 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
 import { clientsDefaultInputs } from '../objects';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { clientsFormHeaderMenu } from '../functions';
 import SelectPricelistFile from '../../PriceList/PricesListPage/SelectPricelistFile/SelectPricelistFile.jsx';

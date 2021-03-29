@@ -9,7 +9,7 @@ import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import { submitWorkData } from './functions.js';
-import useQuery from 'Utils/hooks/useQuery';
+import { useQuery } from 'Utils/hooks';
 import { getWorkReportByDateAndEmployee } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
 import UserContext from '../../../../../App.js';
 import { getEmployeeById } from 'Utils/RequestsAPI/Employees.jsx';

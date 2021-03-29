@@ -7,7 +7,7 @@ import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { getTasksDefaultInputs } from '../functions';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 
 const EditTask = (props) => {
   const [taskId, setTaskId] = useState(1);

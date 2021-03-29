@@ -13,9 +13,9 @@ import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
 import { rigTypes } from '../../rigsVariables.js';
-import useQuery from 'Utils/hooks/useQuery.js';
+import { useQuery } from 'Utils/hooks';
 import { getRigsDefaultInputs } from '../../TableView/functions';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 
 const EditRig = (props) => {
   const { query } = useQuery();

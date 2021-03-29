@@ -8,7 +8,7 @@ import {
 } from 'Utils/RequestsAPI/Products/Categories.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { productCategoriesDefaultInputs } from '../../objects';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 
 const EditCategory = (props) => {
   const {

@@ -16,7 +16,7 @@ import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import { clientsDefaultInputs } from '../objects';
 import { clientsFormHeaderMenu } from '../functions';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';

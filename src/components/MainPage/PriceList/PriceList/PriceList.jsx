@@ -19,7 +19,7 @@ import { getPriceListExcel } from './getPriceListExcel.js';
 import { Link } from 'react-router-dom';
 import SelectLtd from '../LtdListPage/SelectLtd/SelectLtd.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
-import useQuery from 'Utils/hooks/useQuery';
+import { useQuery } from 'Utils/hooks';
 import { getExcelFileBlob, parseExcelData } from './functions.js';
 import GroupTitlePage from './components/GroupTitlePage.jsx';
 import CategoryHeader from './components/CategoryHeader.jsx';

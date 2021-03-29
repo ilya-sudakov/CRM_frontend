@@ -3,7 +3,7 @@ import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { createPricelist } from 'Utils/RequestsAPI/Clients/price_list.js';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { useHistory } from 'react-router';
 
 const UploadPricelistFile = () => {

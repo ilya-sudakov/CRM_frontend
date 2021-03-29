@@ -6,7 +6,7 @@ import { imgToBlobDownload } from 'Utils/functions.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
 import { productsDefaultInputs } from '../objects';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import Button from 'Utils/Form/Button/Button.jsx';
 
 const ViewProduct = (props) => {

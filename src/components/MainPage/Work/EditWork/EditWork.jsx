@@ -7,7 +7,7 @@ import {
   editWork,
 } from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { workItemDefaultInputs } from '../objects';
 
 const EditWork = (props) => {

@@ -8,7 +8,7 @@ import {
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import { transportationDefaultInputs } from '../objects.js';
 
 const EditTransportation = (props) => {

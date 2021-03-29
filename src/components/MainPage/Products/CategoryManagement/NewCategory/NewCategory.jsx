@@ -4,7 +4,7 @@ import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import { addCategory } from 'Utils/RequestsAPI/Products/Categories.js';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { productCategoriesDefaultInputs } from '../../objects';
 
 const NewCategory = (props) => {

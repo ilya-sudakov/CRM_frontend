@@ -13,7 +13,7 @@ import {
   ltdFormBankInputs,
   ltdFormEmployeesInputs,
 } from '../objects.js';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 
 const NewLtd = (props) => {
   const {

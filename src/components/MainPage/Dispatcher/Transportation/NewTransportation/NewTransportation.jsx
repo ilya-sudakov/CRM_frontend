@@ -5,7 +5,7 @@ import { addTransportation } from 'Utils/RequestsAPI/Transportation.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import { transportationDefaultInputs } from '../objects.js';
 
 const NewTransportation = (props) => {

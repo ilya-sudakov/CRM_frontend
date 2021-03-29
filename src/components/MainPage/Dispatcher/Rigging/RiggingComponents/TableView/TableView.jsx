@@ -9,7 +9,7 @@ import { editStampColor } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
-import useQuery from 'Utils/hooks/useQuery.js';
+import { useQuery } from 'Utils/hooks';
 import useSort from 'Utils/hooks/useSort/useSort.js';
 import { isPartHidden, searchQuery, sortStampParts } from './functions.js';
 import { riggingListOptionsHeader } from './objects.js';

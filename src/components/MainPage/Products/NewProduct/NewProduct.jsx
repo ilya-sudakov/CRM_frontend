@@ -9,7 +9,7 @@ import { getDataUri } from 'Utils/functions.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 import { addPackagingToProduct } from 'Utils/RequestsAPI/Products/packaging.js';
-import useForm from 'Utils/hooks/useForm.js';
+import { useForm } from 'Utils/hooks';
 import { productsDefaultInputs } from '../objects.js';
 
 const NewProduct = (props) => {

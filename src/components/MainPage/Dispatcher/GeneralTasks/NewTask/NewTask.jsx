@@ -7,7 +7,7 @@ import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../../App.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { getTasksDefaultInputs } from '../functions';
 
 const NewTask = (props) => {

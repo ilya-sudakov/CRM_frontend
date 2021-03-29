@@ -15,7 +15,7 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
 import UserContext from '../../../../../App.js';
 import { getWorkshopOrdersDefaultInputs } from '../../functions';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 
 const EditWorkshopOrder = (props) => {
   const {

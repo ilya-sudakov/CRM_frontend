@@ -16,7 +16,7 @@ import {
 import { requestStatuses, workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 import { getPageByRequest, getRequestsDefaultInputs } from '../../functions.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 
 const NewRequest = (props) => {
   const userContext = useContext(UserContext);

@@ -5,7 +5,7 @@ import InputText from 'Utils/Form/InputText/InputText.jsx';
 import { createStorage } from 'Utils/RequestsAPI/Workshop/storage.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { workshopStorageDefaultInputs } from '../../objects';
 
 const NewPart = (props) => {

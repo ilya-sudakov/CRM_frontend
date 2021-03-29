@@ -7,7 +7,7 @@ import {
   getPackagingById,
   editPackaging,
 } from 'Utils/RequestsAPI/Products/packaging.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { packagingDefaultInputs } from '../objects';
 
 const EditPackaging = (props) => {

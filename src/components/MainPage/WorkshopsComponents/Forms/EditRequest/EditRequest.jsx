@@ -21,7 +21,7 @@ import {
   getRequestRedirectUrl,
   getRequestsEditingDefaultInputs,
 } from '../../functions.js';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 
 const EditRequest = (props) => {
   const [requestId, setRequestId] = useState(1);

@@ -6,7 +6,7 @@ import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { employeesDefaultInputs } from '../objects.js';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
 import { format } from 'date-fns';

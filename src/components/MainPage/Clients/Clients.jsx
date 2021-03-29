@@ -13,8 +13,7 @@ import ClientsList from './MainComponents/ClientsList.jsx';
 import UserContext from '../../../App.js';
 import { changeSortOrder } from 'Utils/functions.jsx';
 import { clientTypes } from './MainComponents/objects.js';
-import usePagination from 'Utils/hooks/usePagination/usePagination';
-import useSearchBar from 'Utils/hooks/useSearchBar';
+import { usePagination, useSearchBar } from 'Utils/hooks';
 
 const Clients = (props) => {
   const [clients, setClients] = useState([]);

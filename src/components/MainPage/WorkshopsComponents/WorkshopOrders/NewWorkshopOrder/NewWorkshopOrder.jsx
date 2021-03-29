@@ -10,7 +10,7 @@ import {
 } from 'Utils/RequestsAPI/Workshop/Orders.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
-import useForm from 'Utils/hooks/useForm';
+import { useForm } from 'Utils/hooks';
 import { getWorkshopOrdersDefaultInputs } from '../../functions';
 
 const NewWorkshopOrder = (props) => {
