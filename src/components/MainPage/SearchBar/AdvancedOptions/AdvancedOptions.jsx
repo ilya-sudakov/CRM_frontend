@@ -7,7 +7,7 @@ const AdvancedOptions = ({ advancedOptions, setAdvancedOptions }) => {
     flex-direction: column;
     border-bottom: 1px solid #ccc;
     padding: 15px 20px;
-    padding-bottom: 0;
+    padding-bottom: 5px;
   `;
 
   const GroupCheckbox = styled(GroupOption)`
@@ -15,6 +15,7 @@ const AdvancedOptions = ({ advancedOptions, setAdvancedOptions }) => {
     flex-direction: column;
 
     .checkbox {
+      margin-bottom: 10px;
       .checkbox__text {
         color: #333;
       }

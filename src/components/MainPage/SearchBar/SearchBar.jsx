@@ -81,19 +81,21 @@ const SearchBar = ({
             onKeyDown={handleEnterPress}
             value={query}
           ></input>
-          <div
-            className={`searchbar__advanced-options ${
-              query.length > 0 ? 'searchbar__advanced-options--moved' : ''
-            }`}
-          >
-            <OptionsSVG
-              fill="#999999"
-              className="searchbar__img searchbar__img--options"
-              onClick={() => toggleFormWindow()}
-              title="Расширенные опции"
-            />
-            {advancedOptions ? formWindow : null}
-          </div>
+          {advancedOptions ? (
+            <div
+              className={`searchbar__advanced-options ${
+                query.length > 0 ? 'searchbar__advanced-options--moved' : ''
+              }`}
+            >
+              <OptionsSVG
+                fill="#999999"
+                className="searchbar__img searchbar__img--options"
+                onClick={() => toggleFormWindow()}
+                title="Расширенные опции"
+              />
+              {formWindow}
+            </div>
+          ) : null}
           <div
             className={
               query !== ''

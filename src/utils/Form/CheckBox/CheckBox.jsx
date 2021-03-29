@@ -12,14 +12,11 @@ const CheckBox = ({
   checked = false,
 }) => {
   const handleChange = ({ target }) => {
-    console.log('checkbox clicked');
     const name = target.name;
     const value = target.checked;
     const id = target.id;
     onChange(value, name, id);
   };
-
-  useEffect(() => {}, [checked]);
 
   return (
     <div className="checkbox">
