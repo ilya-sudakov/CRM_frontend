@@ -64,7 +64,7 @@ const TableView = ({
                 <Link
                   to={`/price-list?filename=${
                     item.uri.split('downloadFile/')[1]
-                  }`}
+                  }&open=true`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="main-window__link"

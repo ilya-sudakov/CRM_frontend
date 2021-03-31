@@ -120,9 +120,10 @@ const PriceList = () => {
     return [parsedData, disclaimer, titlePage];
   };
 
-  const loadFile = async (uri) => {
+  const loadFile = async (uri, openFile = false) => {
     setIsLoading('Загружаются данные...');
     pushParamToURL('filename', uri.split('downloadFile/')[1]);
+    pushParamToURL('open', openFile ?? false);
     const file = await getExcelFileBlob(
       uri,
       uri.split('downloadFile/')[1],
@@ -131,6 +132,7 @@ const PriceList = () => {
     console.log(file);
     if (!file) return setIsLoading(false);
     const [parsedData] = await processFileBlob(file);
+    if (openFile === false) return;
     handleOpenPDF(true, parsedData);
   };
 
@@ -140,9 +142,11 @@ const PriceList = () => {
 
   useEffect(() => {
     const filename = query.get('filename');
+    const openFile = query.get('open');
     if (filename) {
       loadFile(
         `${process.env.API_BASE_URL}/api/v1/fileWithoutDB/downloadFile/${filename}`,
+        openFile,
       );
     }
   }, []);
@@ -232,7 +236,7 @@ const PriceList = () => {
         </div>
         <form className="main-form__form">
           <SelectLtd onChange={(item) => setSelectedLtd(item)} />
-          <PricesListPage onSelect={(result) => loadFile(result.uri)} />
+          <PricesListPage onSelect={(result) => loadFile(result.uri, false)} />
           <div className="main-form__item">
             <div className="main-form__input_name">
               Excel-таблица для парсинга

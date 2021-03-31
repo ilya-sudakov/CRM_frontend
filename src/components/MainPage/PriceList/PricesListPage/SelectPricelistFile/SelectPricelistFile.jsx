@@ -86,7 +86,7 @@ const SelectPricelistFile = ({ data, onChange, defaultValue }) => {
               <Link
                 to={`/price-list?filename=${
                   selectedItem.uri.split('downloadFile/')[1]
-                }`}
+                }&open=true`}
                 className="main-window__link"
                 target="_blank"
               >
