@@ -24,7 +24,7 @@ const SelectClient = (props) => {
         city: query,
         type: null,
       },
-      selectedOption,
+      [selectedOption],
     )
       .then((response) => response.json())
       .then((response) => {
@@ -54,10 +54,6 @@ const SelectClient = (props) => {
         text: 'Город',
         value: 'city',
       },
-      // {
-      //   text: 'Город&Налогообложение',
-      //   value: 'city&taxes',
-      // },
     ],
   );
 
