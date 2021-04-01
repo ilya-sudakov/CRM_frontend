@@ -124,8 +124,8 @@ const Table = ({
           <CellHeader
             isAction
             style={{
-              width: '30px',
-              maxWidth: '30px',
+              width: '60px',
+              maxWidth: '60px',
             }}
           ></CellHeader>
         ) : null}
@@ -247,8 +247,8 @@ const Table = ({
             {actions ? (
               <Cell
                 style={{
-                  width: '30px',
-                  maxWidth: '30px',
+                  width: '60px',
+                  maxWidth: '60px',
                 }}
               >
                 <TableActions actionsList={actions(item, index)} />

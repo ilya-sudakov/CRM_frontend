@@ -8,23 +8,28 @@ import ActionItem from './Actions/ActionItem.jsx';
 const TableActions = ({ actionsList = [] }) => {
   const [isHidden, setIsHidden] = useState(true);
 
+  const editActionItem = actionsList.find(
+    (item) => item.elementType === 'edit',
+  );
   return (
     <div
       className={`main-window__table-actions ${
         isHidden ? 'main-window__table-actions--is-hidden' : ''
       }`}
-      onMouseEnter={() => setIsHidden(false)}
       onMouseLeave={() => setIsHidden(true)}
     >
+      {editActionItem ? <ActionItem icon="edit" item={editActionItem} /> : null}
       <DotsIcon
         className="main-window__img main-window__img--more"
         style={{ transform: 'rotate(90deg)' }}
-        width={50}
+        width={30}
         height={30}
         alt=""
+        onMouseEnter={() => setIsHidden(false)}
       />
       <div className="table-actions__menu">
         {actionsList.map((item, index) => {
+          if (editActionItem && item.elementType === 'edit') return;
           if (item.elementType === 'delete') {
             return (
               <DeleteItemAction title={item.text} onClick={item.onClick} />
