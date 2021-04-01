@@ -6,17 +6,13 @@
   padding-top: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 25px;
-
-  //full page view
   align-items: flex-start;
+  padding-top: 25px;
   padding: 0;
 
   &__title {
     margin-bottom: 15px;
     font-size: 24px;
-    // display: none;
     padding: 0 5px;
     text-align: center;
   }
@@ -33,7 +29,6 @@
 
   .main-form__header {
     display: flex;
-    // width: calc(100% - 25px);
     width: 100%;
     background-color: $secondary-text-color;
     border-top-left-radius: 5px;
@@ -235,7 +230,7 @@
       .input_date,
       .input_products,
       .select-client-category {
-        margin-left: 0px;
+        margin-left: 0;
       }
     }
 
@@ -687,7 +682,6 @@
   @media (max-width: 500px) {
     .main-form__row {
       flex-direction: column;
-      // width: 100%;
 
       > * {
         width: 100%;

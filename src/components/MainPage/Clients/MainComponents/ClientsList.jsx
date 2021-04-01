@@ -11,6 +11,7 @@ import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLo
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import UserContext from '../../../../App.js';
+import Table from '../../../Table/Table.jsx';
 
 const ClientsList = ({
   isLoading,
@@ -31,41 +32,77 @@ const ClientsList = ({
   console.log(isLoading);
 
   return (
-    <div className="main-window__list main-window__list--full">
-      <div className="main-window__list-item main-window__list-item--header">
-        <span>Название</span>
-        <span>Сайт</span>
-        <span>Контакты</span>
-        <span>Комментарий</span>
-        <span>След. контакт</span>
-        <div className="main-window__table-actions"></div>
-      </div>
-      {isLoading ? (
-        <PlaceholderLoading
-          itemClassName="main-window__list-item"
-          minHeight="50px"
-          items={itemsPerPage}
-        />
-      ) : (
-        sortClients(clients, searchQuery, sortOrder).map((item, index) => (
-          <ListItem
-            index={index}
-            key={index}
-            item={item}
-            userContext={userContext}
-            editItemFunction={editItemFunction}
-            setClients={setClients}
-            setCloseWindow={setCloseWindow}
-            setSelectedItem={setSelectedItem}
-            setShowWindow={setShowWindow}
-            setCurForm={setCurForm}
-            deleteItem={deleteItem}
-            type={type}
-            clients={clients}
+    <>
+      <Table
+        columns={[
+          { text: 'Название', value: 'name' },
+          {
+            text: 'Сайт',
+            value: 'site',
+            link: {
+              getURL: (site) =>
+                site && site?.split('//')?.length > 1
+                  ? site
+                  : `https://${site}`,
+              isOutside: true,
+              newTab: true,
+            },
+          },
+          {
+            text: 'Контакты',
+            value: 'contacts',
+            formatFn: (contacts) =>
+              contacts?.length > 0
+                ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
+                  contacts[0].phoneNumber
+                : 'Не указаны контакт. данные',
+          },
+          { text: 'Комментарий', value: 'comment' },
+          {
+            text: 'След. контакт',
+            value: 'nextDateContact',
+            formatFn: (date) => formatDateString(date),
+          },
+        ]}
+        data={sortClients(clients, searchQuery, sortOrder)}
+        isLoading={!isLoading}
+      />
+      <div className="main-window__list main-window__list--full">
+        <div className="main-window__list-item main-window__list-item--header">
+          <span>Название</span>
+          <span>Сайт</span>
+          <span>Контакты</span>
+          <span>Комментарий</span>
+          <span>След. контакт</span>
+          <div className="main-window__table-actions"></div>
+        </div>
+        {isLoading ? (
+          <PlaceholderLoading
+            itemClassName="main-window__list-item"
+            minHeight="50px"
+            items={itemsPerPage}
           />
-        ))
-      )}
-    </div>
+        ) : (
+          sortClients(clients, searchQuery, sortOrder).map((item, index) => (
+            <ListItem
+              index={index}
+              key={index}
+              item={item}
+              userContext={userContext}
+              editItemFunction={editItemFunction}
+              setClients={setClients}
+              setCloseWindow={setCloseWindow}
+              setSelectedItem={setSelectedItem}
+              setShowWindow={setShowWindow}
+              setCurForm={setCurForm}
+              deleteItem={deleteItem}
+              type={type}
+              clients={clients}
+            />
+          ))
+        )}
+      </div>
+    </>
   );
 };
 

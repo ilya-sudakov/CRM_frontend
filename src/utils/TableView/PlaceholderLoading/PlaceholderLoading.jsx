@@ -8,6 +8,7 @@ const PlaceholderLoading = ({
   minHeight = '1.5rem',
   placeholderContent,
   wrapperClassName,
+  itemStyles = {},
 }) => {
   const [elements, setElements] = useState([]);
 
@@ -18,7 +19,7 @@ const PlaceholderLoading = ({
       temp.push(
         <div
           className={`placeholder-loading__item ${itemClassName}`}
-          style={{ minHeight: minHeight }}
+          style={{ minHeight: minHeight, ...itemStyles }}
         ></div>,
       );
     }
@@ -55,4 +56,5 @@ PlaceholderLoading.propTypes = {
   itemClassName: PropTypes.string,
   wrapperClassName: PropTypes.string,
   placeholderContent: PropTypes.any,
+  itemStyles: PropTypes.object,
 };
