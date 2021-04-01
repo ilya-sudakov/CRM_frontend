@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom';
+import EditSVG from 'Assets/tableview/edit.inline.svg';
 
 const defaultItem = {
   isRendered: false,
 };
 
-const ActionItem = ({ item = defaultItem }) => {
+const icons = {
+  edit: <EditSVG className="main-window__img" />,
+};
+
+const ActionItem = ({ item = defaultItem, icon }) => {
   const isRendered = item.isRendered === undefined || item.isRendered === true;
   if (item.customElement) return !isRendered ? null : item.customElement;
   if (!isRendered) return null;
@@ -18,10 +23,15 @@ const ActionItem = ({ item = defaultItem }) => {
         rel={item.openInNewTab ? 'noopener noreferrer' : ''}
       >
         {item.text}
-        <img className="main-window__img" src={item.imgSrc} />
+        {icon ? (
+          icons[icon]
+        ) : item.imgSrc ? (
+          <img className="main-window__img" src={item.imgSrc} />
+        ) : null}
       </Link>
     );
   }
+
   return (
     <div
       className="main-window__action"
@@ -29,7 +39,9 @@ const ActionItem = ({ item = defaultItem }) => {
       title={item.title}
     >
       {item.text}
-      {item.imgSrc ? (
+      {icon ? (
+        icons[icon]
+      ) : item.imgSrc ? (
         <img className="main-window__img" src={item.imgSrc} />
       ) : null}
     </div>

@@ -205,6 +205,21 @@ const GeneralTasks = (props) => {
     },
   ];
 
+  const actions = (item, index) => [
+    {
+      elementType: 'edit',
+      title: 'Редактирование задачи',
+      link: `/dispatcher/general-tasks/edit/${item.id}`,
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+    },
+    {
+      elementType: 'delete',
+      title: 'Удаление задачи',
+      onClick: () => deleteItem(item.id, index),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+    },
+  ];
+
   return (
     <div className="general_tasks">
       <div className="main-window">
@@ -246,7 +261,12 @@ const GeneralTasks = (props) => {
             ) : null
           }
         />
-        {/* <Table columns={columns} data={sortedData} loading={{ isLoading }} /> */}
+        <Table
+          columns={columns}
+          data={sortedData}
+          loading={{ isLoading }}
+          actions={actions}
+        />
         <TableView
           data={sortedData}
           searchQuery={searchQuery}
