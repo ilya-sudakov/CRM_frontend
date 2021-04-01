@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './TableLoading.scss';
 
 const TableLoading = ({
-  items = 3,
+  items = 5,
   columns = [],
   ItemElement,
   WrapperElement,

@@ -4,13 +4,41 @@ import TableLoading from './PlaceholderLoading/TableLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 
 const StyledTable = styled.table`
-  /* table-layout: fixed; */
   box-sizing: border-box;
   border-collapse: collapse;
   width: 100%;
   max-width: 100vw;
   padding: 0 1px;
   font-size: 14px;
+
+  @media (max-width: 768px) {
+    tr {
+      &:first-child {
+        display: none;
+      }
+    }
+    td {
+      box-sizing: border-box;
+      float: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100% !important;
+      max-width: none !important;
+      padding: 3px 20px !important;
+      text-align: right;
+
+      &:first-child {
+        padding-top: 15px !important;
+      }
+
+      .main-window__table-actions {
+        max-width: none;
+        width: 100%;
+        flex: none;
+      }
+    }
+  }
 `;
 const Row = styled.tr`
   position: relative;
@@ -69,6 +97,16 @@ const TableAppLink = styled(Link)`
 const TableOutsideLink = styled.a`
   ${TableLinkStyles}
 `;
+const MobileText = styled.span`
+  display: none;
+  padding-right: 5px;
+  text-align: left;
+  color: #777;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
 
 const Table = ({
   columns = [],
@@ -120,11 +158,13 @@ const Table = ({
                   maxWidth: column.maxWidth ?? column.width ?? 'auto',
                 },
               };
+              const mobileText = <MobileText>{column.text}</MobileText>;
               if (column.link) {
                 const newTab = column.link.newTab;
                 if (column.link.isOutside) {
                   return (
                     <Cell {...props}>
+                      {mobileText}
                       <TableOutsideLink
                         href={
                           column.link.getURL
@@ -141,6 +181,7 @@ const Table = ({
                 }
                 return (
                   <Cell {...props}>
+                    {mobileText}
                     <TableAppLink
                       to={
                         column.link.getURL
@@ -164,6 +205,7 @@ const Table = ({
               ) {
                 return (
                   <Cell {...props}>
+                    {mobileText}
                     <TableBadge
                       type={column.badge?.type}
                       text={formattedText}
@@ -174,6 +216,7 @@ const Table = ({
               if (column.status) {
                 if (column.status.onChange) {
                   <Cell {...props}>
+                    {mobileText}
                     <TableSelectStatus
                       id={props.key}
                       value={formattedText}
@@ -184,6 +227,7 @@ const Table = ({
                 }
                 return (
                   <Cell {...props}>
+                    {mobileText}
                     <TableSelectStatus
                       id={props.key}
                       value={formattedText}
@@ -195,6 +239,7 @@ const Table = ({
               }
               return (
                 <Cell key={index} {...props}>
+                  {mobileText}
                   {formattedText}
                 </Cell>
               );
@@ -255,7 +300,7 @@ const TableSelectStatus = ({
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    border: 1px solid #dddddddd;
+    border: 1px solid #bbbbbbbb;
     border-radius: 5px;
     width: fit-content;
     min-width: 100px;
