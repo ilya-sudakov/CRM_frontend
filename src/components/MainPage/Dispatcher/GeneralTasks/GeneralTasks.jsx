@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import './GeneralTasks.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
 import { getMainTasks, deleteMainTask } from 'Utils/RequestsAPI/MainTasks.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
@@ -16,40 +15,13 @@ import {
 import { useTitleHeader } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
+import { editTaskStatus } from 'Utils/RequestsAPI/MainTasks.js';
 
 const GeneralTasks = (props) => {
   const userContext = useContext(UserContext);
   const [generalTasks, setGeneralTasks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  //Статусы задач
-  const taskStatuses = [
-    {
-      name: 'Выполнено',
-      className: 'completed',
-      visible: false,
-    },
-    {
-      name: 'Отложено',
-      className: 'delayed',
-      visible: false,
-    },
-    {
-      name: 'Материалы',
-      className: 'materials',
-      visible: false,
-    },
-    {
-      name: 'В процессе',
-      className: 'in-progress',
-      visible: false,
-    },
-    {
-      name: 'Проблема',
-      className: 'problem',
-      visible: false,
-    },
-  ];
   //Уникальные пользователи
   const [taskUsers, setTaskUsers] = useState({});
 
@@ -110,7 +82,11 @@ const GeneralTasks = (props) => {
       curPage,
     );
     const filteredUsers = filterTasksUsers(filteredCompletedTasks, taskUsers);
-    return filteredUsers;
+    return filteredUsers.filter(
+      (task) =>
+        props.userHasAccess(['ROLE_ADMIN']) ||
+        props.userData.username === task.responsible,
+    );
   };
 
   const { titleHeader, curPage } = useTitleHeader(
@@ -163,6 +139,21 @@ const GeneralTasks = (props) => {
     });
   };
 
+  const handleConditionChange = (value, { id }) => {
+    editTaskStatus(
+      {
+        condition: value,
+      },
+      id,
+    )
+      .then(() => {
+        loadTasks();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const columns = [
     {
       text: 'Дата постановки',
@@ -202,6 +193,16 @@ const GeneralTasks = (props) => {
       value: 'condition',
       width: '15%',
       maxWidth: '120px',
+      status: {
+        onChange: (value, item) => handleConditionChange(value, item),
+        options: [
+          { text: 'Материалы', type: 'materials' },
+          { text: 'Выполнено', type: 'completed' },
+          { text: 'В процессе', type: 'in-process' },
+          { text: 'Отложено', type: 'delayed' },
+          { text: 'Проблема', type: 'problem' },
+        ],
+      },
     },
   ];
 
@@ -210,7 +211,12 @@ const GeneralTasks = (props) => {
       elementType: 'edit',
       title: 'Редактирование задачи',
       link: `/dispatcher/general-tasks/edit/${item.id}`,
-      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+      isRendered: userContext.userHasAccess([
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_WORKSHOP',
+      ]),
     },
     {
       elementType: 'delete',
@@ -266,16 +272,6 @@ const GeneralTasks = (props) => {
           data={sortedData}
           loading={{ isLoading }}
           actions={actions}
-        />
-        <TableView
-          data={sortedData}
-          searchQuery={searchQuery}
-          userData={props.userData}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-          isLoading={isLoading}
-          taskStatuses={taskStatuses}
-          loadData={loadTasks}
         />
       </div>
     </div>

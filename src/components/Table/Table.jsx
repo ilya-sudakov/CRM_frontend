@@ -98,6 +98,7 @@ const Table = ({
           ItemElement={CellLoading}
           items={loading.itemsPerPage}
           columns={columns}
+          actions={actions}
           itemStyles={{
             borderRadius: '5px',
             marginBottom: '4px',
@@ -113,7 +114,7 @@ const Table = ({
                 ? column.formatFn(curColumn)
                 : curColumn;
               const props = {
-                key: index,
+                key: `${item.id}.${column.text}` ?? index,
                 style: {
                   width: column.width ?? 'auto',
                   maxWidth: column.maxWidth ?? column.width ?? 'auto',
@@ -170,6 +171,28 @@ const Table = ({
                   </Cell>
                 );
               }
+              if (column.status) {
+                if (column.status.onChange) {
+                  <Cell {...props}>
+                    <TableSelectStatus
+                      id={props.key}
+                      value={formattedText}
+                      onChange={(value) => column.status.onChange(value, item)}
+                      options={column.status.options}
+                    />
+                  </Cell>;
+                }
+                return (
+                  <Cell {...props}>
+                    <TableSelectStatus
+                      id={props.key}
+                      value={formattedText}
+                      onChange={(value) => column.status.onChange(value, item)}
+                      options={column.status.options}
+                    />
+                  </Cell>
+                );
+              }
               return (
                 <Cell key={index} {...props}>
                   {formattedText}
@@ -211,4 +234,55 @@ const TableBadge = ({ text, type = 'error' }) => {
     color: ${(props) => (props.type === 'error' ? '#ad1c1c' : '#333')};
   `;
   return <Badge type={type}>{text}</Badge>;
+};
+
+const statuses = {
+  ['success']: { backgroundColor: '#E5F6D3', color: 'green' },
+  ['Материалы']: { backgroundColor: '#ffe5b4', color: '#795b1b' },
+  ['Выполнено']: { backgroundColor: '#E5F6D3', color: '#43a556' },
+  ['В процессе']: { backgroundColor: '#bdddfd', color: '#396c9e' },
+  ['Отложено']: { backgroundColor: '#ffceec', color: '#a71c71' },
+  ['Проблема']: { backgroundColor: '#F8CBD0', color: '#ad1c1c' },
+};
+
+const TableSelectStatus = ({
+  value = 'success',
+  options = [],
+  onChange,
+  key,
+}) => {
+  const Select = styled.select`
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #dddddddd;
+    border-radius: 5px;
+    width: fit-content;
+    min-width: 100px;
+    min-height: 1.5rem;
+    padding: 3px 10px;
+    outline: none;
+    font-size: 14px;
+  `;
+  const Option = styled.option`
+    background-color: #fff;
+    color: #333;
+  `;
+  return (
+    <Select
+      id={key}
+      value={value}
+      onChange={({ target }) => onChange(target.value)}
+      style={{
+        backgroundColor: statuses[value].backgroundColor,
+        color: statuses[value].color,
+      }}
+    >
+      {options.map((option) => (
+        <Option key={option.value} value={option.value ?? option.text}>
+          {option.text ?? option.value}
+        </Option>
+      ))}
+    </Select>
+  );
 };

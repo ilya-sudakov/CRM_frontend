@@ -7,6 +7,7 @@ const TableLoading = ({
   columns = [],
   ItemElement,
   WrapperElement,
+  actions = [],
 }) => {
   const [elements, setElements] = useState([]);
 
@@ -27,6 +28,16 @@ const TableLoading = ({
               <div className="table-loading__item"></div>
             </ItemElement>
           ))}
+          {actions ? (
+            <ItemElement
+              style={{
+                width: '30px',
+                maxWidth: '30px',
+              }}
+            >
+              <div className="table-loading__item"></div>
+            </ItemElement>
+          ) : null}
         </WrapperElement>,
       );
     }

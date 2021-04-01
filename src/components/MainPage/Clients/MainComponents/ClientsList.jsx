@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import editSVG from 'Assets/tableview/edit.svg';
 import starSVG from 'Assets/tableview/star.svg';
 import starBorderedSVG from 'Assets/tableview/star_border.svg';
 import phoneSVG from 'Assets/tableview/phone.svg';
@@ -7,7 +6,6 @@ import calendarSVG from 'Assets/tableview/calendar.svg';
 import eyeSVG from 'Assets/tableview/eye-invisible-outlined.svg';
 import { formatDateString } from 'Utils/functions.jsx';
 import { sortClients } from './functions.js';
-import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import UserContext from '../../../../App.js';
 import Table from '../../../Table/Table.jsx';
 
@@ -166,18 +164,15 @@ const ClientsList = ({
       imgSrc: calendarSVG,
     },
     {
+      elementType: 'edit',
       title: 'Редактирование клиента',
       link: `/${type}/edit/${item.id}`,
       openInNewTab: true,
-      imgSrc: editSVG,
     },
     {
-      customElement: (
-        <DeleteItemAction
-          title="Удаление клиента"
-          onClick={() => deleteItem(item.id, index)}
-        />
-      ),
+      elementType: 'delete',
+      title: 'Удаление клиента',
+      onClick: () => deleteItem(item.id, index),
       isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
   ];
