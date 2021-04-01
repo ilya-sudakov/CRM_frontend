@@ -1,18 +1,16 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import TableLoading from './PlaceholderLoading/TableLoading.jsx';
+import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 
 const StyledTable = styled.table`
+  /* table-layout: fixed; */
   box-sizing: border-box;
   border-collapse: collapse;
   width: 100%;
   max-width: 100vw;
   padding: 0 1px;
   font-size: 14px;
-
-  .placeholder-loading {
-    min-width: 100%;
-  }
 `;
 const Row = styled.tr`
   position: relative;
@@ -72,20 +70,34 @@ const TableOutsideLink = styled.a`
   ${TableLinkStyles}
 `;
 
-const Table = ({ columns = [], data = [], loading = { isLoading: false } }) => {
+const Table = ({
+  columns = [],
+  data = [],
+  actions,
+  loading = { isLoading: false },
+}) => {
   return (
     <StyledTable>
       <Row headerRow>
         {columns.map((column) => (
           <CellHeader key={column.text}>{column.text}</CellHeader>
         ))}
+        {actions ? (
+          <CellHeader
+            isAction
+            style={{
+              width: '30px',
+              maxWidth: '30px',
+            }}
+          ></CellHeader>
+        ) : null}
       </Row>
       {loading.isLoading ? (
         <TableLoading
           WrapperElement={RowLoading}
           ItemElement={CellLoading}
           items={loading.itemsPerPage}
-          columnLength={columns.length}
+          columns={columns}
           itemStyles={{
             borderRadius: '5px',
             marginBottom: '4px',
@@ -164,6 +176,16 @@ const Table = ({ columns = [], data = [], loading = { isLoading: false } }) => {
                 </Cell>
               );
             })}
+            {actions ? (
+              <Cell
+                style={{
+                  width: '30px',
+                  maxWidth: '30px',
+                }}
+              >
+                <TableActions actionsList={actions(item, index)} />
+              </Cell>
+            ) : null}
           </Row>
         ))
       )}
@@ -178,15 +200,13 @@ const TableBadge = ({ text, type = 'error' }) => {
     display: flex;
     justify-content: center;
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-color: ${(props) => (props.type === 'error' ? '#d4b0b0' : '#fff')};
-    border-radius: 3px;
+    border-radius: 5px;
     width: fit-content;
     min-width: 100px;
     min-height: 1.5rem;
     padding: 3px 10px;
     background-color: ${(props) =>
-      props.type === 'error' ? '#fadada' : '#fff'};
+      props.type === 'error' ? '#F8CBD0' : '#fff'};
     font-size: 14px;
     color: ${(props) => (props.type === 'error' ? '#ad1c1c' : '#333')};
   `;

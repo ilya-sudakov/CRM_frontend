@@ -4,7 +4,7 @@ import './TableLoading.scss';
 
 const TableLoading = ({
   items = 3,
-  columnLength = 3,
+  columns = [],
   ItemElement,
   WrapperElement,
 }) => {
@@ -16,8 +16,14 @@ const TableLoading = ({
     for (let i = 1; i <= count; i++) {
       temp.push(
         <WrapperElement>
-          {new Array(columnLength).fill(0).map((_, index) => (
-            <ItemElement key={index}>
+          {columns.map((item, index) => (
+            <ItemElement
+              style={{
+                width: item.width ?? 'auto',
+                maxWidth: item.maxWidth ?? item.width ?? 'auto',
+              }}
+              key={index}
+            >
               <div className="table-loading__item"></div>
             </ItemElement>
           ))}

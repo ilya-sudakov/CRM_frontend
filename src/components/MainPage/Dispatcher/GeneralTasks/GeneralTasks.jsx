@@ -13,7 +13,9 @@ import {
   filterSearchQuery,
   filterTasksUsers,
 } from './functions';
-import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader';
+import { useTitleHeader } from 'Utils/hooks';
+import Table from 'Components/Table/Table.jsx';
+import { formatDateString } from 'Utils/functions.jsx';
 
 const GeneralTasks = (props) => {
   const userContext = useContext(UserContext);
@@ -161,6 +163,48 @@ const GeneralTasks = (props) => {
     });
   };
 
+  const columns = [
+    {
+      text: 'Дата постановки',
+      value: 'dateCreated',
+      width: '12%',
+      maxWidth: '100px',
+      formatFn: (date) => formatDateString(date),
+    },
+    {
+      text: 'Описание',
+      value: 'description',
+      width: '30%',
+    },
+    {
+      text: 'Ответственный',
+      value: 'responsible',
+      width: '15%',
+    },
+    {
+      text: 'Дата контроля',
+      value: 'dateControl',
+      width: '12%',
+      maxWidth: '120px',
+      badge: {
+        type: 'error',
+        isVisibleFn: (date) => new Date(date) < new Date(),
+      },
+      formatFn: (date) => formatDateString(date),
+    },
+    {
+      text: 'Состояние',
+      value: 'status',
+      width: '20%',
+    },
+    {
+      text: 'Статус',
+      value: 'condition',
+      width: '15%',
+      maxWidth: '120px',
+    },
+  ];
+
   return (
     <div className="general_tasks">
       <div className="main-window">
@@ -202,6 +246,7 @@ const GeneralTasks = (props) => {
             ) : null
           }
         />
+        {/* <Table columns={columns} data={sortedData} loading={{ isLoading }} /> */}
         <TableView
           data={sortedData}
           searchQuery={searchQuery}

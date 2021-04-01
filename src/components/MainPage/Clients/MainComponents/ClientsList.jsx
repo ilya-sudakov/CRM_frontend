@@ -7,8 +7,6 @@ import calendarSVG from 'Assets/tableview/calendar.svg';
 import eyeSVG from 'Assets/tableview/eye-invisible-outlined.svg';
 import { formatDateString } from 'Utils/functions.jsx';
 import { sortClients } from './functions.js';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import UserContext from '../../../../App.js';
 import Table from '../../../Table/Table.jsx';
@@ -39,7 +37,7 @@ const ClientsList = ({
       : 'Не указаны контакт. данные';
 
   const columns = [
-    { text: 'Название', value: 'name', width: '15%' },
+    { text: 'Название', value: 'name', width: '20%' },
     {
       text: 'Сайт',
       value: 'site',
@@ -48,13 +46,13 @@ const ClientsList = ({
         isOutside: true,
         newTab: true,
       },
-      width: '10%',
+      width: '15%',
     },
     {
       text: 'Контакты',
       value: 'contacts',
       formatFn: formatContacts,
-      width: '15%',
+      width: '25%',
     },
     { text: 'Комментарий', value: 'comment', width: '30%' },
     {
@@ -62,7 +60,7 @@ const ClientsList = ({
       value: 'nextDateContact',
       formatFn: (date) => formatDateString(date),
       width: '10%',
-      maxWidth: '120px',
+      // maxWidth: '120px',
       badge: {
         isVisibleFn: (date) => new Date(date) < new Date(),
         type: 'error',
@@ -70,71 +68,8 @@ const ClientsList = ({
     },
   ];
 
-  return (
-    <>
-      <Table
-        columns={columns}
-        data={sortClients(clients, searchQuery, sortOrder)}
-        loading={{ isLoading: isLoading, itemsPerPage: itemsPerPage }}
-      />
-      <div className="main-window__list main-window__list--full">
-        <div className="main-window__list-item main-window__list-item--header">
-          <span>Название</span>
-          <span>Сайт</span>
-          <span>Контакты</span>
-          <span>Комментарий</span>
-          <span>След. контакт</span>
-          <div className="main-window__table-actions"></div>
-        </div>
-        {isLoading ? (
-          <PlaceholderLoading
-            itemClassName="main-window__list-item"
-            minHeight="50px"
-            items={itemsPerPage}
-          />
-        ) : (
-          sortClients(clients, searchQuery, sortOrder).map((item, index) => (
-            <ListItem
-              index={index}
-              key={index}
-              item={item}
-              userContext={userContext}
-              editItemFunction={editItemFunction}
-              setClients={setClients}
-              setCloseWindow={setCloseWindow}
-              setSelectedItem={setSelectedItem}
-              setShowWindow={setShowWindow}
-              setCurForm={setCurForm}
-              deleteItem={deleteItem}
-              type={type}
-              clients={clients}
-            />
-          ))
-        )}
-      </div>
-    </>
-  );
-};
-
-export default ClientsList;
-
-const ListItem = ({
-  item,
-  userContext,
-  editItemFunction,
-  setClients,
-  setCloseWindow,
-  setSelectedItem,
-  setShowWindow,
-  setCurForm,
-  deleteItem,
-  type,
-  clients,
-  index,
-}) => {
-  const handleFavouriteClick = (item, clients) => {
+  const handleFavouriteClick = (item, index, clients) => {
     let temp = clients;
-    //   console.log(item);
     let newClient = Object.assign({
       type: item.type,
       categoryId: item.category.id,
@@ -156,7 +91,6 @@ const ListItem = ({
           ...item,
           favorite: !item.favorite,
         });
-        //   loadData(item.categoryName, item.clientType);
         setClients([...temp]);
       })
       .catch((error) => {
@@ -164,9 +98,8 @@ const ListItem = ({
       });
   };
 
-  const handleHideClient = (item, clients) => {
+  const handleHideClient = (item, index, clients) => {
     let temp = clients;
-    //   console.log(item);
     let newClient = Object.assign({
       type: item.type,
       categoryId: item.category.id,
@@ -189,7 +122,6 @@ const ListItem = ({
           ...item,
           isClosed: true,
         });
-        //   loadData(item.categoryName, item.clientType);
         setClients([...temp]);
         alert('Клиент успешно скрыт');
       })
@@ -198,18 +130,18 @@ const ListItem = ({
       });
   };
 
-  const actionsList = [
+  const actionsList = (item, index) => [
     {
       title: item.favorite
         ? 'Убрать из избранных клиентов'
         : 'Добавить в избранных клиентов',
-      onClick: () => handleFavouriteClick(item, clients),
+      onClick: () => handleFavouriteClick(item, index, clients),
       imgSrc: item.favorite ? starSVG : starBorderedSVG,
       isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
     {
       title: 'Скрыть клиента',
-      onClick: () => handleHideClient(item, clients),
+      onClick: () => handleHideClient(item, index, clients),
       imgSrc: eyeSVG,
       isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
@@ -251,60 +183,13 @@ const ListItem = ({
   ];
 
   return (
-    <div className="main-window__list-item" key={index}>
-      <span>
-        <div className="main-window__mobile-text">Название: </div>
-        {item.name}
-      </span>
-      <span>
-        <div className="main-window__mobile-text">Сайт: </div>
-        <a
-          className="main-window__link"
-          title={item.site}
-          href={
-            item?.site && item?.site?.split('//')?.length > 1
-              ? item.site
-              : 'https://' + item.site
-          }
-          target="_blank"
-          rel="noreferrer"
-        >
-          {item?.site && item?.site?.split('//')?.length > 1
-            ? item?.site?.split('//')[1]
-            : item.site}
-        </a>
-      </span>
-      <span
-        title={
-          item.contacts?.length > 0
-            ? (item.contacts[0].name !== ''
-                ? item.contacts[0].name + ', '
-                : '') + item.contacts[0].phoneNumber
-            : 'Не указаны контакт. данные'
-        }
-      >
-        <div className="main-window__mobile-text">Контактное лицо: </div>
-        {item.contacts?.length > 0
-          ? (item.contacts[0].name !== '' ? item.contacts[0].name + ', ' : '') +
-            item.contacts[0].phoneNumber
-          : 'Не указаны контакт. данные'}
-      </span>
-      <span title={item.comment}>
-        <div className="main-window__mobile-text">Комментарий: </div>
-        {item.comment}
-      </span>
-      <span>
-        <div className="main-window__mobile-text">Дата след. контакта: </div>
-        {new Date(item.nextDateContact) < new Date() ? (
-          <div className="main-window__reminder">
-            <div>!</div>
-            <div>{formatDateString(item.nextDateContact)}</div>
-          </div>
-        ) : (
-          formatDateString(item.nextDateContact)
-        )}
-      </span>
-      <TableActions actionsList={actionsList} />
-    </div>
+    <Table
+      columns={columns}
+      data={sortClients(clients, searchQuery, sortOrder)}
+      loading={{ isLoading, itemsPerPage }}
+      actions={actionsList}
+    />
   );
 };
+
+export default ClientsList;
