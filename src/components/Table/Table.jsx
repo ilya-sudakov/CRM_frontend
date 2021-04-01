@@ -123,12 +123,20 @@ const Table = ({
   data = [],
   actions,
   loading = { isLoading: false },
+  options = { fullBorder: false },
 }) => {
   return (
     <StyledTable>
       <Row headerRow>
         {columns.map((column) => (
-          <CellHeader key={column.text}>{column.text}</CellHeader>
+          <CellHeader
+            key={column.text}
+            style={{
+              ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
+            }}
+          >
+            {column.text}
+          </CellHeader>
         ))}
         {actions ? (
           <CellHeader
@@ -166,6 +174,7 @@ const Table = ({
                 style: {
                   width: column.width ?? 'auto',
                   maxWidth: column.maxWidth ?? column.width ?? 'auto',
+                  ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
                 },
               };
               const mobileText = <MobileText>{column.text}</MobileText>;
@@ -275,6 +284,17 @@ const Table = ({
 
 export default Table;
 
+const statuses = {
+  ['success']: { backgroundColor: '#E5F6D3', color: '#06731c' },
+  ['info']: { backgroundColor: '#bdddfd', color: '#02407d' },
+  ['error']: { backgroundColor: '#F8CBD0', color: '#770f0f' },
+  ['Материалы']: { backgroundColor: '#ffe5b4', color: '#4a3301' },
+  ['Выполнено']: { backgroundColor: '#E5F6D3', color: '#06731c' },
+  ['В процессе']: { backgroundColor: '#bdddfd', color: '#02407d' },
+  ['Отложено']: { backgroundColor: '#ffceec', color: '#6d0a47' },
+  ['Проблема']: { backgroundColor: '#F8CBD0', color: '#770f0f' },
+};
+
 const TableBadge = ({ text, type = 'error' }) => {
   const Badge = styled.div`
     display: flex;
@@ -285,21 +305,20 @@ const TableBadge = ({ text, type = 'error' }) => {
     min-width: 100px;
     min-height: 1.5rem;
     padding: 3px 10px;
-    background-color: ${(props) =>
-      props.type === 'error' ? '#F8CBD0' : '#fff'};
     font-size: 14px;
-    color: ${(props) => (props.type === 'error' ? '#ad1c1c' : '#333')};
+    color: #333;
   `;
-  return <Badge type={type}>{text}</Badge>;
-};
-
-const statuses = {
-  ['success']: { backgroundColor: '#E5F6D3', color: 'green' },
-  ['Материалы']: { backgroundColor: '#ffe5b4', color: '#795b1b' },
-  ['Выполнено']: { backgroundColor: '#E5F6D3', color: '#43a556' },
-  ['В процессе']: { backgroundColor: '#bdddfd', color: '#396c9e' },
-  ['Отложено']: { backgroundColor: '#ffceec', color: '#a71c71' },
-  ['Проблема']: { backgroundColor: '#F8CBD0', color: '#ad1c1c' },
+  return (
+    <Badge
+      type={type}
+      style={{
+        backgroundColor: statuses[type].backgroundColor,
+        color: statuses[type].color,
+      }}
+    >
+      {text}
+    </Badge>
+  );
 };
 
 const TableSelectStatus = ({
