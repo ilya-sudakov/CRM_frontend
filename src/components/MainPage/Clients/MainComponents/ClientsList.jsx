@@ -29,43 +29,53 @@ const ClientsList = ({
   setClients,
 }) => {
   const userContext = useContext(UserContext);
-  console.log(isLoading);
+
+  const getURL = (site) =>
+    site && site?.split('//')?.length > 1 ? site : `https://${site}`;
+  const formatContacts = (contacts) =>
+    contacts?.length > 0
+      ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
+        contacts[0].phoneNumber
+      : 'Не указаны контакт. данные';
+
+  const columns = [
+    { text: 'Название', value: 'name', width: '15%' },
+    {
+      text: 'Сайт',
+      value: 'site',
+      link: {
+        getURL: getURL,
+        isOutside: true,
+        newTab: true,
+      },
+      width: '10%',
+    },
+    {
+      text: 'Контакты',
+      value: 'contacts',
+      formatFn: formatContacts,
+      width: '15%',
+    },
+    { text: 'Комментарий', value: 'comment', width: '30%' },
+    {
+      text: 'След. контакт',
+      value: 'nextDateContact',
+      formatFn: (date) => formatDateString(date),
+      width: '10%',
+      maxWidth: '120px',
+      badge: {
+        isVisibleFn: (date) => new Date(date) < new Date(),
+        type: 'error',
+      },
+    },
+  ];
 
   return (
     <>
       <Table
-        columns={[
-          { text: 'Название', value: 'name' },
-          {
-            text: 'Сайт',
-            value: 'site',
-            link: {
-              getURL: (site) =>
-                site && site?.split('//')?.length > 1
-                  ? site
-                  : `https://${site}`,
-              isOutside: true,
-              newTab: true,
-            },
-          },
-          {
-            text: 'Контакты',
-            value: 'contacts',
-            formatFn: (contacts) =>
-              contacts?.length > 0
-                ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
-                  contacts[0].phoneNumber
-                : 'Не указаны контакт. данные',
-          },
-          { text: 'Комментарий', value: 'comment' },
-          {
-            text: 'След. контакт',
-            value: 'nextDateContact',
-            formatFn: (date) => formatDateString(date),
-          },
-        ]}
+        columns={columns}
         data={sortClients(clients, searchQuery, sortOrder)}
-        isLoading={!isLoading}
+        loading={{ isLoading: isLoading, itemsPerPage: itemsPerPage }}
       />
       <div className="main-window__list main-window__list--full">
         <div className="main-window__list-item main-window__list-item--header">
