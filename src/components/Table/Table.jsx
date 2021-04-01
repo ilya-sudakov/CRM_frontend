@@ -11,6 +11,10 @@ const StyledTable = styled.table`
   padding: 0 1px;
   font-size: 14px;
 
+  .main-window__table-actions {
+    max-width: none;
+  }
+
   @media (max-width: 768px) {
     tr {
       &:first-child {
@@ -33,7 +37,6 @@ const StyledTable = styled.table`
       }
 
       .main-window__table-actions {
-        max-width: none;
         width: 100%;
         flex: none;
       }
@@ -125,7 +128,7 @@ const Table = ({
             isAction
             style={{
               width: '60px',
-              maxWidth: '60px',
+              maxWidth: 'fit-content',
             }}
           ></CellHeader>
         ) : null}
@@ -248,7 +251,7 @@ const Table = ({
               <Cell
                 style={{
                   width: '60px',
-                  maxWidth: '60px',
+                  maxWidth: 'fit-content',
                 }}
               >
                 <TableActions actionsList={actions(item, index)} />
