@@ -63,7 +63,7 @@ const RowLoading = styled(Row)`
 `;
 const baseCellStyles = css`
   --side-padding: 30px;
-  padding: 3px 10px;
+  padding: 8px 10px;
   text-align: left;
 
   &:first-child {
@@ -110,6 +110,13 @@ const MobileText = styled.span`
     display: block;
   }
 `;
+const getMaxLines = (lines = 3) => ({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  display: '-webkit-box',
+  WebkitLineClamp: lines,
+  WebkitBoxOrient: 'vertical',
+});
 
 const Table = ({
   columns = [],
@@ -243,7 +250,9 @@ const Table = ({
               return (
                 <Cell key={index} {...props}>
                   {mobileText}
-                  {formattedText}
+                  <div style={{ ...getMaxLines(column.options?.maxLines) }}>
+                    {formattedText}
+                  </div>
                 </Cell>
               );
             })}

@@ -58,7 +58,6 @@ const ClientsList = ({
       value: 'nextDateContact',
       formatFn: (date) => formatDateString(date),
       width: '10%',
-      // maxWidth: '120px',
       badge: {
         isVisibleFn: (date) => new Date(date) < new Date(),
         type: 'error',
