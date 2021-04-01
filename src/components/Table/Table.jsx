@@ -63,7 +63,7 @@ const RowLoading = styled(Row)`
 `;
 const baseCellStyles = css`
   --side-padding: 30px;
-  padding: 8px 10px;
+  padding: 6px 10px;
   text-align: left;
 
   &:first-child {

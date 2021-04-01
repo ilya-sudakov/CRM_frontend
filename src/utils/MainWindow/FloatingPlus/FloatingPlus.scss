@@ -17,9 +17,7 @@
     transition: 200ms ease-in-out;
 
     &:hover {
-        transform: scale(1.1);
-        box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.8);
-        background-color: lighten($main-color, 2.5%);
+        filter: brightness(1.1);
 
         .floating-plus__hide-btn {
             transform: scale(1);
@@ -27,7 +25,7 @@
     }
 
     &__img {
-        width: 30px;
+        width: 22px;
         filter: brightness(3);
     }
 
