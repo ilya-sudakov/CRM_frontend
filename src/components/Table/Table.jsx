@@ -10,6 +10,7 @@ const StyledTable = styled.table`
   max-width: 100vw;
   padding: 0 1px;
   font-size: 14px;
+  background-color: #fff;
 
   .main-window__table-actions {
     max-width: none;
@@ -124,6 +125,7 @@ const Table = ({
   actions,
   loading = { isLoading: false },
   options = { fullBorder: false },
+  onClick,
 }) => {
   return (
     <StyledTable>
@@ -163,7 +165,11 @@ const Table = ({
         />
       ) : (
         data.map((item, index) => (
-          <Row key={index}>
+          <Row
+            key={index}
+            onClick={() => onClick(item, index)}
+            style={{ cursor: onClick ? 'pointer' : 'auto' }}
+          >
             {columns.map((column) => {
               const curColumn = item[column.value];
               const formattedText = column.formatFn

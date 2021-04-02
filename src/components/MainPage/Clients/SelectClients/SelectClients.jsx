@@ -3,8 +3,8 @@ import './SelectClients.scss';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import useSearchBar from 'Utils/hooks/useSearchBar';
+import Table from 'Components/Table/Table.jsx';
 
 const SelectClient = (props) => {
   const [showWindow, setShowWindow] = useState(false);
@@ -57,13 +57,43 @@ const SelectClient = (props) => {
     ],
   );
 
-  const clickClient = (clientId, clientName) => {
-    setId(clientId);
-    setName(clientName);
-    console.log(clientId);
-    props.onChange(clientId);
+  const clickClient = ({ id, name }) => {
+    setId(id);
+    setName(name);
+    console.log(id);
+    props.onChange(id);
     setShowWindow(!showWindow);
+    setCloseWindow(!closeWindow);
   };
+
+  const getURL = (site) =>
+    site && site?.split('//')?.length > 1 ? site : `https://${site}`;
+  const formatContacts = (contacts) =>
+    contacts?.length > 0
+      ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
+        contacts[0].phoneNumber
+      : 'Не указаны контакт. данные';
+
+  const columns = [
+    { text: 'Название', value: 'name' },
+    {
+      text: 'Сайт',
+      value: 'site',
+      link: {
+        getURL: getURL,
+        isOutside: true,
+        newTab: true,
+      },
+      formatFn: (site) =>
+        site && site.split('//').length > 1 ? site.split('//')[1] : site,
+    },
+    {
+      text: 'Контакты',
+      value: 'contacts',
+      formatFn: formatContacts,
+    },
+    { text: 'Комментарий', value: 'comment' },
+  ];
 
   return (
     <div className="select-client">
@@ -118,14 +148,11 @@ const SelectClient = (props) => {
         content={
           <>
             {searchBar}
-            <TableView
-              clients={clients}
-              clickClient={clickClient}
-              isLoading={isLoading}
-              showWindow={showWindow}
-              setShowWindow={setShowWindow}
-              closeWindow={closeWindow}
-              setCloseWindow={setCloseWindow}
+            <Table
+              columns={columns}
+              data={clients}
+              loading={{ isLoading }}
+              onClick={clickClient}
             />
           </>
         }
@@ -137,81 +164,3 @@ const SelectClient = (props) => {
 };
 
 export default SelectClient;
-
-const TableView = (props) => {
-  useEffect(() => {
-    props.setShowWindow && props.setShowWindow(false);
-  }, [props.data, props.closeWindow]);
-
-  return (
-    <div className="main-window">
-      <div className="main-window__list main-window__list--full">
-        {props.isLoading ? (
-          <PlaceholderLoading
-            itemClassName="main-window__list-item"
-            minHeight="35px"
-            items={3}
-          />
-        ) : props.clients.length === 0 ? (
-          <div style={{ padding: '10px 25px' }}>
-            Введите не менее 3 символа для начала поиска
-          </div>
-        ) : (
-          <>
-            <div className="main-window__list-item main-window__list-item--header">
-              <span>Название</span>
-              <span>Сайт</span>
-              <span>Контакты</span>
-              <span>Комментарий</span>
-            </div>
-            {props.clients.map((client, index) => (
-              <div
-                className="main-window__list-item"
-                key={index}
-                onClick={() => {
-                  props.clickClient(client.id, client.name);
-                  props.setCloseWindow(!props.closeWindow);
-                }}
-              >
-                <span>
-                  <div className="main-window__mobile-text">Название:</div>
-                  {client.name}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Сайт:</div>
-                  <a
-                    className="main-window__link"
-                    title={client.site}
-                    href={
-                      client.site && client.site.split('//').length > 1
-                        ? client.site
-                        : 'https://' + client.site
-                    }
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {client.site && client.site.split('//').length > 1
-                      ? client.site.split('//')[1]
-                      : client.site}
-                  </a>
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Контакты:</div>
-                  {client.contacts?.length > 0
-                    ? (client.contacts[0].name !== ''
-                        ? client.contacts[0].name + ', '
-                        : '') + client.contacts[0].phoneNumber
-                    : 'Не указаны контакт. данные'}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Комментарий:</div>
-                  {client.comment}
-                </span>
-              </div>
-            ))}
-          </>
-        )}
-      </div>
-    </div>
-  );
-};
