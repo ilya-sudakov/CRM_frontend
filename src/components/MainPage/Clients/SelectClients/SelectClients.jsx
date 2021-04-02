@@ -148,12 +148,18 @@ const SelectClient = (props) => {
         content={
           <>
             {searchBar}
-            <Table
-              columns={columns}
-              data={clients}
-              loading={{ isLoading }}
-              onClick={clickClient}
-            />
+            {clients.length === 0 ? (
+              <div style={{ padding: '10px 25px' }}>
+                Введите не менее 3 символа для начала поиска
+              </div>
+            ) : (
+              <Table
+                columns={columns}
+                data={clients}
+                loading={{ isLoading }}
+                onClick={clickClient}
+              />
+            )}
           </>
         }
         showWindow={showWindow}
