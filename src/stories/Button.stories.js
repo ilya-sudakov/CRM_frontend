@@ -1,7 +1,7 @@
 import Button from '../utils/Form/Button/Button.jsx';
 
 export default {
-  title: 'UI elements/Button',
+  title: 'Button',
   component: Button,
 };
 
