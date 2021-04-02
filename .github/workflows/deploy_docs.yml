@@ -13,5 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm install
-      - run: npm run build-storybook
-      - run: npm run deploy-storybook
+      - name: Deploy storybook to Github Pages
+        uses: deborah-digges/deploy-storybook-action@v14.0
+        with:
+          access-token: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
