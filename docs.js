@@ -5,4 +5,6 @@ export default {
   themeConfig: {
     initialColorMode: 'dark',
   },
+  files: ['**/*.mdx'], // should not find README.md
+  ignore: ['README.md'], // should also ignore README.md
 };
