@@ -11,6 +11,7 @@ package-lock.json
 /node_modules
 /src/main/resources/static/built/*
 /src/static/built/*
+.docz
 
 !/src/static/built/firebase-messaging-sw.js
 !/src/static/built/sw.js
