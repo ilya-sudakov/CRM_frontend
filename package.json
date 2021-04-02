@@ -1,5 +1,5 @@
 {
-  "name": "osfix-erp-frontend",
+  "name": "osfix_erp_frontend",
   "version": "1.0.0",
   "description": "ERP система для управления предприятием - Фронтенд",
   "main": "./src/static/built/bundle.js",
@@ -18,16 +18,18 @@
     "lint": "eslint --ext .js,.jsx . --fix src/**/*.js",
     "format": "prettier src/**/*.js --write --config ./.prettierrc",
     "storybook": "start-storybook -p 6006",
+    "predeploy": "npm run build-storybook",
+    "deploy-storybook": "gh-pages -d storybook-static",
     "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ilyasudakov@bitbucket.org/ilyasudakov/osfix-frontend.git"
+    "url": "git+https://ilyasudakov.github.io/osfix_erp_frontend"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://ilyasudakov@bitbucket.org/ilyasudakov/osfix-frontend#readme",
+  "homepage": "https://ilyasudakov.github.io/osfix_erp_frontend",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -58,6 +60,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "file-loader": "^4.3.0",
+    "gh-pages": "^3.1.0",
     "html-webpack-plugin": "^5.2.0",
     "husky": "^5.1.3",
     "jest": "^26.6.3",

@@ -32,3 +32,9 @@
 - Для просмотра test coverage:
 
         npm run test --  --silent --coverage --watchAll=false
+
+- Для запуска Storybook:
+
+        npm run storybook --no-dll
+
+- GH Pages Storybook: https://ilyasudakov.github.io/osfix_erp_frontend/

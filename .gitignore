@@ -12,6 +12,7 @@ package-lock.json
 /src/main/resources/static/built/*
 /src/static/built/*
 .docz
+storybook-static
 
 !/src/static/built/firebase-messaging-sw.js
 !/src/static/built/sw.js
