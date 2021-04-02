@@ -11,7 +11,7 @@ const SearchBar = ({
   searchQuery,
   setSearchQuery,
   fullSize = true,
-  placeholder,
+  placeholder = 'Введите запрос для поиска...',
   searchOptions,
   onOptionChange,
   advancedOptions,

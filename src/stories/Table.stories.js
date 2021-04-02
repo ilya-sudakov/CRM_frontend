@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import Table from '../components/Table/Table.jsx';
 
 export default {
-  title: 'New Table design',
+  title: 'Table',
   component: Table,
 };
 
@@ -90,6 +90,21 @@ const data = [
   },
 ];
 
+const actions = (item) => [
+  {
+    elementType: 'edit',
+    title: 'Редактирование задачи',
+    link: `/dispatcher/general-tasks/edit/${item.id}`,
+    isRendered: true,
+  },
+  {
+    elementType: 'delete',
+    title: 'Удаление задачи',
+    onClick: () => {},
+    isRendered: true,
+  },
+];
+
 export const Default = Template.bind({});
 Default.args = {
   columns: columns,
@@ -100,4 +115,11 @@ export const Loading = Template.bind({});
 Loading.args = {
   columns: columns,
   loading: { isLoading: true },
+};
+
+export const WithActions = Template.bind({});
+WithActions.args = {
+  columns: columns,
+  data: data,
+  actions,
 };
