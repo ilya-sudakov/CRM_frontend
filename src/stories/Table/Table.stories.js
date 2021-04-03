@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import Table from 'Components/Table/Table.jsx';
 
 export default {
-  title: 'Table',
+  title: 'Table/Table',
   component: Table,
 };
 

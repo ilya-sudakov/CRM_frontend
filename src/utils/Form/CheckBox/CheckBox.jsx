@@ -5,7 +5,6 @@ const CheckBox = ({
   name = '',
   text = '',
   id,
-  value,
   disabled = false,
   onChange,
   checked = false,
@@ -24,7 +23,6 @@ const CheckBox = ({
           type="checkbox"
           name={name}
           id={id}
-          value={value}
           disabled={disabled}
           onChange={handleChange}
           checked={checked}

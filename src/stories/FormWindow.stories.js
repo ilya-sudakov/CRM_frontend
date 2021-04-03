@@ -5,10 +5,11 @@ export default {
   component: FormWindow,
 };
 
-const Template = (args) => <FormWindow {...args} showWindow={true} />;
+const Template = (args) => <FormWindow {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   title: 'Окно',
   content: 'Контент 123',
+  showWindow: true,
 };

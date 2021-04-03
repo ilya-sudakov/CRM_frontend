@@ -301,7 +301,7 @@ const statuses = {
   ['Проблема']: { backgroundColor: '#F8CBD0', color: '#770f0f' },
 };
 
-const TableBadge = ({ text, type = 'error' }) => {
+export const TableBadge = ({ text, type = 'error' }) => {
   const Badge = styled.div`
     display: flex;
     justify-content: center;
@@ -327,7 +327,7 @@ const TableBadge = ({ text, type = 'error' }) => {
   );
 };
 
-const TableSelectStatus = ({
+export const TableSelectStatus = ({
   value = 'success',
   options = [],
   onChange,
@@ -350,14 +350,15 @@ const TableSelectStatus = ({
     background-color: #fff;
     color: #333;
   `;
+  const item = statuses[value] ?? statuses['info'];
   return (
     <Select
       id={key}
       value={value}
       onChange={({ target }) => onChange(target.value)}
       style={{
-        backgroundColor: statuses[value].backgroundColor,
-        color: statuses[value].color,
+        backgroundColor: item.backgroundColor,
+        color: item.color,
       }}
     >
       {options.map((option) => (

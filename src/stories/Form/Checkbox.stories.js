@@ -1,7 +1,7 @@
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 
 export default {
-  title: 'Checkbox',
+  title: 'Form/Checkbox',
   component: CheckBox,
 };
 
@@ -9,11 +9,11 @@ const Template = (args) => <CheckBox {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  text: 'Checkbox',
+  text: 'Чекбокс',
 };
 
 export const Checked = Template.bind({});
 Checked.args = {
-  text: 'Checkbox',
+  text: 'Чекбокс',
   checked: true,
 };
