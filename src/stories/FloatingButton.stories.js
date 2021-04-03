@@ -1,4 +1,4 @@
-import FloatingPlus from '../utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 
 export default {
   title: 'FloatingPlus',

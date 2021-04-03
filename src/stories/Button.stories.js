@@ -1,4 +1,4 @@
-import Button from '../utils/Form/Button/Button.jsx';
+import Button from 'Utils/Form/Button/Button.jsx';
 
 export default {
   title: 'Button',

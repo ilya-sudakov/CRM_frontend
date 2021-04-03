@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import Table from '../components/Table/Table.jsx';
+import Table from 'Components/Table/Table.jsx';
 
 export default {
   title: 'Table',

@@ -1,4 +1,4 @@
-import FormWindow from '../utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 
 export default {
   title: 'FormWindow',
