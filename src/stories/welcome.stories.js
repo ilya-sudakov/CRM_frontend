@@ -27,8 +27,9 @@ const Wrapper = styled.div`
 `;
 
 const Item = styled.a`
-  display: flex;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
   margin-right: 15px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -37,6 +38,7 @@ const Item = styled.a`
   padding: 25px 20px;
   font-size: 1.1rem;
   color: #333;
+  text-align: center;
   cursor: pointer;
   transition: 100ms ease-in-out;
 
@@ -62,6 +64,7 @@ storiesOf('Welcome', module).add('Главная', () => (
     <Wrapper>
       <Item href="/?path=/story/form-checkbox--default">Форма</Item>
       <Item href="/?path=/story/table-table--default">Таблица</Item>
+      <Item href="/?path=/story/button--default">Остальное</Item>
       <Item href="/?path=/story/button--default">Остальное</Item>
     </Wrapper>
     <Wrapper>

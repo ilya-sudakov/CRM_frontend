@@ -6,7 +6,8 @@ import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 const StyledTable = styled.table`
   box-sizing: border-box;
   border-collapse: collapse;
-  width: 100%;
+  width: ${(props) => (props.fullSize ? 'calc(100% + 30px)' : '100%')};
+  margin-left: ${(props) => (props.fullSize ? '-15px' : '0')};
   max-width: 100vw;
   padding: 0 1px;
   font-size: 14px;
@@ -124,11 +125,11 @@ const Table = ({
   data = [],
   actions,
   loading = { isLoading: false },
-  options = { fullBorder: false },
+  options = { fullBorder: false, fullSize: false },
   onClick,
 }) => {
   return (
-    <StyledTable>
+    <StyledTable fullSize={options.fullSize}>
       <Row headerRow>
         {columns.map((column) => (
           <CellHeader

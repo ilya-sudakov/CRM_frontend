@@ -25,6 +25,15 @@ const FormWindow = ({
   }, [showWindow, setShowWindow, content]);
 
   const clickOnSelectWindow = (e) => {
+    console.log(
+      e.target,
+      e.target.classList.contains('form-window') ||
+        e.target.classList.contains('form-window__exit') ||
+        e.target.classList.contains('form-window__bar'),
+      !(e.target.classList[0] === 'form-window') &&
+        !e.target.classList.contains('form-window__exit') &&
+        !e.target.classList.contains('form-window__bar'),
+    );
     if (
       e.target.classList.contains('form-window') ||
       e.target.classList.contains('form-window__exit') ||
@@ -38,7 +47,7 @@ const FormWindow = ({
       !e.target.classList.contains('form-window__exit') &&
       !e.target.classList.contains('form-window__bar')
     ) {
-      setShowWindow(true);
+      // setShowWindow(true);
     } else {
       setShowWindow(false);
     }

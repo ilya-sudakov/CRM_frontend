@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import './SelectClients.scss';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import { searchClients } from 'Utils/RequestsAPI/Clients.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
-import useSearchBar from 'Utils/hooks/useSearchBar';
+import { useSearchBar, useFormWindow } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';
 
 const SelectClient = (props) => {
-  const [showWindow, setShowWindow] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [clients, setClients] = useState([]);
   const [id, setId] = useState(0);
@@ -57,15 +55,6 @@ const SelectClient = (props) => {
     ],
   );
 
-  const clickClient = ({ id, name }) => {
-    setId(id);
-    setName(name);
-    console.log(id);
-    props.onChange(id);
-    setShowWindow(!showWindow);
-    setCloseWindow(!closeWindow);
-  };
-
   const getURL = (site) =>
     site && site?.split('//')?.length > 1 ? site : `https://${site}`;
   const formatContacts = (contacts) =>
@@ -95,6 +84,35 @@ const SelectClient = (props) => {
     { text: 'Комментарий', value: 'comment' },
   ];
 
+  const clickClient = ({ id, name }) => {
+    setId(id);
+    setName(name);
+    props.onChange(id);
+    toggleFormWindow();
+    setCloseWindow(!closeWindow);
+  };
+
+  const { formWindow, toggleFormWindow } = useFormWindow(
+    'Выбор клиента',
+    <>
+      {searchBar}
+      {clients.length === 0 ? (
+        <div style={{ padding: '10px 25px' }}>
+          Введите не менее 3 символа для начала поиска
+        </div>
+      ) : (
+        <Table
+          columns={columns}
+          data={clients}
+          loading={{ isLoading }}
+          onClick={clickClient}
+          options={{ fullSize: true }}
+        />
+      )}
+    </>,
+    [closeWindow],
+  );
+
   return (
     <div className="select-client">
       <div className="select-client__input">
@@ -103,7 +121,7 @@ const SelectClient = (props) => {
           {!props.readonly && (
             <SelectFromButton
               text="Выбрать клиента"
-              onClick={() => setShowWindow(!showWindow)}
+              onClick={() => toggleFormWindow()}
             />
           )}
         </div>
@@ -143,28 +161,7 @@ const SelectClient = (props) => {
           Поле не заполнено!
         </div>
       )}
-      <FormWindow
-        title="Клиенты"
-        content={
-          <>
-            {searchBar}
-            {clients.length === 0 ? (
-              <div style={{ padding: '10px 25px' }}>
-                Введите не менее 3 символа для начала поиска
-              </div>
-            ) : (
-              <Table
-                columns={columns}
-                data={clients}
-                loading={{ isLoading }}
-                onClick={clickClient}
-              />
-            )}
-          </>
-        }
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
-      />
+      {formWindow}
     </div>
   );
 };
