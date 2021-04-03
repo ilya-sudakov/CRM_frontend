@@ -292,6 +292,8 @@ export default FileUploader;
 FileUploader.propTypes = {
   regex: PropTypes.string,
   type: PropTypes.string,
+  multipleFiles: PropTypes.bool,
+  defaultValue: PropTypes.array,
   onChange: PropTypes.func,
   uniqueId: PropTypes.string,
   error: PropTypes.string,
