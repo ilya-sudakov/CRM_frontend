@@ -24,6 +24,11 @@
 
         &--expired {
             color: #770f0f;
+
+            // width: fit-content;
+            // background-color: #e0b5b541;
+            // border-radius: 10px;
+            // padding: 5px 10px;
         }
     }
 
@@ -33,6 +38,7 @@
 
         &--expired {
             margin-bottom: 10px;
+
             border-radius: 10px;
             padding: 10px 15px 5px 15px;
             background-color: #e0b5b541;

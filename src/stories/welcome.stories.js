@@ -57,15 +57,27 @@ const GitHubItem = styled(Item)`
   }
 `;
 
+const preserveURL = (newURL) => {
+  const curURL = window.location.href;
+  if (curURL.includes('osfix_erp_frontend')) {
+    return `/osfix_erp_frontend${newURL}`;
+  }
+  return newURL;
+};
+
+const formURL = preserveURL('/?path=/story/form-checkbox--default');
+const TableURL = preserveURL('/?path=/story/table-table--default');
+const OtherURL = preserveURL('/?path=/story/button--default');
+
 storiesOf('Welcome', module).add('Главная', () => (
   <WelcomePage>
     <img src={logo}></img>
     <h3>Фронтенд для ERP/CRM-системы управления малого предприятия</h3>
     <Wrapper>
-      <Item href="/?path=/story/form-checkbox--default">Форма</Item>
-      <Item href="/?path=/story/table-table--default">Таблица</Item>
-      <Item href="/?path=/story/button--default">Остальное</Item>
-      <Item href="/?path=/story/button--default">Остальное</Item>
+      <Item href={formURL}>Форма</Item>
+      <Item href={TableURL}>Таблица</Item>
+      <Item href={OtherURL}>Остальное</Item>
+      <Item href={OtherURL}>Остальное</Item>
     </Wrapper>
     <Wrapper>
       <GitHubItem href="https://github.com/ilyasudakov/osfix_erp_frontend">

@@ -178,6 +178,7 @@ const Table = ({
                 : curColumn;
               const props = {
                 key: `${item.id}.${column.text}` ?? index,
+                title: formattedText,
                 style: {
                   width: column.width ?? 'auto',
                   maxWidth: column.maxWidth ?? column.width ?? 'auto',

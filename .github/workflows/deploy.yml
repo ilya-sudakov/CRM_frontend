@@ -22,4 +22,4 @@ jobs:
             git pull # Pull latest changes
             export NVM_DIR=~/.nvm 
             source ~/.nvm/nvm.sh
-            npm install # Update all packages, install new ones
+            npm install --legacy-peer-deps # Update all packages, install new ones

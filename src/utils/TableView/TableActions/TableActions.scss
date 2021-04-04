@@ -13,6 +13,10 @@
         width: auto !important;
     }
 
+    .main-window__action {
+        margin-right: 0;
+    }
+
     .table-actions__menu {
         display: flex;
         flex-direction: row;
