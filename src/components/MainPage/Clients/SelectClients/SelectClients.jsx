@@ -98,7 +98,7 @@ const SelectClient = (props) => {
       {searchBar}
       {clients.length === 0 ? (
         <div style={{ padding: '10px 25px' }}>
-          Введите не менее 3 символа для начала поиска
+          Введите не менее 3 символов для начала поиска
         </div>
       ) : (
         <Table

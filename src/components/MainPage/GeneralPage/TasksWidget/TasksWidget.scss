@@ -23,7 +23,7 @@
         max-width: 100%;
 
         &--expired {
-            color: #9b0909;
+            color: #770f0f;
         }
     }
 
@@ -32,11 +32,10 @@
         flex-direction: column;
 
         &--expired {
-            border: 1px solid #ddd;
-            background-color: #fdf6f68c;
-            border-radius: 3px;
-            padding: 5px 15px;
             margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 10px 15px 5px 15px;
+            background-color: #e0b5b541;
         }
     }
 
