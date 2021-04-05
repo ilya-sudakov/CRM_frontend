@@ -21,7 +21,6 @@ export const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [expiredIn, setExpiredIn] = useState(new Date());
   const [user, setUser] = useState({
-    //Данные пользователя
     email: '',
     username: '',
     firstName: '',
@@ -38,15 +37,12 @@ export const App = () => {
     visible: false,
   });
 
-  //Обновление данных пользователя
   const setUserData = (isAuthorized, data) => {
     setIsAuthorized(isAuthorized);
     setUser(data?.user);
     setExpiredIn(data?.expiredIn);
   };
 
-  //Метод для проверки на принадлежность пользователя
-  //к одной из ролей из переданного массива ролей
   const userHasAccess = (rolesNeeded = []) => {
     let check = false;
     user.roles.map((item) => {
@@ -61,16 +57,13 @@ export const App = () => {
   };
 
   useEffect(() => {
-    //Проверка на наличие в localStorage браузера токена,
-    //запрос на его обновление при отсутствии
-    if (localStorage.getItem('refreshToken') && !isAuthorized)
-      refreshOldToken();
-
+    if (localStorage.getItem('refreshToken') && !isAuthorized) {
+      refreshAccessToken();
+    }
     initFirebase();
   }, []);
 
-  //Обработка токена
-  const refreshExpiredToken = (expiredIn = new Date()) => {
+  const handleExpiredToken = (expiredIn = new Date()) => {
     const curDateMS = new Date().getTime();
     const expiredInDateMS = new Date(expiredIn * 1000).getTime();
 
@@ -78,34 +71,28 @@ export const App = () => {
       const timeDifference = expiredInDateMS - curDateMS;
       return setTimeout(() => {
         console.log('refreshing old token');
-        return refreshOldToken();
+        return refreshAccessToken();
       }, timeDifference);
     }
 
-    if (expiredInDateMS <= curDateMS) {
-      console.log('refreshing old token');
-      return refreshOldToken();
-    }
+    console.log('refreshing old token');
+    return refreshAccessToken();
   };
 
-  //Обновление токена доступа
-  const refreshOldToken = () => {
+  const refreshAccessToken = () => {
     const refreshTokenObject = Object.assign({
       refreshToken: localStorage.getItem('refreshToken'),
     });
     return refreshToken(refreshTokenObject)
       .then((res) => res.json())
       .then((response) => {
-        //Сохраняем данные пользователя
         setUserData(true, response);
-        //Функция обработки токена, если он устареет
-        refreshExpiredToken(response.expiredIn);
+        handleExpiredToken(response.expiredIn);
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
         return;
       })
       .catch((error) => {
-        //При ошибке очищаем localStorage
         console.log(error);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
