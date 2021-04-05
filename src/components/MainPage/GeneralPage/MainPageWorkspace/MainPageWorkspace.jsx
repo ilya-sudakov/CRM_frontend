@@ -7,7 +7,7 @@ import {
   TasksWidget,
   GraphWidget,
   FeedbackWidget,
-} from '../../lazyImports.jsx';
+} from '../../lazyImports';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { useHistory } from 'react-router';
 import { useState } from 'react';

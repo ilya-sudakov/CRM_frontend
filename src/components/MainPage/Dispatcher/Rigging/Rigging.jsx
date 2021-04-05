@@ -1,5 +1,5 @@
 import { useEffect, useState, Suspense } from 'react';
-import { RiggingWorkshop } from '../../lazyImports.jsx';
+import { RiggingWorkshop } from '../../lazyImports';
 import PrivateRoute from '../../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import PlusImg from 'Assets/sidemenu/plus.inline.svg';

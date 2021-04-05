@@ -7,7 +7,7 @@ import Header from '../Header/Header.jsx';
 import {
   Clients,
   GeneralPage,
-  newClient,
+  NewClient,
   Products,
   NewProduct,
   Users,
@@ -55,9 +55,9 @@ import {
   EditRequest,
   NewLtd,
   EditLtd,
-  ProductionJournalNew,
+  ProductionJournal,
   WorkshopRequests,
-} from './lazyImports.jsx';
+} from './lazyImports';
 import SideMenu from '../SideMenu/SideMenu.jsx';
 import PageNotFound from './PageNotFound/PageNotFound.jsx';
 import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx';
@@ -174,7 +174,7 @@ const MainPage = () => {
                   <PrivateRoute
                     exact
                     path="/clients/new"
-                    component={newClient}
+                    component={NewClient}
                     type="clients"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
@@ -208,7 +208,7 @@ const MainPage = () => {
                   <PrivateRoute
                     exact
                     path="/suppliers/new"
-                    component={newClient}
+                    component={NewClient}
                     type="suppliers"
                     userHasAccess={userContext.userHasAccess}
                     userData={userContext.userData}
@@ -472,7 +472,7 @@ const MainPage = () => {
                   />
                   <PrivateRoute
                     path="/work-management/journal/"
-                    component={ProductionJournalNew}
+                    component={ProductionJournal}
                     allowedRoles={allUsers}
                   />
                   <PrivateRoute

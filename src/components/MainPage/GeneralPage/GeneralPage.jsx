@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { MainPageWorkspace } from '../lazyImports.jsx';
+import { MainPageWorkspace } from '../lazyImports';
 import './GeneralPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 

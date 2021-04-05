@@ -24,7 +24,7 @@ import { getExcelFileBlob, parseExcelData } from './functions.js';
 import GroupTitlePage from './components/GroupTitlePage.jsx';
 import CategoryHeader from './components/CategoryHeader.jsx';
 import GroupOfProducts from './components/GroupOfProducts.jsx';
-import { PricesListPage } from '../../lazyImports.jsx';
+import { PricesListPage } from '../../lazyImports';
 
 const PriceList = () => {
   const [optionalCols, setOptionalCols] = useState(defaultOptionalColumns);

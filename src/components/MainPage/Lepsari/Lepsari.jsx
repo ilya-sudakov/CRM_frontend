@@ -16,7 +16,7 @@ import {
   WorkshopOrders,
   NewRequest,
   EditRequest,
-} from '../lazyImports.jsx';
+} from '../lazyImports';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
 const Lepsari = (props) => {
