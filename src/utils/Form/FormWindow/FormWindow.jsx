@@ -9,6 +9,7 @@ const FormWindow = ({
   title = '',
   headerButton,
   content = '',
+  size = 'big',
 }) => {
   const pressEscKey = useCallback(
     (event) => {
@@ -37,7 +38,9 @@ const FormWindow = ({
 
   return (
     <div
-      className={showWindow ? 'form-window' : 'form-window form-window--hidden'}
+      className={`form-window ${
+        showWindow ? '' : 'form-window--hidden'
+      } form-window--${size}`}
       onClick={clickOnSelectWindow}
     >
       <div
@@ -81,4 +84,5 @@ FormWindow.propTypes = {
   title: PropTypes.string,
   headerButton: PropTypes.object,
   content: PropTypes.any,
+  size: PropTypes.oneOf(['big', 'medium', 'small']),
 };

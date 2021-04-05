@@ -1,4 +1,4 @@
-import { TableBadge } from 'Components/Table/Table.jsx';
+import TableBadge from 'Components/Table/TableBadge.jsx';
 
 export default {
   title: 'Table/Badge',

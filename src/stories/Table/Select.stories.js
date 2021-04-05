@@ -1,4 +1,4 @@
-import { TableSelectStatus } from 'Components/Table/Table.jsx';
+import TableSelectStatus from 'Components/Table/TableSelectStatus.jsx';
 
 export default {
   title: 'Table/Select',

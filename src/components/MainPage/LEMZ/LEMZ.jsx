@@ -16,7 +16,6 @@ import {
   EditWorkshopOrder,
   NewRequest,
   EditRequest,
-  ShipRequest,
 } from '../lazyImports.jsx';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
@@ -91,12 +90,6 @@ const LEMZ = (props) => {
               <PrivateRoute
                 path="/lemz/workshop-lemz/edit/"
                 component={EditRequest}
-                type="lemz"
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
-              />
-              <PrivateRoute
-                path="/lemz/workshop-lemz/ship/"
-                component={ShipRequest}
                 type="lemz"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEMZ']}
               />

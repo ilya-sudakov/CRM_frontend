@@ -16,7 +16,6 @@ import {
   WorkshopOrders,
   NewRequest,
   EditRequest,
-  ShipRequest,
 } from '../lazyImports.jsx';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 
@@ -120,12 +119,6 @@ const Lepsari = (props) => {
               <PrivateRoute
                 path="/lepsari/workshop-storage/edit/"
                 component={EditStorage}
-                type="lepsari"
-                allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
-              />
-              <PrivateRoute
-                path="/lepsari/workshop-lepsari/ship/"
-                component={ShipRequest}
                 type="lepsari"
                 allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_LEPSARI']}
               />
