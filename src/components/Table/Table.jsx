@@ -1,7 +1,10 @@
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TableLoading from './PlaceholderLoading/TableLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import TableSelectStatus from './TableSelectStatus.jsx';
+import TableBadge from './TableBadge.jsx';
 
 const StyledTable = styled.table`
   box-sizing: border-box;
@@ -188,19 +191,18 @@ const Table = ({
               const mobileText = <MobileText>{column.text}</MobileText>;
               if (column.link) {
                 const newTab = column.link.newTab;
+                const linkProps = {
+                  [column.link.isOutside ? 'href' : 'to']: column.link.getURL
+                    ? column.link.getURL(curColumn)
+                    : curColumn,
+                  target: newTab ? '_blank' : undefined,
+                  rel: newTab ? 'noreferrer' : undefined,
+                };
                 if (column.link.isOutside) {
                   return (
                     <Cell {...props}>
                       {mobileText}
-                      <TableOutsideLink
-                        href={
-                          column.link.getURL
-                            ? column.link.getURL(curColumn)
-                            : curColumn
-                        }
-                        target={newTab ? '_blank' : undefined}
-                        rel={newTab ? 'noreferrer' : undefined}
-                      >
+                      <TableOutsideLink {...linkProps}>
                         {formattedText}
                       </TableOutsideLink>
                     </Cell>
@@ -209,27 +211,17 @@ const Table = ({
                 return (
                   <Cell {...props}>
                     {mobileText}
-                    <TableAppLink
-                      to={
-                        column.link.getURL
-                          ? column.link.getURL(curColumn)
-                          : curColumn
-                      }
-                      target={newTab ? '_blank' : undefined}
-                      rel={newTab ? 'noreferrer' : undefined}
-                    >
-                      {formattedText}
-                    </TableAppLink>
+                    <TableAppLink {...linkProps}>{formattedText}</TableAppLink>
                   </Cell>
                 );
               }
-              if (
+              const hasBadge =
                 column.badge &&
                 (column.badge?.isVisible ||
                   (column.badge?.isVisible === undefined &&
                     column.badge?.isVisibleFn === undefined) ||
-                  column.badge?.isVisibleFn(curColumn))
-              ) {
+                  column.badge?.isVisibleFn(curColumn));
+              if (hasBadge) {
                 return (
                   <Cell {...props}>
                     {mobileText}
@@ -241,17 +233,6 @@ const Table = ({
                 );
               }
               if (column.status) {
-                if (column.status.onChange) {
-                  <Cell {...props}>
-                    {mobileText}
-                    <TableSelectStatus
-                      id={props.key}
-                      value={formattedText}
-                      onChange={(value) => column.status.onChange(value, item)}
-                      options={column.status.options}
-                    />
-                  </Cell>;
-                }
                 return (
                   <Cell {...props}>
                     {mobileText}
@@ -260,6 +241,7 @@ const Table = ({
                       value={formattedText}
                       onChange={(value) => column.status.onChange(value, item)}
                       options={column.status.options}
+                      readOnly={!column.status.onChange}
                     />
                   </Cell>
                 );
@@ -292,82 +274,11 @@ const Table = ({
 
 export default Table;
 
-const statuses = {
-  ['success']: { backgroundColor: '#E5F6D3', color: '#06731c' },
-  ['info']: { backgroundColor: '#bdddfd', color: '#02407d' },
-  ['error']: { backgroundColor: '#F8CBD0', color: '#770f0f' },
-  ['Материалы']: { backgroundColor: '#ffe5b4', color: '#4a3301' },
-  ['Выполнено']: { backgroundColor: '#E5F6D3', color: '#06731c' },
-  ['В процессе']: { backgroundColor: '#bdddfd', color: '#02407d' },
-  ['Отложено']: { backgroundColor: '#ffceec', color: '#6d0a47' },
-  ['Проблема']: { backgroundColor: '#F8CBD0', color: '#770f0f' },
-};
-
-export const TableBadge = ({ text, type = 'error' }) => {
-  const Badge = styled.div`
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    border-radius: 5px;
-    width: fit-content;
-    min-width: 100px;
-    min-height: 1.5rem;
-    padding: 3px 10px;
-    font-size: 14px;
-    color: #333;
-  `;
-  return (
-    <Badge
-      type={type}
-      style={{
-        backgroundColor: statuses[type].backgroundColor,
-        color: statuses[type].color,
-      }}
-    >
-      {text}
-    </Badge>
-  );
-};
-
-export const TableSelectStatus = ({
-  value = 'success',
-  options = [],
-  onChange,
-  key,
-}) => {
-  const Select = styled.select`
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 1px solid #bbbbbbbb;
-    border-radius: 5px;
-    width: fit-content;
-    min-width: 100px;
-    min-height: 1.5rem;
-    padding: 3px 10px;
-    outline: none;
-    font-size: 14px;
-  `;
-  const Option = styled.option`
-    background-color: #fff;
-    color: #333;
-  `;
-  const item = statuses[value] ?? statuses['info'];
-  return (
-    <Select
-      id={key}
-      value={value}
-      onChange={({ target }) => onChange(target.value)}
-      style={{
-        backgroundColor: item.backgroundColor,
-        color: item.color,
-      }}
-    >
-      {options.map((option) => (
-        <Option key={option.value} value={option.value ?? option.text}>
-          {option.text ?? option.value}
-        </Option>
-      ))}
-    </Select>
-  );
+Table.propTypes = {
+  columns: PropTypes.array,
+  data: PropTypes.array,
+  actions: PropTypes.array,
+  loading: PropTypes.object,
+  options: PropTypes.object,
+  onClick: PropTypes.func,
 };
