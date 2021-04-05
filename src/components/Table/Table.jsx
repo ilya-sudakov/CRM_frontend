@@ -123,6 +123,37 @@ const getMaxLines = (lines = 3) => ({
   WebkitBoxOrient: 'vertical',
 });
 
+const renderTableLinkCell = ({
+  link,
+  curColumn,
+  props,
+  mobileText,
+  formattedText,
+}) => {
+  const newTab = link.newTab;
+  const linkProps = {
+    [link.isOutside ? 'href' : 'to']: link.getURL
+      ? link.getURL(curColumn)
+      : curColumn,
+    target: newTab ? '_blank' : undefined,
+    rel: newTab ? 'noreferrer' : undefined,
+  };
+  if (link.isOutside) {
+    return (
+      <Cell {...props}>
+        {mobileText}
+        <TableOutsideLink {...linkProps}>{formattedText}</TableOutsideLink>
+      </Cell>
+    );
+  }
+  return (
+    <Cell {...props}>
+      {mobileText}
+      <TableAppLink {...linkProps}>{formattedText}</TableAppLink>
+    </Cell>
+  );
+};
+
 const Table = ({
   columns = [],
   data = [],
@@ -190,30 +221,13 @@ const Table = ({
               };
               const mobileText = <MobileText>{column.text}</MobileText>;
               if (column.link) {
-                const newTab = column.link.newTab;
-                const linkProps = {
-                  [column.link.isOutside ? 'href' : 'to']: column.link.getURL
-                    ? column.link.getURL(curColumn)
-                    : curColumn,
-                  target: newTab ? '_blank' : undefined,
-                  rel: newTab ? 'noreferrer' : undefined,
-                };
-                if (column.link.isOutside) {
-                  return (
-                    <Cell {...props}>
-                      {mobileText}
-                      <TableOutsideLink {...linkProps}>
-                        {formattedText}
-                      </TableOutsideLink>
-                    </Cell>
-                  );
-                }
-                return (
-                  <Cell {...props}>
-                    {mobileText}
-                    <TableAppLink {...linkProps}>{formattedText}</TableAppLink>
-                  </Cell>
-                );
+                return renderTableLinkCell({
+                  link: column.link,
+                  curColumn,
+                  props,
+                  mobileText,
+                  formattedText,
+                });
               }
               const hasBadge =
                 column.badge &&

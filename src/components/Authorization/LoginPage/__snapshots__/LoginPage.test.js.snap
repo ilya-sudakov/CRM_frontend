@@ -113,7 +113,6 @@ exports[`LoginPage component matches snapshot 1`] = `
               checked=""
               name=""
               type="checkbox"
-              value=""
             />
             <div
               class="checkbox__checkmark"
