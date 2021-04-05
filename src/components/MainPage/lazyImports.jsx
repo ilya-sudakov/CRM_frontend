@@ -10,10 +10,6 @@ const EditRequest = lazy(() =>
   import('./WorkshopsComponents/Forms/EditRequest/EditRequest.jsx'),
 );
 
-const ShipRequest = lazy(() =>
-  import('./WorkshopsComponents/Forms/ShipRequest/ShipRequest.jsx'),
-);
-
 const GeneralPage = lazy(() => import('./GeneralPage/GeneralPage.jsx'));
 
 const RiggingList = lazy(() =>
@@ -226,7 +222,7 @@ const StatisticsPage = lazy(() =>
   import('./StatisticsPage/StatisticsPage.jsx'),
 );
 
-// --- WIDGETS --- //
+// <--- WIDGETS ---> //
 
 const StatisticsWidget = lazy(() =>
   import('./GeneralPage/StatisticsWidget/StatisticsWidget.jsx'),
@@ -252,6 +248,8 @@ const NotificationsWidget = lazy(() =>
   import('./GeneralPage/Notifications/NotificationsWidget.jsx'),
 );
 
+// <!--- WIDGETS ---> //
+
 export {
   StatisticsWidget,
   UpdateLogWidget,
@@ -266,7 +264,6 @@ export {
   ClientCategories,
   NewRequest,
   EditRequest,
-  ShipRequest,
   GeneralPage,
   RiggingWorkshop,
   MainPageWorkspace,

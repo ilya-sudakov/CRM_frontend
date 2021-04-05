@@ -52,7 +52,6 @@ import {
   ReportsPage,
   EmployeeReportPage,
   NewRequest,
-  ShipRequest,
   EditRequest,
   NewLtd,
   EditLtd,
@@ -243,12 +242,6 @@ const MainPage = () => {
                       'ROLE_MANAGER',
                       'ROLE_WORKSHOP',
                     ]}
-                  />
-                  <PrivateRoute
-                    path="/requests/ship/"
-                    component={ShipRequest}
-                    type="requests"
-                    allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}
                   />
                   <PrivateRoute
                     path="/requests/"
