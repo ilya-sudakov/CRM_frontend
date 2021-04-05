@@ -34,7 +34,7 @@ const Header = (props) => {
             <div className="line"></div>
           </div>
         </div>
-        <Link className="header__link" to="/">
+        <Link className="header__link header__link--logo" to="/">
           <img className="header__logo" src={logoMobile} alt="" />
         </Link>
       </div>
