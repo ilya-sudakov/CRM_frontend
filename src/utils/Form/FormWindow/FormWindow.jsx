@@ -19,36 +19,18 @@ const FormWindow = ({
 
   useEffect(() => {
     document.addEventListener('keydown', pressEscKey, false);
-    return () => {
-      document.removeEventListener('keydown', pressEscKey, false);
-    };
+    return () => document.removeEventListener('keydown', pressEscKey, false);
   }, [showWindow, setShowWindow, content]);
 
-  const clickOnSelectWindow = (e) => {
-    console.log(
-      e.target,
-      e.target.classList.contains('form-window') ||
-        e.target.classList.contains('form-window__exit') ||
-        e.target.classList.contains('form-window__bar'),
-      !(e.target.classList[0] === 'form-window') &&
-        !e.target.classList.contains('form-window__exit') &&
-        !e.target.classList.contains('form-window__bar'),
-    );
+  const clickOnSelectWindow = (event) => {
+    const classList = event.target.classList;
     if (
-      e.target.classList.contains('form-window') ||
-      e.target.classList.contains('form-window__exit') ||
-      e.target.classList.contains('form-window__bar')
+      classList.contains('form-window') ||
+      classList.contains('form-window__exit') ||
+      classList.contains('form-window__bar')
     ) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (
-      !(e.target.classList[0] === 'form-window') &&
-      !e.target.classList.contains('form-window__exit') &&
-      !e.target.classList.contains('form-window__bar')
-    ) {
-      // setShowWindow(true);
-    } else {
+      event.preventDefault();
+      event.stopPropagation();
       setShowWindow(false);
     }
   };
