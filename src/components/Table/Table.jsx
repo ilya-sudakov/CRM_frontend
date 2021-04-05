@@ -1,120 +1,20 @@
-import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import TableLoading from './PlaceholderLoading/TableLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import TableSelectStatus from './TableSelectStatus.jsx';
 import TableBadge from './TableBadge.jsx';
+import {
+  Cell,
+  TableOutsideLink,
+  TableAppLink,
+  StyledTable,
+  Row,
+  CellHeader,
+  RowLoading,
+  CellLoading,
+  MobileText,
+} from './styles';
 
-const StyledTable = styled.table`
-  box-sizing: border-box;
-  border-collapse: collapse;
-  width: ${(props) => (props.fullSize ? 'calc(100% + 30px)' : '100%')};
-  margin-left: ${(props) => (props.fullSize ? '-15px' : '0')};
-  max-width: 100vw;
-  padding: 0 1px;
-  font-size: 14px;
-  background-color: #fff;
-
-  .main-window__table-actions {
-    max-width: none;
-  }
-
-  @media (max-width: 768px) {
-    tr {
-      &:first-child {
-        display: none;
-      }
-    }
-    td {
-      box-sizing: border-box;
-      float: left;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100% !important;
-      max-width: none !important;
-      padding: 3px 20px !important;
-      text-align: right;
-
-      &:first-child {
-        padding-top: 15px !important;
-      }
-
-      .main-window__table-actions {
-        width: 100%;
-        flex: none;
-      }
-    }
-  }
-`;
-const Row = styled.tr`
-  position: relative;
-  border-bottom: 1px solid #ddd;
-  height: 40px;
-  transition: 100ms ease-in-out;
-
-  &:hover {
-    background-color: ${(props) =>
-      props.headerRow || props.loading ? '#fff' : '#eee'};
-  }
-`;
-const RowLoading = styled(Row)`
-  transform: scale(1);
-
-  &:hover {
-    background-color: #fff;
-  }
-`;
-const baseCellStyles = css`
-  --side-padding: 30px;
-  padding: 6px 10px;
-  text-align: left;
-
-  &:first-child {
-    padding-left: var(--side-padding);
-  }
-
-  &:last-child {
-    padding-right: var(--side-padding);
-  }
-`;
-const Cell = styled.td`
-  ${baseCellStyles}
-`;
-const CellHeader = styled.th`
-  ${baseCellStyles}
-  font-weight: 400;
-  text-align: left;
-  color: #777;
-`;
-const CellLoading = styled.td`
-  ${baseCellStyles}
-
-  > div {
-    border: none;
-    border-radius: 5px;
-  }
-`;
-const TableLinkStyles = css`
-  color: var(--main-color);
-`;
-const TableAppLink = styled(Link)`
-  ${TableLinkStyles}
-`;
-const TableOutsideLink = styled.a`
-  ${TableLinkStyles}
-`;
-const MobileText = styled.span`
-  display: none;
-  padding-right: 5px;
-  text-align: left;
-  color: #777;
-
-  @media (max-width: 768px) {
-    display: block;
-  }
-`;
 const getMaxLines = (lines = 3) => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -150,6 +50,68 @@ const renderTableLinkCell = ({
     <Cell {...props}>
       {mobileText}
       <TableAppLink {...linkProps}>{formattedText}</TableAppLink>
+    </Cell>
+  );
+};
+
+const renderTableCell = (column, item, index, options) => {
+  const mobileText = <MobileText>{column.text}</MobileText>;
+  const curColumn = item[column.value];
+  const formattedText = column.formatFn
+    ? column.formatFn(curColumn)
+    : curColumn;
+  const props = {
+    key: `${item.id}.${column.text}` ?? index,
+    title: formattedText,
+    style: {
+      width: column.width ?? 'auto',
+      maxWidth: column.maxWidth ?? column.width ?? 'auto',
+      ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
+    },
+  };
+  if (column.link) {
+    return renderTableLinkCell({
+      link: column.link,
+      curColumn,
+      props,
+      mobileText,
+      formattedText,
+    });
+  }
+  const hasBadge =
+    column.badge &&
+    (column.badge?.isVisible ||
+      (column.badge?.isVisible === undefined &&
+        column.badge?.isVisibleFn === undefined) ||
+      column.badge?.isVisibleFn(curColumn));
+  if (hasBadge) {
+    return (
+      <Cell {...props}>
+        {mobileText}
+        <TableBadge type={column.badge?.type} text={formattedText} />
+      </Cell>
+    );
+  }
+  if (column.status) {
+    return (
+      <Cell {...props}>
+        {mobileText}
+        <TableSelectStatus
+          id={props.key}
+          value={formattedText}
+          onChange={(value) => column.status.onChange(value, item)}
+          options={column.status.options}
+          readOnly={!column.status.onChange}
+        />
+      </Cell>
+    );
+  }
+  return (
+    <Cell key={index} {...props}>
+      {mobileText}
+      <div style={{ ...getMaxLines(column.options?.maxLines) }}>
+        {formattedText}
+      </div>
     </Cell>
   );
 };
@@ -205,70 +167,9 @@ const Table = ({
             onClick={() => onClick(item, index)}
             style={{ cursor: onClick ? 'pointer' : 'auto' }}
           >
-            {columns.map((column) => {
-              const curColumn = item[column.value];
-              const formattedText = column.formatFn
-                ? column.formatFn(curColumn)
-                : curColumn;
-              const props = {
-                key: `${item.id}.${column.text}` ?? index,
-                title: formattedText,
-                style: {
-                  width: column.width ?? 'auto',
-                  maxWidth: column.maxWidth ?? column.width ?? 'auto',
-                  ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
-                },
-              };
-              const mobileText = <MobileText>{column.text}</MobileText>;
-              if (column.link) {
-                return renderTableLinkCell({
-                  link: column.link,
-                  curColumn,
-                  props,
-                  mobileText,
-                  formattedText,
-                });
-              }
-              const hasBadge =
-                column.badge &&
-                (column.badge?.isVisible ||
-                  (column.badge?.isVisible === undefined &&
-                    column.badge?.isVisibleFn === undefined) ||
-                  column.badge?.isVisibleFn(curColumn));
-              if (hasBadge) {
-                return (
-                  <Cell {...props}>
-                    {mobileText}
-                    <TableBadge
-                      type={column.badge?.type}
-                      text={formattedText}
-                    />
-                  </Cell>
-                );
-              }
-              if (column.status) {
-                return (
-                  <Cell {...props}>
-                    {mobileText}
-                    <TableSelectStatus
-                      id={props.key}
-                      value={formattedText}
-                      onChange={(value) => column.status.onChange(value, item)}
-                      options={column.status.options}
-                      readOnly={!column.status.onChange}
-                    />
-                  </Cell>
-                );
-              }
-              return (
-                <Cell key={index} {...props}>
-                  {mobileText}
-                  <div style={{ ...getMaxLines(column.options?.maxLines) }}>
-                    {formattedText}
-                  </div>
-                </Cell>
-              );
-            })}
+            {columns.map((column) =>
+              renderTableCell(column, item, index, options),
+            )}
             {actions ? (
               <Cell
                 style={{
