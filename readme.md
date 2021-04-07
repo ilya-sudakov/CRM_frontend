@@ -55,9 +55,6 @@
 
         npm run storybook --no-dll
 
-- Для выгрузки Storybook на GP Pages:
-
-        npm run build-storybook
-        npm run deploy-storybook
+- При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action
 
 - GH Pages Storybook: https://ilyasudakov.github.io/osfix_erp_frontend/
