@@ -2,9 +2,9 @@ name: CodeClimate Unit/Integration Test Run
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
