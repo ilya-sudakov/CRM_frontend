@@ -1,7 +1,7 @@
 name: Build and Deploy Storybook to GHPages
 on:
   push:
-    paths: ['src/stories/**'] # Trigger the action only when files change in the folders defined here
+    paths: ['src/stories/**']
   # Allows to run job manually
   workflow_dispatch:
 
@@ -9,15 +9,16 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         uses: actions/checkout@v2.3.1
         with:
           persist-credentials: false
-      - name: Install and Build 🔧
-        run: | # Install npm packages and build the Storybook files
+      - name: Install and Build
+        run: |
           npm install
+          npm install --save-dev webpack@4.44.2
           npm run build-storybook
-      - name: Deploy 🚀
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
