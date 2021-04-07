@@ -41,7 +41,11 @@ const TableActions = ({ actionsList = [] }) => {
           if (editActionItem && item.elementType === 'edit') return;
           if (item.elementType === 'delete') {
             return (
-              <DeleteItemAction title={item.text} onClick={item.onClick} />
+              <DeleteItemAction
+                key={index}
+                title={item.text}
+                onClick={item.onClick}
+              />
             );
           }
           return <ActionItem key={index} icon={item.elementType} item={item} />;

@@ -172,6 +172,7 @@ const SideMenu = (props) => {
           userContext.userHasAccess(item.mainRoles) &&
           item.name && (
             <div
+              key={item.name}
               className={
                 props.location.pathname.includes(item.pathname) &&
                 item.pathname !== '/'

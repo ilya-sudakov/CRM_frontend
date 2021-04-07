@@ -28,7 +28,7 @@
 
         API_BASE_URL = http://localhost:port
         NODE_ENV = production
-        INN_TOKEN = INNToken
+        INN_TOKEN = INN_token
 
 - После этих действий в корне фронтэнд проекта / запустите команду:
 
