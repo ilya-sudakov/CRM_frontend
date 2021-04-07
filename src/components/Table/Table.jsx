@@ -164,7 +164,7 @@ const Table = ({
         data.map((item, index) => (
           <Row
             key={index}
-            onClick={() => onClick(item, index)}
+            onClick={onClick ? () => onClick(item, index) : undefined}
             style={{ cursor: onClick ? 'pointer' : 'auto' }}
           >
             {columns.map((column) =>

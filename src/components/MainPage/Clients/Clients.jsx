@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import './Clients.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import 'Utils/Form/Form.scss';
-import { searchClients } from 'Utils/RequestsAPI/clients';
+import { searchClients } from 'Utils/RequestsAPI/Clients';
 import { Link } from 'react-router-dom';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './SelectLegalEntity.scss';
-import { getInfoByINN, getBIKByINN } from 'Utils/RequestsAPI/clients';
+import { getInfoByINN, getBIKByINN } from 'Utils/RequestsAPI/Clients';
 import Button from 'Utils/Form/Button/Button.jsx';
 import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';

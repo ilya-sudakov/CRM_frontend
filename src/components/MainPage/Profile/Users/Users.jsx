@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Users.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
 import { getUsers, deleteUser } from 'Utils/RequestsAPI/users';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useSort from 'Utils/hooks/useSort/useSort';
+import Table from 'Components/Table/Table.jsx';
+import UserContext from 'Components/../App';
 
-const Users = (props) => {
+const Users = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const userContext = useContext(UserContext);
   const { sortPanel, sortedData } = useSort(
     users,
     {
@@ -122,6 +124,44 @@ const Users = (props) => {
     });
   };
 
+  const roles = {
+    ROLE_ADMIN: 'Руководитель',
+    ROLE_MANAGER: 'Менеджер',
+    ROLE_DISPATCHER: 'Диспетчер',
+    ROLE_LEMZ: 'ЦехЛЭМЗ',
+    ROLE_LEPSARI: 'ЦехЛепсари',
+    ROLE_LIGOSVKIY: 'ЦехЛиговский',
+    ROLE_ENGINEER: 'Инженер1',
+  };
+
+  const formatUserRole = (_roles) => {
+    const role = _roles.find((item) => item.name)?.name;
+    return roles[role];
+  };
+
+  const columns = [
+    { text: 'Имя пользователя', value: 'username' },
+    { text: 'Эл. почта', value: 'email' },
+    {
+      text: 'Роль',
+      value: 'roles',
+      formatFn: formatUserRole,
+    },
+  ];
+  const actions = (item) => [
+    {
+      elementType: 'edit',
+      title: 'Редактировать пользователя',
+      link: `/profile/users/edit/${item.id}`,
+    },
+    {
+      elementType: 'delete',
+      title: 'Удаление пользователя',
+      onClick: () => deleteItem(item.id),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+    },
+  ];
+
   return (
     <div className="users-manage">
       <div className="main-window">
@@ -174,13 +214,11 @@ const Users = (props) => {
             </div>
           }
         />
-        <TableView
+        <Table
+          columns={columns}
           data={filterUsersByRoles(sortedData)}
-          searchQuery={searchQuery}
-          deleteItem={deleteItem}
-          userHasAccess={props.userHasAccess}
-          isLoading={isLoading}
-          userRoles={userRoles}
+          loading={{ isLoading }}
+          actions={actions}
         />
       </div>
     </div>

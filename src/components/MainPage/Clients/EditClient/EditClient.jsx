@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './EditClient.scss';
 import 'Utils/Form/Form.scss';
-import { getClientById, editClient } from 'Utils/RequestsAPI/clients';
+import { getClientById, editClient } from 'Utils/RequestsAPI/Clients';
 import {
   addClientLegalEntity,
   editClientLegalEntity,

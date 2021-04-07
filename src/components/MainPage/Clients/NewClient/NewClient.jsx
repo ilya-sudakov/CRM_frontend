@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import './NewClient.scss';
 import 'Utils/Form/Form.scss';
-import { addClient } from 'Utils/RequestsAPI/clients';
+import { addClient } from 'Utils/RequestsAPI/Clients';
 import { addClientLegalEntity } from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
 import { addClientContact } from 'Utils/RequestsAPI/Clients/Contacts.jsx';
 import { addClientWorkHistory } from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';

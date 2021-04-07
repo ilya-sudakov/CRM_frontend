@@ -10,7 +10,7 @@ import {
   getClientsByCategoryAndType,
   editNextContactDateClient,
   editClient,
-} from 'Utils/RequestsAPI/clients';
+} from 'Utils/RequestsAPI/Clients';
 import { getSuppliersByCategoryAndType } from 'Utils/RequestsAPI/Clients/Suppliers';
 
 export const clientTypes = {
