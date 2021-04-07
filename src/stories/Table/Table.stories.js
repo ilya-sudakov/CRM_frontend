@@ -123,3 +123,22 @@ WithActions.args = {
   data: data,
   actions,
 };
+
+export const EmptyTable = Template.bind({});
+EmptyTable.args = {
+  columns: columns,
+  data: [],
+  actions,
+};
+
+export const NestedTable = Template.bind({});
+NestedTable.args = {
+  columns: columns,
+  data: data,
+  actions,
+  nestedTable: {
+    fieldName: 'nestedItems',
+    columns: columns,
+    actions,
+  },
+};
