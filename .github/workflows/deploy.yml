@@ -3,8 +3,12 @@ name: deploy
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
   push:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
 
 jobs:
   deploy:

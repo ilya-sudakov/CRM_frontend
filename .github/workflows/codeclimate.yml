@@ -3,8 +3,12 @@ name: CodeClimate Unit/Integration Test Run
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
 
 jobs:
   deploy:

@@ -4,8 +4,12 @@ name: docker ci
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
   push:
     branches: [main]
+    paths-ignore:
+      - '**.stories.js'
 
   # Allows to run job manually
   workflow_dispatch:
