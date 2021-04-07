@@ -67,7 +67,7 @@ const preserveURL = (newURL) => {
 
 const formURL = preserveURL('/?path=/story/form-checkbox--default');
 const TableURL = preserveURL('/?path=/story/table-table--default');
-const OtherURL = preserveURL('/?path=/story/button--default');
+// const OtherURL = preserveURL('/?path=/story/button--default');
 
 storiesOf('Welcome', module).add('Главная', () => (
   <WelcomePage>
@@ -76,8 +76,8 @@ storiesOf('Welcome', module).add('Главная', () => (
     <Wrapper>
       <Item href={formURL}>Форма</Item>
       <Item href={TableURL}>Таблица</Item>
-      <Item href={OtherURL}>Остальное</Item>
-      <Item href={OtherURL}>Остальное</Item>
+      {/* <Item href={OtherURL}>Остальное</Item> */}
+      {/* <Item href={OtherURL}>Остальное</Item> */}
     </Wrapper>
     <Wrapper>
       <GitHubItem href="https://github.com/ilyasudakov/osfix_erp_frontend">

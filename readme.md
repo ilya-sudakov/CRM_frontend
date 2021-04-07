@@ -9,6 +9,7 @@
 - Jest
 - ESLint & Prettier
 - Storybook
+- Axios
 - Husky для pre-commit действий (linting&formatting)
 - Github Actions
 
@@ -50,7 +51,7 @@
 
         npm run test --  --silent --coverage --watchAll=false
 
-- Для запуска Storybook:
+- Для запуска dev Storybook:
 
         npm run storybook --no-dll
 
