@@ -16,6 +16,7 @@ import {
   TableNestedWrapper,
   TableNestedRow,
   NestedTable,
+  TableItemsCount,
 } from './styles';
 
 const getMaxLines = (lines = 3) => ({
@@ -59,6 +60,9 @@ const renderTableLinkCell = ({
 
 const renderTableCell = (column, item, index, options) => {
   const mobileText = <MobileText>{column.text}</MobileText>;
+  const itemsCount = column.itemsCount ? (
+    <TableItemsCount>{column.itemsCount(item)}</TableItemsCount>
+  ) : null;
   const curColumn = item[column.value];
   const formattedText = column.formatFn ? column.formatFn(item) : curColumn;
   const props = {
@@ -90,6 +94,7 @@ const renderTableCell = (column, item, index, options) => {
       <Cell {...props}>
         {mobileText}
         <TableBadge type={column.badge?.type} text={formattedText} />
+        {itemsCount}
       </Cell>
     );
   }
@@ -104,6 +109,7 @@ const renderTableCell = (column, item, index, options) => {
           options={column.status.options}
           readOnly={!column.status.onChange}
         />
+        {itemsCount}
       </Cell>
     );
   }
@@ -112,6 +118,7 @@ const renderTableCell = (column, item, index, options) => {
       {mobileText}
       <div style={{ ...getMaxLines(column.options?.maxLines) }}>
         {formattedText}
+        {itemsCount}
       </div>
     </Cell>
   );
@@ -130,9 +137,10 @@ const Table = ({
   onClick,
 }) => {
   const TableStyle = nestedTable ? NestedTable : StyledTable;
+  const isNested = nestedTable ? true : false;
   return (
     <TableStyle style={{ ...options.style }} fullSize={options.fullSize}>
-      <Row headerRow isNested={nestedTable}>
+      <Row headerRow isNested={isNested}>
         {columns.map((column) => (
           <CellHeader
             key={column.text}

@@ -1,10 +1,14 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useContext } from 'react';
 import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
 import PrintIcon from 'Assets/print.png';
-import { getEmployeesListPdfText } from './functions.js';
+import {
+  filterEmployeesBySearchQuery,
+  getEmployeesByWorkshopListPdfText,
+  getEmployeesListPdfText,
+} from './functions.js';
 import {
   deleteEmployee,
   getEmployeesByWorkshop,
@@ -13,10 +17,13 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 import { useTable } from 'Utils/hooks';
+import { formatDateString } from 'Utils/functions.jsx';
+import UserContext from '../../../../App';
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [employees, setEmployees] = useState([]);
+  const userContext = useContext(UserContext);
   const workshops = [
     'ЦехЛЭМЗ',
     'ЦехЛепсари',
@@ -32,30 +39,86 @@ const Employees = (props) => {
     { name: 'Уволенные' },
   ];
   const [isLoading, setIsLoading] = useState(false);
-  const columns = [{ text: 'Подразделение', value: 'name' }];
+  const filterEmployees = (data, workshopItem) => {
+    return data.filter(
+      (employee) =>
+        (workshopItem === employee.workshop &&
+          employee.relevance !== 'Уволен') ||
+        (workshopItem === 'Уволенные' && employee.relevance === 'Уволен'),
+    );
+  };
+  const sortEmployees = (data) => {
+    return sortByField(filterEmployeesBySearchQuery(data, searchQuery), {
+      fieldName: 'lastName',
+      direction: 'asc',
+    });
+  };
+  const columns = [
+    {
+      text: 'Подразделение',
+      value: 'name',
+      itemsCount: (item) => filterEmployees(employees, item.name).length,
+    },
+  ];
   const nestedColumns = [
-    { text: 'ФИО', value: 'lastName' },
-    { text: 'Дата рождения', value: 'dateOfBirth' },
+    {
+      text: 'ФИО',
+      value: 'lastName',
+      formatFn: (item) => `${item.lastName} ${item.name} ${item.middleName}`,
+    },
+    {
+      text: 'Дата рождения',
+      value: 'dateOfBirth',
+      formatFn: ({ dateOfBirth }) => formatDateString(dateOfBirth),
+    },
     { text: 'Гражданство', value: '' },
     { text: 'Должность', value: 'position' },
+  ];
+  const actions = (item) => [
+    {
+      onClick: () =>
+        getEmployeesByWorkshopListPdfText(item.employees, item.name),
+      icon: 'print',
+      text: 'Печать',
+    },
+  ];
+  const actionsNested = (item) => [
+    {
+      elementType: 'edit',
+      title: 'Редактирование сотрудника',
+      link: `/dispatcher/employees/edit/${item.id}`,
+      isRendered: userContext.userHasAccess([
+        'ROLE_ADMIN',
+        'ROLE_DISPATCHER',
+        'ROLE_ENGINEER',
+        'ROLE_WORKSHOP',
+      ]),
+    },
+    {
+      elementType: 'delete',
+      title: 'Удаление сотрудника',
+      onClick: () => deleteItem(item.id),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+    },
   ];
   const data = useMemo(
     () =>
       workshopsTest.map((workshop) => ({
         ...workshop,
-        employees,
+        employees: sortEmployees(filterEmployees(employees, workshop.name)),
       })),
-    [employees, isLoading],
+    [employees, isLoading, searchQuery],
   );
+
   const [table] = useTable({
     data,
     isLoading,
     columns: columns,
-    actions: () => {},
+    actions: actions,
     nestedTable: {
       isLoading,
       columns: nestedColumns,
-      actions: () => {},
+      actions: actionsNested,
       fieldName: 'employees',
     },
   });

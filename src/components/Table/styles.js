@@ -13,6 +13,7 @@ export const StyledTable = styled.table`
 
   .main-window__table-actions {
     max-width: fit-content;
+    margin-left: auto;
   }
 
   @media (max-width: 768px) {
@@ -141,4 +142,9 @@ export const TableNestedWrapper = styled.td`
   width: 100%;
   padding: 20px 30px;
   background-color: #ddd;
+`;
+
+export const TableItemsCount = styled.span`
+  margin-left: 10px;
+  color: #bbb;
 `;

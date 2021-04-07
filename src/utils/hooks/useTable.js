@@ -13,10 +13,10 @@ const useTable = ({
   const [nestedItems, setNestedItems] = useState([]);
 
   useEffect(() => {
-    if (data.length === 0 || isLoading) return;
-    const hiddenItems = data.map((item) => ({
+    if (!data || data.length === 0 || isLoading) return;
+    const hiddenItems = data.map((item, index) => ({
       ...item,
-      isHidden: true,
+      isHidden: nestedItems[index]?.isHidden ?? true,
     }));
     setNestedItems([...hiddenItems]);
   }, [data, ...dependancy]);
