@@ -27,7 +27,6 @@
   и заполнить его следующим образом:
 
         API_BASE_URL = http://localhost:port
-        ACCESS_TOKEN = accessToken
         NODE_ENV = production
         INN_TOKEN = INNToken
 
