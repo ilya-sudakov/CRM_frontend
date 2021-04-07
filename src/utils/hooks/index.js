@@ -10,6 +10,7 @@ import useFormWindow from './useFormWindow';
 import useMessageForUser from './useMessageForUser';
 import useSearchBar from './useSearchBar';
 import useStickyElement from './useStickyElement';
+import useTable from './useTable';
 // <!--- UI Components ---> //
 
 // <--- Work Management ---> //
@@ -65,4 +66,5 @@ export {
   useWorkItemsList,
   useWorkReport,
   useWorkReportByRange,
+  useTable,
 };

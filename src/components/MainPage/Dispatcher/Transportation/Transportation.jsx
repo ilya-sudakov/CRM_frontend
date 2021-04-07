@@ -133,7 +133,11 @@ const Transportation = () => {
   };
 
   const columns = [
-    { text: 'Дата', value: 'date', formatFn: (date) => formatDateString(date) },
+    {
+      text: 'Дата',
+      value: 'date',
+      formatFn: ({ date }) => formatDateString(date),
+    },
     { text: 'Товар', value: 'cargo' },
     { text: 'Кол-во', value: 'quantity' },
     { text: 'Откуда', value: 'sender' },
@@ -250,12 +254,6 @@ const Transportation = () => {
           data={data}
           loading={{ isLoading }}
           actions={actions}
-          // nestedItems={{
-          //   items: [{ isHidden: false }],
-          //   columns: [],
-          //   actions: () => {},
-          //   loading: { isLoading: true },
-          // }}
         />
         {pagination}
       </div>

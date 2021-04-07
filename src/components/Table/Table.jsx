@@ -60,9 +60,7 @@ const renderTableLinkCell = ({
 const renderTableCell = (column, item, index, options) => {
   const mobileText = <MobileText>{column.text}</MobileText>;
   const curColumn = item[column.value];
-  const formattedText = column.formatFn
-    ? column.formatFn(curColumn)
-    : curColumn;
+  const formattedText = column.formatFn ? column.formatFn(item) : curColumn;
   const props = {
     key: `${item.id}.${column.text}` ?? index,
     title: formattedText,
@@ -127,15 +125,14 @@ const Table = ({
   options = {
     fullBorder: false,
     fullSize: false,
-    nestedTable: null,
   },
-  nestedItems,
+  nestedTable,
   onClick,
 }) => {
-  const TableStyle = nestedItems ? NestedTable : StyledTable;
+  const TableStyle = nestedTable ? NestedTable : StyledTable;
   return (
     <TableStyle style={{ ...options.style }} fullSize={options.fullSize}>
-      <Row headerRow isNested={nestedItems}>
+      <Row headerRow isNested={nestedTable}>
         {columns.map((column) => (
           <CellHeader
             key={column.text}
@@ -192,16 +189,14 @@ const Table = ({
                 </Cell>
               ) : null}
             </Row>
-            {nestedItems ? (
-              <TableNestedRow
-                isHidden={nestedItems.items[index]?.isHidden ?? true}
-              >
+            {nestedTable ? (
+              <TableNestedRow isHidden={item?.isHidden ?? true}>
                 <TableNestedWrapper colSpan={100}>
                   <Table
-                    columns={nestedItems?.columns}
-                    data={nestedItems?.items[index]?.data}
-                    actions={nestedItems?.actions}
-                    loading={nestedItems?.loading}
+                    columns={nestedTable?.columns}
+                    data={item[nestedTable.fieldName]}
+                    actions={nestedTable?.actions}
+                    loading={nestedTable?.loading}
                   />
                 </TableNestedWrapper>
               </TableNestedRow>

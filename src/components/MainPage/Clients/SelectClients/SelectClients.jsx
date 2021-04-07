@@ -57,7 +57,7 @@ const SelectClient = (props) => {
 
   const getURL = (site) =>
     site && site?.split('//')?.length > 1 ? site : `https://${site}`;
-  const formatContacts = (contacts) =>
+  const formatContacts = ({ contacts }) =>
     contacts?.length > 0
       ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
         contacts[0].phoneNumber
@@ -73,7 +73,7 @@ const SelectClient = (props) => {
         isOutside: true,
         newTab: true,
       },
-      formatFn: (site) =>
+      formatFn: ({ site }) =>
         site && site.split('//').length > 1 ? site.split('//')[1] : site,
     },
     {

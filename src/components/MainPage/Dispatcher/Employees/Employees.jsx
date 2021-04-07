@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
@@ -12,6 +12,7 @@ import {
 import Button from 'Utils/Form/Button/Button.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
+import { useTable } from 'Utils/hooks';
 
 const Employees = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,7 +24,41 @@ const Employees = (props) => {
     'Офис',
     'Уволенные',
   ];
+  const workshopsTest = [
+    { name: 'ЦехЛЭМЗ' },
+    { name: 'ЦехЛепсари' },
+    { name: 'ЦехЛиговский' },
+    { name: 'Офис' },
+    { name: 'Уволенные' },
+  ];
   const [isLoading, setIsLoading] = useState(false);
+  const columns = [{ text: 'Подразделение', value: 'name' }];
+  const nestedColumns = [
+    { text: 'ФИО', value: 'lastName' },
+    { text: 'Дата рождения', value: 'dateOfBirth' },
+    { text: 'Гражданство', value: '' },
+    { text: 'Должность', value: 'position' },
+  ];
+  const data = useMemo(
+    () =>
+      workshopsTest.map((workshop) => ({
+        ...workshop,
+        employees,
+      })),
+    [employees, isLoading],
+  );
+  const [table] = useTable({
+    data,
+    isLoading,
+    columns: columns,
+    actions: () => {},
+    nestedTable: {
+      isLoading,
+      columns: nestedColumns,
+      actions: () => {},
+      fieldName: 'employees',
+    },
+  });
 
   useEffect(() => {
     document.title = 'Сотрудники';
@@ -101,6 +136,7 @@ const Employees = (props) => {
             }).length
           } записей`}
         />
+        {table}
         <TableView
           data={employees}
           searchQuery={searchQuery}

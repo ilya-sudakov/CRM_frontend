@@ -28,7 +28,7 @@ const ClientsList = ({
 
   const getURL = (site) =>
     site && site?.split('//')?.length > 1 ? site : `https://${site}`;
-  const formatContacts = (contacts) =>
+  const formatContacts = ({ contacts }) =>
     contacts?.length > 0
       ? (contacts[0].name !== '' ? `${contacts[0].name}, ` : '') +
         contacts[0].phoneNumber
@@ -56,7 +56,7 @@ const ClientsList = ({
     {
       text: 'След. контакт',
       value: 'nextDateContact',
-      formatFn: (date) => formatDateString(date),
+      formatFn: ({ nextDateContact }) => formatDateString(nextDateContact),
       width: '10%',
       badge: {
         isVisibleFn: (date) => new Date(date) < new Date(),

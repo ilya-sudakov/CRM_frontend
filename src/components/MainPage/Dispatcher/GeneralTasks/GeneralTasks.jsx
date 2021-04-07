@@ -160,7 +160,7 @@ const GeneralTasks = (props) => {
       value: 'dateCreated',
       width: '12%',
       maxWidth: '100px',
-      formatFn: (date) => formatDateString(date),
+      formatFn: ({ dateCreated }) => formatDateString(dateCreated),
     },
     {
       text: 'Описание',
@@ -181,7 +181,7 @@ const GeneralTasks = (props) => {
         type: 'error',
         isVisibleFn: (date) => new Date(date) < new Date(),
       },
-      formatFn: (date) => formatDateString(date),
+      formatFn: ({ dateControl }) => formatDateString(dateControl),
     },
     {
       text: 'Состояние',

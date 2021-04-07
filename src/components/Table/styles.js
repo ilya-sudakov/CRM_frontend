@@ -99,7 +99,7 @@ export const CellHeader = styled.th`
   ${baseCellStyles}
   font-weight: 400;
   text-align: left;
-  color: #777;
+  color: #999;
 `;
 export const CellLoading = styled.td`
   ${baseCellStyles}

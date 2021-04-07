@@ -134,7 +134,7 @@ const Users = () => {
     ROLE_ENGINEER: 'Инженер1',
   };
 
-  const formatUserRole = (_roles) => {
+  const formatUserRole = ({ roles: _roles }) => {
     const role = _roles.find((item) => item.name)?.name;
     return roles[role];
   };

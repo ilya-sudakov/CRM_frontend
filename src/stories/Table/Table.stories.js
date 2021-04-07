@@ -14,7 +14,7 @@ const columns = [
     value: 'dateCreated',
     width: '12%',
     maxWidth: '100px',
-    formatFn: (date) => format(new Date(date), 'dd.MM.yyyy'),
+    formatFn: ({ dateCreated }) => format(new Date(dateCreated), 'dd.MM.yyyy'),
   },
   {
     text: 'Описание',
@@ -31,7 +31,7 @@ const columns = [
     value: 'dateControl',
     width: '12%',
     maxWidth: '120px',
-    formatFn: (date) => format(new Date(date), 'dd.MM.yyyy'),
+    formatFn: ({ dateControl }) => format(new Date(dateControl), 'dd.MM.yyyy'),
     badge: {
       type: 'error',
       isVisibleFn: (date) => new Date(date) < new Date(),
