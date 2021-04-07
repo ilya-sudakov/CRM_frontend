@@ -4,7 +4,7 @@ import 'Utils/Form/Form.scss';
 import {
   getProductById,
   editProduct,
-} from 'Utils/RequestsAPI/products/products';
+} from 'Utils/RequestsAPI/Products/products';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload, getDataUri } from 'Utils/functions.jsx';

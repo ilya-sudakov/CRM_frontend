@@ -18,7 +18,7 @@ import { sortByField } from 'Utils/sorting/sorting.js';
 import Table from 'Components/Table/Table.jsx';
 import UserContext from 'Components/../App';
 
-const Transportation = (props) => {
+const Transportation = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [transportation, setTransportation] = useState([]);
   const userContext = useContext(UserContext);
@@ -190,7 +190,7 @@ const Transportation = (props) => {
                 <div className="main-window__filter-pick">
                   <span className="transportation__text">Откуда: </span>
                   {workshops.map((item, index) => {
-                    if (props.userHasAccess(item.visibility)) {
+                    if (userContext.userHasAccess(item.visibility)) {
                       return (
                         <div
                           className={
@@ -217,7 +217,7 @@ const Transportation = (props) => {
                 <div className="main-window__filter-pick">
                   <span className="transportation__text">Куда: </span>
                   {workshops.map((item, index) => {
-                    if (props.userHasAccess(item.visibility)) {
+                    if (userContext.userHasAccess(item.visibility)) {
                       return (
                         <div
                           className={

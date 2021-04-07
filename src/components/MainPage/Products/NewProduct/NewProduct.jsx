@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './NewProduct.scss';
 import 'Utils/Form/Form.scss';
-import { addProduct } from 'Utils/RequestsAPI/products/products';
+import { addProduct } from 'Utils/RequestsAPI/Products/products';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';

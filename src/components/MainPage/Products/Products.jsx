@@ -3,7 +3,7 @@ import './Products.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { deleteProduct } from 'Utils/RequestsAPI/products/products';
+import { deleteProduct } from 'Utils/RequestsAPI/Products/products';
 import { deleteCategory } from 'Utils/RequestsAPI/Products/Categories.js';
 import { deletePackagingFromProduct } from 'Utils/RequestsAPI/Products/packaging.js';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
