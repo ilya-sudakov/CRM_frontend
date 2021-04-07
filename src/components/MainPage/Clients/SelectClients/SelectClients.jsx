@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './SelectClients.scss';
-import { searchClients } from 'Utils/RequestsAPI/clients/clients';
+import { searchClients } from 'Utils/RequestsAPI/clients';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 import { useSearchBar, useFormWindow } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';

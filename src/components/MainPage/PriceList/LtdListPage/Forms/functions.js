@@ -1,5 +1,5 @@
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import { getBIKByINN, getInfoByINN } from 'Utils/RequestsAPI/clients/clients';
+import { getBIKByINN, getInfoByINN } from 'Utils/RequestsAPI/clients';
 
 export const fetchINNData = (inputs, setIsLoading, setFormInputs) => {
   setIsLoading(true);
