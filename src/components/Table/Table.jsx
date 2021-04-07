@@ -13,6 +13,9 @@ import {
   RowLoading,
   CellLoading,
   MobileText,
+  TableNestedWrapper,
+  TableNestedRow,
+  NestedTable,
 } from './styles';
 
 const getMaxLines = (lines = 3) => ({
@@ -121,12 +124,18 @@ const Table = ({
   data = [],
   actions,
   loading = { isLoading: false },
-  options = { fullBorder: false, fullSize: false },
+  options = {
+    fullBorder: false,
+    fullSize: false,
+    nestedTable: null,
+  },
+  nestedItems,
   onClick,
 }) => {
+  const TableStyle = nestedItems ? NestedTable : StyledTable;
   return (
-    <StyledTable fullSize={options.fullSize}>
-      <Row headerRow>
+    <TableStyle style={{ ...options.style }} fullSize={options.fullSize}>
+      <Row headerRow isNested={nestedItems}>
         {columns.map((column) => (
           <CellHeader
             key={column.text}
@@ -162,28 +171,45 @@ const Table = ({
         />
       ) : (
         data.map((item, index) => (
-          <Row
-            key={index}
-            onClick={onClick ? () => onClick(item, index) : undefined}
-            style={{ cursor: onClick ? 'pointer' : 'auto' }}
-          >
-            {columns.map((column) =>
-              renderTableCell(column, item, index, options),
-            )}
-            {actions ? (
-              <Cell
-                style={{
-                  width: '60px',
-                  maxWidth: 'fit-content',
-                }}
+          <>
+            <Row
+              key={index}
+              onClick={onClick ? () => onClick(item, index) : undefined}
+              style={{ cursor: onClick ? 'pointer' : 'auto' }}
+              isNested={options.isNested}
+            >
+              {columns.map((column) =>
+                renderTableCell(column, item, index, options),
+              )}
+              {actions ? (
+                <Cell
+                  style={{
+                    width: '60px',
+                    maxWidth: 'fit-content',
+                  }}
+                >
+                  <TableActions actionsList={actions(item, index)} />
+                </Cell>
+              ) : null}
+            </Row>
+            {nestedItems ? (
+              <TableNestedRow
+                isHidden={nestedItems.items[index]?.isHidden ?? true}
               >
-                <TableActions actionsList={actions(item, index)} />
-              </Cell>
+                <TableNestedWrapper colSpan={100}>
+                  <Table
+                    columns={nestedItems?.columns}
+                    data={nestedItems?.items[index]?.data}
+                    actions={nestedItems?.actions}
+                    loading={nestedItems?.loading}
+                  />
+                </TableNestedWrapper>
+              </TableNestedRow>
             ) : null}
-          </Row>
+          </>
         ))
       )}
-    </StyledTable>
+    </TableStyle>
   );
 };
 

@@ -12,7 +12,7 @@ export const StyledTable = styled.table`
   background-color: #fff;
 
   .main-window__table-actions {
-    max-width: none;
+    max-width: fit-content;
   }
 
   @media (max-width: 768px) {
@@ -52,6 +52,24 @@ export const Row = styled.tr`
   &:hover {
     background-color: ${(props) =>
       props.headerRow || props.loading ? '#fff' : '#eee'};
+  }
+
+  &:first-child {
+    th:first-child {
+      border-top-left-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+    }
+    th:last-child {
+      border-top-right-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+    }
+  }
+  &:last-child {
+    td:first-child {
+      border-bottom-left-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+    }
+    td:last-child {
+      border-bottom-right-radius: ${({ isNested }) =>
+        isNested ? '15px' : '0'};
+    }
   }
 `;
 export const RowLoading = styled(Row)`
@@ -109,4 +127,18 @@ export const MobileText = styled.span`
   @media (max-width: 768px) {
     display: block;
   }
+`;
+
+export const NestedTable = styled(StyledTable)`
+  border-radius: 15px;
+`;
+
+export const TableNestedRow = styled(Row)`
+  display: ${({ isHidden }) => (isHidden ? 'none' : 'table-row')};
+`;
+
+export const TableNestedWrapper = styled.td`
+  width: 100%;
+  padding: 20px 30px;
+  background-color: #ddd;
 `;

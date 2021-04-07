@@ -250,6 +250,12 @@ const Transportation = () => {
           data={data}
           loading={{ isLoading }}
           actions={actions}
+          // nestedItems={{
+          //   items: [{ isHidden: false }],
+          //   columns: [],
+          //   actions: () => {},
+          //   loading: { isLoading: true },
+          // }}
         />
         {pagination}
       </div>
