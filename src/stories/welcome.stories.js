@@ -74,7 +74,7 @@ storiesOf('Welcome', module).add('Главная', () => (
     <img src={logo}></img>
     <h3>Фронтенд для ERP/CRM-системы управления малого предприятия</h3>
     <Wrapper>
-      <Item href={formURL}>Форма</Item>
+      <Item href={formURL}>Форма123</Item>
       <Item href={TableURL}>Таблица</Item>
       {/* <Item href={OtherURL}>Остальное</Item> */}
       {/* <Item href={OtherURL}>Остальное</Item> */}
