@@ -22,49 +22,6 @@ const Transportation = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [transportation, setTransportation] = useState([]);
   const userContext = useContext(UserContext);
-  const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
-    transportation,
-  ]);
-
-  const filterSearchQuery = (data) => {
-    const query = searchQuery.toLowerCase();
-    return data.filter(
-      (item) =>
-        item.cargo.toLowerCase().includes(query) ||
-        formatDateString(item.date).includes(query) ||
-        item.sender.toLowerCase().includes(query) ||
-        item.recipient.toLowerCase().includes(query) ||
-        item.driver.toLowerCase().includes(query) ||
-        item.id.toString().includes(query),
-    );
-  };
-
-  const filterTransportation = (data) => {
-    return data.filter((item) => {
-      let senderCheck = false;
-      let recipientCheck = false;
-      workshops.map((workshop) => {
-        if (workshop.senderActive && workshop.name === item.sender) {
-          senderCheck = true;
-        }
-        if (workshop.recipientActive && workshop.name === item.recipient) {
-          recipientCheck = true;
-        }
-      });
-      return recipientCheck && senderCheck;
-    });
-  };
-
-  const handleFilterData = (data) => {
-    return filterTransportation(filterSearchQuery(data));
-  };
-
-  const { pagination, data } = usePagination(
-    () => handleFilterData(sortedData),
-    [searchQuery, sortOrder, sortedData],
-    'static',
-  );
-  const [isLoading, setIsLoading] = useState(true);
   const [workshops, setWorkshops] = useState([
     {
       name: 'ЦехЛЭМЗ',
@@ -96,6 +53,49 @@ const Transportation = () => {
       recipientActive: true,
     },
   ]);
+  const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
+    transportation,
+    workshops,
+  ]);
+
+  const filterSearchQuery = (data) => {
+    const query = searchQuery.toLowerCase();
+    return data.filter(
+      (item) =>
+        item.cargo.toLowerCase().includes(query) ||
+        formatDateString(item.date).includes(query) ||
+        item.sender.toLowerCase().includes(query) ||
+        item.recipient.toLowerCase().includes(query) ||
+        item.driver.toLowerCase().includes(query) ||
+        item.id.toString().includes(query),
+    );
+  };
+
+  const handleFilterData = (data) => {
+    return filterTransportation(filterSearchQuery(data));
+  };
+
+  const filterTransportation = (data) => {
+    return data.filter((item) => {
+      let senderCheck = false;
+      let recipientCheck = false;
+      workshops.map((workshop) => {
+        if (workshop.senderActive && workshop.name === item.sender)
+          senderCheck = true;
+        if (workshop.recipientActive && workshop.name === item.recipient)
+          recipientCheck = true;
+      });
+      return recipientCheck && senderCheck;
+    });
+  };
+
+  const { pagination, data } = usePagination(
+    () => handleFilterData(sortedData),
+    [searchQuery, sortOrder, sortedData],
+    'static',
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
   const printTransportationList = () => {
     let dd = getTransportationListPdfText(
       sortByField(filterTransportation(transportation), {
