@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Transportation.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import PrintIcon from 'Assets/print.png';
-import TableView from './TableView/TableView.jsx';
 import {
   getTransportations,
   deleteTransportation,
@@ -16,10 +15,13 @@ import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import { formatDateString } from 'Utils/functions.jsx';
 import useSort from 'Utils/hooks/useSort/useSort.js';
 import { sortByField } from 'Utils/sorting/sorting.js';
+import Table from 'Components/Table/Table.jsx';
+import UserContext from 'Components/../App';
 
 const Transportation = (props) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [transportation, setTransportation] = useState([]);
+  const userContext = useContext(UserContext);
   const { sortPanel, sortedData, sortOrder } = useSort(transportation, {}, [
     transportation,
   ]);
@@ -130,6 +132,29 @@ const Transportation = (props) => {
     deleteTransportation(id).then(() => loadTransportation());
   };
 
+  const columns = [
+    { text: 'Дата', value: 'date', formatFn: (date) => formatDateString(date) },
+    { text: 'Товар', value: 'cargo' },
+    { text: 'Кол-во', value: 'quantity' },
+    { text: 'Откуда', value: 'sender' },
+    { text: 'Куда', value: 'recipient' },
+    { text: 'Водитель', value: 'driver' },
+  ];
+
+  const actions = (item) => [
+    {
+      elementType: 'edit',
+      title: 'Редактировать запись',
+      link: `/dispatcher/transportation/edit/${item.id}`,
+    },
+    {
+      elementType: 'delete',
+      title: 'Удаление задачи',
+      onClick: () => deleteItem(item.id),
+      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
+    },
+  ];
+
   return (
     <div className="transportation">
       <div className="main-window">
@@ -220,12 +245,11 @@ const Transportation = (props) => {
             </div>
           }
         />
-        <TableView
+        <Table
+          columns={columns}
           data={data}
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
+          loading={{ isLoading }}
+          actions={actions}
         />
         {pagination}
       </div>

@@ -4,7 +4,7 @@ import 'Utils/Form/Form.scss';
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
-} from 'Utils/RequestsAPI/PriceList/PriceList.jsx';
+} from 'Utils/RequestsAPI/PriceList';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
