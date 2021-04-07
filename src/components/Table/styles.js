@@ -148,3 +148,9 @@ export const TableItemsCount = styled.span`
   margin-left: 10px;
   color: #bbb;
 `;
+
+export const TableNotItems = styled.div`
+  padding: 10px 25px;
+  font-size: 1rem;
+  color: #555;
+`;

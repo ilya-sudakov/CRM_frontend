@@ -17,6 +17,7 @@ import {
   TableNestedRow,
   NestedTable,
   TableItemsCount,
+  TableNotItems,
 } from './styles';
 
 const getMaxLines = (lines = 3) => ({
@@ -140,27 +141,33 @@ const Table = ({
   const isNested = nestedTable ? true : false;
   return (
     <TableStyle style={{ ...options.style }} fullSize={options.fullSize}>
-      <Row headerRow isNested={isNested}>
-        {columns.map((column) => (
-          <CellHeader
-            key={column.text}
-            style={{
-              ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
-            }}
-          >
-            {column.text}
-          </CellHeader>
-        ))}
-        {actions ? (
-          <CellHeader
-            isAction
-            style={{
-              width: '60px',
-              maxWidth: 'fit-content',
-            }}
-          ></CellHeader>
-        ) : null}
-      </Row>
+      {data.length > 0 || loading.isLoading ? (
+        <Row headerRow isNested={isNested}>
+          {columns.map((column) => (
+            <CellHeader
+              key={column.text}
+              style={{
+                ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
+              }}
+            >
+              {column.text}
+            </CellHeader>
+          ))}
+          {actions ? (
+            <CellHeader
+              isAction
+              style={{
+                width: '60px',
+                maxWidth: 'fit-content',
+              }}
+            ></CellHeader>
+          ) : null}
+        </Row>
+      ) : (
+        <TableNotItems>
+          Не найдено записей. Создайте запись и она отобразиться здесь
+        </TableNotItems>
+      )}
       {loading.isLoading ? (
         <TableLoading
           WrapperElement={RowLoading}
