@@ -104,7 +104,7 @@ export const MobileText = styled.span`
   display: none;
   padding-right: 5px;
   text-align: left;
-  color: #777;
+  color: #999;
 
   @media (max-width: 768px) {
     display: block;
