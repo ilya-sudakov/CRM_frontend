@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './SelectWorkItem.scss';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { getWork } from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import { getWork } from 'Utils/RequestsAPI/WorkManaging/work_list';
 import TableView from './TableViewWork/TableView.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 

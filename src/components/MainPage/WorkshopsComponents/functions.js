@@ -7,7 +7,7 @@ import {
   connectClientToRequest,
   addProductsToRequest,
   addRequest,
-} from 'Utils/RequestsAPI/Requests.jsx';
+} from 'Utils/RequestsAPI/requests';
 import { workshops } from './workshopVariables.js';
 import { getProductsFromRequestsListPdfText } from 'Utils/pdfFunctions.js';
 import { getCategories } from 'Utils/RequestsAPI/Products/Categories.js';

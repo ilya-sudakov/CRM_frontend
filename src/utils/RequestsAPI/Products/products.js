@@ -1,4 +1,4 @@
-import { request } from '../utilsAPI.jsx';
+import { request } from '../../utilsAPI.jsx';
 
 //GET-запрос всех записей из таблицы продукции
 export function getProducts() {

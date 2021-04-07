@@ -6,7 +6,7 @@ import {
   combineWorksForSamePeople,
 } from '../../components/MainPage/GeneralPage/WorkManagement/ProductionJournal/helpers.js';
 import { formatDateString } from '../functions.jsx';
-import { getRecordedWorkByDay } from '../RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkByDay } from '../RequestsAPI/WorkManaging/work_control';
 
 const useWorkReport = (curDay) => {
   const userContext = useContext(UserContext);

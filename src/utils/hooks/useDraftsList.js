@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getStamp } from '../RequestsAPI/Rigging/Stamp.jsx';
+import { getStamp } from '../RequestsAPI/rigging';
 import { sortByField } from '../sorting/sorting.js';
 
 const useDraftsList = () => {

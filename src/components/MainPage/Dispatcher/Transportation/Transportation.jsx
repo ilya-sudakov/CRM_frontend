@@ -7,7 +7,7 @@ import TableView from './TableView/TableView.jsx';
 import {
   getTransportations,
   deleteTransportation,
-} from 'Utils/RequestsAPI/Transportation.jsx';
+} from 'Utils/RequestsAPI/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';

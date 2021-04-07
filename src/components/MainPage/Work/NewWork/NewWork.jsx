@@ -3,7 +3,7 @@ import Select from 'react-select';
 import './NewWork.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import { addWork } from 'Utils/RequestsAPI/WorkManaging/WorkList.jsx';
+import { addWork } from 'Utils/RequestsAPI/WorkManaging/work_list';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { customSelectStyles } from 'Utils/dataObjects';
 import { useForm } from 'Utils/hooks';

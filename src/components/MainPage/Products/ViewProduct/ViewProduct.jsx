@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './ViewProduct.scss';
 import 'Utils/Form/Form.scss';
-import { getProductById } from 'Utils/RequestsAPI/Products.js';
+import { getProductById } from 'Utils/RequestsAPI/products/products';
 import { imgToBlobDownload } from 'Utils/functions.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';

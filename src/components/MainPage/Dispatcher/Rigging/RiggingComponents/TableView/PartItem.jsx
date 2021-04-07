@@ -2,7 +2,7 @@ import editIcon from 'Assets/tableview/edit.svg';
 import './TableView.scss';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables';
-import { editStampPartColor } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import { editStampPartColor } from 'Utils/RequestsAPI/rigging';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 
 const PartItem = ({ part, refItem, loadData, type, stampId }) => {

@@ -10,9 +10,9 @@ import Button from 'Utils/Form/Button/Button.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import { submitWorkData } from './functions.js';
 import { useQuery } from 'Utils/hooks';
-import { getWorkReportByDateAndEmployee } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getWorkReportByDateAndEmployee } from 'Utils/RequestsAPI/WorkManaging/work_control';
 import UserContext from '../../../../../App.js';
-import { getEmployeeById } from 'Utils/RequestsAPI/Employees.jsx';
+import { getEmployeeById } from 'Utils/RequestsAPI/employees';
 
 const NewRecordWork = (props) => {
   const [worktimeInputs, setWorkTimeInputs] = useState({

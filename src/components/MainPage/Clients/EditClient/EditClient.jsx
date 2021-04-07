@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './EditClient.scss';
 import 'Utils/Form/Form.scss';
-import { getClientById, editClient } from 'Utils/RequestsAPI/Clients.jsx';
+import { getClientById, editClient } from 'Utils/RequestsAPI/clients/clients';
 import {
   addClientLegalEntity,
   editClientLegalEntity,
@@ -27,7 +27,7 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
-import { getRequests } from 'Utils/RequestsAPI/Requests.jsx';
+import { getRequests } from 'Utils/RequestsAPI/requests';
 import { clientsDefaultInputs } from '../objects';
 import { useForm } from 'Utils/hooks';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';

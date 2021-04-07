@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './NewEmployee.scss';
 import 'Utils/Form/Form.scss';
-import { addEmployee } from 'Utils/RequestsAPI/Employees.jsx';
+import { addEmployee } from 'Utils/RequestsAPI/employees';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';

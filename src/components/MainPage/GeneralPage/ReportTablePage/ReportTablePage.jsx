@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import './ReportTablePage.scss';
-import { getRecordedWorkByMonth } from 'Utils/RequestsAPI/WorkManaging/WorkControl.jsx';
+import { getRecordedWorkByMonth } from 'Utils/RequestsAPI/WorkManaging/work_control';
 import UserContext from '../../../../App.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import SummaryPage from './SummaryPage/SummaryPage.jsx';

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   getProductsByCategory,
   getProductById,
-} from '../../RequestsAPI/Products.js';
+} from '../../RequestsAPI/products/products';
 import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js';
 
 const useProductsList = (shouldExecute = true) => {

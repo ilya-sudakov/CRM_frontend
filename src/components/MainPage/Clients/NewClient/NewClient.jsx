@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import './NewClient.scss';
 import 'Utils/Form/Form.scss';
-import { addClient } from 'Utils/RequestsAPI/Clients.jsx';
+import { addClient } from 'Utils/RequestsAPI/clients/clients';
 import { addClientLegalEntity } from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
 import { addClientContact } from 'Utils/RequestsAPI/Clients/Contacts.jsx';
 import { addClientWorkHistory } from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';
@@ -12,7 +12,7 @@ import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
-import { getUsers } from 'Utils/RequestsAPI/Users.jsx';
+import { getUsers } from 'Utils/RequestsAPI/users';
 import Button from 'Utils/Form/Button/Button.jsx';
 import UserContext from '../../../../App.js';
 import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';

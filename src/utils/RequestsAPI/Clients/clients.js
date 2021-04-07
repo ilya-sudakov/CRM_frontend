@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAuthHeaders, request, requestINN } from '../utilsAPI.jsx';
+import { getAuthHeaders, request, requestINN } from '../../utilsAPI.jsx';
 
 export function getClients(elements) {
   return request({

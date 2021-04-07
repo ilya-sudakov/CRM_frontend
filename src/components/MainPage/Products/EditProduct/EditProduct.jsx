@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import './EditProduct.scss';
 import 'Utils/Form/Form.scss';
-import { getProductById, editProduct } from 'Utils/RequestsAPI/Products.js';
+import {
+  getProductById,
+  editProduct,
+} from 'Utils/RequestsAPI/products/products';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload, getDataUri } from 'Utils/functions.jsx';

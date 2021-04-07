@@ -3,7 +3,7 @@ import './Users.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { getUsers, deleteUser } from 'Utils/RequestsAPI/Users.jsx';
+import { getUsers, deleteUser } from 'Utils/RequestsAPI/users';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useSort from 'Utils/hooks/useSort/useSort';

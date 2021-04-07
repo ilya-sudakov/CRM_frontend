@@ -5,7 +5,7 @@ import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import { useForm } from 'Utils/hooks';
 import Button from 'Utils/Form/Button/Button.jsx';
-import { addStamp, addPartsToStamp } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import { addStamp, addPartsToStamp } from 'Utils/RequestsAPI/rigging';
 import { rigTypes } from '../../rigsVariables.js';
 import { getRigsDefaultInputs } from '../../TableView/functions';
 

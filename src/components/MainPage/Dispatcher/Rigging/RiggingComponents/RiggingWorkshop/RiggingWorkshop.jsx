@@ -7,7 +7,7 @@ import {
   deletePartsFromStamp,
   deleteStamp,
   getStampsByStatus,
-} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+} from 'Utils/RequestsAPI/rigging';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';

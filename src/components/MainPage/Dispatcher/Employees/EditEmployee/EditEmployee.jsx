@@ -5,7 +5,7 @@ import {
   getEmployeeById,
   editEmployee,
   deleteEmployee,
-} from 'Utils/RequestsAPI/Employees.jsx';
+} from 'Utils/RequestsAPI/employees';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';

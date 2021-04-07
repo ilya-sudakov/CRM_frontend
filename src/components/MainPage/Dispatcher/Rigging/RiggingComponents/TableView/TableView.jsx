@@ -5,7 +5,7 @@ import deleteIcon from 'Assets/tableview/delete.svg';
 import './TableView.scss';
 import { scrollToElement } from 'Utils/functions.jsx';
 import { rigStatuses, rigTypes } from '../rigsVariables';
-import { editStampColor } from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+import { editStampColor } from 'Utils/RequestsAPI/rigging';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';

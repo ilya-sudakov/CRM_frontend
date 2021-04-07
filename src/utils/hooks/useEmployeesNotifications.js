@@ -3,7 +3,7 @@ import { dateDiffInDays } from '../functions.jsx';
 import {
   getEmployeesByComingBirthday,
   getEmployeesByExpiredDocuments,
-} from '../RequestsAPI/Employees.jsx';
+} from '../RequestsAPI/employees';
 
 const useEmployeesNotifications = (type = 'birthday') => {
   const [employees, setEmployees] = useState([]);

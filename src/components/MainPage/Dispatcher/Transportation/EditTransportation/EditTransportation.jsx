@@ -4,7 +4,7 @@ import 'Utils/Form/Form.scss';
 import {
   getTransportationById,
   editTransportation,
-} from 'Utils/RequestsAPI/Transportation.jsx';
+} from 'Utils/RequestsAPI/transportation';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';

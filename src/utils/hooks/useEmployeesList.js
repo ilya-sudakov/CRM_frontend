@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../App.js';
-import {
-  getEmployees,
-  getEmployeesByWorkshop,
-} from '../RequestsAPI/Employees.jsx';
+import { getEmployees, getEmployeesByWorkshop } from '../RequestsAPI/employees';
 
 const useEmployeesList = (shouldExecute = true) => {
   const [employees, setEmployees] = useState([]);

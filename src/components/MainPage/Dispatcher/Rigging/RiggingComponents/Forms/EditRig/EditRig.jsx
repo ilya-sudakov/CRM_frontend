@@ -8,7 +8,7 @@ import {
   editPartsOfStamp,
   addPartsToStamp,
   deletePartsFromStamp,
-} from 'Utils/RequestsAPI/Rigging/Stamp.jsx';
+} from 'Utils/RequestsAPI/rigging';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
