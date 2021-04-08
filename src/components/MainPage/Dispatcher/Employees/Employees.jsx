@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useContext } from 'react';
 import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
 import PrintIcon from 'Assets/print.png';
 import {
   filterEmployeesBySearchQuery,
@@ -17,7 +16,7 @@ import { useTable } from 'Utils/hooks';
 import { formatDateString } from 'Utils/functions.jsx';
 import UserContext from '../../../../App';
 
-const Employees = (props) => {
+const Employees = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [employees, setEmployees] = useState([]);
   const userContext = useContext(UserContext);
@@ -54,7 +53,10 @@ const Employees = (props) => {
     {
       text: 'Подразделение',
       value: 'name',
-      itemsCount: (item) => filterEmployees(employees, item.name).length,
+      itemsCount: (item) =>
+        item.name !== 'Уволенные'
+          ? filterEmployees(employees, item.name).length
+          : null,
     },
   ];
   const nestedColumns = [
@@ -197,13 +199,6 @@ const Employees = (props) => {
           } записей`}
         />
         {table}
-        <TableView
-          data={employees}
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          userHasAccess={props.userHasAccess}
-          deleteItem={deleteItem}
-        />
       </div>
     </div>
   );

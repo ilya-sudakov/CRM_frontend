@@ -61,9 +61,9 @@ const renderTableLinkCell = ({
 
 const renderTableCell = (column, item, index, options) => {
   const mobileText = <MobileText>{column.text}</MobileText>;
-  const itemsCount = column.itemsCount ? (
-    <TableItemsCount>{column.itemsCount(item)}</TableItemsCount>
-  ) : null;
+  const count = column.itemsCount && column.itemsCount(item);
+  const itemsCount =
+    count || count === 0 ? <TableItemsCount>{count}</TableItemsCount> : null;
   const curColumn = item[column.value];
   const formattedText = column.formatFn ? column.formatFn(item) : curColumn;
   const props = {
