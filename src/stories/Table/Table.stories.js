@@ -155,4 +155,4 @@ const NestedTable = () => {
   return table;
 };
 
-storiesOf('Table', module).add('Nested Table', () => <NestedTable />);
+storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
