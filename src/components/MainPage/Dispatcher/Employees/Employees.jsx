@@ -113,8 +113,8 @@ const Employees = (props) => {
   const [table] = useTable({
     data,
     isLoading,
-    columns: columns,
-    actions: actions,
+    columns,
+    actions,
     nestedTable: {
       isLoading,
       columns: nestedColumns,

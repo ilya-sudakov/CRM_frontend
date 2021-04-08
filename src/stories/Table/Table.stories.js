@@ -1,4 +1,6 @@
 import { format } from 'date-fns';
+import { storiesOf } from '@storybook/react';
+import { useTable } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';
 
 export default {
@@ -136,14 +138,21 @@ const nestedData = data.map((item, index) => ({
   isHidden: index !== 1,
   nestedItems: [item],
 }));
-export const NestedTable = Template.bind({});
-NestedTable.args = {
-  columns: columns,
-  data: nestedData,
-  actions,
-  nestedTable: {
-    fieldName: 'nestedItems',
-    columns: columns,
+
+const NestedTable = () => {
+  const [table] = useTable({
+    nestedData,
+    isLoading: false,
+    columns,
     actions,
-  },
+    nestedTable: {
+      isLoading: false,
+      columns: columns,
+      actions: actions,
+      fieldName: 'nestedItems',
+    },
+  });
+  return table;
 };
+
+storiesOf('Table', module).add('Nested Table', () => <NestedTable />);
