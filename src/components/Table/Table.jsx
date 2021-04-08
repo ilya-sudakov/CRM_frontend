@@ -184,11 +184,12 @@ const Table = ({
       ) : (
         data.map((item, index) => (
           <>
+            {console.log({ isNested })}
             <Row
               key={index}
               onClick={onClick ? () => onClick(item, index) : undefined}
               style={{ cursor: onClick ? 'pointer' : 'auto' }}
-              isNested={options.isNested}
+              isNested={isNested}
             >
               {columns.map((column) =>
                 renderTableCell(column, item, index, options),

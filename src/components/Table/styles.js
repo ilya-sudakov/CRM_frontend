@@ -57,19 +57,18 @@ export const Row = styled.tr`
 
   &:first-child {
     th:first-child {
-      border-top-left-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+      border-top-left-radius: ${(props) => (props.isNested ? '15px' : '0')};
     }
     th:last-child {
-      border-top-right-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+      border-top-right-radius: ${(props) => (props.isNested ? '15px' : '0')};
     }
   }
   &:last-child {
     td:first-child {
-      border-bottom-left-radius: ${({ isNested }) => (isNested ? '15px' : '0')};
+      border-bottom-left-radius: ${(props) => (props.isNested ? '15px' : '0')};
     }
     td:last-child {
-      border-bottom-right-radius: ${({ isNested }) =>
-        isNested ? '15px' : '0'};
+      border-bottom-right-radius: ${(props) => (props.isNested ? '15px' : '0')};
     }
   }
 `;
