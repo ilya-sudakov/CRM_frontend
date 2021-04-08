@@ -124,7 +124,20 @@ const NestedTable = ({ data, isLoading, columns, actions, nestedTable }) => {
   return table;
 };
 
-// storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
+// storiesOf('Table|Table', module).add('Nested Table', () => (
+//   <NestedTable
+//     data={nestedData}
+//     isLoading={false}
+//     columns={columns}
+//     actions={actions}
+//     nestedTable={{
+//       isLoading: false,
+//       columns: columns,
+//       actions: actions,
+//       fieldName: 'nestedTasks',
+//     }}
+//   />
+// ));
 export const NestedItemsTable = () => (
   <NestedTable
     data={nestedData}
@@ -132,7 +145,7 @@ export const NestedItemsTable = () => (
     columns={columns}
     actions={actions}
     nestedTable={{
-      isLoading,
+      isLoading: false,
       columns: columns,
       actions: actions,
       fieldName: 'nestedTasks',
