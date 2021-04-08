@@ -5,10 +5,14 @@ on:
     branches: [main]
     paths-ignore:
       - '**.stories.js'
+      - '**.scss'
+      - '**.css'
   pull_request:
     branches: [main]
     paths-ignore:
       - '**.stories.js'
+      - '**.scss'
+      - '**.css'
 
 jobs:
   deploy:

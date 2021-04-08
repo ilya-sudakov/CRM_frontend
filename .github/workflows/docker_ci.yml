@@ -6,10 +6,14 @@ on:
     branches: [main]
     paths-ignore:
       - '**.stories.js'
+      - '**.scss'
+      - '**.css'
   push:
     branches: [main]
     paths-ignore:
       - '**.stories.js'
+      - '**.scss'
+      - '**.css'
 
   # Allows to run job manually
   workflow_dispatch:
