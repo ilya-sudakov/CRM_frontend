@@ -1,25 +1,19 @@
-import { useState, useEffect, useMemo, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import PrintIcon from 'Assets/print.png';
-import {
-  filterEmployeesBySearchQuery,
-  getEmployeesByWorkshopListPdfText,
-  getEmployeesListPdfText,
-} from './functions.js';
+import { getEmployeesListPdfText } from './functions.js';
 import { deleteEmployee, getEmployeesByWorkshop } from 'API/employees';
 import Button from 'Utils/Form/Button/Button.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
-import { useTable } from 'Utils/hooks';
-import { formatDateString } from 'Utils/functions.jsx';
-import UserContext from '../../../../App';
+import TableView from './TableView.jsx';
 
 const Employees = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [employees, setEmployees] = useState([]);
-  const userContext = useContext(UserContext);
   const workshops = [
     'ЦехЛЭМЗ',
     'ЦехЛепсари',
@@ -27,100 +21,6 @@ const Employees = () => {
     'Офис',
     'Уволенные',
   ];
-  const workshopsTest = [
-    { name: 'ЦехЛЭМЗ' },
-    { name: 'ЦехЛепсари' },
-    { name: 'ЦехЛиговский' },
-    { name: 'Офис' },
-    { name: 'Уволенные' },
-  ];
-  const [isLoading, setIsLoading] = useState(false);
-  const filterEmployees = (data, workshopItem) => {
-    return data.filter(
-      (employee) =>
-        (workshopItem === employee.workshop &&
-          employee.relevance !== 'Уволен') ||
-        (workshopItem === 'Уволенные' && employee.relevance === 'Уволен'),
-    );
-  };
-  const sortEmployees = (data) => {
-    return sortByField(filterEmployeesBySearchQuery(data, searchQuery), {
-      fieldName: 'lastName',
-      direction: 'asc',
-    });
-  };
-  const columns = [
-    {
-      text: 'Подразделение',
-      value: 'name',
-      itemsCount: (item) =>
-        item.name !== 'Уволенные'
-          ? filterEmployees(employees, item.name).length
-          : null,
-    },
-  ];
-  const nestedColumns = [
-    {
-      text: 'ФИО',
-      value: 'lastName',
-      formatFn: (item) => `${item.lastName} ${item.name} ${item.middleName}`,
-    },
-    {
-      text: 'Дата рождения',
-      value: 'dateOfBirth',
-      formatFn: ({ dateOfBirth }) => formatDateString(dateOfBirth),
-    },
-    { text: 'Гражданство', value: '' },
-    { text: 'Должность', value: 'position' },
-  ];
-  const actions = (item) => [
-    {
-      onClick: () =>
-        getEmployeesByWorkshopListPdfText(item.employees, item.name),
-      icon: 'print',
-      text: 'Печать',
-    },
-  ];
-  const actionsNested = (item) => [
-    {
-      elementType: 'edit',
-      title: 'Редактирование сотрудника',
-      link: `/dispatcher/employees/edit/${item.id}`,
-      isRendered: userContext.userHasAccess([
-        'ROLE_ADMIN',
-        'ROLE_DISPATCHER',
-        'ROLE_ENGINEER',
-        'ROLE_WORKSHOP',
-      ]),
-    },
-    {
-      elementType: 'delete',
-      title: 'Удаление сотрудника',
-      onClick: () => deleteItem(item.id),
-      isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
-    },
-  ];
-  const data = useMemo(
-    () =>
-      workshopsTest.map((workshop) => ({
-        ...workshop,
-        employees: sortEmployees(filterEmployees(employees, workshop.name)),
-      })),
-    [employees, isLoading, searchQuery],
-  );
-
-  const [table] = useTable({
-    data,
-    isLoading,
-    columns,
-    actions,
-    nestedTable: {
-      isLoading,
-      columns: nestedColumns,
-      actions: actionsNested,
-      fieldName: 'employees',
-    },
-  });
 
   useEffect(() => {
     document.title = 'Сотрудники';
@@ -133,7 +33,6 @@ const Employees = () => {
 
   const loadEmployees = (signal) => {
     setIsLoading(true);
-    //Динамический
     let emplArr = [];
     const temp = workshops.map((item) => {
       let workshop = {
@@ -198,7 +97,12 @@ const Employees = () => {
             }).length
           } записей`}
         />
-        {table}
+        <TableView
+          employees={employees}
+          isLoading={isLoading}
+          searchQuery={searchQuery}
+          deleteItem={deleteItem}
+        />
       </div>
     </div>
   );
