@@ -113,25 +113,32 @@ const nestedData = data.map((item, index) => ({
   nestedTasks: [item],
 }));
 
-const NestedTable = () => {
+const NestedTable = ({ data, isLoading, columns, actions, nestedTable }) => {
   const [table] = useTable({
-    data: nestedData,
-    isLoading: false,
+    data,
+    isLoading,
     columns,
     actions,
-    nestedTable: {
-      isLoading: false,
-      columns: columns,
-      actions: actions,
-      fieldName: 'nestedTasks',
-    },
+    nestedTable,
   });
   return table;
 };
 
-storiesOf('Table|Table|Nested Table', module).add('Nested Table', () => (
-  <NestedTable />
-));
+// storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
+export const NestedItemsTable = () => (
+  <NestedTable
+    data={nestedData}
+    isLoading={false}
+    columns={columns}
+    actions={actions}
+    nestedTable={{
+      isLoading,
+      columns: columns,
+      actions: actions,
+      fieldName: 'nestedTasks',
+    }}
+  />
+);
 
 export const Default = Template.bind({});
 Default.args = {
