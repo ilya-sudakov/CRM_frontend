@@ -8,6 +8,7 @@ const useTable = ({
   isLoading,
   nestedTable,
   onClick,
+  options,
   dependancy = [],
 }) => {
   const [nestedItems, setNestedItems] = useState([]);
@@ -36,6 +37,7 @@ const useTable = ({
       loading={{ isLoading }}
       actions={actions}
       onClick={handleClickOnRow}
+      options={options}
       nestedTable={
         nestedTable
           ? {

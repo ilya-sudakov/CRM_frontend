@@ -26,15 +26,17 @@ const TableActions = ({ actionsList = [] }) => {
         return <ActionItem key={index} icon={item.elementType} item={item} />;
       })}
       {editActionItem ? <ActionItem icon="edit" item={editActionItem} /> : null}
-      <DotsIcon
-        className="main-window__img main-window__img--more"
-        width={24}
-        height={24}
-        style={{ padding: '5px', transform: 'rotate(90deg)' }}
-        viewBox="0 0 24 24"
-        alt=""
-        onMouseEnter={() => setIsHidden(false)}
-      />
+      {actionsList.filter((item) => !item.isOutside).length > 0 && (
+        <DotsIcon
+          className="main-window__img main-window__img--more"
+          width={24}
+          height={24}
+          style={{ padding: '5px', transform: 'rotate(90deg)' }}
+          viewBox="0 0 24 24"
+          alt=""
+          onMouseEnter={() => setIsHidden(false)}
+        />
+      )}
       <div className="table-actions__menu">
         {actionsList.map((item, index) => {
           if (item.isOutside) return;

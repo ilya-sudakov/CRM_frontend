@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import './SelectEmployee.scss';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
+import TableView from '../TableView.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
-import useSort from 'Utils/hooks/useSort/useSort';
+import { useSort, useFormWindow } from 'Utils/hooks';
 import { filterEmployeesBySearchQuery } from '../functions';
+import { getEmployeeNameText } from 'Utils/functions.jsx';
 import useEmployeesList from 'Utils/hooks/useEmployeesList';
 
 const SelectEmployee = (props) => {
-  const [showWindow, setShowWindow] = useState(false);
-  const [closeWindow, setCloseWindow] = useState(false);
   const [employee, setEmployee] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [fullName, setFullName] = useState('');
@@ -49,12 +47,35 @@ const SelectEmployee = (props) => {
     }
   }, [props.defaultValue]);
 
-  const clickEmployee = (employeeName, employeeId, employee) => {
-    setFullName(employeeName);
+  const clickEmployee = (employee) => {
+    const { id } = employee;
+    const _fullName = getEmployeeNameText(employee);
+    setFullName(_fullName);
     setEmployee(employee);
-    props.handleEmployeeChange(employeeId, employeeName, employee);
-    setShowWindow(!showWindow);
+    props.handleEmployeeChange(id, _fullName, employee);
+    toggleFormWindow();
   };
+
+  const { formWindow, toggleFormWindow } = useFormWindow(
+    'Выбор сотрудника',
+    <>
+      <SearchBar
+        fullSize
+        setSearchQuery={setSearchQuery}
+        placeholder="Введите ФИО сотрудника для поиска..."
+      />
+      <ControlPanel
+        sorting={sortPanel}
+        itemsCount={`Всего: ${employees.length} записей`}
+      />
+      <TableView
+        employees={filterEmployeesBySearchQuery(sortedData, searchQuery)}
+        isLoading={isLoadingEmployees}
+        searchQuery={searchQuery}
+        onSelect={clickEmployee}
+      />
+    </>,
+  );
 
   return (
     <div className="select-employee">
@@ -64,7 +85,7 @@ const SelectEmployee = (props) => {
           {!props.readOnly && (
             <SelectFromButton
               text="Выбрать сотрудника"
-              onClick={() => setShowWindow(!showWindow)}
+              onClick={() => toggleFormWindow()}
             />
           )}
         </div>
@@ -115,34 +136,7 @@ const SelectEmployee = (props) => {
           Поле не заполнено!
         </div>
       )}
-      <FormWindow
-        title="Выбор сотрудника"
-        content={
-          <>
-            <SearchBar
-              fullSize
-              setSearchQuery={setSearchQuery}
-              placeholder="Введите ФИО сотрудника для поиска..."
-            />
-            <ControlPanel
-              sorting={sortPanel}
-              itemsCount={`Всего: ${employees.length} записей`}
-            />
-            <TableView
-              data={filterEmployeesBySearchQuery(sortedData, searchQuery)}
-              searchQuery={searchQuery}
-              userHasAccess={props.userHasAccess}
-              selectEmployee={clickEmployee}
-              setCloseWindow={setCloseWindow}
-              closeWindow={closeWindow}
-              setShowWindow={setShowWindow}
-              isLoading={isLoadingEmployees}
-            />
-          </>
-        }
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
-      />
+      {formWindow}
     </div>
   );
 };

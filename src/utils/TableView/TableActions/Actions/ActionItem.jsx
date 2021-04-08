@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import EditSVG from 'Assets/tableview/edit.inline.svg';
 import PrintSVG from 'Assets/tableview/print.inline.svg';
+import SelectSVG from 'Assets/tableview/ok.inline.svg';
 
 const defaultItem = {
   isRendered: false,
@@ -9,6 +10,7 @@ const defaultItem = {
 const icons = {
   edit: <EditSVG className="main-window__img" />,
   print: <PrintSVG className="main-window__img" />,
+  select: <SelectSVG className="main-window__img" />,
 };
 
 const ActionItem = ({ item = defaultItem, icon }) => {

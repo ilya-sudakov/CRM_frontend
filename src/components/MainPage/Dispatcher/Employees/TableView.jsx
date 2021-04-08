@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useTable } from 'Utils/hooks';
 import { sortByField } from 'Utils/sorting/sorting';
 import UserContext from '../../../../App';
@@ -34,7 +34,7 @@ const TableView = ({
   searchQuery,
   employees,
   deleteItem,
-  //   onSelect,
+  onSelect,
 }) => {
   const userContext = useContext(UserContext);
   const columns = [
@@ -67,6 +67,7 @@ const TableView = ({
         getEmployeesByWorkshopListPdfText(item.employees, item.name),
       icon: 'print',
       text: 'Печать',
+      isOutside: true,
     },
   ];
   const actionsNested = (item) => [
@@ -88,31 +89,39 @@ const TableView = ({
       isRendered: userContext.userHasAccess(['ROLE_ADMIN']),
     },
   ];
-  const data = useMemo(
-    () =>
-      workshops.map((workshop) => ({
-        ...workshop,
-        employees: sortEmployees(
-          filterEmployees(employees, workshop.name),
-          searchQuery,
-        ),
-      })),
-    [employees, isLoading, searchQuery],
-  );
-
-  useEffect(() => {}, [employees]);
+  const data = onSelect
+    ? useMemo(() => sortEmployees(employees, searchQuery), [
+        employees,
+        isLoading,
+        searchQuery,
+      ])
+    : useMemo(
+        () =>
+          workshops.map((workshop) => ({
+            ...workshop,
+            employees: sortEmployees(
+              filterEmployees(employees, workshop.name),
+              searchQuery,
+            ),
+          })),
+        [employees, isLoading, searchQuery],
+      );
 
   const [table] = useTable({
     data,
     isLoading,
-    columns,
-    actions,
-    nestedTable: {
-      isLoading,
-      columns: nestedColumns,
-      actions: actionsNested,
-      fieldName: 'employees',
-    },
+    onClick: onSelect ? (item) => onSelect(item) : undefined,
+    columns: onSelect ? nestedColumns : columns,
+    actions: onSelect ? undefined : actions,
+    nestedTable: onSelect
+      ? undefined
+      : {
+          isLoading,
+          columns: nestedColumns,
+          actions: actionsNested,
+          fieldName: 'employees',
+        },
+    options: onSelect ? { fullSize: true } : undefined,
   });
 
   return table;

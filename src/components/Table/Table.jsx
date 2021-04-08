@@ -184,7 +184,6 @@ const Table = ({
       ) : (
         data.map((item, index) => (
           <>
-            {console.log({ isNested })}
             <Row
               key={index}
               onClick={onClick ? () => onClick(item, index) : undefined}
