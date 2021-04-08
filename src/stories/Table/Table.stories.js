@@ -131,9 +131,9 @@ EmptyTable.args = {
   actions,
 };
 
-const nestedData = data.map((item) => ({
+const nestedData = data.map((item, index) => ({
   ...item,
-  isHidden: false,
+  isHidden: index !== 1,
   nestedItems: [item],
 }));
 export const NestedTable = Template.bind({});
