@@ -115,7 +115,7 @@ const nestedData = data.map((item, index) => ({
 
 const NestedTable = () => {
   const [table] = useTable({
-    nestedData,
+    data: nestedData,
     isLoading: false,
     columns,
     actions,
@@ -129,7 +129,9 @@ const NestedTable = () => {
   return table;
 };
 
-storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
+storiesOf('Table|Table|Nested Table', module).add('Nested Table', () => (
+  <NestedTable />
+));
 
 export const Default = Template.bind({});
 Default.args = {
