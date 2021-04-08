@@ -110,7 +110,7 @@ const actions = (item) => [
 const nestedData = data.map((item, index) => ({
   ...item,
   isHidden: index !== 1,
-  nestedItems: [item],
+  nestedTasks: [item],
 }));
 
 const NestedTable = () => {
@@ -123,7 +123,7 @@ const NestedTable = () => {
       isLoading: false,
       columns: columns,
       actions: actions,
-      fieldName: 'nestedItems',
+      fieldName: 'nestedTasks',
     },
   });
   return table;
