@@ -107,6 +107,30 @@ const actions = (item) => [
   },
 ];
 
+const nestedData = data.map((item, index) => ({
+  ...item,
+  isHidden: index !== 1,
+  nestedItems: [item],
+}));
+
+const NestedTable = () => {
+  const [table] = useTable({
+    nestedData,
+    isLoading: false,
+    columns,
+    actions,
+    nestedTable: {
+      isLoading: false,
+      columns: columns,
+      actions: actions,
+      fieldName: 'nestedItems',
+    },
+  });
+  return table;
+};
+
+storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
+
 export const Default = Template.bind({});
 Default.args = {
   columns: columns,
@@ -132,27 +156,3 @@ EmptyTable.args = {
   data: [],
   actions,
 };
-
-const nestedData = data.map((item, index) => ({
-  ...item,
-  isHidden: index !== 1,
-  nestedItems: [item],
-}));
-
-const NestedTable = () => {
-  const [table] = useTable({
-    nestedData,
-    isLoading: false,
-    columns,
-    actions,
-    nestedTable: {
-      isLoading: false,
-      columns: columns,
-      actions: actions,
-      fieldName: 'nestedItems',
-    },
-  });
-  return table;
-};
-
-storiesOf('Table|Table', module).add('Nested Table', () => <NestedTable />);
