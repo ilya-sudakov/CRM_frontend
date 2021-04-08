@@ -13,7 +13,7 @@ import {
   editRequestStatus,
   editProductStatusToRequest,
   editRequest,
-} from 'Utils/RequestsAPI/requests';
+} from 'API/requests';
 
 import { createLabelForProduct, scrollToElement } from 'Utils/functions.jsx';
 import LabelPrint from '../LabelPrint/LabelPrint.jsx';

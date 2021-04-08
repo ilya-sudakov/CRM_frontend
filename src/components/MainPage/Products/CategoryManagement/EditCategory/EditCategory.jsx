@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import './EditCategory.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import {
-  getCategoryById,
-  editCategory,
-} from 'Utils/RequestsAPI/Products/Categories.js';
+import { getCategoryById, editCategory } from 'API/Products/Categories.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { productCategoriesDefaultInputs } from '../../objects';
 import { useForm } from 'Utils/hooks';

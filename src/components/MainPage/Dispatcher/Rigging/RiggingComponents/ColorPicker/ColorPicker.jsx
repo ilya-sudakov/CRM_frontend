@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import chevronDownIcon from 'Assets/tableview/chevron-down.svg';
 import './ColorPicker.scss';
-import { editStampColor, editStampPartColor } from 'Utils/RequestsAPI/rigging';
+import { editStampColor, editStampPartColor } from 'API/rigging';
 
 import { rigStatuses } from '../rigsVariables.js';
 

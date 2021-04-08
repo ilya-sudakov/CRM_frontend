@@ -4,7 +4,7 @@ import 'Utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { logItemsTypes } from './objects.js';
-import { getLogsListByType } from 'Utils/RequestsAPI/Logs/logs.js';
+import { getLogsListByType } from 'API/Logs/logs.js';
 import usePagination from 'Utils/hooks/usePagination/usePagination';
 import useSort from 'Utils/hooks/useSort/useSort';
 import { useQuery } from 'Utils/hooks';

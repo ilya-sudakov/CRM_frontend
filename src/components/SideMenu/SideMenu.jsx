@@ -8,7 +8,7 @@ import './SideMenu.scss';
 import {
   getClientCategories,
   getSupplierCategories,
-} from 'Utils/RequestsAPI/Clients/Categories.js';
+} from 'API/Clients/Categories.js';
 import UserContext from '../../App.js';
 import { getDefaultItems, sortCategories } from './functions';
 

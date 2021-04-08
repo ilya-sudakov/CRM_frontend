@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import './EditWork.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import {
-  getWorkById,
-  editWork,
-} from 'Utils/RequestsAPI/WorkManaging/work_list';
+import { getWorkById, editWork } from 'API/WorkManaging/work_list';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { useForm } from 'Utils/hooks';
 import { workItemDefaultInputs } from '../objects';

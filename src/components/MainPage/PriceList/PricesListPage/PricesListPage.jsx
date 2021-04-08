@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../../App.js';
-import {
-  deletePriceList,
-  getPriceLists,
-} from 'Utils/RequestsAPI/Clients/price_list.js';
+import { deletePriceList, getPriceLists } from 'API/Clients/price_list.js';
 import styled from 'styled-components';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';

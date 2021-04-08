@@ -12,7 +12,7 @@ import {
   addRequest,
   addProductsToRequest,
   connectClientToRequest,
-} from 'Utils/RequestsAPI/requests';
+} from 'API/requests';
 import { requestStatuses, workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 import { getPageByRequest, getRequestsDefaultInputs } from '../../functions.js';

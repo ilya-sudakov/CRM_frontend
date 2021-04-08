@@ -2,18 +2,18 @@ import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './App.scss';
 import './variables.scss';
-const MainPage = lazy(() => import('./components/MainPage/MainPage.jsx')); //lazy-загрузка компонента MainPage
-import LoginPage from './components/Authorization/LoginPage/LoginPage.jsx';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
-import { refreshToken } from './utils/RequestsAPI/Authorization.js';
-import PageLoading from './components/MainPage/PageLoading/PageLoading.jsx';
-const UserContext = React.createContext();
+const MainPage = lazy(() => import('Components/MainPage/MainPage.jsx')); //lazy-загрузка компонента MainPage
+import LoginPage from 'Components/Authorization/LoginPage/LoginPage.jsx';
+import PrivateRoute from 'Components/PrivateRoute/PrivateRoute.jsx';
+import { refreshToken } from 'API/authorization';
+import PageLoading from 'Components/MainPage/PageLoading/PageLoading.jsx';
 import { messaging } from './init-fcm.js';
 import {
   QueryClient,
   QueryClientProvider,
   // useQuery
 } from 'react-query';
+const UserContext = React.createContext();
 
 const queryClient = new QueryClient();
 

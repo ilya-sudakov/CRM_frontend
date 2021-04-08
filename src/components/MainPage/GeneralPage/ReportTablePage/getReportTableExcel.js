@@ -1,6 +1,6 @@
 import Excel from 'exceljs';
-import { getEmployeesByWorkshop } from 'Utils/RequestsAPI/employees';
-import { getWorkReportByEmployee } from 'Utils/RequestsAPI/WorkManaging/work_control';
+import { getEmployeesByWorkshop } from 'API/employees';
+import { getWorkReportByEmployee } from 'API/WorkManaging/work_control';
 import { getEmployeeNameText } from 'Utils/functions.jsx';
 import { months } from 'Utils/dataObjects.js';
 import { saveExcelFile } from 'Utils/xlsxFunctions.js';

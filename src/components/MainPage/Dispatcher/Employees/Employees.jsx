@@ -9,10 +9,7 @@ import {
   getEmployeesByWorkshopListPdfText,
   getEmployeesListPdfText,
 } from './functions.js';
-import {
-  deleteEmployee,
-  getEmployeesByWorkshop,
-} from 'Utils/RequestsAPI/employees';
+import { deleteEmployee, getEmployeesByWorkshop } from 'API/employees';
 import Button from 'Utils/Form/Button/Button.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';

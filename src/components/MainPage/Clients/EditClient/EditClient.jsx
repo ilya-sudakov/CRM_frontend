@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import './EditClient.scss';
 import 'Utils/Form/Form.scss';
-import { getClientById, editClient } from 'Utils/RequestsAPI/Clients';
+import { getClientById, editClient } from 'API/Clients';
 import {
   addClientLegalEntity,
   editClientLegalEntity,
   deleteClientLegalEntity,
-} from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
+} from 'API/Clients/LegalEntity.jsx';
 import {
   addClientContact,
   editClientContact,
   deleteClientContact,
-} from 'Utils/RequestsAPI/Clients/Contacts.jsx';
+} from 'API/Clients/Contacts.jsx';
 import {
   addClientWorkHistory,
   editClientWorkHistory,
   deleteClientWorkHistory,
-} from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';
+} from 'API/Clients/WorkHistory.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
@@ -27,7 +27,7 @@ import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
-import { getRequests } from 'Utils/RequestsAPI/requests';
+import { getRequests } from 'API/requests';
 import { clientsDefaultInputs } from '../objects';
 import { useForm } from 'Utils/hooks';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';

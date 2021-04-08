@@ -5,10 +5,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import editSVG from 'Assets/tableview/edit.svg';
 import deleteSVG from 'Assets/tableview/delete.svg';
 import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
-import {
-  getPackaging,
-  deletePackaging,
-} from 'Utils/RequestsAPI/Products/packaging.js';
+import { getPackaging, deletePackaging } from 'API/Products/packaging.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 

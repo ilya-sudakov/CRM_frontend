@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import './EditStorage.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import {
-  updateStorage,
-  getStorageById,
-} from 'Utils/RequestsAPI/Workshop/storage.js';
+import { updateStorage, getStorageById } from 'API/Workshop/storage.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables.js';
 import { useForm } from 'Utils/hooks';

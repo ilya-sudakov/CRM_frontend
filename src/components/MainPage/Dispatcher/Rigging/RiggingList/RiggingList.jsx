@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './RiggingList.scss';
 
 import TableView from './TableView/TableView.jsx';
-import { getStamp } from 'Utils/RequestsAPI/rigging';
+import { getStamp } from 'API/rigging';
 import { checkRiggingTypesInputs } from '../RiggingComponents/rigsVariables';
 
 const RiggingList = () => {

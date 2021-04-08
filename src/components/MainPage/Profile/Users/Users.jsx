@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import './Users.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { getUsers, deleteUser } from 'Utils/RequestsAPI/users';
+import { getUsers, deleteUser } from 'API/users';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useSort from 'Utils/hooks/useSort/useSort';

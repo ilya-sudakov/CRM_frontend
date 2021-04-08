@@ -3,10 +3,7 @@ import './Storage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import {
-  deleteStorage,
-  getStorage,
-} from 'Utils/RequestsAPI/Workshop/storage.js';
+import { deleteStorage, getStorage } from 'API/Workshop/storage.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';

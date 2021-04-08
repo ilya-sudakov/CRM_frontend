@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import './EditProduct.scss';
 import 'Utils/Form/Form.scss';
-import {
-  getProductById,
-  editProduct,
-} from 'Utils/RequestsAPI/Products/products';
+import { getProductById, editProduct } from 'API/Products/products';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload, getDataUri } from 'Utils/functions.jsx';
@@ -15,7 +12,7 @@ import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging
 import {
   deletePackagingFromProduct,
   addPackagingToProduct,
-} from 'Utils/RequestsAPI/Products/packaging.js';
+} from 'API/Products/packaging.js';
 import { useForm } from 'Utils/hooks';
 import { productsDefaultInputs } from '../objects';
 

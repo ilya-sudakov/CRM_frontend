@@ -3,7 +3,7 @@ import './EditLtd.scss';
 import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 // import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import { addLTD, getLTDById } from 'Utils/RequestsAPI/PriceList/lts_list.js';
+import { addLTD, getLTDById } from 'API/PriceList/lts_list.js';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { getDataUri } from 'Utils/functions.jsx';
 import { fetchINNData, getInputsListFromArray } from '../functions.js';

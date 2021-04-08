@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import './NewTask.scss';
 import 'Utils/Form/Form.scss';
-import { addMainTask } from 'Utils/RequestsAPI/MainTasks.js';
+import { addMainTask } from 'API/tasks';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputUser from 'Utils/Form/InputUser/InputUser.jsx';

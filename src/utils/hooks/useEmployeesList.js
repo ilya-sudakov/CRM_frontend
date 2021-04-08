@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../App.js';
-import { getEmployees, getEmployeesByWorkshop } from '../RequestsAPI/employees';
+import { getEmployees, getEmployeesByWorkshop } from '../API/employees';
 
 const useEmployeesList = (shouldExecute = true) => {
   const [employees, setEmployees] = useState([]);

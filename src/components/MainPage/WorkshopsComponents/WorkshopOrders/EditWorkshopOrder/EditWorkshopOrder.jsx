@@ -10,7 +10,7 @@ import {
   editProductInOrder,
   addProductToOrder,
   deleteProductFromOrder,
-} from 'Utils/RequestsAPI/Workshop/Orders.jsx';
+} from 'API/Workshop/Orders.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
 import UserContext from '../../../../../App.js';

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getRequests } from 'Utils/RequestsAPI/requests';
+import { getRequests } from 'API/requests';
 
 const useRequestsData = (shouldExecute = true) => {
   const [requests, setRequests] = useState([]);

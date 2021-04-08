@@ -3,10 +3,7 @@ import './Transportation.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import PrintIcon from 'Assets/print.png';
-import {
-  getTransportations,
-  deleteTransportation,
-} from 'Utils/RequestsAPI/transportation';
+import { getTransportations, deleteTransportation } from 'API/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';

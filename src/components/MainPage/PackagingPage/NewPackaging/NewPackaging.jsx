@@ -3,7 +3,7 @@ import './NewPackaging.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import { addPackaging } from 'Utils/RequestsAPI/Products/packaging.js';
+import { addPackaging } from 'API/Products/packaging.js';
 import { useForm } from 'Utils/hooks';
 import { packagingDefaultInputs } from '../objects';
 

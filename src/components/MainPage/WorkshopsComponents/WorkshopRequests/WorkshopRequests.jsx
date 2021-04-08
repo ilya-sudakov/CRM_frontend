@@ -10,7 +10,7 @@ import {
   getRequestsByWorkshop,
   transferRequest,
   getRequests,
-} from 'Utils/RequestsAPI/requests';
+} from 'API/requests';
 import {
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,

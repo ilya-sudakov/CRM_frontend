@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import {
   getProductsByCategory,
   getProductById,
-} from '../../RequestsAPI/Products/products';
-import { getCategoriesNames } from '../../RequestsAPI/Products/Categories.js';
+} from '../../API/Products/products';
+import { getCategoriesNames } from '../../API/Products/Categories.js';
 
 const useProductsList = (shouldExecute = true) => {
   const [products, setProducts] = useState([]);

@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import './EditTransportation.scss';
 import 'Utils/Form/Form.scss';
-import {
-  getTransportationById,
-  editTransportation,
-} from 'Utils/RequestsAPI/transportation';
+import { getTransportationById, editTransportation } from 'API/transportation';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';

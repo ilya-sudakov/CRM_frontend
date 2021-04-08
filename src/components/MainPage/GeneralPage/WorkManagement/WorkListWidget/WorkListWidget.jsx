@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import openWidget from 'Assets/tableview/bx-window-open.svg';
-import { getRecordedWorkByDay } from 'Utils/RequestsAPI/WorkManaging/work_control';
+import { getRecordedWorkByDay } from 'API/WorkManaging/work_control';
 import { formatDateString } from 'Utils/functions.jsx';
 import UserContext from '../../../../../App.js';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';

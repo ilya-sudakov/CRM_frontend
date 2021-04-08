@@ -1,4 +1,4 @@
-import { getEmployees } from 'Utils/RequestsAPI/employees';
+import { getEmployees } from 'API/employees';
 
 export const loadEmployees = async (
   signal,

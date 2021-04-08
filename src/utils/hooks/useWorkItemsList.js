@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getWork } from '../RequestsAPI/WorkManaging/work_list';
+import { getWork } from '../API/WorkManaging/work_list';
 
 const useWorkItemsList = () => {
   const [works, setWorks] = useState([]);

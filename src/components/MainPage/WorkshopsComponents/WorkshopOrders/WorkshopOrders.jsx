@@ -6,7 +6,7 @@ import {
   deleteProductFromOrder,
   deleteOrder,
   getOrdersByName,
-} from 'Utils/RequestsAPI/Workshop/Orders.jsx';
+} from 'API/Workshop/Orders.jsx';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';

@@ -5,7 +5,7 @@ import Widget from '../Widget/Widget.jsx';
 import ReportIcon from 'Assets/sidemenu/feedback.inline.svg';
 import QuestionIcon from 'Assets/widgets/question-circle-outlined.inline.svg';
 import SuggestIcon from 'Assets/widgets/talk-bubbles-line.inline.svg';
-import { addFeedback } from 'Utils/RequestsAPI/Feedback/feedback.js';
+import { addFeedback } from 'API/Feedback/feedback.js';
 import UserContext from '../../../../App.js';
 import { Link } from 'react-router-dom';
 

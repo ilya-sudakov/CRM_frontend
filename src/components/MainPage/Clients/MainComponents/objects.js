@@ -1,17 +1,17 @@
-import { deleteClientLegalEntity } from 'Utils/RequestsAPI/Clients/LegalEntity.jsx';
-import { deleteClientContact } from 'Utils/RequestsAPI/Clients/Contacts.jsx';
+import { deleteClientLegalEntity } from 'API/Clients/LegalEntity.jsx';
+import { deleteClientContact } from 'API/Clients/Contacts.jsx';
 import {
   deleteClientWorkHistory,
   editClientWorkHistory,
   addClientWorkHistory,
-} from 'Utils/RequestsAPI/Clients/WorkHistory.jsx';
+} from 'API/Clients/WorkHistory.jsx';
 import {
   deleteClient,
   getClientsByCategoryAndType,
   editNextContactDateClient,
   editClient,
-} from 'Utils/RequestsAPI/Clients';
-import { getSuppliersByCategoryAndType } from 'Utils/RequestsAPI/Clients/Suppliers';
+} from 'API/Clients';
+import { getSuppliersByCategoryAndType } from 'API/Clients/Suppliers';
 
 export const clientTypes = {
   clients: {

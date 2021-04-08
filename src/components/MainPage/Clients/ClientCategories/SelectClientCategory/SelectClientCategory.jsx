@@ -6,7 +6,7 @@ import TableView from './TableView/TableView.jsx';
 import {
   getClientCategories,
   getSupplierCategories,
-} from 'Utils/RequestsAPI/Clients/Categories.js';
+} from 'API/Clients/Categories.js';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectClientCategory = (props) => {

@@ -1,5 +1,5 @@
 import { exportClientsEmailsCSV } from 'Utils/xlsxFunctions.js';
-import { getClients } from 'Utils/RequestsAPI/Clients';
+import { getClients } from 'API/Clients';
 
 export const sortClients = (clients, searchQuery, sortOrder) => {
   return clients.sort((a, b) => {

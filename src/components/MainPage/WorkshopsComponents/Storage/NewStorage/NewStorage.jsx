@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './NewStorage.scss';
 import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
-import { createStorage } from 'Utils/RequestsAPI/Workshop/storage.js';
+import { createStorage } from 'API/Workshop/storage.js';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables.js';
 import { useForm } from 'Utils/hooks';

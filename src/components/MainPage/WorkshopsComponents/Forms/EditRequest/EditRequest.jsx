@@ -14,7 +14,7 @@ import {
   deleteProductsToRequest,
   getRequestById,
   connectClientToRequest,
-} from 'Utils/RequestsAPI/requests';
+} from 'API/requests';
 import { requestStatuses, workshops } from '../../workshopVariables.js';
 import SelectClient from '../../../Clients/SelectClients/SelectClients.jsx';
 import {

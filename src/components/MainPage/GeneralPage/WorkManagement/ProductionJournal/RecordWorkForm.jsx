@@ -8,7 +8,7 @@ import {
   deleteProductFromRecordedWork,
   deleteDraftFromRecordedWork,
   deleteRecordedWork,
-} from 'Utils/RequestsAPI/WorkManaging/work_control';
+} from 'API/WorkManaging/work_control';
 import Button from 'Utils/Form/Button/Button.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import SelectWork from '../SelectWork/SelectWork.jsx';

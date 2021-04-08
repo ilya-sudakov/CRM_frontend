@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './NewLtd.scss';
 import Button from 'Utils/Form/Button/Button.jsx';
-import { addLTD } from 'Utils/RequestsAPI/PriceList/lts_list.js';
+import { addLTD } from 'API/PriceList/lts_list.js';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
 import { fetchINNData, getInputsListFromArray } from '../functions';
 import { getDataUri } from 'Utils/functions.jsx';

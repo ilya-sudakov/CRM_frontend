@@ -4,10 +4,7 @@ import 'Utils/Form/Form.scss';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SelectItems from 'Utils/Form/SelectItems/SelectItems.jsx';
-import {
-  addOrder,
-  addProductToOrder,
-} from 'Utils/RequestsAPI/Workshop/Orders.jsx';
+import { addOrder, addProductToOrder } from 'API/Workshop/Orders.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
 import { useForm } from 'Utils/hooks';

@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import './EditEmployee.scss';
 import 'Utils/Form/Form.scss';
-import {
-  getEmployeeById,
-  editEmployee,
-  deleteEmployee,
-} from 'Utils/RequestsAPI/employees';
+import { getEmployeeById, editEmployee, deleteEmployee } from 'API/employees';
 import InputText from 'Utils/Form/InputText/InputText.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';

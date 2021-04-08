@@ -1,4 +1,4 @@
-import { getMainTasks } from 'Utils/RequestsAPI/MainTasks.js';
+import { getMainTasks } from 'API/tasks';
 
 export const filterTasks = (tasks) => {
   return tasks.filter((task) => task.condition !== 'Выполнено');

@@ -7,10 +7,10 @@ import {
   connectClientToRequest,
   addProductsToRequest,
   addRequest,
-} from 'Utils/RequestsAPI/requests';
+} from 'API/requests';
 import { workshops } from './workshopVariables.js';
 import { getProductsFromRequestsListPdfText } from 'Utils/pdfFunctions.js';
-import { getCategories } from 'Utils/RequestsAPI/Products/Categories.js';
+import { getCategories } from 'API/Products/Categories.js';
 
 export const getPageByRequest = (item) => {
   if (item.status === 'Завершено') {

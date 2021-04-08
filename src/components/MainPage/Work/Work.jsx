@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Work.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import { deleteWork, getWork } from 'Utils/RequestsAPI/WorkManaging/work_list';
+import { deleteWork, getWork } from 'API/WorkManaging/work_list';
 import 'Utils/MainWindow/MainWindow.scss';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';

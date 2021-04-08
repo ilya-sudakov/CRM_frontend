@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import './GeneralTasks.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import { getMainTasks, deleteMainTask } from 'Utils/RequestsAPI/MainTasks.js';
+import { getMainTasks, deleteMainTask } from 'API/tasks';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
@@ -15,7 +15,7 @@ import {
 import { useTitleHeader } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
-import { editTaskStatus } from 'Utils/RequestsAPI/MainTasks.js';
+import { editTaskStatus } from 'API/tasks';
 
 const GeneralTasks = (props) => {
   const userContext = useContext(UserContext);

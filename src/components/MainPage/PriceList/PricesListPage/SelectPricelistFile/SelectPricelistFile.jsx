@@ -6,7 +6,7 @@ import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectPricelistFile.scss';
-import { getPriceLists } from 'Utils/RequestsAPI/Clients/price_list.js';
+import { getPriceLists } from 'API/Clients/price_list.js';
 import { Link, useHistory } from 'react-router-dom';
 
 const SelectPricelistFile = ({ data, onChange, defaultValue }) => {

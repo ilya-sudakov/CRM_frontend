@@ -13,8 +13,8 @@ import {
   getDatesAndWorkItems,
   formatDateString,
 } from 'Utils/functions.jsx';
-import { getRecordedWorkByDateRange } from 'Utils/RequestsAPI/WorkManaging/work_control';
-import { getEmployeesByWorkshop } from 'Utils/RequestsAPI/employees';
+import { getRecordedWorkByDateRange } from 'API/WorkManaging/work_control';
+import { getEmployeesByWorkshop } from 'API/employees';
 import Button from 'Utils/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
 import TableView from './TableView/TableView.jsx';

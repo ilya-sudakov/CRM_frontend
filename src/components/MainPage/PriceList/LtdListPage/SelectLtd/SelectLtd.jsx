@@ -4,7 +4,7 @@ import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectLtd.scss';
-import { getLTDList } from 'Utils/RequestsAPI/PriceList/lts_list.js';
+import { getLTDList } from 'API/PriceList/lts_list.js';
 
 const SelectLtd = ({ data, onChange }) => {
   const [selectedLtd, setSelectedLtd] = useState(null);

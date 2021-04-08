@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './SelectPackaging.scss';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import { getPackaging } from 'Utils/RequestsAPI/Products/packaging.js';
+import { getPackaging } from 'API/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import 'Utils/MainWindow/MainWindow.scss';
 import deleteSVG from 'Assets/tableview/delete.svg';

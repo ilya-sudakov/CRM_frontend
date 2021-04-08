@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import './SelectUser.scss';
-import { getUsers } from 'Utils/RequestsAPI/users';
+import { getUsers } from 'API/users';
 
 const SelectUser = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

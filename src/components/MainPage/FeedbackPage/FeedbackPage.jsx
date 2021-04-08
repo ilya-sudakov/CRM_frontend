@@ -10,14 +10,11 @@ import {
   formatDateStringWithTime,
   scrollToElement,
 } from 'Utils/functions.jsx';
-import {
-  getFeedback,
-  deleteFeedbackById,
-} from 'Utils/RequestsAPI/Feedback/feedback.js';
+import { getFeedback, deleteFeedbackById } from 'API/Feedback/feedback.js';
 import {
   getMessagesByDiscussionId,
   deleteMessage,
-} from 'Utils/RequestsAPI/Feedback/messages.js';
+} from 'API/Feedback/messages.js';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
