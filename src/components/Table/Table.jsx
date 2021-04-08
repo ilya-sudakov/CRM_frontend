@@ -134,13 +134,17 @@ const Table = ({
     fullBorder: false,
     fullSize: false,
   },
+  isNested,
   nestedTable,
   onClick,
 }) => {
   const TableStyle = nestedTable ? NestedTable : StyledTable;
-  const isNested = nestedTable ? true : false;
   return (
-    <TableStyle style={{ ...options.style }} fullSize={options.fullSize}>
+    <TableStyle
+      style={{ ...options.style }}
+      fullSize={options.fullSize}
+      isNested={isNested}
+    >
       {data.length > 0 || loading.isLoading ? (
         <Row headerRow isNested={isNested}>
           {columns.map((column) => (
@@ -212,6 +216,7 @@ const Table = ({
                     data={item[nestedTable.fieldName]}
                     actions={nestedTable?.actions}
                     loading={nestedTable?.loading}
+                    isNested
                   />
                 </TableNestedWrapper>
               </TableNestedRow>

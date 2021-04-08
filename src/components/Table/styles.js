@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+const nestedBorderRadius = '10px';
+
 export const StyledTable = styled.table`
   box-sizing: border-box;
   border-collapse: collapse;
   width: ${(props) => (props.fullSize ? 'calc(100% + 30px)' : '100%')};
   margin-left: ${(props) => (props.fullSize ? '-15px' : '0')};
+  border-radius: ${(props) => (props.isNested ? nestedBorderRadius : '0')};
   max-width: 100vw;
   padding: 0 1px;
   font-size: 14px;
@@ -57,18 +60,22 @@ export const Row = styled.tr`
 
   &:first-child {
     th:first-child {
-      border-top-left-radius: ${(props) => (props.isNested ? '15px' : '0')};
+      border-top-left-radius: ${(props) =>
+        props.isNested ? nestedBorderRadius : '0'};
     }
     th:last-child {
-      border-top-right-radius: ${(props) => (props.isNested ? '15px' : '0')};
+      border-top-right-radius: ${(props) =>
+        props.isNested ? nestedBorderRadius : '0'};
     }
   }
   &:last-child {
     td:first-child {
-      border-bottom-left-radius: ${(props) => (props.isNested ? '15px' : '0')};
+      border-bottom-left-radius: ${(props) =>
+        props.isNested ? nestedBorderRadius : '0'};
     }
     td:last-child {
-      border-bottom-right-radius: ${(props) => (props.isNested ? '15px' : '0')};
+      border-bottom-right-radius: ${(props) =>
+        props.isNested ? nestedBorderRadius : '0'};
     }
   }
 `;
