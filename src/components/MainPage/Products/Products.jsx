@@ -8,7 +8,7 @@ import { deleteCategory } from 'API/Products/Categories.js';
 import { deletePackagingFromProduct } from 'API/Products/packaging.js';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import useSort from 'Utils/hooks/useSort/useSort';
@@ -64,7 +64,7 @@ const Products = (props) => {
   return (
     <div className="products">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo="/products/new"
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />
@@ -97,7 +97,7 @@ const Products = (props) => {
           title="Категории продукции"
           content={
             <>
-              <FloatingPlus
+              <FloatingButton
                 linkTo="/products/category/new"
                 visibility={['ROLE_ADMIN']}
               />

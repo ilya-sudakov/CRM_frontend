@@ -3,7 +3,7 @@ import './Users.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getUsers, deleteUser } from 'API/users';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useSort from 'Utils/hooks/useSort/useSort';
 import Table from 'Components/Table/Table.jsx';
@@ -165,7 +165,10 @@ const Users = () => {
   return (
     <div className="users-manage">
       <div className="main-window">
-        <FloatingPlus linkTo="/profile/users/new" visibility={['ROLE_ADMIN']} />
+        <FloatingButton
+          linkTo="/profile/users/new"
+          visibility={['ROLE_ADMIN']}
+        />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Управление пользователями</div>
         </div>

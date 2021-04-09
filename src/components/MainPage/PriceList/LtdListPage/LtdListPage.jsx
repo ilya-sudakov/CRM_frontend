@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import useSort from 'Utils/hooks/useSort/useSort.js';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { deleteLTD, getLTDList } from 'API/PriceList/lts_list.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
@@ -74,7 +74,7 @@ const LtdListPage = () => {
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Список ООО</div>
         </div>
-        <FloatingPlus
+        <FloatingButton
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
           linkTo={'/ltd-list/new'}
         />

@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import './ReportTablePage.scss';
 import { getRecordedWorkByMonth } from 'API/WorkManaging/work_control';
 import UserContext from '../../../../App.js';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import SummaryPage from './SummaryPage/SummaryPage.jsx';
 import { getMonthDates } from './functions.js';
 
@@ -143,7 +143,7 @@ const ReportTablePage = () => {
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Табель</div>
         </div>
-        <FloatingPlus
+        <FloatingButton
           linkTo="/work-management/record-time"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />

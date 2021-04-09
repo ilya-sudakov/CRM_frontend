@@ -1,11 +1,11 @@
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 
 export default {
-  title: 'FloatingPlus',
-  component: FloatingPlus,
+  title: 'FloatingButton',
+  component: FloatingButton,
 };
 
-const Template = (args) => <FloatingPlus {...args} />;
+const Template = (args) => <FloatingButton {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};

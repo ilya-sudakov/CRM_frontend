@@ -15,7 +15,7 @@ import {
   getMessagesByDiscussionId,
   deleteMessage,
 } from 'API/Feedback/messages.js';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
@@ -126,7 +126,7 @@ const FeedbackPage = (props) => {
   return (
     <div className="feedback-page">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo="/feedback/new"
           visibility={[
             'ROLE_ADMIN',

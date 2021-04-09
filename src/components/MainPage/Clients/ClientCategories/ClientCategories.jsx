@@ -14,7 +14,7 @@ import {
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
@@ -82,7 +82,7 @@ const ClientCategories = (props) => {
   return (
     <div className="client-categories">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           onClick={() => {
             setCurForm('new');
             setShowWindow(!showWindow);

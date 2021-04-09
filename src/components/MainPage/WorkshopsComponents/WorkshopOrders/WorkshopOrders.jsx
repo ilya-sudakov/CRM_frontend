@@ -7,7 +7,7 @@ import {
   deleteOrder,
   getOrdersByName,
 } from 'API/Workshop/Orders.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import Tableview from './Table.jsx';
@@ -117,7 +117,7 @@ const WorkshopOrders = (props) => {
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
-        <FloatingPlus
+        <FloatingButton
           linkTo={`${workshops[props.type].ordersRedirectURL}/new`}
           visibility={['ROLE_ADMIN', 'ROLE_ENGINEER', 'ROLE_LEMZ']}
         />

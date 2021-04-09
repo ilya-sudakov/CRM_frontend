@@ -18,7 +18,7 @@ import { getEmployeesByWorkshop } from 'API/employees';
 import Button from 'Utils/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
 import TableView from './TableView/TableView.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
@@ -225,7 +225,7 @@ const WorkManagementPage = (props) => {
   return (
     <div className="work-management-page">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           iconSrc={isOneColumn ? TwoColumnsIcon : OneColumnIcon}
           title={isOneColumn ? 'Несколько столбцов' : 'Один столбец'}
           onClick={() => {

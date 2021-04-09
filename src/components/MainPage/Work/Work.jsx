@@ -3,8 +3,7 @@ import './Work.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView.jsx';
 import { deleteWork, getWork } from 'API/WorkManaging/work_list';
-import 'Utils/MainWindow/MainWindow.scss';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const Work = (props) => {
@@ -37,7 +36,7 @@ const Work = (props) => {
   return (
     <div className="work">
       <div className="main-window">
-        <FloatingPlus linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
+        <FloatingButton linkTo="/work-list/new" visibility={['ROLE_ADMIN']} />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Работы</div>
         </div>

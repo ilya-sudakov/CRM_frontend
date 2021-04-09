@@ -5,7 +5,7 @@ import PrintIcon from 'Assets/print.png';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import {
   getRequestsByWorkshop,
   transferRequest,
@@ -221,7 +221,7 @@ const WorkshopRequests = (props) => {
   return (
     <div className="workshop-requests">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           onClick={() => setIsMinimized(!isMinimized)}
           iconSrc={chevronDown}
           title="Свернуть заявки"

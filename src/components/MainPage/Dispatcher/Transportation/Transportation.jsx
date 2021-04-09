@@ -6,7 +6,7 @@ import PrintIcon from 'Assets/print.png';
 import { getTransportations, deleteTransportation } from 'API/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import { formatDateString } from 'Utils/functions.jsx';
@@ -159,7 +159,7 @@ const Transportation = () => {
   return (
     <div className="transportation">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo="/dispatcher/transportation/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER']}
         />

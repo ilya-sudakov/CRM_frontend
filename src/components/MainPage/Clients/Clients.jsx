@@ -5,7 +5,7 @@ import 'Utils/Form/Form.scss';
 import { searchClients } from 'API/Clients';
 import { Link } from 'react-router-dom';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';
 import EditNextContactDate from './MainComponents/EditContactDay.jsx';
@@ -248,7 +248,7 @@ const Clients = (props) => {
   return (
     <div className="clients">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo={'/' + props.type + '/new'}
           visibility={['ROLE_ADMIN', 'ROLE_MANAGER']}
         />

@@ -1,35 +1,40 @@
 import { useContext, useState } from 'react';
-import './FloatingPlus.scss';
+import './FloatingButton.scss';
 import plusIcon from 'Assets/sidemenu/plus.svg';
 import { Link } from 'react-router-dom';
 import UserContext from '../../../App.js';
+import PropTypes from 'prop-types';
 
-const FloatingPlus = (props) => {
+const FloatingButton = ({
+  visibility,
+  linkTo = '/',
+  title = 'Создать',
+  onClick,
+  iconStyles,
+  iconSrc,
+}) => {
   const userContext = useContext(UserContext);
   const [showButton, setShowButton] = useState(true);
 
-  if (
-    (!props.visibility || userContext.userHasAccess(props.visibility)) &&
-    showButton
-  ) {
+  if ((!visibility || userContext.userHasAccess(visibility)) && showButton) {
     return (
       <Link
         className="floating-plus"
-        to={props.linkTo ? props.linkTo : '/'}
-        title={props.title ? props.title : 'Создать'}
+        to={linkTo}
+        title={title}
         onClick={
-          props.onClick
+          onClick
             ? (event) => {
                 event.preventDefault();
-                props.onClick();
+                onClick();
               }
             : null
         }
       >
         <img
           className="floating-plus__img"
-          style={props.iconStyles}
-          src={props.iconSrc ? props.iconSrc : plusIcon}
+          style={iconStyles}
+          src={iconSrc ?? plusIcon}
         />
         <div
           className="floating-plus__hide-btn"
@@ -49,4 +54,13 @@ const FloatingPlus = (props) => {
   }
 };
 
-export default FloatingPlus;
+export default FloatingButton;
+
+FloatingButton.propTypes = {
+  visibility: PropTypes.array,
+  linkTo: PropTypes.string,
+  title: PropTypes.string,
+  onClick: PropTypes.func,
+  iconStyles: PropTypes.object,
+  iconSrc: PropTypes.string,
+};

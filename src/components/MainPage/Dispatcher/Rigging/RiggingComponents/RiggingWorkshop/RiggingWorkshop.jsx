@@ -8,7 +8,7 @@ import {
   deleteStamp,
   getStampsByStatus,
 } from 'API/rigging';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { filterRigItems } from './functions.js';
@@ -86,7 +86,7 @@ const RiggingWorkshop = (props) => {
 
   return (
     <div className="rigging-workshop">
-      <FloatingPlus
+      <FloatingButton
         linkTo="/dispatcher/rigging/stamp/new"
         visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP', 'ROLE_ENGINEER']}
       />

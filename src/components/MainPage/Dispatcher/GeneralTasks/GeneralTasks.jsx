@@ -3,7 +3,7 @@ import './GeneralTasks.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getMainTasks, deleteMainTask } from 'API/tasks';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import useSort from 'Utils/hooks/useSort/useSort';
@@ -229,7 +229,7 @@ const GeneralTasks = (props) => {
   return (
     <div className="general_tasks">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo="/dispatcher/general-tasks/new"
           visibility={['ROLE_ADMIN', 'ROLE_DISPATCHER', 'ROLE_ENGINEER']}
         />

@@ -4,7 +4,7 @@ import 'Utils/MainWindow/MainWindow.scss';
 import TableView from './TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { deleteStorage, getStorage } from 'API/Workshop/storage.js';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import { workshops } from '../workshopVariables.js';
@@ -60,7 +60,7 @@ const Storage = (props) => {
   return (
     <div className="storage">
       <div className="main-window">
-        <FloatingPlus
+        <FloatingButton
           linkTo={`${workshops[props.type].storageRedirectURL}/new`}
           visibility={['ROLE_ADMIN', 'ROLE_WORKSHOP']}
         />

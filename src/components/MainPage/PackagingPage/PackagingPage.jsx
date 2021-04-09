@@ -6,7 +6,7 @@ import editSVG from 'Assets/tableview/edit.svg';
 import deleteSVG from 'Assets/tableview/delete.svg';
 import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import { getPackaging, deletePackaging } from 'API/Products/packaging.js';
-import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
+import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const PackagingPage = (props) => {
@@ -62,7 +62,7 @@ const PackagingPage = (props) => {
   return (
     <div className="packaging-page">
       <div className="main-window">
-        <FloatingPlus linkTo="/packaging/new" visibility={['ROLE_ADMIN']} />
+        <FloatingButton linkTo="/packaging/new" visibility={['ROLE_ADMIN']} />
         <div className="main-window__header main-window__header--full">
           <div className="main-window__title">Упаковки</div>
         </div>
