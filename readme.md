@@ -1,5 +1,15 @@
 # Система управления для малого предприятия - Фронтенд <a href="https://codeclimate.com/github/ilyasudakov/osfix_erp_frontend/maintainability"><img src="https://api.codeclimate.com/v1/badges/4caebb62502ad174f310/maintainability" /></a> <a href="https://codeclimate.com/github/ilyasudakov/osfix_erp_frontend/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4caebb62502ad174f310/test_coverage" /></a>
 
+# Документация
+
+## Общая документация
+
+https://github.com/ilyasudakov/osfix_erp_frontend/wiki
+
+## Storybook
+
+https://ilyasudakov.github.io/osfix_erp_frontend/
+
 # Библиотеки
 
 ### Фронтенд
@@ -55,5 +65,3 @@
         npm run storybook --no-dll
 
 - При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action
-
-- GH Pages Storybook: https://ilyasudakov.github.io/osfix_erp_frontend/
