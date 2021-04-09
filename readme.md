@@ -10,24 +10,6 @@ https://github.com/ilyasudakov/osfix_erp_frontend/wiki
 
 https://ilyasudakov.github.io/osfix_erp_frontend/
 
-# Библиотеки
-
-### Фронтенд
-
-- React 17
-- Webpack 5
-- Jest
-- ESLint & Prettier
-- Storybook
-- Axios
-- Husky для pre-commit действий (linting&formatting)
-- Github Actions
-
-### Деплой на сервере
-
-- NGINX
-- Docker, docker-compose для LetsEncrypt [Еще не используется, но реализовано]
-
 # Инструкция по установке
 
 - После копирования репозитория в корне проекта необходимо создать файл
@@ -65,3 +47,21 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
         npm run storybook --no-dll
 
 - При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action
+
+# Библиотеки
+
+### Фронтенд
+
+- React 17
+- Webpack 5
+- Jest
+- ESLint & Prettier
+- Storybook
+- Axios
+- Husky для pre-commit действий (linting&formatting)
+- Github Actions
+
+### Деплой на сервере
+
+- NGINX
+- Docker, docker-compose для LetsEncrypt [Еще не используется, но реализовано]
