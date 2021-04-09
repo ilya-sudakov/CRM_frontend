@@ -179,7 +179,7 @@ const GeneralTasks = (props) => {
       maxWidth: '120px',
       badge: {
         type: 'error',
-        isVisibleFn: (date) => new Date(date) < new Date(),
+        isVisibleFn: ({ dateControl }) => new Date(dateControl) < new Date(),
       },
       formatFn: ({ dateControl }) => formatDateString(dateControl),
     },
