@@ -17,7 +17,7 @@ import {
   TableNestedRow,
   NestedTable,
   TableItemsCount,
-  TableNotItems,
+  TableNoItems,
 } from './styles';
 
 const getMaxLines = (lines = 3) => ({
@@ -168,9 +168,9 @@ const Table = ({
           ) : null}
         </Row>
       ) : (
-        <TableNotItems>
+        <TableNoItems>
           Не найдено записей. Создайте запись и она отобразиться здесь
-        </TableNotItems>
+        </TableNoItems>
       )}
       {loading.isLoading ? (
         <TableLoading

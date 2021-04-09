@@ -2,15 +2,12 @@ import { useState, useEffect } from 'react';
 import './PackagingPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import editSVG from 'Assets/tableview/edit.svg';
-import deleteSVG from 'Assets/tableview/delete.svg';
-import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import { getPackaging, deletePackaging } from 'API/Products/packaging.js';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';
 
-const PackagingPage = (props) => {
+const PackagingPage = () => {
   const [packages, setPackages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -95,80 +92,6 @@ const PackagingPage = (props) => {
           searchQuery={searchQuery}
           deleteItem={deleteItem}
         />
-        <div className="main-window__list main-window__list--full">
-          <TableLoading isLoading={isLoading} />
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Кол-во</span>
-            <span>Размер</span>
-            <span>Комментарий</span>
-            <div className="main-window__actions">Действия</div>
-          </div>
-          {packages
-            .filter(
-              (item) =>
-                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.quantity
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchQuery.toLowerCase()) ||
-                item.size.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                item.comment.toLowerCase().includes(searchQuery.toLowerCase()),
-            )
-            .sort((a, b) => {
-              if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
-                return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
-              }
-              if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
-                return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
-              }
-              return 0;
-            })
-            .map((packageItem, packageIndex) => {
-              return (
-                <div className="main-window__list-item" key={packageItem.id}>
-                  <span>
-                    <div className="main-window__mobile-text">Название:</div>
-                    {packageItem.name}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Кол-во:</div>
-                    {packageItem.quantity}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Размер:</div>
-                    {packageItem.size}
-                  </span>
-                  <span>
-                    <div className="main-window__mobile-text">Комментарий:</div>
-                    {packageItem.comment}
-                  </span>
-                  <div className="main-window__actions">
-                    <div
-                      className="main-window__action"
-                      title="Редактирование упаковки"
-                      onClick={() => {
-                        props.history.push('/packaging/edit/' + packageItem.id);
-                      }}
-                    >
-                      <img className="main-window__img" src={editSVG} />
-                    </div>
-                    {props.userHasAccess(['ROLE_ADMIN']) && (
-                      <div
-                        className="main-window__action"
-                        title="Удаление упаковки"
-                        onClick={() => {
-                          deleteItem(packageIndex);
-                        }}
-                      >
-                        <img className="main-window__img" src={deleteSVG} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-        </div>
       </div>
     </div>
   );
