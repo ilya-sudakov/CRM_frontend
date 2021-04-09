@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import './ClientCategories.scss';
-import editSVG from 'Assets/tableview/edit.svg';
-import deleteSVG from 'Assets/tableview/delete.svg';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
@@ -15,9 +13,9 @@ import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
+import TableView from './TableView.jsx';
 
 const ClientCategories = (props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -140,61 +138,23 @@ const ClientCategories = (props) => {
           setSearchQuery={setSearchQuery}
         />
         <ControlPanel itemsCount={`Всего: ${categories.length} записей`} />
-        <div className="main-window__list main-window__list--full">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Название</span>
-            <span>Видимость</span>
-            <div className="main-window__actions">Действия</div>
-          </div>
-          {isLoading && (
-            <PlaceholderLoading
-              itemClassName="main-window__list-item"
-              minHeight="20px"
-              items={2}
-            />
-          )}
-          {sortByField(
+        <TableView
+          data={sortByField(
             categories.filter((item) => {
               return item.name
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase());
             }),
             { fieldName: 'name', direction: 'asc' },
-          ).map((item) => {
-            return (
-              <div className="main-window__list-item" key={item.id}>
-                <span>
-                  <div className="main-window__mobile-text">Название: </div>
-                  {item.name}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Видимость: </div>
-                  {item.visibility}
-                </span>
-                <div className="main-window__actions">
-                  <div
-                    className="main-window__action"
-                    onClick={() => {
-                      setEditCategory(item);
-                      setCurForm('edit');
-                      setShowWindow(!showWindow);
-                    }}
-                  >
-                    <img className="main-window__img" src={editSVG} />
-                  </div>
-                  {props.userHasAccess(['ROLE_ADMIN']) && (
-                    <div
-                      className="main-window__action"
-                      onClick={() => deleteItem(item.id)}
-                    >
-                      <img className="main-window__img" src={deleteSVG} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+          )}
+          isLoading={isLoading}
+          onEdit={(item) => {
+            setEditCategory(item);
+            setCurForm('edit');
+            setShowWindow(!showWindow);
+          }}
+          deleteItem={deleteItem}
+        />
       </div>
     </div>
   );

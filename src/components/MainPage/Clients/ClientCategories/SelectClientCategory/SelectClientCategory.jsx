@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './SelectClientCategory.scss';
 import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
+import TableView from '../TableView.jsx';
 import {
   getClientCategories,
   getSupplierCategories,
@@ -11,7 +11,6 @@ import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
 
 const SelectClientCategory = (props) => {
   const [showWindow, setShowWindow] = useState(false);
-  const [closeWindow, setCloseWindow] = useState(false);
   const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [id, setId] = useState(0);
@@ -27,6 +26,12 @@ const SelectClientCategory = (props) => {
       name: 'поставщик',
       getCategoriesFunction: () => getSupplierCategories(),
     },
+  };
+
+  const filterSearchQuery = (data) => {
+    return data.filter((item) => {
+      return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
   };
 
   useEffect(() => {
@@ -48,10 +53,10 @@ const SelectClientCategory = (props) => {
       });
   };
 
-  const clickCategory = (categoryId, categoryName) => {
-    setId(categoryId);
-    setFullName(categoryName);
-    props.handleCategoryChange(categoryId, categoryName);
+  const clickCategory = ({ id, name }) => {
+    setId(id);
+    setFullName(name);
+    props.handleCategoryChange(id, name);
     setShowWindow(!showWindow);
   };
 
@@ -113,13 +118,9 @@ const SelectClientCategory = (props) => {
               placeholder="Введите запрос для поиска..."
             />
             <TableView
-              data={categories}
+              data={filterSearchQuery(categories)}
               searchQuery={searchQuery}
-              userHasAccess={props.userHasAccess}
-              selectCategory={clickCategory}
-              setCloseWindow={setCloseWindow}
-              closeWindow={closeWindow}
-              setShowWindow={setShowWindow}
+              onSelect={clickCategory}
               isLoading={isLoading}
             />
           </>
