@@ -1,105 +1,112 @@
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { formatDateString, addSpaceDelimiter } from 'Utils/functions.jsx';
-
-import editSVG from 'Assets/tableview/edit.svg';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import Table from 'Components/Table/Table.jsx';
+import styled from 'styled-components';
+import { editOrder } from 'API/Workshop/Orders.jsx';
 
 const Tableview = ({
   data,
   isLoading,
-  statuses,
   deleteItem,
   userHasAccess,
   link,
+  loadData,
 }) => {
+  const ProductsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+  `;
+  const ProductRow = styled.div`
+    display: flex;
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+    span {
+      &:first-child {
+        margin-right: 5px;
+      }
+      &:last-child {
+        color: #777;
+      }
+    }
+  `;
+  const handleStatusChange = (item, value) => {
+    return editOrder(
+      {
+        ...item,
+        date: new Date(item.date).getTime() / 1000,
+        deliverBy: new Date(item.deliverBy).getTime() / 1000,
+        status: value,
+      },
+      item.id,
+    ).then(() => loadData());
+  };
+  const columns = [
+    {
+      text: 'Дата создания',
+      value: 'date',
+      formatFn: ({ date }) => formatDateString(date),
+    },
+    { text: 'Название', value: 'name' },
+    {
+      text: 'Продукция',
+      value: 'name',
+      // eslint-disable-next-line react/display-name
+      formatFn: ({ products }) => (
+        <ProductsWrapper>
+          {products.map((product) => (
+            <ProductRow key={product.id}>
+              <span>{product.name}</span>
+              <span> ({addSpaceDelimiter(product.quantity)} шт.)</span>
+            </ProductRow>
+          ))}
+        </ProductsWrapper>
+      ),
+    },
+    { text: 'Комплектация', value: 'assembly' },
+    {
+      text: 'Статус',
+      value: 'status',
+      status: {
+        onChange: (value, item) => handleStatusChange(item, value),
+        options: [
+          { text: 'Заказано', value: 'ordered' },
+          { text: 'Отправлено', value: 'sent' },
+          { text: 'Проблема', value: 'problem' },
+          { text: 'Завершено', value: 'completed' },
+        ],
+      },
+    },
+    {
+      text: 'Дата поставки',
+      value: 'name',
+      formatFn: ({ deliverBy }) => formatDateString(deliverBy),
+      badge: {
+        isVisibleFn: ({ deliverBy, status }) =>
+          new Date(deliverBy) < new Date() && status !== 'completed',
+        type: 'error',
+      },
+    },
+  ];
+  const actions = (item) => [
+    {
+      elementType: 'edit',
+      title: 'Редактировать запись',
+      link: `${link}/edit/${item.id}`,
+    },
+    {
+      elementType: 'delete',
+      title: 'Удаление записи',
+      onClick: () => deleteItem(item),
+      isRendered: userHasAccess(['ROLE_ADMIN']),
+    },
+  ];
   return (
-    <div className="main-window__list main-window__list--full">
-      <div className="main-window__list-item main-window__list-item--header">
-        <span>Дата создания</span>
-        <span>Название</span>
-        <span>Продукция</span>
-        <span>Комплектация</span>
-        <span>Статус</span>
-        <span>Дата поставки</span>
-        <div className="main-window__table-actions"></div>
-      </div>
-      {isLoading && (
-        <PlaceholderLoading
-          itemClassName="main-window__list-item"
-          minHeight="35px"
-          items={3}
-        />
-      )}
-      {data.map((order) => {
-        return (
-          <div
-            className={
-              'main-window__list-item main-window__list-item--' + order.status
-            }
-            key={order.id}
-          >
-            <span>
-              <div className="main-window__mobile-text">Дата создания: </div>
-              {formatDateString(order.date)}
-            </span>
-            <span>
-              <div className="main-window__mobile-text">Название: </div>
-              {order.name}
-            </span>
-            <span>
-              <div className="main-window__mobile-text">Продукция: </div>
-              <div className="main-window__list-col">
-                {order.products.map((product) => (
-                  <div className="workshop-orders__products" key={product.id}>
-                    <div>{product.name}</div>
-                    <div> ({addSpaceDelimiter(product.quantity)} шт.)</div>
-                  </div>
-                ))}
-              </div>
-            </span>
-            <span>
-              <div className="main-window__mobile-text">Назначение: </div>
-              {order.assembly}
-            </span>
-            <span className={'main-window__list-item--' + order.status}>
-              <div className="main-window__mobile-text">Статус: </div>
-              {statuses.find((item) => item.className === order.status)?.name}
-            </span>
-            <span>
-              <div className="main-window__mobile-text">Дата поставки: </div>
-              {new Date(order.deliverBy) < new Date() &&
-              order.status !== 'completed' ? (
-                <div className="main-window__reminder">
-                  <div>!</div>
-                  <div>{formatDateString(order.deliverBy)}</div>
-                </div>
-              ) : (
-                formatDateString(order.deliverBy)
-              )}
-            </span>
-            <TableActions
-              actionsList={[
-                {
-                  link: `${link}/edit/${order.id}`,
-                  imgSrc: editSVG,
-                  title: 'Редактирование заказа',
-                },
-                {
-                  customElement: (
-                    <DeleteItemAction
-                      title="Удаление заказа"
-                      onClick={() => deleteItem(order)}
-                    />
-                  ),
-                  isRendered: userHasAccess(['ROLE_ADMIN']),
-                },
-              ]}
-            />
-          </div>
-        );
-      })}
-    </div>
+    <Table
+      data={data}
+      columns={columns}
+      actions={actions}
+      loading={{ isLoading }}
+    />
   );
 };
 

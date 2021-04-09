@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import './Storage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import TableView from './TableView/TableView.jsx';
+import TableView from './TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { deleteStorage, getStorage } from 'API/Workshop/storage.js';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';

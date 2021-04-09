@@ -149,9 +149,9 @@ const WorkshopOrders = (props) => {
           })}
           link={workshops[props.type].ordersRedirectURL}
           isLoading={isLoading}
-          statuses={statuses}
           deleteItem={deleteItem}
           userHasAccess={userContext.userHasAccess}
+          loadData={loadData}
         />
       </div>
     </div>

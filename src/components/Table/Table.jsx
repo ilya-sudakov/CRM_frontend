@@ -89,7 +89,7 @@ const renderTableCell = (column, item, index, options) => {
     (column.badge?.isVisible ||
       (column.badge?.isVisible === undefined &&
         column.badge?.isVisibleFn === undefined) ||
-      column.badge?.isVisibleFn(curColumn));
+      column.badge?.isVisibleFn(item));
   if (hasBadge) {
     return (
       <Cell {...props}>

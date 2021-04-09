@@ -59,7 +59,7 @@ const ClientsList = ({
       formatFn: ({ nextDateContact }) => formatDateString(nextDateContact),
       width: '10%',
       badge: {
-        isVisibleFn: (date) => new Date(date) < new Date(),
+        isVisibleFn: ({ date }) => new Date(date) < new Date(),
         type: 'error',
       },
     },

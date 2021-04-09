@@ -6,15 +6,9 @@
   --sent: #bdbd41;
   --problem: #c23737;
 
-  .main-window__info-panel {
-    // justify-content: space-between;
-  }
-
   .control-panel {
     margin-top: -10px;
     border-top: 1px solid #dddddd;
-    width: calc(100% + 25px);
-
     .main-window__control-panel-wrapper {
       .main-window__info-panel {
         margin-bottom: 0;
@@ -24,10 +18,6 @@
         margin-bottom: 0;
       }
     }
-  }
-
-  .searchbar {
-    width: calc(100% + 25px) !important;
   }
   .main-window__status-panel {
     .main-window__button {
@@ -65,7 +55,6 @@
   }
   .main-window {
     &__list {
-      width: calc(100% + 25px) !important;
       .main-window__list-item {
         padding-left: 25px;
         position: relative;
