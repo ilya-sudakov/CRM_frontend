@@ -2,12 +2,12 @@ import './InputProducts.scss';
 import SelectFromButton from '../SelectFromButton/SelectFromButton.jsx';
 import { useState, useEffect, useCallback } from 'react';
 import './Select.scss';
-import SearchBar from '../../../components/MainPage/SearchBar/SearchBar.jsx';
-import TableView from '../../../components/MainPage/Products/TableView/TableView.jsx';
+import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
+import TableView from 'Components/MainPage/Products/TableView.jsx';
 import FormWindow from '../../Form/FormWindow/FormWindow.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import useSort from '../../hooks/useSort/useSort';
+import { useSort, useProductsList } from 'Utils/hooks';
 import {
   renderNewQuantity,
   renderPackaging,
@@ -15,7 +15,6 @@ import {
   renderSelectedItemName,
   renderSelectPackaging,
 } from './functions.jsx';
-import useProductsList from '../../hooks/useProductsList/useProductsList';
 
 const InputProducts = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

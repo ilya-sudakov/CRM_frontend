@@ -10,7 +10,13 @@ import {
   copyLinkToClipboard,
 } from './functions';
 
-const ImageView = ({ file, closeWindow = null }) => {
+const ImageView = ({
+  file,
+  closeWindow = null,
+  style = {
+    maxPreviewWidth: '50px',
+  },
+}) => {
   const imgRef = createRef(null);
   const imgBigRef = createRef(null);
   const isBase64 = typeof file === 'string';
@@ -63,11 +69,13 @@ const ImageView = ({ file, closeWindow = null }) => {
       className="image-view"
       onClick={file && file !== '' && isImage ? () => toggleFormWindow() : null}
       title="Открыть в полном размере"
+      style={{ maxWidth: style.maxPreviewWidth }}
     >
       {file && file !== '' && isImage ? (
         <img
           className="image-view__img image-view__img--preview"
           ref={imgRef}
+          style={{ maxWidth: style.maxPreviewWidth }}
         />
       ) : (
         <div className="image-view__img image-view__img--placeholder">Файл</div>

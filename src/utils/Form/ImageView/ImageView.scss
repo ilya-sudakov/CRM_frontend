@@ -1,9 +1,10 @@
 .image-view {
+    --max-image-preview-width: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 50px;
+    max-width: var(--max-image-preview-width);
     min-height: calc(50px * 9 / 16);
     border: 1px solid #ddd;
     background-color: #eee;
@@ -39,7 +40,7 @@
 
         &--preview,
         &--placeholder {
-            max-width: 50px;
+            max-width: var(--max-image-preview-width);
             border-radius: 3px;
         }
         &--placeholder {

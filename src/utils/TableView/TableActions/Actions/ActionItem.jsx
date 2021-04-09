@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import EditSVG from 'Assets/tableview/edit.inline.svg';
 import PrintSVG from 'Assets/tableview/print.inline.svg';
 import SelectSVG from 'Assets/tableview/ok.inline.svg';
+import ViewSVG from 'Assets/tableview/view.inline.svg';
 
 const defaultItem = {
   isRendered: false,
@@ -9,6 +10,14 @@ const defaultItem = {
 
 const icons = {
   edit: <EditSVG className="main-window__img" />,
+  view: (
+    <ViewSVG
+      width={20}
+      height={20}
+      viewBox="0 0 16 16"
+      className="main-window__img"
+    />
+  ),
   print: <PrintSVG className="main-window__img" />,
   select: <SelectSVG className="main-window__img" />,
 };

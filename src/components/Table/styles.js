@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-const nestedBorderRadius = '10px';
+const nestedBorderRadius = '5px';
 
 export const StyledTable = styled.table`
   box-sizing: border-box;
@@ -17,6 +17,12 @@ export const StyledTable = styled.table`
   .main-window__table-actions {
     max-width: fit-content;
     margin-left: auto;
+  }
+
+  .main-window__action {
+    .main-window__img {
+      width: auto !important;
+    }
   }
 
   @media (max-width: 768px) {

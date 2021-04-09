@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Products.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
+import TableView from './TableView.jsx';
 import { deleteProduct } from 'API/Products/products';
 import { deleteCategory } from 'API/Products/Categories.js';
 import { deletePackagingFromProduct } from 'API/Products/packaging.js';
@@ -52,11 +52,8 @@ const Products = (props) => {
     document.title = 'Продукция';
   }, []);
 
-  const deleteItem = (event) => {
-    const id = event.target.dataset.id;
-    return deletePackagingFromProduct(id).then(() => {
-      return deleteProduct(id);
-    });
+  const deleteItem = ({ id }) => {
+    return deletePackagingFromProduct(id).then(() => deleteProduct(id));
   };
 
   const deleteItemCategory = (event) => {
