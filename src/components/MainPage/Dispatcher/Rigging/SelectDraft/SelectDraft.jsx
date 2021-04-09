@@ -13,6 +13,7 @@ const SelectDraft = (props) => {
   const [selected, setSelected] = useState([]);
   const [drafts, setDrafts] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [closeWindow, setCloseWindow] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [defaultValueLoaded, setDefaultValueLoaded] = useState(false);
@@ -50,6 +51,7 @@ const SelectDraft = (props) => {
     if (props.drafts) {
       setDrafts([...props.drafts]);
     } else {
+      setIsLoading(true);
       let newDrafts = [];
       getStamp()
         .then((res) => res.json())
@@ -64,8 +66,10 @@ const SelectDraft = (props) => {
               });
             });
           });
+          setIsLoading(false);
           return setDrafts([...newDrafts]);
-        });
+        })
+        .catch(() => setIsLoading(false));
     }
   }
 
@@ -180,7 +184,6 @@ const SelectDraft = (props) => {
             content={
               <>
                 <SearchBar
-                  // title="Поиск по чертежам"
                   fullSize
                   placeholder="Введите артикул чертежа для поиска..."
                   setSearchQuery={setSearchQueryCategory}
@@ -192,6 +195,7 @@ const SelectDraft = (props) => {
                   closeWindow={closeWindow}
                   setCloseWindow={setCloseWindow}
                   setShowWindow={setShowWindow}
+                  isLoading={isLoading}
                 />
               </>
             }

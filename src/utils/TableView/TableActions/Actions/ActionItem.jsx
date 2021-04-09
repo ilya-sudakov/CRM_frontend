@@ -55,7 +55,11 @@ const ActionItem = ({ item = defaultItem, icon }) => {
       {icon ? (
         icons[icon]
       ) : item.imgSrc ? (
-        <img className="main-window__img" src={item.imgSrc} />
+        <img
+          className="main-window__img"
+          style={{ maxWidth: '24px' }}
+          src={item.imgSrc}
+        />
       ) : null}
     </div>
   );

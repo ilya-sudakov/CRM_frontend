@@ -1,14 +1,22 @@
 import { useEffect } from 'react';
 import './TableView.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import okSVG from 'Assets/tableview/ok.svg';
+import Table from 'Components/Table/Table.jsx';
 
-const TableView = (props) => {
+const TableView = ({
+  isLoading,
+  searchQuery,
+  drafts = [],
+  setShowWindow,
+  closeWindow,
+  selectDraft,
+  setCloseWindow,
+}) => {
   const search = () => {
     let re = /[.,\s\-_]/gi;
-    const query = props.searchQuery.toLowerCase();
+    const query = searchQuery.toLowerCase();
     let searchArr = query.split(' ');
-    return props.drafts.filter((item) => {
+    return drafts.filter((item) => {
       let check = true;
       searchArr.map((searchWord) => {
         if (
@@ -36,76 +44,38 @@ const TableView = (props) => {
     Detail: 'Деталь',
   };
 
-  useEffect(() => {
-    // console.log(props.drafts);
-    props.setShowWindow(false);
-  }, [props.closeWindow]);
+  const locations = {
+    lemz: 'ЦехЛЭМЗ',
+    lepsari: 'ЦехЛепсари',
+    ligovskiy: 'ЦехЛиговский',
+  };
 
+  useEffect(() => {
+    setShowWindow(false);
+  }, [closeWindow]);
+
+  const columns = [
+    { text: 'Артикул', value: 'number' },
+    { text: 'Название', value: 'name' },
+    {
+      text: 'Местоположение',
+      value: 'location',
+      formatFn: ({ location }) => locations[location],
+    },
+    { text: 'Тип', value: 'comment', formatFn: ({ type }) => partTypes[type] },
+  ];
   return (
-    <div className="select-drafts__list">
-      <div className="main-window">
-        <div className="main-window__list main-window__list--full">
-          <div className="main-window__list-item main-window__list-item--header">
-            <span>Артикул</span>
-            <span>Название</span>
-            <span>Местоположение</span>
-            <span>Тип</span>
-            <div className="main-window__actions">Действие</div>
-          </div>
-          {search().map((draft) => {
-            return (
-              <div
-                className="main-window__list-item"
-                key={draft.id}
-                onClick={() => {
-                  console.log(draft);
-                  props.selectDraft(
-                    draft.id,
-                    draft.name,
-                    draft.type,
-                    draft.number,
-                  );
-                  props.setCloseWindow(!props.closeWindow);
-                }}
-              >
-                <span>
-                  <div className="main-window__mobile-text">Артикул:</div>
-                  {draft.number}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Название:</div>
-                  {draft.name}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">
-                    Местоположение:
-                  </div>
-                  {draft.location}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Тип:</div>
-                  {partTypes[draft.type]}
-                </span>
-                <div className="main-window__actions">
-                  <div
-                    className="main-window__action"
-                    onClick={() => {
-                      props.selectDraft(draft.id, draft.name, draft.type);
-                      console.log(props.closeWindow);
-                      props.setCloseWindow(!props.closeWindow);
-                    }}
-                    title="Выбрать деталь"
-                  >
-                    {/* Выбрать */}
-                    <img className="main-window__img" src={okSVG} alt="" />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    <Table
+      data={search()}
+      columns={columns}
+      options={{ fullSize: true }}
+      loading={{ isLoading }}
+      onClick={(item) => {
+        console.log(item);
+        selectDraft(item.id, item.name, item.type, item.number);
+        setCloseWindow(!closeWindow);
+      }}
+    />
   );
 };
 
