@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import './SelectWorkItem.scss';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getWork } from 'API/WorkManaging/work_list';
-import TableView from './TableViewWork/TableView.jsx';
+import TableView from '../TableView.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import { useFormWindow } from 'Utils/hooks';
 
 const SelectWorkItem = (props) => {
-  const [showWindow, setShowWindow] = useState(false);
   const [works, setWorks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +33,25 @@ const SelectWorkItem = (props) => {
   const clickWork = (employeeName, employeeId, newWorkType) => {
     setFullName(employeeName);
     props.handleWorkItemChange(employeeName, employeeId, newWorkType);
-    setShowWindow(!showWindow);
+    toggleFormWindow();
   };
+
+  const { formWindow, toggleFormWindow } = useFormWindow(
+    'Выбор работы',
+    <>
+      <SearchBar
+        fullSize
+        setSearchQuery={setSearchQuery}
+        placeholder="Введите название работы для поиска..."
+      />
+      <TableView
+        data={works}
+        searchQuery={searchQuery}
+        selectWork={clickWork}
+        isLoading={isLoading}
+      />
+    </>,
+  );
 
   return (
     <div className="select-work-item">
@@ -45,7 +61,7 @@ const SelectWorkItem = (props) => {
           {(props.readOnly === undefined || !props.readOnly) && (
             <SelectFromButton
               text="Выбрать тип работы"
-              onClick={() => setShowWindow(!showWindow)}
+              onClick={() => toggleFormWindow()}
             />
           )}
         </div>
@@ -83,33 +99,7 @@ const SelectWorkItem = (props) => {
           Поле не заполнено!
         </div>
       )}
-      <FormWindow
-        title="Выбор работы"
-        windowName="select-work-item"
-        id={props.id}
-        content={
-          <>
-            <SearchBar
-              // title="Поиск по работам"
-              fullSize
-              setSearchQuery={setSearchQuery}
-              placeholder="Введите название работы для поиска..."
-            />
-            <TableView
-              data={works}
-              searchQuery={searchQuery}
-              userHasAccess={props.userHasAccess}
-              selectWork={clickWork}
-              fullName={fullName}
-              isLoading={isLoading}
-              showWindow={showWindow}
-              setShowWindow={setShowWindow}
-            />
-          </>
-        }
-        showWindow={showWindow}
-        setShowWindow={setShowWindow}
-      />
+      {formWindow}
     </div>
   );
 };

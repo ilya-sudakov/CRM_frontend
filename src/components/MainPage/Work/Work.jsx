@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Work.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import TableView from './TableView/TableView.jsx';
+import TableView from './TableView.jsx';
 import { deleteWork, getWork } from 'API/WorkManaging/work_list';
 import 'Utils/MainWindow/MainWindow.scss';
 import FloatingPlus from 'Utils/MainWindow/FloatingPlus/FloatingPlus.jsx';
@@ -20,9 +20,7 @@ const Work = (props) => {
     };
   }, []);
 
-  const deleteItem = (id) => {
-    deleteWork(id).then(() => loadWork());
-  };
+  const deleteItem = (id) => deleteWork(id).then(() => loadWork());
 
   const loadWork = (signal) => {
     getWork(signal)
@@ -35,6 +33,7 @@ const Work = (props) => {
         console.log(error);
       });
   };
+
   return (
     <div className="work">
       <div className="main-window">
@@ -44,7 +43,6 @@ const Work = (props) => {
         </div>
         <SearchBar
           fullSize
-          // title="Поиск работы"
           placeholder="Введите название работы для поиска..."
           setSearchQuery={setSearchQuery}
         />
