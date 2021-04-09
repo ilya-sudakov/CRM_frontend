@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-const nestedBorderRadius = '5px';
+const nestedBorderRadius = '3px';
 
 export const StyledTable = styled.table`
   box-sizing: border-box;
@@ -153,7 +153,7 @@ export const TableNestedRow = styled(Row)`
 export const TableNestedWrapper = styled.td`
   width: 100%;
   padding: 20px 30px;
-  background-color: #ddd;
+  background-color: #dfdfdf;
 `;
 
 export const TableItemsCount = styled.span`
