@@ -31,17 +31,17 @@ const PackagingPage = () => {
     setIsLoading(true);
     const abortController = new AbortController();
     loadData(abortController.signal);
-    setIsLoading(false);
     return function cancel() {
       abortController.abort();
     };
   }, []);
 
   const loadData = (signal) => {
-    getPackaging(signal)
+    return getPackaging(signal)
       .then((res) => res.json())
       .then((res) => {
         setPackages(res);
+        setIsLoading(false);
       });
   };
 

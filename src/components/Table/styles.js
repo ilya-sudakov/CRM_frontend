@@ -169,5 +169,5 @@ export const TableItemsCount = styled.span`
 export const TableNoItems = styled.div`
   padding: 10px 25px;
   font-size: 0.9rem;
-  color: #555;
+  color: #777;
 `;
