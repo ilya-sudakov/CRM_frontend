@@ -56,7 +56,7 @@ export const StyledTable = styled.table`
 export const Row = styled.tr`
   position: relative;
   border-bottom: 1px solid #ddd;
-  height: 40px;
+  height: ${({ isNested }) => (isNested ? '30px' : '40px')};
   transition: 100ms ease-in-out;
 
   &:hover {
@@ -65,23 +65,25 @@ export const Row = styled.tr`
   }
 
   &:first-child {
-    th:first-child {
-      border-top-left-radius: ${(props) =>
-        props.isNested ? nestedBorderRadius : '0'};
-    }
-    th:last-child {
-      border-top-right-radius: ${(props) =>
-        props.isNested ? nestedBorderRadius : '0'};
+    th {
+      &:first-child {
+        border-top-left-radius: ${({ isNested }) =>
+          isNested ? nestedBorderRadius : '0'};
+      }
+      &:last-child {
+        border-top-right-radius: ${({ isNested }) =>
+          isNested ? nestedBorderRadius : '0'};
+      }
     }
   }
   &:last-child {
     td:first-child {
-      border-bottom-left-radius: ${(props) =>
-        props.isNested ? nestedBorderRadius : '0'};
+      border-bottom-left-radius: ${({ isNested }) =>
+        isNested ? nestedBorderRadius : '0'};
     }
     td:last-child {
-      border-bottom-right-radius: ${(props) =>
-        props.isNested ? nestedBorderRadius : '0'};
+      border-bottom-right-radius: ${(isNested) =>
+        isNested ? nestedBorderRadius : '0'};
     }
   }
 `;
