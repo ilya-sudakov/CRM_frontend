@@ -8,6 +8,7 @@ import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import { getPackaging, deletePackaging } from 'API/Products/packaging.js';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import TableView from './TableView.jsx';
 
 const PackagingPage = (props) => {
   const [packages, setPackages] = useState([]);
@@ -47,12 +48,9 @@ const PackagingPage = (props) => {
       });
   };
 
-  const deleteItem = (index) => {
-    const id = packages[index].id;
-    deletePackaging(id)
-      .then(() => {
-        loadData();
-      })
+  const deleteItem = ({ id }) => {
+    return deletePackaging(id)
+      .then(() => loadData())
       .catch((error) => {
         console.log(error);
         alert('Ошибка при удалении');
@@ -68,7 +66,6 @@ const PackagingPage = (props) => {
         </div>
         <SearchBar
           fullSize
-          // title="Поиск по упаковкам"
           placeholder="Введите запрос для поиска..."
           setSearchQuery={setSearchQuery}
         />
@@ -83,6 +80,20 @@ const PackagingPage = (props) => {
             </div>
           }
           itemsCount={`Всего: ${packages.length} записей`}
+        />
+        <TableView
+          data={packages.sort((a, b) => {
+            if (a[sortOrder.curSort] < b[sortOrder.curSort]) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? 1 : -1;
+            }
+            if (a[sortOrder.curSort] > b[sortOrder.curSort]) {
+              return sortOrder[sortOrder.curSort] === 'desc' ? -1 : 1;
+            }
+            return 0;
+          })}
+          isLoading={isLoading}
+          searchQuery={searchQuery}
+          deleteItem={deleteItem}
         />
         <div className="main-window__list main-window__list--full">
           <TableLoading isLoading={isLoading} />

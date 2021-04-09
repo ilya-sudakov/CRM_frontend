@@ -5,15 +5,13 @@ import { getPackaging } from 'API/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import 'Utils/MainWindow/MainWindow.scss';
 import deleteSVG from 'Assets/tableview/delete.svg';
-import okSVG from 'Assets/tableview/ok.svg';
-import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
 import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import TableView from '../TableView.jsx';
 
 const SelectPackaging = (props) => {
   const [selected, setSelected] = useState([]);
   const [packages, setPackages] = useState([]);
   const [showWindow, setShowWindow] = useState(false);
-  const [closeWindow, setCloseWindow] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,7 +20,6 @@ const SelectPackaging = (props) => {
     return getPackaging(signal)
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
         setPackages(res);
         return setIsLoading(false);
       })
@@ -47,13 +44,12 @@ const SelectPackaging = (props) => {
         content={
           <>
             <SearchBar
-              // title="Поиск по упаковкам"
               fullSize
               setSearchQuery={setSearchQuery}
               placeholder="Введите название упаковки для поиска..."
             />
             <TableView
-              packages={packages}
+              data={packages}
               searchQuery={searchQuery}
               isLoading={isLoading}
               onSelect={(item) => {
@@ -63,10 +59,6 @@ const SelectPackaging = (props) => {
                 props.onChange([...temp]);
                 setShowWindow(!showWindow);
               }}
-              showWindow={showWindow}
-              setShowWindow={setShowWindow}
-              closeWindow={closeWindow}
-              setCloseWindow={setCloseWindow}
             />
           </>
         }
@@ -154,75 +146,6 @@ const SelectPackaging = (props) => {
           </div>
         </div>
       )}
-    </div>
-  );
-};
-
-const TableView = (props) => {
-  useEffect(() => {
-    props.setShowWindow && props.setShowWindow(false);
-  }, [props.closeWindow]);
-
-  return (
-    <div className="main-window">
-      <div className="main-window__list main-window__list--full">
-        <TableLoading isLoading={props.isLoading} />
-        <div className="main-window__list-item main-window__list-item--header">
-          <span>Название</span>
-          <span>Количество</span>
-          <span>Комментарий</span>
-          <span>Размер</span>
-          <div className="main-window__actions">Действие</div>
-        </div>
-        {props.packages
-          .filter((item) => {
-            return (
-              item.name
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase()) ||
-              item.comment
-                .toLowerCase()
-                .includes(props.searchQuery.toLowerCase())
-            );
-          })
-          .map((item) => {
-            return (
-              <div
-                key={item.id}
-                className="main-window__list-item"
-                onClick={(event) => {
-                  event.preventDefault();
-                  props.onSelect(item);
-                  props.setCloseWindow(!props.closeWindow);
-                  props.setShowWindow(false);
-                }}
-              >
-                <span>
-                  <div className="main-window__mobile-text">Название:</div>
-                  {item.name}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Количество:</div>
-                  {item.quantity}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Комментарий:</div>
-                  {item.comment}
-                </span>
-                <span>
-                  <div className="main-window__mobile-text">Размер:</div>
-                  {item.size}
-                </span>
-                <div className="main-window__actions">
-                  <div className="main-window__action" title="Выбрать упаковку">
-                    {/* Выбрать */}
-                    <img className="main-window__img" src={okSVG} />
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
     </div>
   );
 };
