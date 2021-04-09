@@ -30,7 +30,7 @@ const getMaxLines = (lines = 3) => ({
 
 const renderTableLinkCell = ({
   link,
-  curColumn,
+  item,
   props,
   mobileText,
   formattedText,
@@ -38,8 +38,8 @@ const renderTableLinkCell = ({
   const newTab = link.newTab;
   const linkProps = {
     [link.isOutside ? 'href' : 'to']: link.getURL
-      ? link.getURL(curColumn)
-      : curColumn,
+      ? link.getURL(item)
+      : formattedText,
     target: newTab ? '_blank' : undefined,
     rel: newTab ? 'noreferrer' : undefined,
   };
@@ -78,7 +78,7 @@ const renderTableCell = (column, item, index, options) => {
   if (column.link) {
     return renderTableLinkCell({
       link: column.link,
-      curColumn,
+      item,
       props,
       mobileText,
       formattedText,

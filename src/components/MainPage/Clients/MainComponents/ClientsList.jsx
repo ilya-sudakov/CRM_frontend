@@ -26,7 +26,7 @@ const ClientsList = ({
 }) => {
   const userContext = useContext(UserContext);
 
-  const getURL = (site) =>
+  const getURL = ({ site }) =>
     site && site?.split('//')?.length > 1 ? site : `https://${site}`;
   const formatContacts = ({ contacts }) =>
     contacts?.length > 0

@@ -114,7 +114,7 @@ const TableView = (props) => {
   const SelectAction = styled.div`
     display: flex;
     align-items: center;
-    background-color: ${({ close }) => (close ? 'green' : '#bbb')};
+    background-color: ${({ close }) => (close ? 'green' : '#888')};
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;

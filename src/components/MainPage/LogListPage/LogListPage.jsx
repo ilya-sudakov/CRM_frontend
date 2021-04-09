@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './LogListPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import TableView from './TableView/TableView.jsx';
+import TableView from './TableView.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { logItemsTypes } from './objects.js';
 import { getLogsListByType } from 'API/Logs/logs.js';

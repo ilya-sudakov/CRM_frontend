@@ -45,6 +45,9 @@ export const StyledTable = styled.table`
       &:first-child {
         padding-top: 15px !important;
       }
+      &:last-child {
+        padding-bottom: 15px !important;
+      }
 
       .main-window__table-actions {
         width: 100%;
