@@ -77,7 +77,7 @@ module.exports = {
     fallback: {
       fs: false,
     },
-    extensions: ['.js', '.scss', 'jsx'],
+    extensions: ['.js', '.scss', '.jsx'],
     alias: {
       Components: path.resolve(__dirname, 'src/components'),
       API: path.resolve(__dirname, 'src/utils/API'),

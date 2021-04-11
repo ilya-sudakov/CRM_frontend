@@ -13,7 +13,7 @@ import {
   filterTasksUsers,
 } from './functions';
 import { useTitleHeader } from 'Utils/hooks';
-import Table from 'Components/Table/Table.jsx';
+import Table from 'Components/Table/Table';
 import { formatDateString } from 'Utils/functions.jsx';
 import { editTaskStatus } from 'API/tasks';
 
