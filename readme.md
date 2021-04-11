@@ -16,12 +16,9 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
         NODE_ENV = production
         INN_TOKEN = INN_token
 
-- Установите все зависимости:
+- Установите все зависимости и запустите проект:
 
         npm install
-
-- Для запуска в режиме development:
-
         npm start
 
 # Основные команды
