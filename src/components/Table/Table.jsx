@@ -68,7 +68,11 @@ const renderTableCell = (column, item, index, options) => {
   const formattedText = column.formatFn ? column.formatFn(item) : curColumn;
   const props = {
     key: `${item.id}.${column.text}` ?? index,
-    title: formattedText,
+    title: Array.isArray(formattedText)
+      ? formattedText.reduce((sum, cur) => sum + cur, '')
+      : typeof formattedText === 'object'
+      ? curColumn
+      : formattedText,
     style: {
       width: column.width ?? 'auto',
       maxWidth: column.maxWidth ?? column.width ?? 'auto',

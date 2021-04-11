@@ -43,8 +43,8 @@
 
   &--inverted {
     background-color: $secondary-text-color;
-    border: 1px solid #bbbbbb;
-    color: #444444;
+    border: 1px solid #bbb;
+    color: #444;
 
     &__img {
       max-width: 20px;
@@ -59,7 +59,7 @@
 
     .button__circle {
       border: 4px rgba(100, 100, 100, 0.5) solid;
-      border-top: 4px #666666 solid;
+      border-top: 4px #666 solid;
     }
 
     &:hover {
@@ -68,7 +68,7 @@
 
       .button__circle {
         border: 4px rgba(100, 100, 100, 0.7) solid;
-        border-top: 4px #555555 solid;
+        border-top: 4px #555 solid;
       }
     }
   }

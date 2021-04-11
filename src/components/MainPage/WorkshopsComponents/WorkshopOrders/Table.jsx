@@ -49,7 +49,7 @@ const Tableview = ({
     { text: 'Название', value: 'name' },
     {
       text: 'Продукция',
-      value: 'name',
+      value: 'products',
       // eslint-disable-next-line react/display-name
       formatFn: ({ products }) => (
         <ProductsWrapper>

@@ -10,10 +10,7 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
 # Инструкция по установке
 
-- После копирования репозитория в корне проекта необходимо создать файл
-
-        .env
-
+- После копирования репозитория в корне проекта необходимо создать файл `.env`  
   и заполнить его следующим образом:
 
         API_BASE_URL = http://localhost:port
@@ -24,13 +21,15 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
         npm install
 
+- Для запуска в режиме development, введите:
+
+        npm start
+
 - После установки зависимостей, для запуска production версии, введите:
 
         npm run webpack:prod
 
-- Для запуска в режиме development, введите:
-
-        npm start
+# Основные команды
 
 - Для запуска тестов, введите:
 
@@ -44,7 +43,7 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
         npm run storybook --no-dll
 
-- При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action
+_При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action_
 
 # Библиотеки
 
