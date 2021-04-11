@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import TableLoading from './PlaceholderLoading/TableLoading.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
-import TableSelectStatus from './TableSelectStatus.jsx';
-import TableBadge from './TableBadge.jsx';
+import TableSelectStatus from './TableSelectStatus';
+import TableBadge from './TableBadge';
 import {
   Cell,
   TableOutsideLink,
