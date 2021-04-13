@@ -60,12 +60,12 @@ export const Row = styled.tr`
   position: relative;
   border-bottom: 1px solid #ddd;
   height: ${({ headerRow }) => (headerRow ? '30px' : '45px')};
-  background: ${({ headerRow }) => (headerRow ? '#f9f9f9' : '#fff')};
+  background: ${({ headerRow }) => (headerRow ? '#fbfbfb' : '#fff')};
   transition: 100ms ease-in-out;
 
   &:hover {
     background-color: ${(props) =>
-      props.headerRow || props.loading ? '#fff' : '#eee'};
+      props.headerRow ? '#fbfbfb' : props.loading ? '#fff' : '#eee'};
   }
 
   &:first-child {
