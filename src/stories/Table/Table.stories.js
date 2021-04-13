@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import { storiesOf } from '@storybook/react';
 import { useTable } from 'Utils/hooks';
 import Table from 'Components/Table/Table.jsx';
 
