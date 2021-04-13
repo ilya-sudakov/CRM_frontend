@@ -59,7 +59,8 @@ export const StyledTable = styled.table`
 export const Row = styled.tr`
   position: relative;
   border-bottom: 1px solid #ddd;
-  height: ${({ isNested }) => (isNested ? '30px' : '40px')};
+  height: ${({ headerRow }) => (headerRow ? '30px' : '45px')};
+  background: ${({ headerRow }) => (headerRow ? '#f9f9f9' : '#fff')};
   transition: 100ms ease-in-out;
 
   &:hover {
