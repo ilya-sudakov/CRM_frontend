@@ -2,7 +2,7 @@ import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel';
 import Button from 'Utils/Form/Button/Button';
 
 export default {
-  title: 'MainComponents/ControlPanel',
+  title: 'Основной UI/ControlPanel',
   component: ControlPanel,
 };
 

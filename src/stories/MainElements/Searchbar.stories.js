@@ -1,7 +1,7 @@
 import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
 
 export default {
-  title: 'SearchBar',
+  title: 'Основной UI/SearchBar',
   component: SearchBar,
 };
 

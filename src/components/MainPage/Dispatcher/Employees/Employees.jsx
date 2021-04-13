@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import './Employees.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import PrintIcon from 'Assets/print.png';
 import { getEmployeesListPdfText } from './functions.js';
 import { deleteEmployee, getEmployeesByWorkshop } from 'API/employees';
 import Button from 'Utils/Form/Button/Button.jsx';
@@ -82,7 +81,6 @@ const Employees = () => {
             <Button
               text="Печать списка"
               isLoading={isLoading}
-              imgSrc={PrintIcon}
               inverted
               className="main-window__button main-window__button--inverted"
               onClick={printEmployeesList}

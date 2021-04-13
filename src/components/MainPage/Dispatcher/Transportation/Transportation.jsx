@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import './Transportation.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import PrintIcon from 'Assets/print.png';
 import { getTransportations, deleteTransportation } from 'API/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Utils/Form/Button/Button.jsx';
@@ -176,7 +175,6 @@ const Transportation = () => {
             <Button
               text="Печать списка"
               inverted
-              imgSrc={PrintIcon}
               isLoading={isLoading}
               className="main-window__button main-window__button--inverted"
               onClick={printTransportationList}

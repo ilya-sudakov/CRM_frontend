@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import './WorkshopRequests.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import PrintIcon from 'Assets/print.png';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import Button from 'Utils/Form/Button/Button.jsx';
@@ -242,7 +241,6 @@ const WorkshopRequests = (props) => {
             <Button
               text="Печать списка"
               isLoading={isLoading}
-              imgSrc={PrintIcon}
               inverted
               className="main-window__button main-window__button--inverted"
               onClick={() =>

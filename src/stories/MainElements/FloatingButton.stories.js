@@ -1,7 +1,7 @@
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 
 export default {
-  title: 'FloatingButton',
+  title: 'Основной UI/FloatingButton',
   component: FloatingButton,
 };
 
