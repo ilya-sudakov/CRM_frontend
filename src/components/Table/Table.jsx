@@ -59,7 +59,7 @@ const renderTableLinkCell = ({
   );
 };
 
-const renderTableCell = (column, item, index, options) => {
+const renderTableCell = (column, item, index, options, isNested) => {
   const mobileText = <MobileText>{column.text}</MobileText>;
   const count = column.itemsCount && column.itemsCount(item);
   const itemsCount =
@@ -78,6 +78,7 @@ const renderTableCell = (column, item, index, options) => {
       maxWidth: column.maxWidth ?? column.width ?? 'auto',
       ...(options.fullBorder && { borderRight: '1px solid #ddd' }),
     },
+    isNested,
   };
   if (column.link) {
     return renderTableLinkCell({
@@ -199,7 +200,7 @@ const Table = ({
               isNested={isNested}
             >
               {columns.map((column) =>
-                renderTableCell(column, item, index, options),
+                renderTableCell(column, item, index, options, isNested),
               )}
               {actions ? (
                 <Cell
