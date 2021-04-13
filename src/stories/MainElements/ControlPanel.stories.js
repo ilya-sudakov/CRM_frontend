@@ -12,10 +12,10 @@ export const Default = Template.bind({});
 Default.args = {};
 
 export const WithItemCount = Template.bind({});
-Default.args = { itemsCount: `Всего: 100 записей` };
+WithItemCount.args = { itemsCount: `Всего: 100 записей` };
 
 export const WithButtons = Template.bind({});
-Default.args = {
+WithButtons.args = {
   buttons: (
     <Button
       text="Печать списка"
