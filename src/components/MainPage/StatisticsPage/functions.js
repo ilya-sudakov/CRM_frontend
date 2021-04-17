@@ -111,7 +111,6 @@ export const getRequestIncomeStats = (requests, currDate, prevData) => {
       request.status === 'Завершено' &&
       checkIfDateIsInRange(date, prevData.startDate, prevData.endDate)
     ) {
-      console.log('prev:', request.id, request.sum);
       prevMonthIncome += Number.parseFloat(request.sum);
       return false;
     }
@@ -124,7 +123,6 @@ export const getRequestIncomeStats = (requests, currDate, prevData) => {
       request.status === 'Завершено' &&
       checkIfDateIsInRange(date, currDate.startDate, currDate.endDate)
     ) {
-      console.log('cur:', request.id, request.sum);
       curMonthIncome += Number.parseFloat(request.sum);
       return true;
     }

@@ -27,20 +27,16 @@ const ProductionJournal = () => {
     worksList: [],
     workId: 0,
   });
-  const handleCloseWindow = () => {
-    return setShowWindow(!showWindow);
-  };
   const {
     formWindow,
     setShowWindow,
     showWindow,
+    toggleFormWindow,
   } = useFormWindow(
     curWorkItem.title,
     <RecordWorkForm
       inputs={curWorkItem}
-      handleCloseWindow={() => setShowWindow(false)}
-      showWindow={() => showWindow}
-      setShowWindow={setShowWindow}
+      handleCloseWindow={() => toggleFormWindow()}
     />,
     [curWorkItem],
   );
@@ -81,7 +77,7 @@ const ProductionJournal = () => {
     worksList,
     workId,
   ) => {
-    handleCloseWindow();
+    toggleFormWindow();
     const deletedWork = worksList
       ? worksList.filter((work) => work.id !== workId)
       : null;

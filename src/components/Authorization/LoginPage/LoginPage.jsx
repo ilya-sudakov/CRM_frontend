@@ -34,7 +34,6 @@ const LoginPage = (props) => {
   }, [showError, setShowError]);
 
   const handleLogin = () => {
-    // event.preventDefault();
     setIsLoading(true);
     const loginRequest = Object.assign({
       username: username,
@@ -86,7 +85,6 @@ const LoginPage = (props) => {
                 src={companylogo}
                 alt=""
               />
-              {/* <div className="authorization__title-text">Вход в аккаунт</div> */}
             </div>
             <ErrorMessage
               message="Ошибка при авторизации"

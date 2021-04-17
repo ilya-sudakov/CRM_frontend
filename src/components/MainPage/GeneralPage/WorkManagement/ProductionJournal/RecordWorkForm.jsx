@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import './RecordWorkForm.scss';
 import 'Utils/Form/Form.scss';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
 import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import {
@@ -14,61 +13,28 @@ import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import SelectWork from '../SelectWork/SelectWork.jsx';
 import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
 import { submitWorkData } from '../RecordWork/functions.js';
+import { useForm } from 'Utils/hooks';
+import { productionJournalDefaultInputs } from './objects';
 
 const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
-  const [worktimeInputs, setWorkTimeInputs] = useState({
-    date: new Date(),
-    employee: null,
-    works: [],
-    originalWorks: [],
-  });
-  const [workTimeErrors, setWorkTimeErrors] = useState({
-    date: false,
-    employee: false,
-    works: false,
-  });
-  const [validInputs, setValidInputs] = useState({
-    date: true,
-    employee: true,
-    works: true,
-  });
-  const [showError, setShowError] = useState(false);
+  const {
+    handleInputChange,
+    formInputs,
+    updateFormInputs,
+    errorWindow,
+  } = useForm(productionJournalDefaultInputs);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const { products, categories } = useProductsList();
   const [totalHours, setTotalHours] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
 
-  const validateField = (fieldName, value) => {
-    switch (fieldName) {
-      case 'date':
-        setValidInputs({
-          ...validInputs,
-          date: value !== null,
-        });
-        break;
-      case 'works':
-        setValidInputs({
-          ...validInputs,
-          works: value !== null,
-        });
-        break;
-      default:
-        if (validInputs[fieldName] !== undefined) {
-          setValidInputs({
-            ...validInputs,
-            [fieldName]: value !== '',
-          });
-        }
-        break;
-    }
-  };
-
   const handleSubmit = () => {
+    console.log(formInputs);
     return submitWorkData(
-      worktimeInputs,
-      worktimeInputs.date,
-      worktimeInputs.employee,
+      formInputs,
+      formInputs.date,
+      formInputs.employee,
       setIsLoading,
       inputs,
     ).then(() => setIsSaved(true));
@@ -76,8 +42,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
 
   const handleDelete = () => {
     setIsLoading(true);
-    console.log('deleting element', worktimeInputs);
-    const originalWork = worktimeInputs.originalWorks[0];
+    console.log('deleting element', formInputs);
+    const originalWork = formInputs.originalWorks[0];
     const id = originalWork.id;
     return Promise.all(
       originalWork.product.map((product) =>
@@ -101,15 +67,16 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
 
   useEffect(() => {
     const isEmployeeNew =
-      inputs?.employee?.lastName && worktimeInputs.employee === null;
+      inputs?.employee?.lastName && formInputs.employee === null;
     if (
       isEmployeeNew ||
-      inputs.employee?.id !== worktimeInputs.employee?.id ||
-      inputs.date !== worktimeInputs.date ||
-      inputs.type !== worktimeInputs.type ||
-      inputs.works !== worktimeInputs.works
+      inputs.employee?.id !== formInputs.employee?.id ||
+      inputs.date !== formInputs.date ||
+      inputs.type !== formInputs.type ||
+      inputs.works !== formInputs.works
     ) {
-      setWorkTimeInputs({ ...inputs, originalWorks: inputs.works });
+      console.log({ ...inputs, originalWorks: inputs.works });
+      updateFormInputs({ ...inputs, originalWorks: inputs.works });
     }
   }, [inputs, handleCloseWindow]);
 
@@ -123,11 +90,7 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
     <div className="record-work-form">
       <div className="main-form">
         <form className="main-form__form">
-          <ErrorMessage
-            message="Не заполнены все обязательные поля!"
-            showError={showError}
-            setShowError={setShowError}
-          />
+          {errorWindow}
           <MessageForUser
             showMessage={showMessage}
             setShowMessage={setShowMessage}
@@ -141,33 +104,22 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
           <InputDate
             inputName="Дата"
             name="date"
-            selected={worktimeInputs.date}
+            selected={formInputs.date}
             readOnly
           />
           <SelectEmployee
             inputName="Выбор сотрудника"
-            defaultValue={worktimeInputs.employee}
+            defaultValue={formInputs.employee}
             userHasAccess={() => {}}
             readOnly
           />
-          {/* Создание работы */}
           <SelectWork
-            handleWorkChange={(value) => {
-              validateField('works', value);
-              setWorkTimeInputs({
-                ...worktimeInputs,
-                works: value,
-              });
-              setWorkTimeErrors({
-                ...workTimeErrors,
-                works: false,
-              });
-            }}
+            handleWorkChange={(value) => handleInputChange('works', value)}
             totalHours={totalHours}
             setTotalHours={setTotalHours}
             categories={categories}
             products={products}
-            defaultValue={worktimeInputs.works}
+            defaultValue={formInputs.works}
             noNewItems
           />
           <div className="main-form__item">
@@ -177,14 +129,13 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
             * - поля, обязательные для заполнения
           </div>
           <div className="main-form__buttons main-form__buttons--full">
-            <button
+            <Button
               inverted
+              text="Закрыть"
               className="main-form__submit main-form__submit--inverted"
               onClick={() => setIsSaved(true)}
-            >
-              Закрыть
-            </button>
-            {worktimeInputs.type === 'edit' ? (
+            />
+            {formInputs.type === 'edit' ? (
               <Button
                 text="Удалить запись"
                 isLoading={isLoading}
@@ -192,8 +143,8 @@ const RecordWorkForm = ({ inputs, handleCloseWindow }) => {
                 onClick={() => setShowMessage(true)}
               />
             ) : null}
-            {worktimeInputs.works?.length > 0 &&
-            worktimeInputs.works?.reduce((sum, cur) => {
+            {formInputs.works?.length > 0 &&
+            formInputs.works?.reduce((sum, cur) => {
               if (cur.workType === 'Без продукции/чертежа') return sum + 1;
               if (cur.workType === 'Чертеж') return sum + 1;
               return cur?.product.length;
