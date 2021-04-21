@@ -9,7 +9,7 @@ import {
   rigStatuses,
   rigTypes,
 } from '../../RiggingComponents/rigsVariables.js';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const TableView = (props) => {
   const [workshops, setWorkshops] = useState([

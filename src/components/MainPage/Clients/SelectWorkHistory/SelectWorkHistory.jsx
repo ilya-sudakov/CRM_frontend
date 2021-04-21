@@ -6,7 +6,7 @@ import cancelSVG from 'Assets/tableview/cancel.svg';
 import './SelectWorkHistory.scss';
 import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import { formatDateStringWithTime } from 'Utils/functions.jsx';
-import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import ImgLoader from 'Components/TableView/ImgLoader/ImgLoader.jsx';
 import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
 import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { sortByField } from 'Utils/sorting/sorting';

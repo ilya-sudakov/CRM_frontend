@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import usePagination from './usePagination.js';
+import usePagination from './usePagination';
 
 jest.mock('react-router-dom', () => ({
   useLocation: jest.fn().mockReturnValue({

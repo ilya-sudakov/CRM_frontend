@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../../../App.js';
 import { deletePriceList, getPriceLists } from 'API/Clients/price_list.js';
 import styled from 'styled-components';
-import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import DeleteItemAction from 'Components/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const PricesListPage = ({ onSelect }) => {
   const [ltdData, setLtdData] = useState([]);

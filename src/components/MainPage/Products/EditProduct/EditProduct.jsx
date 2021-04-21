@@ -5,7 +5,7 @@ import { getProductById, editProduct } from 'API/Products/products';
 import InputText from 'Components/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
 import { imgToBlobDownload, getDataUri } from 'Utils/functions.jsx';
-import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import ImgLoader from 'Components/TableView/ImgLoader/ImgLoader.jsx';
 import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
 import Button from 'Components/Form/Button/Button.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';

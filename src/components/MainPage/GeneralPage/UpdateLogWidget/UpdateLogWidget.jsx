@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { sortByField } from 'Utils/sorting/sorting.js';
 import { formatDateString, dateDiffInDays } from 'Utils/functions.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import UserContext from '../../../../App.js';
 
 const UpdateLogWidget = () => {

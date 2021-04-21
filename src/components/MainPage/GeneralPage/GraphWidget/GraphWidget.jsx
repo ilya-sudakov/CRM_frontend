@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { formatDateStringNoYear } from 'Utils/functions.jsx';
-import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
+import TableLoading from 'Components/TableView/TableLoading/TableLoading.jsx';
 import Button from 'Components/Form/Button/Button.jsx';
 import { getRecordedWorkByDateRange } from 'API/WorkManaging/work_control';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import TableLoading from './PlaceholderLoading/TableLoading.jsx';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import TableActions from 'Components/TableView/TableActions/TableActions.jsx';
 import TableSelectStatus from './TableSelectStatus';
 import TableBadge from './TableBadge';
 import {

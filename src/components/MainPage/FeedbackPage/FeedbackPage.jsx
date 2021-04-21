@@ -16,7 +16,7 @@ import {
   deleteMessage,
 } from 'API/Feedback/messages.js';
 import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const FeedbackPage = (props) => {

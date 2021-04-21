@@ -17,7 +17,7 @@ import {
 
 import { createLabelForProduct, scrollToElement } from 'Utils/functions.jsx';
 import LabelPrint from '../LabelPrint/LabelPrint.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { getPageByRequest, printRequest } from '../functions.js';
 import { defaultPrintObject } from '../objects.js';
 import {
@@ -34,8 +34,8 @@ import {
   renderProductsSubItem,
   renderListHeader,
 } from './renderItems.jsx';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import TableActions from 'Components/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Components/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import MessageForUser from 'Components/Form/MessageForUser/MessageForUser.jsx';
 import {
   getRequestItemClassName,

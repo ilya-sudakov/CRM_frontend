@@ -1,7 +1,7 @@
 //Таблица с табелем
 import { useEffect } from 'react';
 import { months } from 'Utils/dataObjects.js'; //Список месяцев
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import {
   formatDateStringNoYear,
   getEmployeeNameText,

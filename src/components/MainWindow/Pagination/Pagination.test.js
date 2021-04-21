@@ -1,6 +1,6 @@
 import Pagination from './Pagination.jsx';
 import { cleanup, fireEvent } from '@testing-library/react';
-import { renderWithRouter } from '../../testing/functions.js';
+import { renderWithRouter } from 'Utils/testing/functions';
 
 describe('Pagination component', () => {
   afterEach(cleanup);

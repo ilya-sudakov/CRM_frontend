@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import './PartsStatistic.scss';
 import { createGraph, loadCanvas } from 'Utils/graphs.js';
 import chevronDownSVG from 'Assets/tableview/chevron-down.svg';
-import TableLoading from 'Utils/TableView/TableLoading/TableLoading.jsx';
+import TableLoading from 'Components/TableView/TableLoading/TableLoading.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 import ProductsStatisticsList from './ProductsStatisticsList.jsx';
 import UserContext from '../../../../../../App.js';

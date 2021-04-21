@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
-import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import TableActions from 'Components/TableView/TableActions/TableActions.jsx';
+import DeleteItemAction from 'Components/TableView/TableActions/Actions/DeleteItemAction.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { getExcelFileBlob } from '../../PriceList/functions.js';
 import { downloadImage } from 'Components/Form/ImageView/functions.js';
 import { Link } from 'react-router-dom';

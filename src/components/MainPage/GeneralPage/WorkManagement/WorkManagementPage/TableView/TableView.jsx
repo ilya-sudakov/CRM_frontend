@@ -9,7 +9,7 @@ import {
 } from 'Utils/functions.jsx';
 import { days } from 'Utils/dataObjects';
 import { Link } from 'react-router-dom';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { sortEmployees } from '../../../ReportTablePage/functions';
 
 const TableView = (props) => {

@@ -4,7 +4,7 @@ import openWidget from 'Assets/tableview/bx-window-open.svg';
 import { getRecordedWorkByDay } from 'API/WorkManaging/work_control';
 import { formatDateString } from 'Utils/functions.jsx';
 import UserContext from '../../../../../App.js';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { workshopsList } from './objects.js';
 import WorkList from './WorkList.jsx';
 import Widget from '../../Widget/Widget.jsx';

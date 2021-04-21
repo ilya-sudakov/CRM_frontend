@@ -10,7 +10,7 @@ import {
 import { getPreviousMonthDates } from 'Utils/helpers/time.js';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import useRequestsData from 'Utils/hooks/useRequestsData';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 
 const StatisticsWidget = () => {
   const { requests, isLoading } = useRequestsData();

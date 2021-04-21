@@ -3,7 +3,7 @@ import './TableView.scss';
 import { addSpaceDelimiter } from 'Utils/functions.jsx';
 import { rigStatuses, rigTypes, workshopsLocations } from '../rigsVariables';
 import { editStampPartColor } from 'API/rigging';
-import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
+import TableActions from 'Components/TableView/TableActions/TableActions.jsx';
 
 const PartItem = ({ part, refItem, loadData, type, stampId }) => {
   return (

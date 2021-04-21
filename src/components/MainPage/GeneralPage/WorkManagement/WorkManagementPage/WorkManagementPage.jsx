@@ -19,7 +19,7 @@ import Button from 'Components/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
 import TableView from './TableView/TableView.jsx';
 import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
-import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
+import PlaceholderLoading from 'Components/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const WorkManagementPage = (props) => {

@@ -132,7 +132,7 @@ export const CellLoading = styled.td`
 export const TableLinkStyles = css`
   color: var(--main-color);
 `;
-export const TableAppLink = styled(Link)`
+export const TableAppLink = styled((props) => <Link {...props} />)`
   ${TableLinkStyles}
 `;
 export const TableOutsideLink = styled.a`

@@ -4,7 +4,7 @@ import 'Components/Form/Form.scss';
 import { getProductById } from 'API/Products/products';
 import { imgToBlobDownload } from 'Utils/functions.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
-import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
+import ImgLoader from 'Components/TableView/ImgLoader/ImgLoader.jsx';
 import { productsDefaultInputs } from '../objects';
 import { useForm } from 'Utils/hooks';
 import Button from 'Components/Form/Button/Button.jsx';
