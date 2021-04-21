@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './WorkshopRequests.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import Button from 'Components/Form/Button/Button.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
 import {
   getRequestsByWorkshop,
   transferRequest,
@@ -14,7 +14,7 @@ import {
   getQuantityOfProductsFromRequests,
   getDatesFromRequests,
 } from 'Utils/functions.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { pages, requstsSortOptions } from '../objects.js';
 import chevronDown from 'Assets/tableview/chevron-down.svg';
 import useSort from 'Utils/hooks/useSort/useSort.js';

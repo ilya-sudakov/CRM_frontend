@@ -3,7 +3,7 @@ import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import Button from 'Components/Form/Button/Button.jsx';
 import { getReportTableExcel } from '../getReportTableExcel.js';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';
 import { EmployeeInfo } from './InfoComponents.jsx';
 import { formatDateString } from 'Utils/functions.jsx';

@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import './GeneralTasks.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getMainTasks, deleteMainTask } from 'API/tasks';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import useSort from 'Utils/hooks/useSort/useSort';
 import {

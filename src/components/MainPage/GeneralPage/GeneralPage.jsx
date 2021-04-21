@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { MainPageWorkspace } from '../lazyImports';
 import './GeneralPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 
 const GeneralPage = (props) => {
   useEffect(() => {

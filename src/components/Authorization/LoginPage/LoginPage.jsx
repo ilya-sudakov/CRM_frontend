@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LoginPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import { login } from 'API/authorization';
 import eyeIcon from 'Assets/loginPage/eye.png';
 import companylogo from 'Assets/loginPage/login-page_logo.png';

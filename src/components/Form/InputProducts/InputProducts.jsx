@@ -6,7 +6,7 @@ import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
 import TableView from 'Components/MainPage/Products/TableView.jsx';
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { useSort, useProductsList } from 'Utils/hooks';
 import {
   renderNewQuantity,

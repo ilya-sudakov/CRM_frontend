@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './PackagingPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { getPackaging, deletePackaging } from 'API/Products/packaging.js';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';
 
 const PackagingPage = () => {

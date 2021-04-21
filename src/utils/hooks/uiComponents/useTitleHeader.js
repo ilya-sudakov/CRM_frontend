@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import TitleHeader from '../../MainWindow/TitleHeader/TitleHeader.jsx';
+import TitleHeader from 'Components/MainWindow/TitleHeader/TitleHeader.jsx';
 
 const useTitleHeader = (
   title,

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './ClientCategories.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import {
   getClientCategories,
@@ -12,8 +12,8 @@ import {
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 import TableView from './TableView.jsx';
 

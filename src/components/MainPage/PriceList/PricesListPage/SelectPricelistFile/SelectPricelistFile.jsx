@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import Button from 'Components/Form/Button/Button.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectPricelistFile.scss';

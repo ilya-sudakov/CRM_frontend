@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import './Transportation.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getTransportations, deleteTransportation } from 'API/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
 import Button from 'Components/Form/Button/Button.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import { formatDateString } from 'Utils/functions.jsx';
 import useSort from 'Utils/hooks/useSort/useSort.js';

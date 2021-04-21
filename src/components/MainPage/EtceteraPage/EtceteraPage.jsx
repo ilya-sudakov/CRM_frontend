@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import './EtceteraPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 // import { Link } from 'react-router-dom'
 import UserContext from '../../../App.js';
 

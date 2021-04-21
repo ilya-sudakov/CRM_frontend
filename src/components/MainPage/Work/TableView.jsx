@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import { sortByField } from 'Utils/sorting/sorting';
 import Table from 'Components/Table/Table.jsx';
 import UserContext from 'Components/../App';

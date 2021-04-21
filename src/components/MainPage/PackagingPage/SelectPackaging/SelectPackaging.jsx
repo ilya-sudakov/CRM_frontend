@@ -3,7 +3,7 @@ import './SelectPackaging.scss';
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import { getPackaging } from 'API/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import deleteSVG from 'Assets/tableview/delete.svg';
 import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import TableView from '../TableView.jsx';

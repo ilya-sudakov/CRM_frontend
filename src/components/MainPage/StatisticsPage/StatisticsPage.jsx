@@ -3,7 +3,7 @@ import './StatisticsPage.scss';
 import { formatDateStringNoYear } from 'Utils/functions.jsx';
 import { months } from 'Utils/dataObjects.js';
 
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { getPreviousWeekDays, getPreviousYearDates } from './functions.js';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import ProductionPage from './Pages/ProductionPage.jsx';

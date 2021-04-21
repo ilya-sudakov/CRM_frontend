@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Pagination from '../../MainWindow/Pagination/Pagination.jsx';
+import Pagination from 'Components/MainWindow/Pagination/Pagination.jsx';
 import useQuery from '../useQuery.js';
 
 const usePagination = (

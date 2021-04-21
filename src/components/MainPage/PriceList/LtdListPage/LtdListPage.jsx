@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import usePagination from 'Utils/hooks/usePagination/usePagination.js';
 import useSort from 'Utils/hooks/useSort/useSort.js';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { deleteLTD, getLTDList } from 'API/PriceList/lts_list.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import UserContext from '../../../../App.js';

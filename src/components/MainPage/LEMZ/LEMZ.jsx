@@ -3,7 +3,7 @@ import PrivateRoute from '../../PrivateRoute/PrivateRoute.jsx';
 import { Route, Switch, Link } from 'react-router-dom';
 import PlusImg from 'Assets/sidemenu/plus.inline.svg';
 import './LEMZ.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import PageLoading from '../PageLoading/PageLoading.jsx';
 import {

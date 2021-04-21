@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import TableView from './TableView.jsx';

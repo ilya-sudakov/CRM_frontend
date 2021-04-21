@@ -7,8 +7,8 @@ import {
   deleteOrder,
   getOrdersByName,
 } from 'API/Workshop/Orders.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import Tableview from './Table.jsx';
 import { sortByField } from 'Utils/sorting/sorting';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Products.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView.jsx';
 import { deleteProduct } from 'API/Products/products';
@@ -8,8 +8,8 @@ import { deleteCategory } from 'API/Products/Categories.js';
 import { deletePackagingFromProduct } from 'API/Products/packaging.js';
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import TableViewCategory from './CategoryManagement/TableView/TableViewCategory.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import useSort from 'Utils/hooks/useSort/useSort';
 

@@ -1,4 +1,4 @@
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel';
 import Button from 'Components/Form/Button/Button';
 
 export default {

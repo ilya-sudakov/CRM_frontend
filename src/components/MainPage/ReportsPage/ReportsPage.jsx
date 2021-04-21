@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import './ReportsPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import UserContext from '../../../App.js';
 import workTimeIcon from 'Assets/sidemenu/work_time_icon.svg';
 import Button from 'Components/Form/Button/Button.jsx';

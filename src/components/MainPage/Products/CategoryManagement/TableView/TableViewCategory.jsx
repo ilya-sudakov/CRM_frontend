@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import editSVG from 'Assets/tableview/edit.svg';
 import deleteSVG from 'Assets/tableview/delete.svg';
 import okSVG from 'Assets/tableview/ok.svg';

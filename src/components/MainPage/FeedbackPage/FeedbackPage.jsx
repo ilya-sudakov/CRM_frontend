@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import './FeedbackPage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import unreadMessagesSVG from 'Assets/chat/unread_messages__mail_icon.svg';
 import deleteSVG from 'Assets/tableview/delete.svg';
@@ -15,9 +15,9 @@ import {
   getMessagesByDiscussionId,
   deleteMessage,
 } from 'API/Feedback/messages.js';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const FeedbackPage = (props) => {
   const [searchQuery, setSearchQuery] = useState('');

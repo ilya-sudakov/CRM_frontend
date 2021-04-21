@@ -3,8 +3,8 @@ import './Work.scss';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import TableView from './TableView.jsx';
 import { deleteWork, getWork } from 'API/WorkManaging/work_list';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 
 const Work = (props) => {
   const [work, setWork] = useState([]);

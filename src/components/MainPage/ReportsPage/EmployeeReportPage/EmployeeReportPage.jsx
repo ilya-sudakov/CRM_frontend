@@ -3,7 +3,7 @@ import SelectEmployee from '../../Dispatcher/Employees/SelectEmployee/SelectEmpl
 import Button from 'Components/Form/Button/Button.jsx';
 // import EmployeeInfoPanel from "./EmployeeInfo.jsx";
 import EmployeeInfoPanel from '../../GeneralPage/ReportTablePage/EmployeeInfo/EmployeeInfo.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
 import useWorkReportByRange from 'Utils/hooks/useWorkReportByRange.js';
 import UserContext from '../../../../App.js';

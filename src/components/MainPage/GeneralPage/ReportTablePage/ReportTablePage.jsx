@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import './ReportTablePage.scss';
 import { getRecordedWorkByMonth } from 'API/WorkManaging/work_control';
 import UserContext from '../../../../App.js';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
 import SummaryPage from './SummaryPage/SummaryPage.jsx';
 import { getMonthDates } from './functions.js';
 

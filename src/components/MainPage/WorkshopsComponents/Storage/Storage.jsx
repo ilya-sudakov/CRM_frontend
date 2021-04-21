@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
 import './Storage.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import TableView from './TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { deleteStorage, getStorage } from 'API/Workshop/storage.js';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import UserContext from '../../../../App.js';
 import { workshops } from '../workshopVariables.js';
 import { sortByField } from 'Utils/sorting/sorting.js';

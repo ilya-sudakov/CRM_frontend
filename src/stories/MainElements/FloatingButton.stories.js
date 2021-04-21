@@ -1,4 +1,4 @@
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
 
 export default {
   title: 'Основной UI/FloatingButton',

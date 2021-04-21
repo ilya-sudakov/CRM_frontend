@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import './Clients.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import 'Components/Form/Form.scss';
 import { searchClients } from 'API/Clients';
 import { Link } from 'react-router-dom';
 import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';
 import EditNextContactDate from './MainComponents/EditContactDay.jsx';
 import ClientsList from './MainComponents/ClientsList.jsx';

@@ -8,8 +8,8 @@ import {
   deleteStamp,
   getStampsByStatus,
 } from 'API/rigging';
-import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
-import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
+import FloatingButton from 'Components/MainWindow/FloatingButton/FloatingButton.jsx';
+import ControlPanel from 'Components/MainWindow/ControlPanel/ControlPanel.jsx';
 import useTitleHeader from 'Utils/hooks/uiComponents/useTitleHeader.js';
 import { filterRigItems } from './functions.js';
 

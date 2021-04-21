@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import 'Components/Form/Form.scss';
 import okSVG from 'Assets/tableview/calendar_check.svg';
 import cancelSVG from 'Assets/tableview/cancel.svg';

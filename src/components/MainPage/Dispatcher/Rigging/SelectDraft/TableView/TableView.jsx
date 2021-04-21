@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './TableView.scss';
-import 'Utils/MainWindow/MainWindow.scss';
+import 'Components/MainWindow/MainWindow.scss';
 import Table from 'Components/Table/Table.jsx';
 
 const TableView = ({
