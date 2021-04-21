@@ -16,6 +16,8 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
         NODE_ENV = production
         INN_TOKEN = INN_token
 
+  <sub>_Про ИНН API можно узнать [здесь](https://github.com/ilyasudakov/osfix_erp_frontend/wiki/%D0%98%D0%9D%D0%9D-API)_</sub>
+
 - Установите зависимости и запустите проект:
 
         npm install
@@ -39,7 +41,7 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
         npm run storybook --no-dll
 
-_При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action_
+<sub>_При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action_</sub>
 
 # Библиотеки
 
