@@ -6,11 +6,9 @@ export function getLogsList(
   sort = { curSort: 'date', date: 'DESC' },
 ) {
   return request({
-    url: `${
-      process.env.API_BASE_URL
-    }/api/v1/log/?size=${size}&page=${page}&sort=${sort.curSort},${
-      sort[sort.curSort]
-    }`,
+    url: `${process.env.API_URL}/api/v1/log/?size=${size}&page=${page}&sort=${
+      sort.curSort
+    },${sort[sort.curSort]}`,
     method: 'GET',
   });
 }
@@ -23,7 +21,7 @@ export function getLogsListByType(
 ) {
   return request({
     url: `${
-      process.env.API_BASE_URL
+      process.env.API_URL
     }/api/v1/log/${type}/?size=${size}&page=${page}&sort=${sort.curSort},${
       sort[sort.curSort]
     }`,

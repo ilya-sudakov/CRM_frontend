@@ -3,7 +3,7 @@ import { getAuthHeaders, request, requestINN } from '../../utilsAPI.jsx';
 
 export function getClients(elements) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + '?size=' + elements,
+    url: process.env.API_URL + '/api/v1/client/' + '?size=' + elements,
     method: 'GET',
   });
 }
@@ -12,7 +12,7 @@ export function searchClients(query, fields) {
   const formattedFields = fields.filter((cur) => cur !== '' && cur).join('&');
   console.log('formatted', formattedFields, fields);
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/client/search/${
+    url: `${process.env.API_URL}/api/v1/client/search/${
       formattedFields && formattedFields !== '' ? `${formattedFields}/` : ''
     }`,
     method: 'POST',
@@ -22,7 +22,7 @@ export function searchClients(query, fields) {
 
 export function getClientsByCategory(category) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/category/',
+    url: process.env.API_URL + '/api/v1/client/category/',
     method: 'POST',
     body: JSON.stringify(category),
   });
@@ -30,7 +30,7 @@ export function getClientsByCategory(category) {
 
 export function editNextContactDateClient(date) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/date/',
+    url: process.env.API_URL + '/api/v1/client/date/',
     method: 'POST',
     body: JSON.stringify(date),
   });
@@ -45,7 +45,7 @@ export function getClientsByCategoryAndType(
 ) {
   return request({
     url:
-      process.env.API_BASE_URL +
+      process.env.API_URL +
       '/api/v1/client/category_type/client/' +
       '?' +
       'page=' +
@@ -66,7 +66,7 @@ export function getClientsByCategoryAndType(
 
 export function searchClientsByCategoryAndType(query, field, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/client/category_type/search/${
+    url: `${process.env.API_URL}/api/v1/client/category_type/search/${
       field && field !== '' ? `${field}/` : ''
     }`,
     method: 'POST',
@@ -77,24 +77,20 @@ export function searchClientsByCategoryAndType(query, field, signal) {
 
 export function getClientById(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + id,
+    url: process.env.API_URL + '/api/v1/client/' + id,
     method: 'GET',
   });
 }
 
 export function addClient(newClient) {
   const headers = getAuthHeaders();
-  return axios.post(
-    `${process.env.API_BASE_URL}/api/v1/client`,
-    newClient,
-    headers,
-  );
+  return axios.post(`${process.env.API_URL}/api/v1/client`, newClient, headers);
 }
 
 export function editClient(newClient, id) {
   const headers = getAuthHeaders();
   return axios.put(
-    `${process.env.API_BASE_URL}/api/v1/client/${id}`,
+    `${process.env.API_URL}/api/v1/client/${id}`,
     newClient,
     headers,
   );
@@ -102,7 +98,7 @@ export function editClient(newClient, id) {
 
 export function deleteClient(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + id,
+    url: process.env.API_URL + '/api/v1/client/' + id,
     method: 'DELETE',
   });
 }

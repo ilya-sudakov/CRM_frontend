@@ -2,14 +2,14 @@ import { request, requestINN } from '../../utilsAPI.jsx';
 
 export function getSuppliers(elements) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + '?size=' + elements,
+    url: process.env.API_URL + '/api/v1/client/' + '?size=' + elements,
     method: 'GET',
   });
 }
 
 export function searchSuppliers(query) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/search/',
+    url: process.env.API_URL + '/api/v1/client/search/',
     method: 'POST',
     body: JSON.stringify(query),
   });
@@ -17,7 +17,7 @@ export function searchSuppliers(query) {
 
 export function getSuppliersByCategory(category) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/category/',
+    url: process.env.API_URL + '/api/v1/client/category/',
     method: 'POST',
     body: JSON.stringify(category),
   });
@@ -25,7 +25,7 @@ export function getSuppliersByCategory(category) {
 
 export function editNextContactDateSupplier(date) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/date/',
+    url: process.env.API_URL + '/api/v1/client/date/',
     method: 'POST',
     body: JSON.stringify(date),
   });
@@ -40,7 +40,7 @@ export function getSuppliersByCategoryAndType(
 ) {
   return request({
     url:
-      process.env.API_BASE_URL +
+      process.env.API_URL +
       '/api/v1/client/category_type/supplier/' +
       '?' +
       'page=' +
@@ -61,7 +61,7 @@ export function getSuppliersByCategoryAndType(
 
 export function searchSuppliersByCategoryAndType(query, signal) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/category_type/search/',
+    url: process.env.API_URL + '/api/v1/client/category_type/search/',
     method: 'POST',
     body: JSON.stringify(query),
     signal: signal,
@@ -70,14 +70,14 @@ export function searchSuppliersByCategoryAndType(query, signal) {
 
 export function getClientById(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + id,
+    url: process.env.API_URL + '/api/v1/client/' + id,
     method: 'GET',
   });
 }
 
 export function addClient(newClient) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client',
+    url: process.env.API_URL + '/api/v1/client',
     method: 'POST',
     body: JSON.stringify(newClient),
   });
@@ -85,7 +85,7 @@ export function addClient(newClient) {
 
 export function editClient(newClient, id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + id,
+    url: process.env.API_URL + '/api/v1/client/' + id,
     method: 'PUT',
     body: JSON.stringify(newClient),
   });
@@ -93,7 +93,7 @@ export function editClient(newClient, id) {
 
 export function deleteClient(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/client/' + id,
+    url: process.env.API_URL + '/api/v1/client/' + id,
     method: 'DELETE',
   });
 }

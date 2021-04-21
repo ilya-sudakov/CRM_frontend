@@ -4,21 +4,21 @@ import axios from 'axios';
 
 export function getRecordedWorks() {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/',
+    url: process.env.API_URL + '/api/v1/work_control/',
     method: 'GET',
   });
 }
 
 export function getRecordedWorkById(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/' + id,
+    url: process.env.API_URL + '/api/v1/work_control/' + id,
     method: 'GET',
   });
 }
 
 export function getRecordedWorkByMonth(month, year, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/month/${month}&${year}`,
+    url: `${process.env.API_URL}/api/v1/work_control/month/${month}&${year}`,
     method: 'GET',
     signal: signal,
   });
@@ -31,7 +31,7 @@ export function getRecordedWorkByDay(
   signal,
 ) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/day/${day}&${month}&${year}`,
+    url: `${process.env.API_URL}/api/v1/work_control/day/${day}&${month}&${year}`,
     method: 'GET',
     signal: signal,
   });
@@ -39,7 +39,7 @@ export function getRecordedWorkByDay(
 
 export function getRecordedWorkByDateRange(dF, mF, yF, dL, mL, yL, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/range/${dF}&${mF}&${yF}&${dL}&${mL}&${yL}`,
+    url: `${process.env.API_URL}/api/v1/work_control/range/${dF}&${mF}&${yF}&${dL}&${mL}&${yL}`,
     method: 'GET',
     signal: signal,
   });
@@ -47,7 +47,7 @@ export function getRecordedWorkByDateRange(dF, mF, yF, dL, mL, yL, signal) {
 
 export function getWorkReportByEmployee(id, month, year, signal) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/report/${id}&${month}&${year}`,
+    url: `${process.env.API_URL}/api/v1/work_control/report/${id}&${month}&${year}`,
     method: 'GET',
     signal: signal,
   });
@@ -56,7 +56,7 @@ export function getWorkReportByEmployee(id, month, year, signal) {
 export function getWorkReportByDateAndEmployee(employeeId, year, month, day) {
   const headers = getAuthHeaders();
   return axios.get(
-    `${process.env.API_BASE_URL}/api/v1/work_control/employeeDay/${employeeId}&${year}&${month}&${day}`,
+    `${process.env.API_URL}/api/v1/work_control/employeeDay/${employeeId}&${year}&${month}&${day}`,
     headers,
   );
 }
@@ -68,7 +68,7 @@ export function addProductToRecordedWork(
   productName,
 ) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/${id}&${productId}&${productQuantity}`,
+    url: `${process.env.API_URL}/api/v1/work_control/product/${id}&${productId}&${productQuantity}`,
     method: 'POST',
     body: JSON.stringify(productName),
   });
@@ -76,14 +76,14 @@ export function addProductToRecordedWork(
 
 export function deleteProductFromRecordedWork(id, productId) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/product/V2/${id}&${productId}`,
+    url: `${process.env.API_URL}/api/v1/work_control/product/V2/${id}&${productId}`,
     method: 'DELETE',
   });
 }
 
 export function addDraftToRecordedWork(id, draftId, draftType, quantity, name) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/part/',
+    url: process.env.API_URL + '/api/v1/work_control/part/',
     method: 'POST',
     body: JSON.stringify({
       workControl: id,
@@ -97,21 +97,21 @@ export function addDraftToRecordedWork(id, draftId, draftType, quantity, name) {
 
 export function deleteDraftFromRecordedWork(id, draftId, draftType) {
   return request({
-    url: `${process.env.API_BASE_URL}/api/v1/work_control/part/${id}&${draftId}&${draftType}`,
+    url: `${process.env.API_URL}/api/v1/work_control/part/${id}&${draftId}&${draftType}`,
     method: 'DELETE',
   });
 }
 
 export function deleteRecordedWork(id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/' + id,
+    url: process.env.API_URL + '/api/v1/work_control/' + id,
     method: 'DELETE',
   });
 }
 
 export function addRecordedWork(newWork) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/',
+    url: process.env.API_URL + '/api/v1/work_control/',
     method: 'POST',
     body: JSON.stringify(newWork),
   });
@@ -119,7 +119,7 @@ export function addRecordedWork(newWork) {
 
 export function editRecordedWork(newWork, id) {
   return request({
-    url: process.env.API_BASE_URL + '/api/v1/work_control/' + id,
+    url: process.env.API_URL + '/api/v1/work_control/' + id,
     method: 'PUT',
     body: JSON.stringify(newWork),
   });

@@ -12,7 +12,7 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
 - В корне проекта необходимо создать файл `.env` и заполнить его:
 
-        API_BASE_URL = http://localhost:port
+        API_URL = http://localhost:port
         NODE_ENV = production
         INN_TOKEN = INN_token
 

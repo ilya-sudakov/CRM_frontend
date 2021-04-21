@@ -145,7 +145,7 @@ const PriceList = () => {
     const openFile = query.get('open');
     if (filename) {
       loadFile(
-        `${process.env.API_BASE_URL}/api/v1/fileWithoutDB/downloadFile/${filename}`,
+        `${process.env.API_URL}/api/v1/fileWithoutDB/downloadFile/${filename}`,
         openFile,
       );
     }
@@ -254,7 +254,7 @@ const PriceList = () => {
                     ? [
                         {
                           url: `${
-                            process.env.API_BASE_URL
+                            process.env.API_URL
                           }/api/v1/fileWithoutDB/downloadFile/${query.get(
                             'filename',
                           )}`,
