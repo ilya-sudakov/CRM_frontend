@@ -116,6 +116,7 @@ export const Cell = styled.td`
 `;
 export const CellHeader = styled.th`
   ${baseCellStyles}
+  padding: 6px;
   font-weight: 400;
   text-align: left;
   color: #999;
