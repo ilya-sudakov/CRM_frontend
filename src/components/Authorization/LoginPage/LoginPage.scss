@@ -203,11 +203,10 @@
           border-color: $main-color;
         }
       }
-      & .authorization__line {
+      .authorization__line {
         width: 22px;
         height: 2px;
-        // background-color: red;
-        background-color: #000000;
+        background-color: #666;
         border-radius: 999px;
         position: absolute;
         right: 8px;
@@ -217,10 +216,11 @@
         transform: rotate(-45deg);
         cursor: pointer;
         transition: 0.1s ease-in-out;
-      }
-      & .authorization__line--hidden {
-        transform: scaleX(0);
-        height: 0;
+
+        &--hidden {
+          transform: scaleX(0);
+          height: 0;
+        }
       }
     }
     .authorization__field_input .authorization__img {
@@ -251,6 +251,7 @@
         top: calc(0.5rem + 15px);
         cursor: pointer;
         max-width: 22px;
+        filter: invert(1) brightness(0.2);
 
         //dark-theme
         // filter: invert(1) brightness(0.7);
