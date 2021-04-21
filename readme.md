@@ -45,7 +45,7 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
         npm run storybook --no-dll
 
-<sub>_При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action_</sub>
+  <sub>_При изменении stories файла/ов, Storybook автоматически билдится и выгружается в GHPages при Push'е коммита на GitHub с помощью GitHub Action_</sub>
 
 # Библиотеки
 
