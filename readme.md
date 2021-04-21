@@ -12,16 +12,20 @@ https://ilyasudakov.github.io/osfix_erp_frontend/
 
 - В корне проекта необходимо создать файл `.env` и заполнить его:
 
-        API_URL = http://localhost:port
-        NODE_ENV = production
-        INN_TOKEN = INN_token
+  ```
+  API_URL = http://localhost:port
+  NODE_ENV = production
+  INN_TOKEN = INN_token
+  ```
 
   <sub>_Про ИНН API можно узнать [здесь](https://github.com/ilyasudakov/osfix_erp_frontend/wiki/%D0%98%D0%9D%D0%9D-API)_</sub>
 
 - Установите зависимости и запустите проект:
 
-        npm install
-        npm start
+  ```
+  npm install
+  npm start
+  ```
 
 # Основные команды
 
