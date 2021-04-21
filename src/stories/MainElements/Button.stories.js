@@ -26,7 +26,7 @@ DefaultLoading.args = {
 
 export const InvertedLoading = Template.bind({});
 InvertedLoading.args = {
-  text: 'Текст кнопки',
+  text: 'Текст инвертированной кнопки',
   inverted: true,
   isLoading: true,
 };
