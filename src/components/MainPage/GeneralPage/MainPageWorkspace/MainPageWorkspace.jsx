@@ -8,7 +8,7 @@ import {
   GraphWidget,
   FeedbackWidget,
 } from '../../lazyImports';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { useHistory } from 'react-router';
 import { useState } from 'react';
 import { getReportTableExcel } from '../ReportTablePage/getReportTableExcel';

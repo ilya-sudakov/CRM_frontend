@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import SearchBar from 'Components/MainPage/SearchBar/SearchBar.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import TableView from './TableView.jsx';
-import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
+import MessageForUser from 'Components/Form/MessageForUser/MessageForUser.jsx';
 import { formatDateStringNoYear } from 'Utils/functions.jsx';
 import { days } from 'Utils/dataObjects.js';
 
@@ -13,7 +13,7 @@ import useWorkReport from 'Utils/hooks/useWorkReport.js';
 import useFormWindow from 'Utils/hooks/useFormWindow.js';
 import RecordWorkForm from './RecordWorkForm.jsx';
 import { createWorkListPDF, updateData } from './functions.js';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 const ProductionJournal = () => {
   const [showMessage, setShowMessage] = useState(false);

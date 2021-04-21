@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './SelectPriceItem.scss';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { getDataUri } from 'Utils/functions.jsx';
-import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { defaultPriceItemObject } from './objects.js';
 
 const SelectPriceItem = (props) => {

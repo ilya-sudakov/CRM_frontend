@@ -4,7 +4,7 @@ import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getTransportations, deleteTransportation } from 'API/transportation';
 import { createPDF, getTransportationListPdfText } from 'Utils/pdfFunctions.js';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import usePagination from 'Utils/hooks/usePagination/usePagination.js';

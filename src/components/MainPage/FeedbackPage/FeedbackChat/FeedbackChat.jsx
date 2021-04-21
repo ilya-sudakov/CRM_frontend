@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './FeedbackChat.scss';
 import sendSVG from 'Assets/chat/send.svg';
 import arrowUpSVG from 'Assets/chat/unread_messages__arrow-up.svg';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import {
   formatDateStringWithTime,
   formatDateStringToTime,

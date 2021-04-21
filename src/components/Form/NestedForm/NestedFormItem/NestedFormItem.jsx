@@ -4,7 +4,7 @@ import './NestedFormItem.scss';
 import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
-import useMessageForUser from '../../../hooks/useMessageForUser.js';
+import { useMessageForUser } from 'Utils/hooks';
 
 const NestedFormItem = ({
   readOnly,

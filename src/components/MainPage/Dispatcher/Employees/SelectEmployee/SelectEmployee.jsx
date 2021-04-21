@@ -3,7 +3,7 @@ import './SelectEmployee.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from '../TableView.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
-import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import { useSort, useFormWindow } from 'Utils/hooks';
 import { filterEmployeesBySearchQuery } from '../functions';
 import { getEmployeeNameText } from 'Utils/functions.jsx';

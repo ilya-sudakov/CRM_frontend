@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './EditClient.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { getClientById, editClient } from 'API/Clients';
 import {
   addClientLegalEntity,
@@ -18,14 +18,14 @@ import {
   deleteClientWorkHistory,
 } from 'API/Clients/WorkHistory.jsx';
 import SelectLegalEntity from '../SelectLegalEntity/SelectLegalEntity.jsx';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
 import SelectContacts from '../SelectContacts/SelectContacts.jsx';
 import SelectClientCategory from '../ClientCategories/SelectClientCategory/SelectClientCategory.jsx';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
-import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputUser from 'Components/Form/InputUser/InputUser.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import ViewRequests from '../ViewRequests/ViewRequests.jsx';
 import { getRequests } from 'API/requests';
 import { clientsDefaultInputs } from '../objects';

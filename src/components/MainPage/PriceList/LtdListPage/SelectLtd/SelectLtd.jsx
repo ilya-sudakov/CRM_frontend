@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
+import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import TableView from '../TableView/TableView.jsx';
 import UserContext from '../../../../../App.js';
 import './SelectLtd.scss';

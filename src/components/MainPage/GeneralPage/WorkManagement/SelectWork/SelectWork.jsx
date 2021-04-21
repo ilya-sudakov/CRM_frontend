@@ -2,10 +2,10 @@ import { useState, useEffect, useContext } from 'react';
 import deleteSVG from 'Assets/select/delete.svg';
 import './SelectWork.scss';
 import SelectWorkItem from '../../../Work/SelectWorkItem/SelectWorkItem.jsx';
-import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';
+import InputProducts from 'Components/Form/InputProducts/InputProducts.jsx';
 import SelectDraft from '../../../Dispatcher/Rigging/SelectDraft/SelectDraft.jsx';
 import UserContext from '../../../../../App.js';
-import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
+import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
 import useMessageForUser from 'Utils/hooks/useMessageForUser';
 
 const SelectWork = (props) => {

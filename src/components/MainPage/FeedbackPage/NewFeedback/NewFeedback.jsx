@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './NewFeedback.scss';
-import 'Utils/Form/Form.scss';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+import 'Components/Form/Form.scss';
+import InputText from 'Components/Form/InputText/InputText.jsx';
 import { addFeedback } from 'API/Feedback/feedback';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { useForm } from 'Utils/hooks';
 
 const NewFeedback = (props) => {

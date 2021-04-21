@@ -3,8 +3,8 @@ import deleteSVG from 'Assets/select/delete.svg';
 import './SelectDraft.scss';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
 import TableView from './TableView/TableView.jsx';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
-import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
+import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import { getStamp } from 'API/rigging';
 
 const SelectDraft = (props) => {

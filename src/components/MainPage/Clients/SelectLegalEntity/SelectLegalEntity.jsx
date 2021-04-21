@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './SelectLegalEntity.scss';
 import { getInfoByINN, getBIKByINN } from 'API/Clients';
-import Button from 'Utils/Form/Button/Button.jsx';
-import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
-import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
+import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
 
 const SelectLegalEntity = (props) => {
   const newEntity = {

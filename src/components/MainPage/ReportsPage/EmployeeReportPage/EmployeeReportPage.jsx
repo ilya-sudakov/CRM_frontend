@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import SelectEmployee from '../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 // import EmployeeInfoPanel from "./EmployeeInfo.jsx";
 import EmployeeInfoPanel from '../../GeneralPage/ReportTablePage/EmployeeInfo/EmployeeInfo.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';

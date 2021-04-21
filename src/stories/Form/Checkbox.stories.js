@@ -1,4 +1,4 @@
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
 
 export default {
   title: 'Form/Checkbox',

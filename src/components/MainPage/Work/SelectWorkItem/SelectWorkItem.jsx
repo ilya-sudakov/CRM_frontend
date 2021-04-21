@@ -3,7 +3,7 @@ import './SelectWorkItem.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getWork } from 'API/WorkManaging/work_list';
 import TableView from '../TableView.jsx';
-import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import { useFormWindow } from 'Utils/hooks';
 
 const SelectWorkItem = (props) => {

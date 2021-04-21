@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import './EditUser.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { getUserById, editUser } from 'API/users';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { useForm } from 'Utils/hooks';
 import { usersDefaultInputs } from '../objects';
 

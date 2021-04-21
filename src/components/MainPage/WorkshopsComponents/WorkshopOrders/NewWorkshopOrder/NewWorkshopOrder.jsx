@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import './NewWorkshopOrder.scss';
-import 'Utils/Form/Form.scss';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import SelectItems from 'Utils/Form/SelectItems/SelectItems.jsx';
+import 'Components/Form/Form.scss';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import SelectItems from 'Components/Form/SelectItems/SelectItems.jsx';
 import { addOrder, addProductToOrder } from 'API/Workshop/Orders.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { workshops } from '../../workshopVariables';
 import { useForm } from 'Utils/hooks';
 import { getWorkshopOrdersDefaultInputs } from '../../functions';

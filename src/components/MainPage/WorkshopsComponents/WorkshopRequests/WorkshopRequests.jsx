@@ -3,7 +3,7 @@ import './WorkshopRequests.scss';
 import 'Utils/MainWindow/MainWindow.scss';
 import TableView from '../TableView/TableView.jsx';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import {
   getRequestsByWorkshop,

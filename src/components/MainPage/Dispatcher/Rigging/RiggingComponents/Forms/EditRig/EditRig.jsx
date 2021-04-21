@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './EditRig.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';
 import {
   getStampById,
@@ -9,8 +9,8 @@ import {
   addPartsToStamp,
   deletePartsFromStamp,
 } from 'API/rigging';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { formatDateString } from 'Utils/functions.jsx';
 import { rigTypes } from '../../rigsVariables.js';
 import { useQuery } from 'Utils/hooks';

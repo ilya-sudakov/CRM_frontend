@@ -3,7 +3,7 @@ import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
 import PlaceholderLoading from 'Utils/TableView/PlaceholderLoading/PlaceholderLoading.jsx';
 import { getExcelFileBlob } from '../../PriceList/functions.js';
-import { downloadImage } from 'Utils/Form/ImageView/functions.js';
+import { downloadImage } from 'Components/Form/ImageView/functions.js';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 

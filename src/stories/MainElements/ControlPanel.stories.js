@@ -1,5 +1,5 @@
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel';
-import Button from 'Utils/Form/Button/Button';
+import Button from 'Components/Form/Button/Button';
 
 export default {
   title: 'Основной UI/ControlPanel',

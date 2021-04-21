@@ -1,5 +1,5 @@
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
 
 const CategoryHeader = ({
   category,

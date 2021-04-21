@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
 import { getUsers } from 'API/users';
 
 const UsersVisibility = (props) => {

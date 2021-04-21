@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { sortByField } from 'Utils/sorting/sorting.js';
 import PropTypes from 'prop-types';
 import './FileUploader.scss';
-import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
+import ImageView from 'Components/Form/ImageView/ImageView.jsx';
 import RemoveIcon from 'Assets/tableview/delete.inline.svg';
 import DownloadIcon from 'Assets/download.inline.svg';
 import { downloadImage, getFileExtension } from '../ImageView/functions';

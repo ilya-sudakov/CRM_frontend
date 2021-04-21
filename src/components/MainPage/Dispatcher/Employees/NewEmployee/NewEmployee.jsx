@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './NewEmployee.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { addEmployee } from 'API/employees';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { useForm } from 'Utils/hooks';
 import { employeesDefaultInputs } from '../objects.js';
 import { createFormDataFromObject } from 'Utils/functions.jsx';

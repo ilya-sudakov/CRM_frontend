@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext } from 'react';
 import './EditRequest.scss';
-import 'Utils/Form/Form.scss';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
-import InputProducts from 'Utils/Form/InputProducts/InputProducts.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import 'Components/Form/Form.scss';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputUser from 'Components/Form/InputUser/InputUser.jsx';
+import InputProducts from 'Components/Form/InputProducts/InputProducts.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import UserContext from '../../../../../App.js';
 import {
   editRequest,

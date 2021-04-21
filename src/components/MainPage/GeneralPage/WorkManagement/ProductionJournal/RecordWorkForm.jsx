@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 import './RecordWorkForm.scss';
-import 'Utils/Form/Form.scss';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import 'Components/Form/Form.scss';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import {
   deleteProductFromRecordedWork,
   deleteDraftFromRecordedWork,
   deleteRecordedWork,
 } from 'API/WorkManaging/work_control';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import SelectWork from '../SelectWork/SelectWork.jsx';
-import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
+import MessageForUser from 'Components/Form/MessageForUser/MessageForUser.jsx';
 import { submitWorkData } from '../RecordWork/functions.js';
 import { useForm } from 'Utils/hooks';
 import { productionJournalDefaultInputs } from './objects';

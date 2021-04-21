@@ -6,7 +6,7 @@ import OneColumnIcon from 'Assets/tableview/onecolumn.png';
 import okIcon from 'Assets/tableview/ok.svg';
 import TwoColumnsIcon from 'Assets/tableview/twocolumns.png';
 import chevronDownSVG from 'Assets/tableview/chevron-down.svg';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import {
   getAllProductsFromWorkCount,
   getAllDraftsFromWorkCount,
@@ -15,7 +15,7 @@ import {
 } from 'Utils/functions.jsx';
 import { getRecordedWorkByDateRange } from 'API/WorkManaging/work_control';
 import { getEmployeesByWorkshop } from 'API/employees';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import PartsStatistic from './PartsStatistic/PartsStatistic.jsx';
 import TableView from './TableView/TableView.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';

@@ -36,7 +36,7 @@ import {
 } from './renderItems.jsx';
 import TableActions from 'Utils/TableView/TableActions/TableActions.jsx';
 import DeleteItemAction from 'Utils/TableView/TableActions/Actions/DeleteItemAction.jsx';
-import MessageForUser from 'Utils/Form/MessageForUser/MessageForUser.jsx';
+import MessageForUser from 'Components/Form/MessageForUser/MessageForUser.jsx';
 import {
   getRequestItemClassName,
   handleMinimizeRequestItem,

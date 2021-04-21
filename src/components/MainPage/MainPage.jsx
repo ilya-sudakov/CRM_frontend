@@ -2,7 +2,7 @@ import { Suspense, useContext, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './MainPage.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import Header from '../Header/Header.jsx';
 import {
   Clients,

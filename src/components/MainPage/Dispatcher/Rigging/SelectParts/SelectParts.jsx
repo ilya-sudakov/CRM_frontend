@@ -4,10 +4,10 @@ import {
   workshopsLocations,
   checkRiggingTypesInputs,
 } from '../RiggingComponents/rigsVariables';
-import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { scrollToElement } from 'Utils/functions.jsx';
-import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import FormErrorMessage from 'Utils/FormErrorMessage/FormErrorMessage.jsx';
+import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
+import FormErrorMessage from 'Components/Form/FormErrorMessage/FormErrorMessage.jsx';
 
 const SelectParts = (props) => {
   const [selected, setSelected] = useState([]);

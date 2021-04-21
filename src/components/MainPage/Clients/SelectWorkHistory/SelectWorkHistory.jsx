@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import 'Utils/MainWindow/MainWindow.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import okSVG from 'Assets/tableview/calendar_check.svg';
 import cancelSVG from 'Assets/tableview/cancel.svg';
 import './SelectWorkHistory.scss';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import { formatDateStringWithTime } from 'Utils/functions.jsx';
 import ImgLoader from 'Utils/TableView/ImgLoader/ImgLoader.jsx';
-import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
+import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 
 const SelectWorkHistory = (props) => {

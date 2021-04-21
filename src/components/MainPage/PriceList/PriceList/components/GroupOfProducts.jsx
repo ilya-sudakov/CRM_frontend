@@ -1,5 +1,5 @@
 import SelectPriceItem from '../../SelectPriceItem/SelectPriceItem.jsx';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 import ChevronSVG from 'Assets/tableview/chevron-down.inline.svg';
 

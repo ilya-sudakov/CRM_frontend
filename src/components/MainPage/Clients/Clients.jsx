@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import './Clients.scss';
 import 'Utils/MainWindow/MainWindow.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { searchClients } from 'API/Clients';
 import { Link } from 'react-router-dom';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import EditWorkHistory from './MainComponents/EditWorkHistory.jsx';

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import './RecordWork.scss';
-import 'Utils/Form/Form.scss';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import 'Components/Form/Form.scss';
+import ErrorMessage from 'Components/Form/ErrorMessage/ErrorMessage.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import SelectEmployee from '../../../Dispatcher/Employees/SelectEmployee/SelectEmployee.jsx';
 import SelectWork from '../SelectWork/SelectWork.jsx';
 import SelectWorkHours from '../SelectWorkHours/SelectWorkHours.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import useProductsList from 'Utils/hooks/useProductsList/useProductsList.js';
 import { submitWorkData } from './functions.js';
 import { useQuery } from 'Utils/hooks';

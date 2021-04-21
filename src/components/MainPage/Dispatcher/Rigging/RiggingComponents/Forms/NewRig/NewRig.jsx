@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import './NewRig.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import SelectParts from '../../../SelectParts/SelectParts.jsx';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
 import { useForm } from 'Utils/hooks';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { addStamp, addPartsToStamp } from 'API/rigging';
 import { rigTypes } from '../../rigsVariables.js';
 import { getRigsDefaultInputs } from '../../TableView/functions';

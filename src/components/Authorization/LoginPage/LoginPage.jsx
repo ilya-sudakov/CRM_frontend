@@ -5,10 +5,10 @@ import 'Utils/MainWindow/MainWindow.scss';
 import { login } from 'API/authorization';
 import eyeIcon from 'Assets/loginPage/eye.png';
 import companylogo from 'Assets/loginPage/login-page_logo.png';
-import ErrorMessage from 'Utils/Form/ErrorMessage/ErrorMessage.jsx';
+import ErrorMessage from 'Components/Form/ErrorMessage/ErrorMessage.jsx';
 import exitSVG from 'Assets/header/exit.svg';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 const LoginPage = (props) => {
   const [username, setUserName] = useState('');

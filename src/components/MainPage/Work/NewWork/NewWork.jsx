@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import './NewWork.scss';
-import 'Utils/Form/Form.scss';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+import 'Components/Form/Form.scss';
+import InputText from 'Components/Form/InputText/InputText.jsx';
 import { addWork } from 'API/WorkManaging/work_list';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { customSelectStyles } from 'Utils/dataObjects';
 import { useForm } from 'Utils/hooks';
 import { workItemDefaultInputs } from '../objects';

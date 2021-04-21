@@ -1,4 +1,4 @@
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
 
 export default {
   title: 'Form/FileUploader',

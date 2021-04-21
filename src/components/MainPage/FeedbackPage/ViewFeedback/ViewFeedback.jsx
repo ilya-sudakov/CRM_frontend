@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import './ViewFeedback.scss';
-import 'Utils/Form/Form.scss';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+import 'Components/Form/Form.scss';
+import InputText from 'Components/Form/InputText/InputText.jsx';
 import FeedbackChat from '../FeedbackChat/FeedbackChat.jsx';
 import { getFeedbackById, editFeedback } from 'API/Feedback/feedback.js';
 import { addMessage, getMessagesByDiscussionId } from 'API/Feedback/messages';
 import { formatDateStringWithTime } from 'Utils/functions.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 const ViewFeedback = (props) => {
   const [formInputs, setFormInputs] = useState({

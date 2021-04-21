@@ -1,4 +1,4 @@
-import Switch from 'Utils/Form/Switch/Switch.jsx';
+import Switch from 'Components/Form/Switch/Switch.jsx';
 
 export default {
   title: 'Form/Switch',

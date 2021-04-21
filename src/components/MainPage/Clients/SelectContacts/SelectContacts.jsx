@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import AddToButton from 'Utils/Form/AddToButton/AddToButton.jsx';
-import NestedFormItem from 'Utils/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
-import FormErrorMessage from 'Utils/FormErrorMessage/FormErrorMessage.jsx';
+import AddToButton from 'Components/Form/AddToButton/AddToButton.jsx';
+import NestedFormItem from 'Components/Form/NestedForm/NestedFormItem/NestedFormItem.jsx';
+import FormErrorMessage from 'Components/Form/FormErrorMessage/FormErrorMessage.jsx';
 import './SelectContacts.scss';
 
 const SelectContacts = (props) => {

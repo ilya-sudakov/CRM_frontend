@@ -4,7 +4,7 @@ import 'Utils/MainWindow/MainWindow.scss';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import { getEmployeesListPdfText } from './functions.js';
 import { deleteEmployee, getEmployeesByWorkshop } from 'API/employees';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import { sortByField } from 'Utils/sorting/sorting';
 import TableView from './TableView.jsx';

@@ -1,7 +1,7 @@
 import DownloadIcon from 'Assets/download.svg';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
 import SearchBar from '../../../SearchBar/SearchBar.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { getReportTableExcel } from '../getReportTableExcel.js';
 import ControlPanel from 'Utils/MainWindow/ControlPanel/ControlPanel.jsx';
 import TableView from './TableView.jsx';

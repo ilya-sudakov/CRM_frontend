@@ -14,7 +14,7 @@ import workTimeIcon from 'Assets/sidemenu/work_time_icon.svg';
 // import graphIcon from 'Assets/graph-icon.svg';
 import statsIcon from 'Assets/statistics/stats-alt.svg';
 
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 const EtceteraPage = (props) => {
   const userContext = useContext(UserContext);

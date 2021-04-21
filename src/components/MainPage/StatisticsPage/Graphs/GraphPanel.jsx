@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 
 const GraphPanel = ({
   isLoaded,

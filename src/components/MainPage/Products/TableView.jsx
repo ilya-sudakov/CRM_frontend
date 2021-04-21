@@ -5,7 +5,7 @@ import plusIcon from 'Assets/tableview/add_item.png';
 import plusContIcon from 'Assets/tableview/add_cont.png';
 import 'Utils/MainWindow/MainWindow.scss';
 import { useTable } from 'Utils/hooks';
-import ImageView from 'Utils/Form/ImageView/ImageView.jsx';
+import ImageView from 'Components/Form/ImageView/ImageView.jsx';
 import UserContext from 'Components/../App';
 import styled from 'styled-components';
 

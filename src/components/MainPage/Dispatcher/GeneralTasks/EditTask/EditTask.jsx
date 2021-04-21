@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './EditTask.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { getMainTaskById, editMainTask } from 'API/tasks';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import InputUser from 'Utils/Form/InputUser/InputUser.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import InputUser from 'Components/Form/InputUser/InputUser.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { getTasksDefaultInputs } from '../functions';
 import { useForm } from 'Utils/hooks';
 

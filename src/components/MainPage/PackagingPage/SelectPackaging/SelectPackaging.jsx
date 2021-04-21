@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import './SelectPackaging.scss';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import { getPackaging } from 'API/Products/packaging.js';
 import SearchBar from '../../SearchBar/SearchBar.jsx';
 import 'Utils/MainWindow/MainWindow.scss';
 import deleteSVG from 'Assets/tableview/delete.svg';
-import SelectFromButton from 'Utils/Form/SelectFromButton/SelectFromButton.jsx';
+import SelectFromButton from 'Components/Form/SelectFromButton/SelectFromButton.jsx';
 import TableView from '../TableView.jsx';
 
 const SelectPackaging = (props) => {

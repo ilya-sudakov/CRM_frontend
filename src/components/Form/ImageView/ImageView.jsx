@@ -1,6 +1,6 @@
 import { createRef, useEffect } from 'react';
 import useFormWindow from 'Utils/hooks/useFormWindow';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 import './ImageView.scss';
 import {

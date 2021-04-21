@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import SelectWorkHistory from '../SelectWorkHistory/SelectWorkHistory.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 
 const EditWorkHistory = (props) => {
   const [isLoading, setIsLoading] = useState(false);

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import './PriceList.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import {
   getPriceGroupImageByName,
   updatePriceGroupByName,
 } from 'API/PriceList';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
-import CheckBox from 'Utils/Form/CheckBox/CheckBox.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
+import CheckBox from 'Components/Form/CheckBox/CheckBox.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import {
   defaultCategories,
   defaultOptionalColumns,

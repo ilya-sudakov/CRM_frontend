@@ -9,7 +9,7 @@ import {
   editClientCategory,
   getSupplierCategories,
 } from 'API/Clients/Categories.js';
-import FormWindow from 'Utils/Form/FormWindow/FormWindow.jsx';
+import FormWindow from 'Components/Form/FormWindow/FormWindow.jsx';
 import NewClientCategory from './NewClientCategory/NewClientCategory.jsx';
 import EditClientCategory from './EditClientCategory/EditClientCategory.jsx';
 import FloatingButton from 'Utils/MainWindow/FloatingButton/FloatingButton.jsx';

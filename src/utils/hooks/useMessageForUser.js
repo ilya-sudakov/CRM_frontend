@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import MessageForUser from '../Form/MessageForUser/MessageForUser.jsx';
+import MessageForUser from 'Components/Form/MessageForUser/MessageForUser.jsx';
 
 const useMessageForUser = (
   content = {

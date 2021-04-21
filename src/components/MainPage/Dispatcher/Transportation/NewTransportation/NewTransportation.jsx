@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import './NewTransportation.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { addTransportation } from 'API/transportation';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
-import InputDate from 'Utils/Form/InputDate/InputDate.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
+import InputDate from 'Components/Form/InputDate/InputDate.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { useForm } from 'Utils/hooks';
 import { transportationDefaultInputs } from '../objects.js';
 

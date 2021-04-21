@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import { createPricelist } from 'API/Clients/price_list.js';
 import { createFormDataFromObject } from 'Utils/functions.jsx';
 import { useForm } from 'Utils/hooks';

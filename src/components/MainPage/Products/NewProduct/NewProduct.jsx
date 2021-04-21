@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import './NewProduct.scss';
-import 'Utils/Form/Form.scss';
+import 'Components/Form/Form.scss';
 import { addProduct } from 'API/Products/products';
-import InputText from 'Utils/Form/InputText/InputText.jsx';
+import InputText from 'Components/Form/InputText/InputText.jsx';
 import SelectCategory from '../SelectCategory/SelectCategory.jsx';
-import FileUploader from 'Utils/Form/FileUploader/FileUploader.jsx';
+import FileUploader from 'Components/Form/FileUploader/FileUploader.jsx';
 import { getDataUri } from 'Utils/functions.jsx';
-import Button from 'Utils/Form/Button/Button.jsx';
+import Button from 'Components/Form/Button/Button.jsx';
 import SelectPackaging from '../../PackagingPage/SelectPackaging/SelectPackaging.jsx';
 import { addPackagingToProduct } from 'API/Products/packaging.js';
 import { useForm } from 'Utils/hooks';
