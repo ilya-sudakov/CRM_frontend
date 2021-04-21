@@ -149,6 +149,7 @@ const Table = ({
       style={{ ...options.style }}
       fullSize={options.fullSize}
       isNested={isNested}
+      loading={loading.isLoading}
     >
       {data.length > 0 || loading.isLoading ? (
         <Row headerRow isNested={isNested}>

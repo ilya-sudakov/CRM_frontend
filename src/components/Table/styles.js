@@ -34,7 +34,7 @@ export const StyledTable = styled.table`
     td {
       box-sizing: border-box;
       float: left;
-      display: flex;
+      display: ${({ loading }) => (loading ? 'table-cell' : 'flex')};
       justify-content: space-between;
       align-items: center;
       width: 100% !important;
