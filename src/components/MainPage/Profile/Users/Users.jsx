@@ -130,7 +130,7 @@ const Users = () => {
     ROLE_DISPATCHER: 'Диспетчер',
     ROLE_LEMZ: 'ЦехЛЭМЗ',
     ROLE_LEPSARI: 'ЦехЛепсари',
-    ROLE_LIGOSVKIY: 'ЦехЛиговский',
+    ROLE_LIGOVSKIY: 'ЦехЛиговский',
     ROLE_ENGINEER: 'Инженер1',
   };
 
