@@ -135,7 +135,10 @@ const Users = () => {
   };
 
   const formatUserRole = ({ roles: _roles }) => {
-    const role = _roles.find((item) => item.name)?.name;
+    console.log(_roles);
+    const role = _roles.find(
+      (item) => item.name && item.name !== 'ROLE_WORKSHOP',
+    )?.name;
     return roles[role];
   };
 
