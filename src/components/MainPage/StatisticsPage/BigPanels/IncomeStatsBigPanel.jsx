@@ -8,8 +8,8 @@ import {
 } from '../functions.js';
 import RequestsList from '../Lists/RequestsList/RequestsList.jsx';
 import BigPanel from './BigPanel.jsx';
-import BarChart from 'Utils/Charts/BarChart/BarChart.jsx';
-import { tooltipLabelRubles } from 'Utils/Charts/callbacks.js';
+import BarChart from 'Components/Charts/BarChart/BarChart.jsx';
+import { tooltipLabelRubles } from 'Components/Charts/callbacks';
 
 const IncomeStatsBigPanel = ({
   requests,

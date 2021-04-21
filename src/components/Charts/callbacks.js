@@ -1,4 +1,4 @@
-import { addSpaceDelimiter } from '../functions.jsx';
+import { addSpaceDelimiter } from 'Utils/functions';
 
 export const tooltipLabelRubles = (tooltipItem, data) => {
   let label = data.datasets[tooltipItem.datasetIndex].label || '';

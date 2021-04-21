@@ -11,7 +11,6 @@ const BigPanel = ({
   invertedStats,
   percentage,
   timePeriod,
-  // charts,
   windowCharts,
   windowContent,
   content,
@@ -31,7 +30,6 @@ const BigPanel = ({
       className={`panel panel--big ${
         isLoaded && !isLoading ? '' : 'panel--placeholder'
       }`}
-      // to={linkTo || "/"}
     >
       <div className="panel__category" onClick={() => setShowWindow(true)}>
         <span>{category || 'Категория'}</span>
