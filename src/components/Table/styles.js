@@ -116,7 +116,7 @@ export const Cell = styled.td`
 `;
 export const CellHeader = styled.th`
   ${baseCellStyles}
-  padding: 6px;
+  padding: 6px ${({ isNested }) => (isNested ? '6px' : '10px')};
   font-weight: 400;
   text-align: left;
   color: #999;
