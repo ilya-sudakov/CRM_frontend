@@ -100,7 +100,7 @@ export const RowLoading = styled(Row)`
 `;
 export const baseCellStyles = css`
   --side-padding: 30px;
-  padding: 6px ${({ isNested }) => (isNested ? '6px' : '10px')};
+  padding: 6px 10px;
   text-align: left;
 
   &:first-child {
@@ -116,7 +116,6 @@ export const Cell = styled.td`
 `;
 export const CellHeader = styled.th`
   ${baseCellStyles}
-  padding: 6px ${({ isNested }) => (isNested ? '6px' : '10px')};
   font-weight: 400;
   text-align: left;
   color: #999;
